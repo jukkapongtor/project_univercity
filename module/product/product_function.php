@@ -1,0 +1,87 @@
+<?php
+function list_product(){
+	echo "<div class='container-fluid well padding0' style='margin-top:5px;'>";
+		echo "<div class='col-md-3 padding0' >";
+			echo "<div class='list-group' style='margin-bottom:0px;'>";
+		$query_type=mysqli_query($_SESSION['connect_db'],"SELECT type.product_type,type.type_name,quality.product_quality FROM type LEFT JOIN quality ON type.product_type = quality.quality_type GROUP BY type.type_name ORDER BY type.product_type ASC")or die("ERROR : product_function line 6");
+		while(list($product_type,$type_name,$product_quality)=mysqli_fetch_row($query_type)){
+			$active = ($product_type==$_GET['menu'])?"active":"";
+			echo "<a href='index.php?module=product&action=list_product&menu=$product_type&cate=$product_quality' class='list-group-item list-group-item-success $active'><font style='font-size:18px'><b>รายการสินค้าประเภท$type_name</b></font></a>";
+		} 
+			echo "</div>";
+		echo "</div>";
+		echo "<div class='col-md-9' style='padding-top:10px;padding-right:0px'>";
+		$query_cate = mysqli_query($_SESSION['connect_db'],"SELECT product_quality,quality_name FROM quality WHERE quality_type='$_GET[menu]'")or die("ERROR : product_function line 14");
+		$number=1;
+		$num_cate = mysqli_num_rows($query_cate);
+		if(!empty($num_cate)){
+		while (list($product_quality,$quality_name)=mysqli_fetch_row($query_cate)) {
+			echo "<div class='col-md-3'>";
+			if($product_quality==$_GET['cate']){
+				echo "<center><img src='images/icon/no-images.jpg' width='95' height='95' style='border-radius:100px;border:5px solid #248a32;' >";
+			}else{
+				echo "<center><a href='index.php?module=product&action=list_product&menu=$_GET[menu]&cate=$product_quality'><img src='images/icon/no-images.jpg' class='select-cate-product_$number' style='width: 100px;height: 100px;border-radius: 100px;'></a>";
+			}
+				echo "<p style='font-size:25px;margin-top:5px'>$quality_name</p></center>";
+			$number++;
+			echo "</div>";
+		}
+		}else{
+			echo "<div class='col-md-12' style='padding-top:30px;'>";
+				echo "<center><h3><b>สินค้ายังไม่ถูกเพิ่มหมวดหมู่</b></h3></center>";
+			echo "</div>";
+		}
+		echo "</div>";
+	echo "</div>";
+	echo "<div class='container-fluid'>";
+	$query_type =  mysqli_query($_SESSION['connect_db'],"SELECT type_name FROM type WHERE product_type='$_GET[menu]'")or die("ERROR : product_function line 30");
+	list($type_product) = mysqli_fetch_row($query_type);
+	$query_cate = mysqli_query($_SESSION['connect_db'],"SELECT quality_name FROM quality WHERE quality_type='$_GET[menu]' AND product_quality='$_GET[cate]'")or die("ERROR : product_function line 32");
+	list($cate_name)=mysqli_fetch_row($query_cate);
+	echo "<h3><b>รายการสินค้า / ร้านการสินค้าประเภท$type_product / หมวดหมู่$cate_name</b></h3>";
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price,product_type,product_image FROM product WHERE product_type='$_GET[menu]' AND product_quality='$_GET[cate]'")or die("ERROR : product_function line 30");
+	while (list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_product)) {
+		echo "<div class='col-md-3' style='margin-top:20px'>";
+			$folder = ($product_type==1)?"fern":"pots";
+			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id'><img src='images/$folder/$product_image' width='100%' height='300'><p><font style='font-size:20px'>$product_name</font></p></a><p class='marginun20'><font size='3'>$product_price</font></p> ";
+		echo "</div>";
+	}
+	echo "</div>";
+}
+
+function product_detail(){
+	
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product.product_price,product.product_detail,type.type_name,quality.quality_name,size.size_name,product.product_stock,product.product_image FROM product INNER JOIN type ON product.product_type = type.product_type INNER JOIN quality ON product.product_quality = quality.product_quality INNER JOIN size ON product.product_size = size.product_size WHERE product.product_id='$_GET[product_id]'")or die("ERROR : product_function line 47");
+	list($product_id,$product_name,$product_price,$product_detail,$product_type,$product_quality,$product_size,$product_stock,$product_image)=mysqli_fetch_row($query_product);
+		echo "<center><h4 style='margin-top:30px;font-size:45px'><b>$product_name</b></h4></center>";
+		echo "<div class='col-md-5'style='margin-top:20px'>";
+			$file = ($product_type=="เฟิร์น")?"fern":"pots";
+			echo "<img src='images/$file/$product_image' width='100%' height='500' style='border-radius:5px;'>";
+		echo "</div>";
+		echo "<div class='col-md-7' style='margin-top:20px'>";
+			$product_detail =(empty($product_detail))?"ไม่มีรายละเอียดของข้อมูลสินค้า":$product_detail;
+			echo "<p style='font-size:25px'><b>รายละเอียดสินค้า :</b><br>&nbsp;&nbsp;&nbsp;&nbsp;$product_detail</p>";
+			echo "<p style='font-size:25px'><b>ราคาสินค้า : </b> $product_price &nbsp;<b>บาท/(Bath)</b></p>";
+			echo "<p style='font-size:25px'><b>ประเภทสินค้า : </b> $product_type</p>";
+			echo "<p style='font-size:25px'><b>หมวดหมู่สินค้า : </b> $product_quality</p>";
+			echo "<p style='font-size:25px'><b>ขนาดสินค้า : </b> $product_size</p>";
+			echo "<p style='font-size:25px'><b>สถานะสินค้า : </b> $product_stock</p>";
+			echo "<p align='center' style='font-size:25px'><a href='index.php?module=cart&action=add_to_cart&product_id=$product_id'><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-shopping-cart'></span><font style='font-size:25px;'>หยิบสินค้า</font></button></a></p>";
+		echo "</div>";
+
+
+	echo "<br class='clear'><div class='underline'></div>";
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price,product_type,product_image FROM product ORDER BY RAND() LIMIT 4")or die("ERROR : product_function line 65");
+	while (list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_product)) {
+		echo "<div class='col-md-3' style='margin-top:20px'>";
+			$file = ($product_type==1)?"fern":"pots";
+			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$file/$product_image' width='100%' height='200px'>";
+			echo "<p style='font-size:25px;'>$product_name</p></a>";
+			echo "<p style='font-size:20px;margin-top:-15px;'>$product_price</p></center>";
+		echo "</div>";
+	}
+
+
+}
+
+?>

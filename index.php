@@ -1,0 +1,263 @@
+<?php
+    session_start();
+	include("include/function.php");
+    include("module/product/product_function.php");
+    include("module/news/news_function.php");
+    include("module/webboard/webboard_function.php");
+    include("module/users/users_function.php");
+    include("module/cart/cart_function.php");
+	connect_db();
+	$module=empty($_GET['module'])?"":$_GET['module'];
+    $action=empty($_GET['action'])?"":$_GET['action'];
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>MUMFERN SHOP</title>
+ <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+ <link rel="stylesheet" type="text/css" href="css/mystyle.css">
+ <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+ <link rel="stylesheet" type="text/css" href="js/jquery-ui.css">
+ <script src="js/jquery-1.11.3.min.js"></script>
+ <script src="js/jquery-ui.js"></script>
+ <script src="js/bootstrap.min.js"></script>
+ <script>
+    $(function(){
+        $(".header-function-user").mouseenter(function(){
+            $("#header-user").hide();
+            $("#header-user-hover").show();
+        });
+        $(".header-function-user").mouseleave(function(){
+            $("#header-user").show();
+            $("#header-user-hover").hide();
+        });
+        $(".product-recommend-sale").click(function(){
+            $(".product-recommend-sale").css({"background":"#248a32","border-bottom":"1px solid #1c5d25","color":"white" });
+            $(".product-recommend-new").css({"background":"white","border-bottom":"0px","color":"#1c5d25" });
+            $(".product-recommend-best").css({"background":"white","border-bottom":"0px","color":"#1c5d25" });
+            $(".product-recom-sale-content").show();
+            $(".product-recom-new-content").hide();
+            $(".product-recom-best-content").hide();
+        });
+        $(".product-recommend-new").click(function(){
+            $(".product-recommend-new").css({"background":"#248a32","border-bottom":"1px solid #1c5d25","color":"white" });
+            $(".product-recommend-sale").css({"background":"white","border-bottom":"0px","color":"#1c5d25" });
+            $(".product-recommend-best").css({"background":"white","border-bottom":"0px","color":"#1c5d25" });
+            $(".product-recom-new-content").show();
+            $(".product-recom-sale-content").hide();
+            $(".product-recom-best-content").hide();
+        });
+        $(".product-recommend-best").click(function(){
+            $(".product-recommend-best").css({"background":"#248a32","border-bottom":"1px solid #1c5d25","color":"white" });
+            $(".product-recommend-new").css({"background":"white","border-bottom":"0px","color":"#1c5d25" });
+            $(".product-recommend-sale").css({"background":"white","border-bottom":"0px","color":"#1c5d25" });
+            $(".product-recom-best-content").show();
+            $(".product-recom-new-content").hide();
+            $(".product-recom-sale-content").hide();
+        });
+<?php
+        if(!empty($_GET['menu'])){
+            $query_cate = mysqli_query($_SESSION['connect_db'],"SELECT product_quality,quality_name FROM quality WHERE quality_type='$_GET[menu]'")or die("ERROR : inedex line 60");
+            $count_cate = mysqli_num_rows($query_cate);
+            for($i=1;$i<=$count_cate;$i++){
+                echo "$('.select-cate-product_$i').mouseenter(function(){";
+                    echo "$('.select-cate-product_$i').css({'width':'95','height':'95','border':'solid 5px #42b752'});";
+                echo "});";
+                echo "$('.select-cate-product_$i').mouseleave(function(){";
+                    echo "$('.select-cate-product_$i').css({'width':'100','height':'100','border':'0px'});";
+                echo "});";
+            }
+        }
+        
+
+ ?> 
+
+    });
+ </script>
+ 
+ 
+</head>
+<body>
+<!-- Button trigger modal -->
+
+<div class="display_com">
+    <div class="header">
+        <div class="header-logo">
+            <div class="header-logo-img"><img src="images/icon/logomumfern.png" width="100%" height="100%"></div>
+            <font color="#1c5d25" size="5"><p style="margin-top:16px;"><b>MUMFERN SHOP</b></p></font>
+        </div>
+        <div class="header-menu">
+<?php
+            switch ($module) {
+                case 'product': $active_menu1="";$active_menu2="header-menu-active";$active_menu3="";$active_menu4=""; break;
+                case 'news': $active_menu1="";$active_menu2="";$active_menu3="header-menu-active";$active_menu4=""; break;
+                case 'webboard': $active_menu1="";$active_menu2="";$active_menu3="";$active_menu4="header-menu-active"; break;
+                default: $active_menu1="header-menu-active";$active_menu2="";$active_menu3="";$active_menu4=""; break;
+            }
+
+            echo "<a href='index.php'><div class='header-menu-home $active_menu1'><center>หน้าหลัก</center></div></a>";
+            echo "<a href='index.php?module=product&action=list_product&menu=1&cate=1'><div class='header-menu-product $active_menu2'><center>รายการสินค้า</center></div></a>";
+            echo "<a href='index.php?module=news&action=news'><div class='header-menu-news $active_menu3'><center>ข่าวสาร</center></div></a>";
+            echo "<a href='index.php?module=webboard&action=webboard'><div class='header-menu-webboard $active_menu4'><center>เว็บบอร์ด </center></div></a>";
+?>
+        </div>
+        <div class="header-function">
+            <a href="index.php?module=cart&action=show_cart"><div class="header-function-cart">
+                <img src="images/icon/cart-of-ecommerce.png" width="40" height="40">
+            </div></a>
+            
+<?php
+            
+
+            if(empty($_SESSION['login_name'])){
+                echo "<div class='header-function-user'>";
+                    echo "<a href='include/'><img src='images/user/user.png' id='header-user' width='40' height='40'>";
+                    echo "<img src='images/user/user-hover.png' id='header-user-hover' width='40' height='40' style='display:none'></a>";
+                echo "</div>";
+            }else{
+                $query_user = mysqli_query($_SESSION['connect_db'],"SELECT username,fullname,lastname,image FROM users WHERE username='$_SESSION[login_name]'")or die("ERROR : index line 116");
+                list($username,$user_fullname,$user_lastname,$user_image)=mysqli_fetch_row($query_user);
+                echo "<div class='header-function-user' style='width:auto;padding:5px;'>";
+                    echo "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><img src='images/user/$user_image'   width='50' height='50' style='float:left;border-radius:50px;'></a>";
+                    echo "<ul class='dropdown-menu dropdown-menu-right' style='cursor:default'>";
+                        echo "<li><p style='margin-left:10px;font-size:20px;'><b>ชื่อผู้ใช้งาน :</b> $username</p></li>";
+                        echo "<li><div>
+                        <div style='float:left'>
+                            <img src='images/user/$user_image'   width='70' height='70' style='margin-left:10px;'>
+                        </div>
+                        <div style='float:left'>
+                            <p style='margin-right:10px;font-size:23px;'>&nbsp;$user_fullname $user_lastname</p>";
+                    if($_SESSION['login_type']==1){
+                        echo "<a href='backend/' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;'>&nbsp;จัดการข้อมูลหลังร้าน</p></a>";
+                    }
+                        echo "<p style='margin-top:-10px;font-size:21px;'>&nbsp;แก้ไขข้อมูลส่วนตัว</p>
+                        </div>
+                        </div><br class='clear'></li>";
+                        echo "<li role='separator' class='divider'></li>";
+                        echo "<li><p align='right' style='margin-right:10px;'><a href='include/index.php?action=logout'><button class='btn btn-sm btn-default'><font size='4'>ออกจากระบบ</font></button></a></p></li>";
+                    echo "</ul>";
+                echo "</div>";
+            }
+                
+
+            
+
+?>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="container-fluid"> 
+        <div class="col-md-2"></div>
+        <div class="col-md-8" style="background:#fff;padding:60px 0px 10px 0px;">
+<?php
+        if(!empty($module)){
+            get_module($module,$action);
+        }else{
+?>
+            <div id="carousel-example-generic" class="carousel slide " data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+              </ol>
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner home-slide" role="listbox">
+                <div class="item active home-slide ">
+                  <img src="images/fern/20150818_182251_001.jpg" style="width:100%;height:100%" alt="...">
+                  <div class="carousel-caption">
+                    ...
+                  </div>
+                </div>
+                <div class="item home-slide ">
+                  <img src="images/fern/20150819_074210.jpg." style="width:100%;height:100%" alt="...">
+                  <div class="carousel-caption">
+                    ...
+                  </div>
+                </div>
+                <div class="item home-slide ">
+                  <img src="images/fern/20150819_074317.jpg" style="width:100%;height:100%" alt="...">
+                  <div class="carousel-caption">
+                    ...
+                  </div>
+                </div>
+              </div>
+
+              <!-- Controls -->
+              <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+            <br>
+            <center><h1><b>MUMFERN SHOP</b></h1></center>
+            <center><h2  class='marginun20'><b>ร้าน มุมเฟิร์น</b></h2></center>
+            <p><center><font size='5'>ร้านมุมเฟิร์น เป็นร้านค้าขายต้นไม้ประเภทเฟิร์น เราจะขายสินค้าประเภทเฟิร์นเป็นหลัก ซึ่งมีหลายประเภท</font></center></p>
+            <p  class='marginun20'><center><font size='5' >และร้านเรายังนำกระถางมาขายซึ่งมีหลากหลายรูปแบบให้เลือก ให้เหมาะสมกับเฟิร์นที่ทางร้านขาย</font></center></p>
+            <br>
+            <div class="clear"></div>
+            <div class="product-recommend">
+                <div class='product-recommend-center'></div>
+                <div class="product-recommend-sale"><center>สินค้าลดราคา</center></div>
+                <div class="product-recommend-new"><center>สินค้ามาใหม่</center></div>
+                <div class="product-recommend-best"><center>สินค้าขายดี</center></div>
+                <div class='product-recommend-center'></div>
+            </div>
+            <div class="product-recom-sale-content">
+<?php
+            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price,product_type,product_image FROM product LIMIT 0,6 ");
+            while(list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_recom_sale)){
+                echo "<div class='col-md-4' style='padding-top:10px;'>";
+                    $folder= ($product_type=="1")?"fern":"pots";
+                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
+                    echo "<p><center><font size='5'>$product_name</font></center></p></a>";
+                    echo "<p class='marginun20'><center><font size='4'>$product_price</font></center></p>";
+                echo "</div>";
+            }
+?>
+            </div>
+            <div class="product-recom-new-content">
+<?php
+            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price,product_type,product_image FROM product LIMIT 6,6 ");
+            while(list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_recom_sale)){
+                echo "<div class='col-md-4' style='padding-top:10px;'>";
+                    $folder= ($product_type=="1")?"fern":"pots";
+                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
+                    echo "<p><center><font size='5'>$product_name</font></center></p></a>";
+                    echo "<p class='marginun20'><center><font size='4'>$product_price</font></center></p>";
+                echo "</div>";
+            }
+?>
+            </div>
+            <div class="product-recom-best-content">
+<?php
+            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price,product_type,product_image FROM product LIMIT 12,6 ");
+            while(list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_recom_sale)){
+                echo "<div class='col-md-4' style='padding-top:10px;'>";
+                    $folder= ($product_type=="1")?"fern":"pots";
+                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
+                    echo "<p><center><font size='5'>$product_name</font></center></p></a>";
+                    echo "<p class='marginun20'><center><font size='4'>$product_price</font></center></p>";
+                echo "</div>";
+            }
+?>
+            </div>
+<?php
+        }
+?>      
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+<div class="display_mobile">
+    
+</div>
+
+</body>
+</html>
