@@ -84,10 +84,10 @@
 
 <div class="display_com">
     <div class="header">
-        <div class="header-logo">
+        <a href='index.php' style='text-decoration: none;'><div class="header-logo">
             <div class="header-logo-img"><img src="images/icon/logomumfern.png" width="100%" height="100%"></div>
             <font color="#1c5d25" size="5"><p style="margin-top:16px;"><b>MUMFERN SHOP</b></p></font>
-        </div>
+        </div></a>
         <div class="header-menu">
 <?php
             switch ($module) {
@@ -120,19 +120,31 @@
                 $query_user = mysqli_query($_SESSION['connect_db'],"SELECT username,fullname,lastname,image FROM users WHERE username='$_SESSION[login_name]'")or die("ERROR : index line 116");
                 list($username,$user_fullname,$user_lastname,$user_image)=mysqli_fetch_row($query_user);
                 echo "<div class='header-function-user' style='width:auto;padding:5px;'>";
-                    echo "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><img src='images/user/$user_image'   width='50' height='50' style='float:left;border-radius:50px;'></a>";
-                    echo "<ul class='dropdown-menu dropdown-menu-right' style='cursor:default'>";
+                    echo "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>";
+                    if(empty($user_image)){
+                        echo "<img src='images/user/user.png'   width='50' height='50' style='float:left;border-radius:50px;'>";
+                    }else{
+                        echo "<img src='images/user/$user_image'   width='50' height='50' style='float:left;border-radius:50px;'>";
+                    }
+                    
+                    echo "</a><ul class='dropdown-menu dropdown-menu-right' style='cursor:default'>";
                         echo "<li><p style='margin-left:10px;font-size:20px;'><b>ชื่อผู้ใช้งาน :</b> $username</p></li>";
                         echo "<li><div>
-                        <div style='float:left'>
-                            <img src='images/user/$user_image'   width='70' height='70' style='margin-left:10px;'>
-                        </div>
-                        <div style='float:left'>
-                            <p style='margin-right:10px;font-size:23px;'>&nbsp;$user_fullname $user_lastname</p>";
+                        <div style='float:left'>";
+                        if(empty($user_image)){
+                            echo "<img src='images/user/user.png'   width='70' height='70' style='margin-left:10px;'>";
+                        }else{
+                            echo "<img src='images/user/$user_image'   width='70' height='70' style='margin-left:10px;'>";
+                        }
+                        echo "</div>
+                        <div style='float:left'>";
+                        if(!empty($user_fullname)&&!empty($user_lastname)){
+                            echo "<p style='margin-right:10px;font-size:23px;'>&nbsp;$user_fullname $user_lastname</p>";
+                        }
                     if($_SESSION['login_type']==1){
-                        echo "<a href='backend/' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;'>&nbsp;จัดการข้อมูลหลังร้าน</p></a>";
+                        echo "<a href='backend/' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;จัดการข้อมูลหลังร้าน</p></a>";
                     }
-                        echo "<p style='margin-top:-10px;font-size:21px;'>&nbsp;แก้ไขข้อมูลส่วนตัว</p>
+                        echo "<p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;แก้ไขข้อมูลส่วนตัว</p>
                         </div>
                         </div><br class='clear'></li>";
                         echo "<li role='separator' class='divider'></li>";
