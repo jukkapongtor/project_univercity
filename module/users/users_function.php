@@ -65,6 +65,7 @@ function data_users(){
 		list($fullname,$lastname,$image)=mysqli_fetch_row($query_users);
 			echo "<p><center><img src='images/user/$image' width='150' height='150'></center></p><br>";
 			echo "<p align='center'><img src='images/icon/black-user-shape.png' width='24' style='margin-top:-8px'>&nbsp;<font size='5'><b>ยินดีต้อนรับ</b></font></p>";
+			$name = (empty($fullname)AND empty($lastname))?"ไม่ระบุชื่อหรือนามสกุล":"$fullname $lastname";
 			echo "<p class='font20' style='padding-left:18px;'><b>ชื่อ : </b>$fullname $lastname</p>";
 			switch ($_GET['menu']) {
 				case '1': $action_menu_user1 ="active-datausers-menu";$action_menu_user2 ="";$action_menu_user3 ="";$action_menu_user4 ="";$action_menu_user5 =""; break;
@@ -134,7 +135,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;:&nbsp;</b></p>";
 				echo "</td>";
 				echo "<td width='70%'>";
-					echo "<p class='font20'><input class='form-control' tyle='text' name='fullname' placeholder='Fullname'></p>";
+					echo "<p class='font20'><input class='form-control' tyle='text' name='fullname' placeholder='Fullname' value='$fullname'></p>";
 				echo "</td>";
 			echo "</tr>";
 			echo "<tr>";
@@ -145,7 +146,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td>";
-					echo "<p class='font20'><input class='form-control' tyle='text' name='lastname' placeholder='Lastname'></p>";
+					echo "<p class='font20'><input class='form-control' tyle='text' name='lastname' placeholder='Lastname' value='$lastname'></p>";
 				echo "</td>";
 			echo "</tr>";
 			echo "<tr>";
@@ -200,7 +201,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td>";
-					echo "<p class='font20'><input class='form-control' tyle='text' name='phone' placeholder='Phone'></p>";
+					echo "<p class='font20'><input class='form-control' tyle='text' name='phone' placeholder='Phone' value='$phone'></p>";
 				echo "</td>";
 			echo "</tr>";
 		echo "</table></center>";
