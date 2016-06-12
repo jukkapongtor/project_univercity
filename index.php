@@ -132,9 +132,9 @@
                         echo "<li><div>
                         <div style='float:left'>";
                         if(empty($user_image)){
-                            echo "<img src='images/user/user.png'   width='70' height='70' style='margin-left:10px;'>";
+                            echo "<a href='index.php?module=users&action=data_users' style='text-decoration: none;'><img src='images/user/user.png'   width='70' height='70' style='margin-left:10px;'></a>";
                         }else{
-                            echo "<img src='images/user/$user_image'   width='70' height='70' style='margin-left:10px;'>";
+                            echo "<a href='index.php?module=users&action=data_users' style='text-decoration: none;'><img src='images/user/$user_image'   width='70' height='70' style='margin-left:10px;'></a>";
                         }
                         echo "</div>
                         <div style='float:left'>";
@@ -144,7 +144,7 @@
                     if($_SESSION['login_type']==1){
                         echo "<a href='backend/' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;จัดการข้อมูลหลังร้าน</p></a>";
                     }
-                        echo "<p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;แก้ไขข้อมูลส่วนตัว</p>
+                        echo "<a href='index.php?module=users&action=data_users' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;ข้อมูลผู้ใช้งาน</p></a>
                         </div>
                         </div><br class='clear'></li>";
                         echo "<li role='separator' class='divider'></li>";
