@@ -144,7 +144,7 @@
                     if($_SESSION['login_type']==1){
                         echo "<a href='backend/' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;จัดการข้อมูลหลังร้าน</p></a>";
                     }
-                        echo "<a href='index.php?module=users&action=data_users' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;ข้อมูลผู้ใช้งาน</p></a>
+                        echo "<a href='index.php?module=users&action=data_users&menu=1' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;ข้อมูลผู้ใช้งาน</p></a>
                         </div>
                         </div><br class='clear'></li>";
                         echo "<li role='separator' class='divider'></li>";

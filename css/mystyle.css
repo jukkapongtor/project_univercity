@@ -7,6 +7,10 @@ div {
 .clear{
 	clear: both;
 }
+.margin0{
+	margin:0px;
+	padding: 8px 0px;
+}
 .marginun20{
 	margin-top: -20px;
 }
@@ -129,7 +133,14 @@ div {
 	background: #fff;
 	color:#20712b;
 }
-
+.datausers_menu a{
+	text-decoration: none;
+	color: black;
+}
+.datausers_menu a :hover{
+	background: #56c665;
+	color: white;
+}
 @media screen and (max-width:720px){
 		
 }
