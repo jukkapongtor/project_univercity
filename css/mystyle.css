@@ -7,18 +7,28 @@ div {
 .clear{
 	clear: both;
 }
+.margin0{
+	margin:0px;
+	padding: 8px 0px;
+}
 .marginun20{
 	margin-top: -20px;
 }
 .padding0{
 	padding: 0px;
 }
+.font20{
+	font-size: 20px;
+}
+.font26{
+	font-size: 26px;
+}
 .underline{
 	margin-top: 30px;
 	border-bottom: 2px solid #ccc;
 	width: 100%;
 	
-}
+}	
 .header{
 	width: 100%;
 	height: 60px;
@@ -115,7 +125,25 @@ div {
 .product-recom-new-content,.product-recom-best-content{
 	display: none;
 }
-
+.datausers_menu{
+	background: #00e;
+	background: #bbf9c3;
+	padding: 20px 0px;
+	border-right: 2px solid #649d6c;
+	height: 100%; 
+}
+.active-datausers-menu{
+	background: #fff;
+	color:#20712b;
+}
+.datausers_menu a{
+	text-decoration: none;
+	color: black;
+}
+.datausers_menu a :hover{
+	background: #56c665;
+	color: white;
+}
 @media screen and (max-width:720px){
 		
 }
