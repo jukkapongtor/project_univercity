@@ -128,13 +128,15 @@ function edit_user(){
 					       <h1 class='modal-title' style='margin:-10px 10px;margin-bottom:-20px;'><b>เปลี่ยนรหัสผ่าน</b></h1>";
 					     echo "</div>";
 					     echo "<div class='modal-body'>";
+					     	echo "<form action='index.php?module=users&action=update_passwd' method='post'>";
 					     	echo "<center><table style='width:60%'>";
-					     		echo "<tr><td class='font20'><p><b>รหัสผ่านปัจจุบัน</b></p></td><td><b><p>&nbsp;:&nbsp;</p></b></td><td><p><input class='form-control' type='text' name='oldpasswd' placeholder='Old Password'></p></td></tr>";
-					     		echo "<tr><td class='font20'><p><b>รหัสผ่านใหม่</b></p></td><td><b><p>&nbsp;:&nbsp;</p></b></td><td><p><input class='form-control' type='text' name='newpasswd' placeholder='New Password'></p></td></tr>";
-					     		echo "<tr><td class='font20'><p><b>ยืนยันรหัสผ่านใหม่</b></p></td><td><b><p>&nbsp;:&nbsp;</p></b></td><td><p><input class='form-control' type='text' name='connewpasswd' placeholder='Confirm New Password'></p></td></tr>";
+					     		echo "<tr><td class='font20'><p><b>รหัสผ่านปัจจุบัน</b></p></td><td><b><p>&nbsp;:&nbsp;</p></b></td><td><p><input class='form-control' type='password' name='oldpasswd' placeholder='Old Password'></p></td></tr>";
+					     		echo "<tr><td class='font20'><p><b>รหัสผ่านใหม่</b></p></td><td><b><p>&nbsp;:&nbsp;</p></b></td><td><p><input class='form-control' type='password' name='newpasswd' placeholder='New Password'></p></td></tr>";
+					     		echo "<tr><td class='font20'><p><b>ยืนยันรหัสผ่านใหม่</b></p></td><td><b><p>&nbsp;:&nbsp;</p></b></td><td><p><input class='form-control' type='password' name='connewpasswd' placeholder='Confirm New Password'></p></td></tr>";
 					     	echo "</table>";
 					     	echo "<br><button class='btn btn-sm btn-success' type='submit'><font class='font20'>บันทึกการเปลี่ยนแปลง</font></button>&nbsp;&nbsp;&nbsp;<button class='btn btn-sm btn-danger' type='button' class='close' data-dismiss='modal' aria-label='Close'><font class='font20'>ยกเลิกการเปลี่ยนแปลง</font></button>";
 					     	echo "</center>";
+					     	echo "</form>";
 					     echo "</div>";
 					    echo "</div>";
 					  echo "</div>";
@@ -226,5 +228,27 @@ function edit_user(){
 		echo "</table></center>";
 		echo "<p align='right' class='font20'><button class='btn btn-success' type='submit'><b>บันทึกข้อมูล</b></button></p>";
 	echo "</div>";
+}
+
+function update_passwd(){
+
+	if(empty($_POST['oldpasswd'])||empty($_POST['newpasswd'])||empty($_POST['connewpasswd'])){
+		echo "<script>alert('คุณกรอกข้อมูลไม่ครบ กรุณากรอกข้อมูลให้ครบก่อนทำการยืนยัน');window.location='index.php?module=users&action=data_users&menu=1';</script>";
+	}else{
+		$query_users = mysqli_query($_SESSION['connect_db'],"SELECT passwd FROM users WHERE username= '$_SESSION[login_name]'")or die("ERROR : users function line 238");
+		list($passwd)=mysqli_fetch_row($query_users);
+		
+		if($passwd!=$_POST['oldpasswd']){
+			echo "<script>alert('รหัสเดิมไม่ถูกต้อง กรุณาตรวจสอบรหัสเดิมของคุณให้ถูกต้อง');window.location='index.php?module=users&action=data_users&menu=1';</script>";
+		}elseif($_POST['newpasswd']!=$_POST['connewpasswd']){
+			echo "<script>alert('การยืนยันรหัสผ่านไม่สอดคล้องกัน กรุณาตรวจสอบความถูกต้อง');window.location='index.php?module=users&action=data_users&menu=1';</script>";
+		}
+
+		mysqli_query($_SESSION['connect_db'],"UPDATE users SET passwd='$_POST[newpasswd]' WHERE username ='$_SESSION[login_name]'")or die("ERROR : update password users function line 246 ");
+		echo "<script>alert('รหัสผ่านของท่านถูกแก้ไขเรียบร้อยแล้ว');window.location='index.php?module=users&action=data_users&menu=1';</script>";
+
+
+	}
+
 }
 ?>
