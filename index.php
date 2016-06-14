@@ -144,8 +144,10 @@
                     if($_SESSION['login_type']==1){
                         echo "<a href='backend/' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;จัดการข้อมูลหลังร้าน</p></a>";
                     }
-                        echo "<a href='index.php?module=users&action=data_users&menu=1' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;ข้อมูลผู้ใช้งาน</p></a>
-                        </div>
+                    if($_SESSION['login_type']!=1){
+                        echo "<a href='index.php?module=users&action=data_users&menu=1' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;ข้อมูลผู้ใช้งาน</p></a>";
+                    }
+                        echo "</div>
                         </div><br class='clear'></li>";
                         echo "<li role='separator' class='divider'></li>";
                         echo "<li><p align='right' style='margin-right:10px;'><a href='include/index.php?action=logout'><button class='btn btn-sm btn-default'><font size='4'>ออกจากระบบ</font></button></a></p></li>";

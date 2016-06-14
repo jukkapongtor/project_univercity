@@ -252,7 +252,7 @@
 						 <span >จัดการข้มูลผู้ใช้งาน</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/tables_simple.html">ดูข้อมูลผู้ใช้งาน</a></li>
+						<li><a class="ajax-link" href="ajax/manage_user.php">ดูข้อมูลผู้ใช้งาน</a></li>
 						<li><a class="ajax-link" href="ajax/tables_datatables.html">สถานะผู้ใช้งาน</a></li>
 					</ul>
 				</li>
