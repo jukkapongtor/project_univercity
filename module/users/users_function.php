@@ -133,7 +133,7 @@ function edit_user(){
 					     		echo "<tr><td class='font20'><p><b>รหัสผ่านใหม่</b></p></td><td><b><p>&nbsp;:&nbsp;</p></b></td><td><p><input class='form-control' type='text' name='newpasswd' placeholder='New Password'></p></td></tr>";
 					     		echo "<tr><td class='font20'><p><b>ยืนยันรหัสผ่านใหม่</b></p></td><td><b><p>&nbsp;:&nbsp;</p></b></td><td><p><input class='form-control' type='text' name='connewpasswd' placeholder='Confirm New Password'></p></td></tr>";
 					     	echo "</table>";
-					     	echo "<br><button class='btn btn-sm btn-success' type='submit'><font class='font20'>บันทึกการเปลี่ยนแปลง</font></button>&nbsp;&nbsp;&nbsp;<button class='btn btn-sm btn-danger' type='button'><font class='font20'>ยกเลิกการเปลี่ยนแปลง</font></button>";
+					     	echo "<br><button class='btn btn-sm btn-success' type='submit'><font class='font20'>บันทึกการเปลี่ยนแปลง</font></button>&nbsp;&nbsp;&nbsp;<button class='btn btn-sm btn-danger' type='button' class='close' data-dismiss='modal' aria-label='Close'><font class='font20'>ยกเลิกการเปลี่ยนแปลง</font></button>";
 					     	echo "</center>";
 					     echo "</div>";
 					    echo "</div>";
