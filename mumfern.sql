@@ -191,13 +191,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `passwd` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `fullname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `middlename` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `lastname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `address` text COLLATE utf8_unicode_ci NOT NULL,
   `image` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `type` int(1) NOT NULL,
+  `house_no` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'บ้านเลขที่',
+  `village_no` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'หมู่',
+  `alley` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ตรอก',
+  `lane` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ซอย',
+  `road` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ถนน',
+  `sub_district` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ตำบล / แขวง',
+  `district` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'อำเภอ / เขต',
+  `province` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'จังหวัด',
+  `postal_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'รหัสไปรษณี',
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -205,10 +212,11 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- dump ตาราง `users`
 --
 
-INSERT INTO `users` (`username`, `passwd`, `fullname`, `middlename`, `lastname`, `address`, `image`, `phone`, `email`, `type`) VALUES
-('admin', '1234', 'jukkapong', '', 'marsri', '    123456789    ', 'Koala.jpg', '0847524421', 'jigsaw1011@gmail.com', 1),
-('lescken', '1234', 'Jukkit', 'tham', 'jinda', '223', 'Jellyfish.jpg', '', '', 3),
-('localhost', '1234', 'Veeradae', '', 'Buaphuane', '112/2            ', 'Koala.jpg', '0908932864', 'jigsaw1018@windowslive.com', 3);
+INSERT INTO `users` (`username`, `passwd`, `fullname`, `lastname`, `image`, `phone`, `email`, `type`, `house_no`, `village_no`, `alley`, `lane`, `road`, `sub_district`, `district`, `province`, `postal_code`) VALUES
+('admin', '1234', 'jukkapong', 'marsri', 'Koala.jpg', '0847524421', 'jigsaw1011@gmail.com', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('lescken', '1234', 'Jukkit', 'jinda', 'Jellyfish.jpg', '', '', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('localhost', '12345', 'Veeradae', 'Buaphuane', 'Koala.jpg', '0908932864', 'jigsaw1018@windowslive.com', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('member', '1234', '', '', '', '', 'adsasd@asdasd', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
