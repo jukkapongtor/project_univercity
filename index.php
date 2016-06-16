@@ -75,6 +75,54 @@
  ?> 
 
     });
+    $(document).ready(function() {
+        $('#select_provinces').change(function() {
+            $.ajax({
+                type: 'POST',
+                data: {select_provinces: $(this).val()},
+                url: 'module/index.php?data=provinces',
+                success: function(data) {$('#select_districts').html(data);}
+            });
+            $.ajax({
+                type: 'POST',
+                data: {select_provinces:"null",select_districts:"null"},
+                url: 'module/index.php?data=districts',
+                success: function(data) {$('#select_subdistricts').html(data);}
+            });
+            $.ajax({
+                type: 'POST',
+                data: {select_districts:"null"},
+                url: 'module/index.php?data=zipcode',
+                success: function(data) {$('#zipcode').val(data);}
+            });
+            return false;
+        });
+        $('#select_districts').change(function() {
+            $.ajax({
+                type: 'POST',
+                data: {select_provinces: $('#select_provinces').val(),select_districts: $(this).val()},
+                url: 'module/index.php?data=districts',
+                success: function(data) {$('#select_subdistricts').html(data);}
+            });
+            $.ajax({
+                type: 'POST',
+                data: {select_districts:"null"},
+                url: 'module/index.php?data=zipcode',
+                success: function(data) {$('#zipcode').val(data);}
+            });
+            return false;
+        });
+        $('#select_subdistricts').change(function() {
+            $.ajax({
+                type: 'POST',
+                data: {select_districts: $(this).val()},
+                url: 'module/index.php?data=zipcode',
+                success: function(data) {$('#zipcode').val(data);}
+            });
+            return false;
+        });
+        
+    });
  </script>
  
  
