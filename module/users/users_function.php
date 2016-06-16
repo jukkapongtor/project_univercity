@@ -148,7 +148,7 @@ function edit_user(){
 	echo "</div>";
 	echo "<div class='col-md-12' >";
 		echo "<p class='font20'><b>ที่อยู่ที่ใช้ในการจัดส่ง</b></p>";
-		echo "<center><table width='80%'><from>";
+		echo "<form action='index.php?module=users&action=update_users' method='post'><center><table width='80%'>";
 			echo "<tr>";
 				echo "<td>";
 					echo "<p class='font20'><b>ชื่อ</b></p>";
@@ -223,19 +223,25 @@ function edit_user(){
 				echo "</td>";
 			echo "</tr>";
 			echo "<tr>";
-				echo "<td width='20%'>";
+				echo "<td width='18%'>";
 					echo "<p class='font20'><b>จังหวัด</b></p>";
 				echo "</td>";
 				echo "<td width='5%'>";
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
-				echo "<td width='25%'>";
+				echo "<td width='27%'>";
 					echo "<p class='font20'>";
 					echo "<select id='select_provinces' name='province' style='width:100%'>";
 						echo "<option value='null'>เลือกจังหวัด</option>";
 						$query_provinces = mysqli_query($_SESSION['connect_db'],"SELECT PROVINCE_ID,PROVINCE_NAME FROM provinces")or die("ERROR : users function line 235");
 						while(list($province_id,$province_name)=mysqli_fetch_row($query_provinces)){
-							echo "<option value='$province_id'>$province_name</option>";
+							if($province==$province_name){
+								echo "<option value='$province_id' selected='selected'>$province_name</option>";
+								$isset_province = $province_id;
+							}else{
+								echo "<option value='$province_id'>$province_name</option>";
+							}
+							
 						}
 					echo "</select></p>";
 				echo "</td>";
@@ -246,7 +252,21 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td width='27%'>";
-					echo "<p class='font20'><select id='select_districts' name='districts' style='width:100%'><option value='null'>เลือกอำเภอ</option></select></p>";
+					echo "<p class='font20'><select id='select_districts' name='districts' style='width:100%'>";
+					if(empty($district)){
+						echo "<option value='null'>เลือกอำเภอ</option>";
+					}else{
+						$query_disrtict = mysqli_query($_SESSION['connect_db'],"SELECT AMPHUR_ID,AMPHUR_NAME FROM amphures WHERE PROVINCE_ID = '$isset_province'")or die("ERROR : users function line 259");
+						while(list($amphure_id,$amphure_name)=mysqli_fetch_row($query_disrtict)){
+							if($district == $amphure_name){
+								echo "<option value='$amphure_id' selected='selected'>$amphure_name</option>";
+								$isset_district = $amphure_id;
+							}else{
+								echo "<option value='$amphure_id'>$amphure_name</option>";
+							}
+						}
+					}	
+					echo "</select></p>";
 				echo "</td>";
 			echo "</tr>";
 			echo "<tr>";
@@ -257,7 +277,20 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td>";
-					echo "<p class='font20'><select id='select_subdistricts' name='subdistrict' style='width:100%'><option value='null'>เลือกตำบล</option></select></p>";
+					echo "<p class='font20'><select id='select_subdistricts' name='subdistrict' style='width:100%'>";
+					if(empty($sub_district)){
+						echo "<option value='null'>เลือกตำบล</option>";
+					}else{
+						$query_subdisrtict = mysqli_query($_SESSION['connect_db'],"SELECT DISTRICT_CODE,DISTRICT_NAME FROM districts WHERE PROVINCE_ID = '$isset_province' AND AMPHUR_ID='$isset_district'")or die("ERROR : users function line 259");
+						while(list($disrtict_code,$disrtict_name)=mysqli_fetch_row($query_subdisrtict)){
+							if($sub_district == $disrtict_name){
+								echo "<option value='$disrtict_code' selected='selected'>$disrtict_name</option>";
+							}else{
+								echo "<option value='$disrtict_code'>$disrtict_name</option>";
+							}
+						}
+					}
+					echo "</select></p>";
 				echo "</td>";
 				echo "<td>";
 					echo "<p class='font20'><b>&nbsp;รหัสไปรษณีย์</b></p>";
@@ -266,7 +299,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td>";
-					echo "<p class='font20'><input class='form-control' tyle='text' id='zipcode' name='zipcode' placeholder='Postcode'></p>";
+					echo "<p class='font20'><input class='form-control' tyle='text' id='zipcode' name='zipcode' placeholder='Postcode' value='$postal_code'></p>";
 				echo "</td>";
 			echo "</tr>";
 			echo "<tr>";
@@ -281,7 +314,7 @@ function edit_user(){
 				echo "</td>";
 			echo "</tr>";
 		echo "</table></center><br>";
-		echo "<p align='right' class='font20'><button class='btn btn-success' type='submit'><b>บันทึกข้อมูล</b></button></p>";
+		echo "<p align='right' class='font20'><button type='submit' class='btn btn-success' ><b>บันทึกข้อมูล</b></button></form></p>";
 	echo "</div>";
 }
 
@@ -306,5 +339,13 @@ function update_passwd(){
 
 	}
 
+}
+function update_users(){
+	$query_address = mysqli_query($_SESSION['connect_db'],"SELECT provinces.PROVINCE_NAME,amphures.AMPHUR_NAME,districts.DISTRICT_NAME FROM provinces LEFT JOIN amphures ON provinces.PROVINCE_ID = provinces.PROVINCE_ID LEFT JOIN districts ON amphures.AMPHUR_ID=districts.AMPHUR_ID WHERE provinces.PROVINCE_ID='$_POST[province]' AND amphures.AMPHUR_ID='$_POST[districts]' AND districts.DISTRICT_CODE='$_POST[subdistrict]'")or die("ERROR : users function line 312");
+	list($province,$district,$subdistrict)=mysqli_fetch_row($query_address);
+	$update_users = "UPDATE users SET fullname='$_POST[fullname]',lastname='$_POST[lastname]',phone='$_POST[phone]',type='',house_no='$_POST[house_no]',village_no='$_POST[village_no]',alley='$_POST[alley]',lane='$_POST[lane]',road='$_POST[road]',sub_district='$subdistrict',district='$district',province='$province',postal_code='$_POST[zipcode]' WHERE username='$_SESSION[login_name]'";
+	mysqli_query($_SESSION['connect_db'],$update_users)or die("ERROR : users function line 312");
+
+	echo "<script>alert('บันทึกข้อมูลผู้ใช้เสร็จสิ้น');window.location='index.php?module=users&action=data_users&menu=1'</script>";
 }
 ?>
