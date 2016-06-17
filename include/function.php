@@ -12,7 +12,7 @@ function check_login(){
 	}else{
 		$user_form=$_POST['username'];
 		$pwd_form=$_POST['passwd'];
-		$query_user=mysqli_query($_SESSION['connect_db'],"SELECT username,fullname,passwd,type FROM users WHERE username='$user_form' AND passwd='$pwd_form'")or die ("ERROR : user_function line 8");
+		$query_user=mysqli_query($_SESSION['connect_db'],"SELECT username,fullname,passwd,type FROM users WHERE username='$user_form' AND passwd='$pwd_form'")or die ("ERROR : user_function line 15");
 		list($username,$fullname,$pwd,$type)=mysqli_fetch_row($query_user);
 		if($user_form==$username AND $pwd_form==$pwd){
 			$_SESSION['login_result']="true";
