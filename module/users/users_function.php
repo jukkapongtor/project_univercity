@@ -83,7 +83,8 @@ function data_users(){
 		echo "</div>";
 		echo "<div class='col-md-9'>";
 				switch ($_GET['menu']) {
-					case '1': edit_user(); break;				
+					case '1': edit_user(); break;
+					case '2': show_cart(); break;				
 					//default: echo "<script>alert('เกิดข้อผิดพลาดในการใช้งาน ระบบจะนำคุณไปยังหน้าหลัก');window.location='index.php'</script>";break;
 				}
 		echo "</div>";
@@ -348,4 +349,5 @@ function update_users(){
 
 	echo "<script>alert('บันทึกข้อมูลผู้ใช้เสร็จสิ้น');window.location='index.php?module=users&action=data_users&menu=1'</script>";
 }
+
 ?>
