@@ -3,9 +3,35 @@ function show_cart(){
 	if(empty($_SESSION['cart_id'])){
 		echo "<center><h1 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>สินค้ายังไม่ถูกเพิ่มในตะกร้า</b></h1></center>";
 	}else{
+		echo "<center><h1 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>รายการสินค้าในตะกร้า</b></h1></center>";
+		echo "<table class='table table-hover table-striped'>";
+			echo "<tr><th><p class='font20' align='center'><b>ลำดับ</b></p></th><th><p class='font20'><b>รูปภาพ</b></p></th><th><p class='font20'><b>ชื่อสินค้า</b></p></th><th><p class='font20' align='center'><b>ราคา(ต่อชิ้น)</b></p></th><th><p class='font20' align='center'><b>จำนวน</b></p></th><th><p class='font20' align='center'><b>รวมราคา</b></p></th></tr>";
+		$num=1;
+		$total_price=0;
 		foreach ($_SESSION['cart_id'] as $key => $value) {
-			echo "$key => $value <br>";
+			$query_product =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product.product_price,type.type_name,product.product_image FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id ='$key'")or die("ERROR : cart function line 11");
+			list($product_id,$product_name,$product_price,$type_name,$product_image)=mysqli_fetch_row($query_product);
+			echo "<tr>";
+				echo "<td><p class='font20' align='center'>$num</p></td>";
+				$file = ($type_name=='เฟิร์น')?"fern":$type_name;
+				$file = ($type_name=='กรพถาง')?"pots":$file;
+				if(empty($product_image)){
+					$file ="icon";
+					$product_image ="on-images.jpg";
+				}
+				echo "<td><img src='images/$file/$product_image' width='50px'></td>";
+				echo "<td><p class='font20'>$product_name</p></td>";
+				echo "<td><p class='font20' align='center'>".number_format($product_price)."</p></td>";
+				echo "<td><p class='font20' align='center'>$value</p></td>";
+				$sum = $value * $product_price;
+				$total_price+=$sum;
+				echo "<td><p class='font20' align='right'>".number_format($sum)."</p></td>";
+			echo "</tr>";
+			$num++;
 		}
+		echo "<tr><td colspan='5'><b><p class='font20' align='right'>รวมราคาสินค้าทั้งหมด</p></b></td><td><p class='font20' align='right'>".number_format($total_price)."</p></td></tr>";
+		echo "</table>";
+		echo "<center><button class='btn btn-success'><p class='font20' style='margin-bottom:-5px;'>ยืนยันการซื้อสิินค้า</p></button>&nbsp;&nbsp;&nbsp;<button class='btn btn-danger'><p class='font20' style='margin-bottom:-5px;'>ยกเลิกการซื้อสินค้า</p></button></center>";
 	}
 
 }
