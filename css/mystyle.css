@@ -4,6 +4,17 @@ body{
 div {
   font-family: 'rainganregular',"Cordia New", sans-serif;
 }
+#total_amountincart{
+	position: absolute;
+	z-index: 2;
+	right: 0;
+	margin-right: 5px;
+	background: #16326a;
+	padding: 0px 7px;
+	border-radius: 10px;
+	color:white;
+	padding-top: 2px;
+}
 .clear{
 	clear: both;
 }

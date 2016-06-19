@@ -73,17 +73,16 @@ function data_users(){
 				case '2': $action_menu_user1 ="";$action_menu_user2 ="active-datausers-menu";$action_menu_user3 ="";$action_menu_user4 ="";$action_menu_user5 =""; break;
 				case '3': $action_menu_user1 ="";$action_menu_user2 ="";$action_menu_user3 ="active-datausers-menu";$action_menu_user4 ="";$action_menu_user5 =""; break;
 				case '4': $action_menu_user1 ="";$action_menu_user2 ="";$action_menu_user3 ="";$action_menu_user4 ="active-datausers-menu";$action_menu_user5 =""; break;
-				case '5': $action_menu_user1 ="";$action_menu_user2 ="";$action_menu_user3 ="";$action_menu_user4 ="";$action_menu_user5 ="active-datausers-menu"; break;
 			}
 			echo "<a href='index.php?module=users&action=data_users&menu=1'><p class='font20 margin0 $action_menu_user1'>&nbsp;&nbsp;<b>ข้อมูลส่วนตัว</p></a>";
 			echo "<a href='index.php?module=users&action=data_users&menu=2'><p class='font20 margin0 $action_menu_user2'>&nbsp;&nbsp;สินค้าในตะกร้า</p></a>";
-			echo "<a href='index.php?module=users&action=data_users&menu=3'><p class='font20 margin0 $action_menu_user3'>&nbsp;&nbsp;สถานะการชำระเงิน</p></a>";
-			echo "<a href='index.php?module=users&action=data_users&menu=4'><p class='font20 margin0 $action_menu_user4'>&nbsp;&nbsp;สถานะการส่งสินค้า</p></a>";
-			echo "<a href='index.php?module=users&action=data_users&menu=5'><p class='font20 margin0 $action_menu_user5'>&nbsp;&nbsp;ประวัติการซื้อสินค้า</b></p></a>";
+			echo "<a href='index.php?module=users&action=data_users&menu=3'><p class='font20 margin0 $action_menu_user3'>&nbsp;&nbsp;สถานะการซื้อสินค้า</p></a>";
+			echo "<a href='index.php?module=users&action=data_users&menu=4'><p class='font20 margin0 $action_menu_user4'>&nbsp;&nbsp;ประวัติการซื้อสินค้า</b></p></a>";
 		echo "</div>";
 		echo "<div class='col-md-9'>";
 				switch ($_GET['menu']) {
-					case '1': edit_user(); break;				
+					case '1': edit_user(); break;
+					case '2': show_cart(); break;				
 					//default: echo "<script>alert('เกิดข้อผิดพลาดในการใช้งาน ระบบจะนำคุณไปยังหน้าหลัก');window.location='index.php'</script>";break;
 				}
 		echo "</div>";
@@ -348,4 +347,5 @@ function update_users(){
 
 	echo "<script>alert('บันทึกข้อมูลผู้ใช้เสร็จสิ้น');window.location='index.php?module=users&action=data_users&menu=1'</script>";
 }
+
 ?>

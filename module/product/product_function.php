@@ -66,7 +66,24 @@ function product_detail(){
 			echo "<p style='font-size:25px'><b>หมวดหมู่สินค้า : </b> $product_quality</p>";
 			echo "<p style='font-size:25px'><b>ขนาดสินค้า : </b> $product_size</p>";
 			echo "<p style='font-size:25px'><b>สถานะสินค้า : </b> $product_stock</p>";
-			echo "<p align='center' style='font-size:25px'><a href='index.php?module=cart&action=add_to_cart&product_id=$product_id'><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-shopping-cart'></span><font style='font-size:25px;'>หยิบสินค้า</font></button></a></p>";
+			echo "<div class='row'>";
+			  echo "<div class='col-lg-3'></div>";
+			  echo "<div class='col-lg-4'>";
+			    echo "<div class='input-group'>";
+			      echo "<span class='input-group-btn'>";
+			        echo "<button class='btn btn-default' id='lower_indetail' type='button'>ลบ</button>";
+			      echo "</span>";
+			      echo "<input type='text' class='form-control' id='product_amountindetail' value='1'>";
+			      echo "<span class='input-group-btn'>";
+			        echo "<button class='btn btn-default' id='push_indetail' type='button'>บวก</button>";
+			      echo "</span>";
+			    echo "</div>";
+			  echo "</div>";
+			  echo "<div class='col-lg-2'>";
+			    echo "<input type='hidden' id='product_id' value='$product_id'>";
+			  	echo "<p align='center'><a id='add2cart'><button type='button' class='btn btn-default btn-sm'><font style='font-size:15px'><b>หยิบสินค้า</b></font></button></a></p>";
+			  echo "</div>";
+			 echo "</div>";	
 		echo "</div>";
 
 

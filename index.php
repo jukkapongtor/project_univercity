@@ -121,7 +121,97 @@
             });
             return false;
         });
+
+        $('#push_indetail').click(function() {
+            var product_indetail = document.getElementById('product_amountindetail').value;
+            product_indetail++;
+            document.getElementById('product_amountindetail').value=product_indetail;
+        });
+        $('#lower_indetail').click(function() {
+            var product_indetail = document.getElementById('product_amountindetail').value;
+            if(product_indetail>1){
+                product_indetail--;
+                document.getElementById('product_amountindetail').value=product_indetail;
+            }
+            
+        });
+<?php
         
+        echo "$('#add2cart').click(function() {";
+            if(empty($_SESSION['login_name'])){
+                echo "alert('การซื้อสินค้าทำได้เฉพาะสมาชิกเท่านั้น');";
+            }else{
+                echo "stop=0;";
+                echo "var product_id = document.getElementById('product_id').value;";
+                if(!empty($_SESSION['cart_id'])){
+                    foreach ($_SESSION['cart_id'] as $key => $value) {
+                        echo "if('$key'==product_id){";
+                            echo "alert('สินค้าชิ้นนี้ถูกเพิ่มในตะกร้าสินค้าเรียบร้อยแล้ว');";
+                            echo "stop=1;";
+                        echo "}";
+                    }
+                }
+                echo "if(stop==0){";
+                echo "var product_indetail = parseInt(document.getElementById('product_amountindetail').value);";
+                echo "var amount_incart = parseInt(document.getElementById('total_amountincart').innerHTML);";
+                echo "if(isNaN(amount_incart)){";
+                   echo " amount_incart =0;";
+                echo "}";
+                echo "total = product_indetail +amount_incart;";
+                echo "$('#total_amountincart').show();";
+                echo "document.getElementById('total_amountincart').innerHTML =total;";
+                echo "$.post('module/index.php?data=add_cart',{product_id:product_id,amount:product_indetail},function(data){";
+                echo "});";
+                echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:total},function(data){";
+                echo "});";
+                echo "alert('เพิ่มสินค้าลงในตะกร้าแล้ว');";
+                echo "window.location='index.php?module=product&action=product_detail&product_id="."'+product_id+'"."';";
+                echo "}";
+            }
+        echo "});";
+        if(!empty($_SESSION['cart_id'])){
+            foreach ($_SESSION['cart_id'] as $key => $value) {
+                $query_price_product = mysqli_query($_SESSION['connect_db'],"SELECT product_price FROM product WHERE product_id='$key'")or die("ERROR index line 174");
+                list($product_price)=mysqli_fetch_row($query_price_product);
+                echo "$('#push_incart_$key').click(function() {";
+                    echo "var product_incart = document.getElementById('product_amountincart_$key').value;";
+                    echo "var total_incart = parseInt(document.getElementById('total_incart').innerHTML);";
+                    echo "var amount_incart = parseInt(document.getElementById('total_amountincart').innerHTML);";
+                    echo "product_incart++;";
+                    echo "document.getElementById('product_amountincart_$key').value=product_incart;";
+                    echo "var sum = product_incart * $product_price;";
+                    echo "var total = $product_price + total_incart;";
+                    echo "amount_incart++;";
+                    echo "document.getElementById('sum_incart_$key').innerHTML =sum;";
+                    echo "document.getElementById('total_incart').innerHTML =total;";
+                    echo "document.getElementById('total_amountincart').innerHTML=amount_incart;";
+                    echo "$.post('module/index.php?data=add_cart',{product_id:'$key',amount:product_incart},function(data){";
+                    echo "});";
+                    echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
+                    echo "});";
+                echo "});";
+                echo "$('#lower_incart_$key').click(function() {";
+                    echo "var product_incart = document.getElementById('product_amountincart_$key').value;";
+                    echo "var total_incart = parseInt(document.getElementById('total_incart').innerHTML);";
+                    echo "var amount_incart = parseInt(document.getElementById('total_amountincart').innerHTML);";
+                    echo "if(product_incart>0){";
+                        echo "product_incart--;";
+                        echo "document.getElementById('product_amountincart_$key').value=product_incart;";
+                        echo "var sum = product_incart * $product_price;";
+                        echo "var total = total_incart - $product_price ;";
+                        echo "amount_incart--;";
+                        echo "document.getElementById('sum_incart_$key').innerHTML =sum;";
+                        echo "document.getElementById('total_incart').innerHTML =total;";
+                        echo "document.getElementById('total_amountincart').innerHTML=amount_incart;";
+                        echo "$.post('module/index.php?data=add_cart',{product_id:'$key',amount:product_incart},function(data){";
+                        echo "});";
+                        echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
+                        echo "});";
+                    echo "}";
+                echo "});";
+            }
+        }
+?>
     });
  </script>
  
@@ -152,7 +242,16 @@
 ?>
         </div>
         <div class="header-function">
-            <a href="index.php?module=cart&action=show_cart"><div class="header-function-cart">
+<?php
+        if(!empty($_SESSION['login_name'])){
+            echo "<a href='index.php?module=users&action=data_users&menu=2'><div class='header-function-cart'>";
+        }else{
+            echo "<a href='' ><div class='header-function-cart'>";
+        }
+                $_SESSION['total_amount'] = (empty($_SESSION['total_amount']))?"0":$_SESSION['total_amount'];
+                $hidden = (empty($_SESSION['total_amount']))?"display:none":"";
+                echo "<b><p id='total_amountincart' style='$hidden'>$_SESSION[total_amount]</p></b>";
+?>
                 <img src="images/icon/cart-of-ecommerce.png" width="40" height="40">
             </div></a>
             
