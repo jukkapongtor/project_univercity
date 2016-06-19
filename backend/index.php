@@ -25,6 +25,7 @@
 		<link href="plugins/select2/select2.css" rel="stylesheet">
 		<link href="plugins/justified-gallery/justifiedGallery.css" rel="stylesheet">
 		<link href="css/style_v2.css" rel="stylesheet">
+		<link href="css/style_v3.css" rel="stylesheet">
 		<link href="plugins/chartist/chartist.min.css" rel="stylesheet">
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -165,6 +166,16 @@
 						<i class="fa fa-dashboard"></i>
 						<span class="hidden-xs">Dashborad</span>
 					</a>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-table"></i>
+						 <span >จัดการเว็บไซต์</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="ajax/manage_website.php">จัดการหน้าเว็บไซต์</a></li>
+						<li><a class="ajax-link" href="ajax/manage_slideshow.php">จัดการสไลด์</a></li>
+					</ul>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
