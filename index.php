@@ -211,8 +211,15 @@
                 echo "});";
             }
         }
+
+
+        
 ?>
-    });
+            $("#message_bold").click(function(){
+                var message = document.getElementById('webboard_message').value;
+                document.getElementById('webboard_message').value= message+"<b></b>";
+            });
+        });
  </script>
  
  
