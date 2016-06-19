@@ -25,6 +25,7 @@
 		<link href="plugins/select2/select2.css" rel="stylesheet">
 		<link href="plugins/justified-gallery/justifiedGallery.css" rel="stylesheet">
 		<link href="css/style_v2.css" rel="stylesheet">
+		<link href="css/style_v3.css" rel="stylesheet">
 		<link href="plugins/chartist/chartist.min.css" rel="stylesheet">
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -169,6 +170,16 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-table"></i>
+						 <span >จัดการเว็บไซต์</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="ajax/manage_website.php">จัดการหน้าเว็บไซต์</a></li>
+						<li><a class="ajax-link" href="ajax/manage_slideshow.php">จัดการสไลด์</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-table"></i>
 						 <span >จัดการรายการสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
@@ -242,17 +253,17 @@
 						 <span >จัดการคิวอาร์โค้ด</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/tables_simple.html">เพิ่มคิวอาร์โค้ด</a></li>
+						<li><a class="ajax-link" href="ajax/qrcode_generator.php">เพิ่มคิวอาร์โค้ด</a></li>
 						<li><a class="ajax-link" href="ajax/tables_datatables.html">แก้ไขปคิวอาร์โค้ด</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-table"></i>
-						 <span >จัดการข้มูลผู้ใช้งาน</span>
+						 <span >จัดการข้อมูลผู้ใช้งาน</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/manage_user.php">ดูข้อมูลผู้ใช้งาน</a></li>
+						<li><a class="ajax-link" href="ajax/manage_customer.php">ดูข้อมูลผู้ใช้งาน</a></li>
 						<li><a class="ajax-link" href="ajax/tables_datatables.html">สถานะผู้ใช้งาน</a></li>
 					</ul>
 				</li>

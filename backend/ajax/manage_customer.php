@@ -20,7 +20,7 @@
 </div>
 <?php
 
-	$query_user = mysqli_query($_SESSION['connect_db'],"SELECT username,fullname,image,email,type FROM users WHERE type=3 " ) or die ("ERROE : backend file : mannage_user line 6 ");
+	$query_user = mysqli_query($_SESSION['connect_db'],"SELECT username,fullname,image,email,type FROM users WHERE type=3 " ) or die ("ERROE : backend file : mannage_costomer line 6 ");
 
 	$number = 1;
 	//echo "<h2 style='margin-top:30px; background : #C1CDC1'  >จัดการลูกค้า</h2>";
@@ -40,7 +40,11 @@
 	 	echo "<td>$image</td>";
 	 	echo "<td>$username</td>";
 	 	echo "<td>$email</td>";
-	 	echo "<td>$type</td><td><center><img src='../images/icon/magnifying-glass .png' width='30px'height='30px'></center></td>
+	 	echo "<td>$type</td>
+	 		  <td><center><a href ='ajax/detail_customer_id.php?username=$username'>
+	 		  	<img src='../images/icon/magnifying-glass .png' width='30px'height='30px'>
+	 		  </a></center></td>
+	 		 
 	 		  <td><center><img src='../images/icon/garbage.png' width='30px'height='30px'></center></td></tr>";
 
 
