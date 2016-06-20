@@ -158,6 +158,10 @@ div {
 .weboard-showrecommend{
 	margin: 20px 50px;
 }
+.blog_webboard{
+	border:1px solid #bbb;
+	padding: 10px;
+}
 @media screen and (max-width:720px){
 		
 }
