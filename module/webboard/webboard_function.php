@@ -33,7 +33,7 @@ function webboard(){
 				  	while(list($webboard_id,$webboard_header,$webboard_detail,$username,$webboard_date,$like,$visitor)=mysqli_fetch_row($query_webboard)){
 				  		echo "<tr>
 				  			<td class='col-md-1'><p align='center' class='font20'>$number</p></td>
-				  			<td class='col-md-4'><p class='font20'>$webboard_header</p></td>
+				  			<td class='col-md-4'><p class='font20'><a href='index.php?module=webboard&action=webboard_detail&webboard_id=$webboard_id'>$webboard_header</a></p></td>
 				  			<td class='col-md-2'><p align='center' class='font20'>$username</p></td>
 				  			<td class='col-md-1'><p align='center' class='font20'>$visitor</p></td>
 				  			<td class='col-md-1'><p align='center' class='font20'>ตอบ</p></td>
@@ -62,7 +62,7 @@ function webboard(){
 				  	while(list($webboard_id,$webboard_header,$webboard_detail,$username,$webboard_date,$like,$visitor)=mysqli_fetch_row($query_webboard)){
 				  		echo "<tr>
 				  			<td class='col-md-1'><p align='center' class='font20'>$number</p></td>
-				  			<td class='col-md-4'><p class='font20'>$webboard_header</p></td>
+				  			<td class='col-md-4'><p class='font20'><a href='index.php?module=webboard&action=webboard_detail&webboard_id=$webboard_id'>$webboard_header</a></p></td>
 				  			<td class='col-md-2'><p align='center' class='font20'>$username</p></td>
 				  			<td class='col-md-1'><p align='center' class='font20'>$visitor</p></td>
 				  			<td class='col-md-1'><p align='center' class='font20'>ตอบ</p></td>
@@ -96,7 +96,7 @@ function webboard(){
 		  	while(list($webboard_id,$webboard_header,$webboard_detail,$username,$webboard_date,$like,$visitor)=mysqli_fetch_row($query_webboard)){
 		  		echo "<tr>
 		  			<td class='col-md-1'><p align='center' class='font20'>$number</p></td>
-		  			<td class='col-md-4'><p class='font20'>$webboard_header</p></td>
+		  			<td class='col-md-4'><p class='font20'><a href='index.php?module=webboard&action=webboard_detail&webboard_id=$webboard_id'>$webboard_header</a></p></td>
 		  			<td class='col-md-2'><p align='center' class='font20'>$username</p></td>
 		  			<td class='col-md-1'><p align='center' class='font20'>$visitor</p></td>
 		  			<td class='col-md-1'><p align='center' class='font20'>ตอบ</p></td>
