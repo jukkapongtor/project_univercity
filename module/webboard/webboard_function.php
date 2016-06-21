@@ -179,6 +179,7 @@ function webboard_detail(){
 			echo "<div class='col-md-12 blog_webboard'>";
 				echo "<p><b class='font20'>ความเห็นที่ $subwebboard_comment</b></p>";
 				echo "<p class='font20'>$subwebboard_detail</p>";
+				echo "<div class='col-md-12'><a href='' id='comment_subwebboard$subwebboard_id'><p class='font20' align='right'> ตอบกลับ</p></a></div>";
 				echo "<hr>";
 				echo "<div class='col-md-2' style='padding-top:20px;'><p class='font20'><b>Like : </b>$subwebboard_like</p></div>";
 				echo "<div class='col-md-10' style='border-left:1px solid #bbb;padding-left:10px;'><p class='font20'>";
@@ -199,9 +200,18 @@ function webboard_detail(){
 			echo "<form method='post' action='index.php?module=webboard&action=insert_subwebboard'><div>";
 				echo "<input type='hidden' name='webboard_id' value='$_GET[webboard_id]'>";
 		  		echo "<div class='col-md-12'><b><p class='font20'>ตอบกลับกระทู้ : </p></b></div>";
-		  		echo "<div class='col-md-12'><p class='font20'><textarea class='form-control' id='subwebboard_message' name='subwebboard_message' style='height:150px;'></textarea></p></div>";
-		  		echo "<div class='col-md-6'><p ><button type='submit' class='btn btn-success font20' >ตอบกลับ</button></p></div>";
+		  		if(empty($_SESSION['login_name'])){
+		  			echo "<div class='col-md-12'><p class='font20'>*****หากต้องการตอบกระทู้หรือตั้งกระทู้ กรุณาล็อดอินเข้าใช้งานระบบก่อน*****</p></div>";
+		  			$disabled = "disabled";
+		  			$button_type ="button";
+		  		}else{
+		  			$disabled = "";
+		  			$button_type ="submit";
+		  		}
+		  		echo "<div class='col-md-12'><p class='font20'><textarea class='form-control' id='subwebboard_message' name='subwebboard_message' style='height:150px;' $disabled></textarea></p></div>";
+		  		echo "<div class='col-md-6'><p ><button type='$button_type' class='btn btn-success font20' >ตอบกลับ</button></p></div>";
 		  		echo "<div class='col-md-6'>";
+		  		if(!empty($_SESSION['login_name'])){
 		  			echo "<table align='right'>";
 		  				$query_user = mysqli_query($_SESSION['connect_db'],"SELECT image FROM users WHERE username='$_SESSION[login_name]'")or die("ERROR : webboard function line 47");
 		  				list($image)=mysqli_fetch_row($query_user);
@@ -209,6 +219,7 @@ function webboard_detail(){
 		  				echo "<tr><td rowspan='2' valign='top' >$image</td><td ><b class='font20'>&nbsp;ตอบกลับโดย : </b></td></tr>";
 		  				echo "<tr><td ><p class='font20' style='margin-top:-5px'>&nbsp;$_SESSION[login_name]</p></td></tr>";
 		  			echo "</table>";
+		  		}
 		  		echo "</div>";
 		  	echo "</div></form>";
 		echo "</div>";
