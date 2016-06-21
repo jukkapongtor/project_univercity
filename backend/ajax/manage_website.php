@@ -32,6 +32,7 @@
 			echo "$('.off-buywebsite2').show();";
 			echo "$.post('ajax/function.php?data=switch_onoff_buywebsite',{switch_onoff_buywebsite:2},function(data){";
 			echo "});";
+			echo "alert('ปืดระบบการขายสินค้าเรียบร้อยแลว');";
 			echo "window.location='ajax/manage_website_callback.php';";
 		}else{
 			echo "$('.on-buywebsite1').show();";
@@ -40,6 +41,7 @@
 			echo "$('.off-buywebsite2').hide();";
 			echo "$.post('ajax/function.php?data=switch_onoff_buywebsite',{switch_onoff_buywebsite:1},function(data){";
 			echo "});";
+			echo "alert('เปืดระบบการขายสินค้าเรียบร้อยแลว');";
 			echo "window.location='ajax/manage_website_callback.php';";
 		}
 		echo "});";

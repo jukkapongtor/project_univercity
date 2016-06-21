@@ -211,16 +211,7 @@
                 echo "});";
             }
         }
-        $query_subwebboard = mysqli_query($_SESSION['connect_db'],"SELECT subwebboard_id FROM subwebboard WHERE webboard_id ='$_GET[webboard_id]'")or die("ERROR subwebboard function line 214");
-        while (list($subwebboard_id)=mysqli_fetch_row($query_subwebboard)) {
-            echo "$('#comment_subwebboard$subwebboard_id').click(function(){";
-                if(empty($_SESSION['login_name'])){
-                    echo "alert('กรุณาล็อคอินก่อนทำการตอบกระทู้');";
-                }else{
-                   
-                }
-            echo "});";
-        }
+        
 ?>
             $("#message_bold").click(function(){
                 var message = document.getElementById('webboard_message').value;
