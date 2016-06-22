@@ -43,8 +43,13 @@ function show_cart(){
 		}
 		echo "<tr><td colspan='5'><b><p class='font20' align='right'>รวมราคาสินค้าทั้งหมด</p></b></td><td><p class='font20' id='total_incart' align='right'>$total_price</p></td></tr>";
 		echo "</table>";
-		echo "<center><button class='btn btn-success'><p class='font20' style='margin-bottom:-5px;'>ยืนยันการซื้อสิินค้า</p></button>&nbsp;&nbsp;&nbsp;<button class='btn btn-danger'><p class='font20' style='margin-bottom:-5px;'>ยกเลิกการซื้อสินค้า</p></button></center>";
+		echo "<center><a href='index.php?module=orders&action=order_insert'><button class='btn btn-success'><p class='font20' style='margin-bottom:-5px;'>ยืนยันการซื้อสิินค้า</p></button></a>&nbsp;&nbsp;&nbsp;<a href='index.php?module=cart&action=cancel_cart'><button class='btn btn-danger'><p class='font20' style='margin-bottom:-5px;'>ยกเลิกการซื้อสินค้า</p></button></center>";
 	}
 
+}
+function cancel_cart(){
+	unset($_SESSION['total_amount']);
+	unset($_SESSION['cart_id']);
+	echo "<script>alert('ยกเลิกสินค้าทั้งหมดในนตะกร้าเรียบร้อยแล้ว');window.location='index.php?module=users&action=data_users&menu=2'</script>";
 }
 ?>

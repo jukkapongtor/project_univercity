@@ -6,6 +6,7 @@
     include("module/webboard/webboard_function.php");
     include("module/users/users_function.php");
     include("module/cart/cart_function.php");
+    include("module/orders/orders_function.php");
 	connect_db();
 	$module=empty($_GET['module'])?"":$_GET['module'];
     $action=empty($_GET['action'])?"":$_GET['action'];

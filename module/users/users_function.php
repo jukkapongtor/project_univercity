@@ -87,6 +87,7 @@ function data_users(){
 				switch ($_GET['menu']) {
 					case '1': edit_user(); break;
 					case '2': show_cart(); break;				
+					case '3': order_list(); break;	
 					//default: echo "<script>alert('เกิดข้อผิดพลาดในการใช้งาน ระบบจะนำคุณไปยังหน้าหลัก');window.location='index.php'</script>";break;
 				}
 		echo "</div>";
