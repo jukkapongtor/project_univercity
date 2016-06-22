@@ -12,6 +12,20 @@ function order_insert(){
 	$date_order = date("Y-m-d H:i:s");
 	$sql_insert_order = "INSERT INTO orders VALUES('','$_SESSION[login_name]','$date_order','24:00:00','1','$total_amount','$total_price','')";
 	mysqli_query($_SESSION['connect_db'],$sql_insert_order)or die("ERROR : order function line 14");
+	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders ORDER BY order_id DESC")or die("ERROR : order function line 15");
+	list($order_id) = mysqli_fetch_row($query_order);
+	$sql_insert_orderdetail ="INSERT INTO order_detail VALUES";
+	$number=1;
+	foreach ($_SESSION['cart_id'] as $key => $value) {
+		if(!empty($value)){
+			$sql_insert_orderdetail.= "('','$order_id','$key','$value')";
+		}
+		if($number!=count($_SESSION['cart_id'] )&&!empty($value)){
+			$sql_insert_orderdetail.=",";
+		}
+		$number++;
+	}
+	mysqli_query($_SESSION['connect_db'],$sql_insert_orderdetail)or die("ERROR : order function line 28");
 	unset($_SESSION['cart_id']);
 	unset($_SESSION['total_amount']);
 	echo "<script>window.location='index.php?module=users&action=data_users&menu=3'</script>";
@@ -20,6 +34,14 @@ function order_insert(){
 function order_list(){
 	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_username='$_SESSION[login_name]'")or die("ERROR : order function line 21");
 	$row = mysqli_num_rows($query_order);
+	echo "<div class='panel panel-primary'>";
+	  echo "<div class='panel-heading'>";
+	    echo "<h3 class='panel-title font26'>ช่องทางการชำระเงิน</h3>";
+	  echo "</div>";
+	  echo "<div class='panel-body'>";
+	    echo "<p class='font20'><b>บัญชีธนาคาร : </b> 5555-2222-3333-1111</p>";
+	  echo "</div>";
+	echo "</div>";
 	if(empty($row)){
 		echo "<center><h1 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>ไม่เคยมีสถานะซื้อสินค้า</b></h1></center>";
 	}else{
@@ -41,10 +63,43 @@ function order_list(){
 				//echo "<td>$total_price</td>";
 				echo "<td>";
 					switch ($order_status) {
-						case 1: echo "<button class='btn btn-sm btn-info font20' style='padding:2px;width:100%'>ส่งข้อมมูลชำระเงิน</button>"; break;
+						case 1: echo "<button class='btn btn-sm btn-info font20' data-toggle='modal' data-target='#formtranfer_$order_id' style='padding:2px;width:100%' >ส่งข้อมมูลชำระเงิน</button>"; break;
 						case 3:	echo "<button class='btn btn-sm btn-success font20' style='padding:2px;width:100%'>รหัสส่งสินค้า</button>"; break;
 					}
+				echo "<div class='modal fade' id='formtranfer_$order_id' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
+				  echo "<div class='modal-dialog' role='document'>";
+				    echo "<div class='modal-content'>";
+				      echo "<div class='modal-header' style='padding-bottom:0px;'>";
+				        echo "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
+				        echo "<h4 class='modal-title font26' id='myModalLabel'><b>ฟอร์ทการชำระเงินการซื้อสินค้ารหัส : </b>$order_id</h4>";
+				      echo "</div>";
+				      echo "<div class='modal-body'>";
+				        echo "<p class='font20'><b>รายละเอียดการซื้อสินค้ารหัส : </b>$order_id</p>";
+				        echo "<table class='table table-hover table-striped font20'>";
+				        echo "<thead><tr><th>ลำดับ</th><th>ชื่อสินค้า</th><th>ราคา(ชิ้น)</th><th>จำนวน</th><th>รวมราคา</th></tr></thead><tbody>";
+				        $num=1;
+				        $query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,product.product_price,order_detail.total_amount FROM order_detail LEFT JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = '$order_id'")or die("ERROR : order function line 82");
+				        while(list($product_name,$product_price,$total_amount)=mysqli_fetch_row($query_orderdetail)){
+				     		echo "<tr>";
+				     			echo "<td>$num</td>";
+				     			echo "<td>$product_name</td>";
+				     			echo "<td>$product_price</td>";
+				     			echo "<td>$total_amount</td>";
+				     			echo "<td>".number_format($product_price*$total_amount)."</td>";
+				     		echo "</tr>";
+				     		$num++;
+				        }
+				        echo "</tbody></table>";
+				      echo "</div>";
+				      echo "<div class='modal-footer'>";
+				        echo "<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>";
+				        echo "<button type='button' class='btn btn-primary'>Save changes</button>";
+				      echo "</div>";
+				    echo "</div>";
+				  echo "</div>";
+				echo "</div>";
 				echo "</td>";
+				
 			echo "</tr>";
 			$number++;
 		}
