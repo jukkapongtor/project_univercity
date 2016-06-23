@@ -20,3 +20,16 @@
 .text_name:active  {
    border: solid 2px #0043EB;
   }
+
+.blog-add{
+  background: #FF7F24;
+  font-size: 20px;
+  color: #FFFFFF;
+  border-radius: 7px ;
+}
+.blog-add:hover{
+background: #FFA54F;
+font-size: 20px;
+color: #FFFFFF;
+border-radius: 7px ;
+}

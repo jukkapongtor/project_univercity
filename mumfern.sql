@@ -10296,6 +10296,7 @@ INSERT INTO `users` (`username`, `passwd`, `fullname`, `lastname`, `image`, `pho
 -- --------------------------------------------------------
 
 --
+<<<<<<< HEAD
 -- โครงสร้างตาราง `web_page`
 --
 
@@ -10305,6 +10306,33 @@ CREATE TABLE IF NOT EXISTS `web_page` (
   `nameshop_thai` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `detail_shop` text COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+=======
+-- โครงสร้างตาราง `webboard`
+--
+
+CREATE TABLE IF NOT EXISTS `webboard` (
+  `weboard_id` int(11) NOT NULL AUTO_INCREMENT,
+  `weboard_header` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `weboard_detail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `webboard_date` datetime DEFAULT NULL,
+  `webboard_like` int(11) DEFAULT NULL,
+  `visitor` int(11) DEFAULT NULL,
+  PRIMARY KEY (`weboard_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+
+--
+-- dump ตาราง `webboard`
+--
+
+INSERT INTO `webboard` (`weboard_id`, `weboard_header`, `weboard_detail`, `username`, `webboard_date`, `webboard_like`, `visitor`) VALUES
+(1, 'ปลูกเฟิร์นยังไงให้ดูน่ารัก', 'ปลูกบนดิน', 'localhost', '2016-06-19 18:54:40', 0, 0),
+(2, 'ปลูกกล้วยไม้ยังไงให้สวยงาม', 'ปลูกบนท้องฟ้า', 'localhost', '2016-06-19 19:19:54', 0, 0),
+(3, 'ปลูกดินยังไงให้ได้แร่ธาตุครบถ้วน', 'ไม่ต้องปลูก ขุดเอา', 'localhost', '2016-06-19 19:20:34', 0, 0),
+(4, 'กล้วยไม้ไหนสวยที่สุดในโลก', 'ก็ไม่รู้สินะ', 'localhost', '2016-06-19 19:28:03', 0, 0),
+(5, 'เฟิร์นที่ตายยากที่สุด', 'เฟิร์นที่มาจากดาวคริปตัน', 'localhost', '2016-06-19 19:28:38', 0, 0),
+(6, 'เฟิร์นอะไรททนทานต่อฟ้าผ่า', 'เฟิร์นที่ธอร์เป็นคนเพาะพันธ์ขึ้นมา', 'localhost', '2016-06-19 19:29:25', 0, 0);
+>>>>>>> 2dacc24b9036267738a3d3dbfa1de030de8090dd
 
 -- --------------------------------------------------------
 
