@@ -20,20 +20,6 @@
 .text_name:active  {
    border: solid 2px #0043EB;
   }
-<<<<<<< HEAD
-
-.blog-add{
-  background: #FF7F24;
-  font-size: 20px;
-  color: #FFFFFF;
-  border-radius: 7px ;
-}
-.blog-add:hover{
-background: #FFA54F;
-font-size: 20px;
-color: #FFFFFF;
-border-radius: 7px ;
-=======
 .on-off-buywebsite{
   width: 100px;
   height: 30px;
@@ -73,5 +59,4 @@ border-radius: 7px ;
   background: orange;
   padding-left: 13px;
   color:white;
->>>>>>> bdc72fc79de7316986124500101ae1ab4eea150d
 }
