@@ -10007,46 +10007,11 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `order_id` tinyint(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `order_username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `order_date` datetime NOT NULL,
-  `order_date_limit` time DEFAULT NULL,
   `order_status` tinyint(1) NOT NULL DEFAULT '1',
-  `total_amount` int(11) DEFAULT NULL,
-  `total_price` decimal(10,2) NOT NULL,
+  `total_paid` decimal(10,2) NOT NULL,
   `tracking_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=64 ;
-
---
--- dump ตาราง `orders`
---
-
-INSERT INTO `orders` (`order_id`, `order_username`, `order_date`, `order_date_limit`, `order_status`, `total_amount`, `total_price`, `tracking_id`) VALUES
-(00063, 'localhost', '2016-06-23 11:32:00', '24:00:00', 1, 8, '9000.00', ''),
-(00062, 'localhost', '2016-06-22 19:53:42', '24:00:00', 2, 6, '2814.00', '');
-
--- --------------------------------------------------------
-
---
--- โครงสร้างตาราง `order_detail`
---
-
-CREATE TABLE IF NOT EXISTS `order_detail` (
-  `orderdetail_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) DEFAULT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `total_amount` int(11) DEFAULT NULL,
-  PRIMARY KEY (`orderdetail_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
-
---
--- dump ตาราง `order_detail`
---
-
-INSERT INTO `order_detail` (`orderdetail_id`, `order_id`, `product_id`, `total_amount`) VALUES
-(1, 62, 8, 1),
-(2, 62, 22, 1),
-(3, 62, 2, 4),
-(4, 63, 8, 4),
-(5, 63, 14, 4);
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=55 ;
 
 -- --------------------------------------------------------
 
@@ -10271,79 +10236,6 @@ INSERT INTO `slide` (`slide_id`, `product_id`, `slide_detail`) VALUES
 -- --------------------------------------------------------
 
 --
--- โครงสร้างตาราง `status`
---
-
-CREATE TABLE IF NOT EXISTS `status` (
-  `status_id` int(11) DEFAULT NULL,
-  `status_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- dump ตาราง `status`
---
-
-INSERT INTO `status` (`status_id`, `status_name`) VALUES
-(1, 'รอการชำระเงิน'),
-(2, 'รอการตรวจสอบ'),
-(3, 'กำลังส่งสินค้า'),
-(4, 'จบกระบวนการ'),
-(5, 'ล้มเหลว');
-
--- --------------------------------------------------------
-
---
--- โครงสร้างตาราง `subwebboard`
---
-
-CREATE TABLE IF NOT EXISTS `subwebboard` (
-  `subwebboard_id` int(11) NOT NULL AUTO_INCREMENT,
-  `webboard_id` int(11) DEFAULT NULL,
-  `subwebboard_detail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subwebboard_date` datetime DEFAULT NULL,
-  `subwebboard_like` int(11) DEFAULT NULL,
-  PRIMARY KEY (`subwebboard_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
-
---
--- dump ตาราง `subwebboard`
---
-
-INSERT INTO `subwebboard` (`subwebboard_id`, `webboard_id`, `subwebboard_detail`, `username`, `subwebboard_date`, `subwebboard_like`) VALUES
-(1, 1, 'จ๊ะเอ๋', 'member', '2016-06-20 10:49:24', 0),
-(2, 0, 'กิ้วๆๆ', 'member', '2016-06-20 11:01:32', 0),
-(3, 0, 'ฮาโหล', 'member', '2016-06-20 11:01:44', 0),
-(4, 0, 'ฟกฟหกฟหก', 'member', '2016-06-20 11:02:50', 0),
-(5, 1, 'กิ้วๆๆ', 'member', '2016-06-20 11:03:22', 0),
-(6, 3, 'แต้ก่าตั๋ว', 'member', '2016-06-20 11:09:35', 0),
-(7, 6, '<a href=''www.google.com''>ไป google </a>', 'localhost', '2016-06-22 19:01:48', 0),
-(8, 6, '<a href=''http:\\google.com''>adasdasd</a>', 'localhost', '2016-06-22 19:02:32', 0);
-
--- --------------------------------------------------------
-
---
--- โครงสร้างตาราง `transfer`
---
-
-CREATE TABLE IF NOT EXISTS `transfer` (
-  `transfer_id` int(11) NOT NULL AUTO_INCREMENT,
-  `transfer_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `transfer_date` datetime DEFAULT NULL,
-  `order_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`transfer_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
-
---
--- dump ตาราง `transfer`
---
-
-INSERT INTO `transfer` (`transfer_id`, `transfer_image`, `transfer_date`, `order_id`) VALUES
-(1, 'Tulips.jpg', '2016-06-23 11:30:28', 62);
-
--- --------------------------------------------------------
-
---
 -- โครงสร้างตาราง `type`
 --
 
@@ -10404,31 +10296,58 @@ INSERT INTO `users` (`username`, `passwd`, `fullname`, `lastname`, `image`, `pho
 -- --------------------------------------------------------
 
 --
+-- โครงสร้างตาราง `webblog`
+--
+
+CREATE TABLE IF NOT EXISTS `webblog` (
+  `id_blog` char(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `title_blog` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `featured_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `review_detail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `detail` text COLLATE utf8_unicode_ci,
+  `rating_blog` int(11) DEFAULT NULL,
+  `visitor` int(11) DEFAULT NULL,
+  `type_blog` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `blog_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- dump ตาราง `webblog`
+--
+
+INSERT INTO `webblog` (`id_blog`, `title_blog`, `featured_image`, `review_detail`, `detail`, `rating_blog`, `visitor`, `type_blog`, `blog_date`) VALUES
+('', '', '', '', 'ooppp', 0, 0, '', '2016-06-22 18:47:26'),
+('', '', '', '', 'asd', 0, 0, '', '2016-06-22 18:51:15'),
+('', 'asd', '', '', 'asd', 0, 0, 'ข่าวสาร', '2016-06-22 18:52:14');
+
+-- --------------------------------------------------------
+
+--
 -- โครงสร้างตาราง `webboard`
 --
 
 CREATE TABLE IF NOT EXISTS `webboard` (
-  `webboard_id` int(11) NOT NULL AUTO_INCREMENT,
-  `webboard_header` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `webboard_detail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `weboard_id` int(11) NOT NULL AUTO_INCREMENT,
+  `weboard_header` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `weboard_detail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `webboard_date` datetime DEFAULT NULL,
   `webboard_like` int(11) DEFAULT NULL,
   `visitor` int(11) DEFAULT NULL,
-  PRIMARY KEY (`webboard_id`)
+  PRIMARY KEY (`weboard_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- dump ตาราง `webboard`
 --
 
-INSERT INTO `webboard` (`webboard_id`, `webboard_header`, `webboard_detail`, `username`, `webboard_date`, `webboard_like`, `visitor`) VALUES
-(1, 'ปลูกเฟิร์นยังไงให้ดูน่ารัก', 'ปลูกบนดิน', 'localhost', '2016-06-19 18:54:40', 0, 66),
-(2, 'ปลูกกล้วยไม้ยังไงให้สวยงาม', 'ปลูกบนท้องฟ้า', 'localhost', '2016-06-19 19:19:54', 0, 22),
-(3, 'ปลูกดินยังไงให้ได้แร่ธาตุครบถ้วน', 'ไม่ต้องปลูก ขุดเอา', 'localhost', '2016-06-19 19:20:34', 0, 26),
-(4, 'กล้วยไม้ไหนสวยที่สุดในโลก', 'ก็ไม่รู้สินะ', 'localhost', '2016-06-19 19:28:03', 0, 1),
+INSERT INTO `webboard` (`weboard_id`, `weboard_header`, `weboard_detail`, `username`, `webboard_date`, `webboard_like`, `visitor`) VALUES
+(1, 'ปลูกเฟิร์นยังไงให้ดูน่ารัก', 'ปลูกบนดิน', 'localhost', '2016-06-19 18:54:40', 0, 0),
+(2, 'ปลูกกล้วยไม้ยังไงให้สวยงาม', 'ปลูกบนท้องฟ้า', 'localhost', '2016-06-19 19:19:54', 0, 0),
+(3, 'ปลูกดินยังไงให้ได้แร่ธาตุครบถ้วน', 'ไม่ต้องปลูก ขุดเอา', 'localhost', '2016-06-19 19:20:34', 0, 0),
+(4, 'กล้วยไม้ไหนสวยที่สุดในโลก', 'ก็ไม่รู้สินะ', 'localhost', '2016-06-19 19:28:03', 0, 0),
 (5, 'เฟิร์นที่ตายยากที่สุด', 'เฟิร์นที่มาจากดาวคริปตัน', 'localhost', '2016-06-19 19:28:38', 0, 0),
-(6, 'เฟิร์นอะไรททนทานต่อฟ้าผ่า', 'เฟิร์นที่ธอร์เป็นคนเพาะพันธ์ขึ้นมา', 'localhost', '2016-06-19 19:29:25', 0, 54);
+(6, 'เฟิร์นอะไรททนทานต่อฟ้าผ่า', 'เฟิร์นที่ธอร์เป็นคนเพาะพันธ์ขึ้นมา', 'localhost', '2016-06-19 19:29:25', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -10437,21 +10356,11 @@ INSERT INTO `webboard` (`webboard_id`, `webboard_header`, `webboard_detail`, `us
 --
 
 CREATE TABLE IF NOT EXISTS `web_page` (
-  `web_page_id` int(11) NOT NULL AUTO_INCREMENT,
   `logo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `nameshop_eng` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `nameshop_thai` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `detail_shop` text COLLATE utf8_unicode_ci,
-  `sellproduct_status` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`web_page_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
-
---
--- dump ตาราง `web_page`
---
-
-INSERT INTO `web_page` (`web_page_id`, `logo`, `nameshop_eng`, `nameshop_thai`, `detail_shop`, `sellproduct_status`) VALUES
-(1, 'asdasd', 'asdasd', 'asdasd', 'asdasd', 1);
+  `detail_shop` text COLLATE utf8_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 

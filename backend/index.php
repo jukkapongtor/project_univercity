@@ -176,6 +176,7 @@
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/manage_website.php">จัดการหน้าเว็บไซต์</a></li>
 						<li><a class="ajax-link" href="ajax/manage_slideshow.php">จัดการสไลด์</a></li>
+						<li><a class="ajax-link" href="ajax/manage_webblog.php">จัดการบทความ</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -294,6 +295,8 @@
 						<li><a class="ajax-link" href="ajax/charts_coindesk.html">CoinDesk realtime</a></li>
 					</ul>
 				</li>
+									
+			
 <!--
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
