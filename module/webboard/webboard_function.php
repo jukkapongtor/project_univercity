@@ -127,7 +127,8 @@ function form_webboard(){
 	  			echo "<table align='right'>";
 	  				$query_user = mysqli_query($_SESSION['connect_db'],"SELECT image FROM users WHERE username='$_SESSION[login_name]'")or die("ERROR : webboard function line 47");
 	  				list($image)=mysqli_fetch_row($query_user);
-	  				echo "<tr><td rowspan='2' valign='top' ><img src='images/user/$image' width='45' height='45'></td><td ><b class='font20'>&nbsp;ตั้งกระทู้โดย : </b></td></tr>";
+	  				$image = (empty($image))?"<img src='images/icon/no-images.jpg' width='45' height='45'>":"<img src='images/user/$image' width='45' height='45'>";
+	  				echo "<tr><td rowspan='2' valign='top' >$image</td><td ><b class='font20'>&nbsp;ตั้งกระทู้โดย : </b></td></tr>";
 	  				echo "<tr><td ><p class='font20' style='margin-top:-5px'>&nbsp;$_SESSION[login_name]</p></td></tr>";
 	  			echo "</table>";
 	  		echo "</div>";
@@ -146,7 +147,92 @@ function add_webboard(){
 	
 }
 function webboard_detail(){
-
+	$query_visitor = mysqli_query($_SESSION['connect_db'],"SELECT visitor FROM webboard WHERE webboard_id='$_GET[webboard_id]'")or die("ERROR : webboard function line 151");
+	list($visitor)=mysqli_fetch_row($query_visitor);
+	$visitor++;
+	mysqli_query($_SESSION['connect_db'],"UPDATE webboard SET visitor='$visitor' WHERE webboard_id='$_GET[webboard_id]' ")or die("ERROR : webboard function line 152");
+	echo "<div class='col-md-12' style='padding:20px;'>";
+		echo "<div class='col-md-12 blog_webboard'>";
+			$query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT * FROM webboard WHERE webboard_id='$_GET[webboard_id]'")or die("ERROR : webboard function line 151");
+			list($webboard_id,$webboard_header,$webboard_detail,$username,$webboard_date,$webboard_like,$visitor)=mysqli_fetch_row($query_webboard);
+			echo "<p class='font26'><b>ชื่อกระทู้ : </b> $webboard_header</p>";
+			echo "<p class='font26'><b>รายระเอียดข้อมูล : </b></p>";
+			echo "<p class='font20'>$webboard_detail</p>";
+			echo "<hr>";
+			echo "<div class='col-md-2' style='padding-top:20px;'><p class='font20'><b>Like : </b>$webboard_like</p></div>";
+			echo "<div class='col-md-8' style='border-left:1px solid #bbb;padding-left:10px;'><p class='font20'>";
+				echo "<table>";
+	  				$query_user = mysqli_query($_SESSION['connect_db'],"SELECT image FROM users WHERE username='$username'")or die("ERROR : webboard function line 47");
+	  				list($image)=mysqli_fetch_row($query_user);
+	  				echo "<tr><td rowspan='2' valign='top' ><img src='images/user/$image' width='45' height='45'></td><td ><b class='font20'>&nbsp;$username</b></td></tr>";
+	  				echo "<tr><td ><p class='font20' style='margin-top:-5px'>&nbsp;$webboard_date</p></td></tr>";
+	  			echo "</table>";
+			echo "</div>";
+			echo "<div class='col-md-2'><p class='font20'><b>จำนวนผู้เข้าชม : </b>$visitor</p></div>";
+		echo "</div>";
+		$query_subwebboard = mysqli_query($_SESSION['connect_db'],"SELECT * FROM subwebboard WHERE webboard_id ='$webboard_id'")or die("ERROR subwebboard function line 174");
+		$subwebboard_row = mysqli_num_rows($query_subwebboard);
+		if($subwebboard_row>0){
+		echo "<div class='col-md-12' style='margin-top:20px;'><p class='font20' ><b>ความคิดเห็น</b></p><hr style='margin-top:-10px;'></div>";
+			$subwebboard_comment =1;
+			while (list($subwebboard_id,$webboard_id,$subwebboard_detail,$username,$subwebboard_date,$subwebboard_like)=mysqli_fetch_row($query_subwebboard)) {
+			echo "<div class='col-md-12 blog_webboard'>";
+				echo "<p><b class='font20'>ความเห็นที่ $subwebboard_comment</b></p>";
+				echo "<p class='font20'>$subwebboard_detail</p>";
+				echo "<div class='col-md-12'><a href='' id='comment_subwebboard$subwebboard_id'><p class='font20' align='right'> ตอบกลับ</p></a></div>";
+				echo "<hr>";
+				echo "<div class='col-md-2' style='padding-top:20px;'><p class='font20'><b>Like : </b>$subwebboard_like</p></div>";
+				echo "<div class='col-md-10' style='border-left:1px solid #bbb;padding-left:10px;'><p class='font20'>";
+					echo "<table>";
+		  				$query_user = mysqli_query($_SESSION['connect_db'],"SELECT image FROM users WHERE username='$username'")or die("ERROR : webboard function line 47");
+		  				list($image)=mysqli_fetch_row($query_user);
+		  				$image = (empty($image))?"<img src='images/icon/no-images.jpg' width='45' height='45'>":"<img src='images/user/$image' width='45' height='45'>";
+		  				echo "<tr><td rowspan='2' valign='top' >$image</td><td ><b class='font20'>&nbsp;$username</b></td></tr>";
+		  				echo "<tr><td ><p class='font20' style='margin-top:-5px'>&nbsp;$subwebboard_date</p></td></tr>";
+		  			echo "</table>";
+				echo "</div>";
+			echo "</div>";
+			$subwebboard_comment++;
+			}
+		}
+		echo "<div class='col-md-12' style='margin-top:20px;'><p class='font20' ><b>แสดงความเห็น</b></p><hr style='margin-top:-10px;'></div>";
+		echo "<div class='col-md-12 blog_webboard'>";
+			echo "<form method='post' action='index.php?module=webboard&action=insert_subwebboard'><div>";
+				echo "<input type='hidden' name='webboard_id' value='$_GET[webboard_id]'>";
+		  		echo "<div class='col-md-12'><b><p class='font20'>ตอบกลับกระทู้ : </p></b></div>";
+		  		if(empty($_SESSION['login_name'])){
+		  			echo "<div class='col-md-12'><p class='font20'>*****หากต้องการตอบกระทู้หรือตั้งกระทู้ กรุณาล็อดอินเข้าใช้งานระบบก่อน*****</p></div>";
+		  			$disabled = "disabled";
+		  			$button_type ="button";
+		  		}else{
+		  			$disabled = "";
+		  			$button_type ="submit";
+		  		}
+		  		echo "<div class='col-md-12'><p class='font20'><textarea class='form-control' id='subwebboard_message' name='subwebboard_message' style='height:150px;' $disabled></textarea></p></div>";
+		  		echo "<div class='col-md-6'><p ><button type='$button_type' class='btn btn-success font20' >ตอบกลับ</button></p></div>";
+		  		echo "<div class='col-md-6'>";
+		  		if(!empty($_SESSION['login_name'])){
+		  			echo "<table align='right'>";
+		  				$query_user = mysqli_query($_SESSION['connect_db'],"SELECT image FROM users WHERE username='$_SESSION[login_name]'")or die("ERROR : webboard function line 47");
+		  				list($image)=mysqli_fetch_row($query_user);
+		  				$image = (empty($image))?"<img src='images/icon/no-images.jpg' width='45' height='45'>":"<img src='images/user/$image' width='45' height='45'>";
+		  				echo "<tr><td rowspan='2' valign='top' >$image</td><td ><b class='font20'>&nbsp;ตอบกลับโดย : </b></td></tr>";
+		  				echo "<tr><td ><p class='font20' style='margin-top:-5px'>&nbsp;$_SESSION[login_name]</p></td></tr>";
+		  			echo "</table>";
+		  		}
+		  		echo "</div>";
+		  	echo "</div></form>";
+		echo "</div>";
+		
+	echo "</div>";
 }
-
+function insert_subwebboard(){
+	if(empty($_POST['subwebboard_message'])){
+		echo "<script>alert('กรุณาพิมพ์ข้อความก่อนทำการตอบกระทู้');window.location='index.php?module=webboard&action=webboard_detail&webboard_id=$_POST[webboard_id]'</script>";
+	}else{
+		$subwebboard_datetime = date("Y-m-d H:i:s");
+		mysqli_query($_SESSION['connect_db'],"INSERT INTO subwebboard VALUES('','$_POST[webboard_id]','$_POST[subwebboard_message]','$_SESSION[login_name]','$subwebboard_datetime','0')")or die("ERROR : insert_subwebboard line 209");
+		echo "<script>window.location='index.php?module=webboard&action=webboard_detail&webboard_id=$_POST[webboard_id]'</script>";
+	}
+}
 ?>

@@ -54,19 +54,24 @@ function product_detail(){
 	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product.product_price,product.product_detail,type.type_name,quality.quality_name,size.size_name,product.product_stock,product.product_image FROM product INNER JOIN type ON product.product_type = type.product_type INNER JOIN quality ON product.product_quality = quality.product_quality INNER JOIN size ON product.product_size = size.product_size WHERE product.product_id='$_GET[product_id]'")or die("ERROR : product_function line 47");
 	list($product_id,$product_name,$product_price,$product_detail,$product_type,$product_quality,$product_size,$product_stock,$product_image)=mysqli_fetch_row($query_product);
 		echo "<center><h4 style='margin-top:30px;font-size:45px'><b>$product_name</b></h4></center>";
-		echo "<div class='col-md-5'style='margin-top:20px'>";
+		echo "<div class='container-fluid'><div class='col-md-5'style='margin-top:20px'>";
 			$file = ($product_type=="เฟิร์น")?"fern":"pots";
 			echo "<img src='images/$file/$product_image' width='100%' height='500' style='border-radius:5px;'>";
 		echo "</div>";
 		echo "<div class='col-md-7' style='margin-top:20px'>";
 			$product_detail =(empty($product_detail))?"ไม่มีรายละเอียดของข้อมูลสินค้า":$product_detail;
 			echo "<p style='font-size:25px'><b>รายละเอียดสินค้า :</b><br>&nbsp;&nbsp;&nbsp;&nbsp;$product_detail</p>";
-			echo "<p style='font-size:25px'><b>ราคาสินค้า : </b> $product_price &nbsp;<b>บาท/(Bath)</b></p>";
+			$quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 64");
+	        list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
+	        if($sellstatus==1){
+				echo "<p style='font-size:25px'><b>ราคาสินค้า : </b> $product_price &nbsp;<b>บาท/(Bath)</b></p>";
+			}
 			echo "<p style='font-size:25px'><b>ประเภทสินค้า : </b> $product_type</p>";
 			echo "<p style='font-size:25px'><b>หมวดหมู่สินค้า : </b> $product_quality</p>";
 			echo "<p style='font-size:25px'><b>ขนาดสินค้า : </b> $product_size</p>";
 			echo "<p style='font-size:25px'><b>สถานะสินค้า : </b> $product_stock</p>";
 			echo "<div class='row'>";
+			if($sellstatus==1){
 			  echo "<div class='col-lg-3'></div>";
 			  echo "<div class='col-lg-4'>";
 			    echo "<div class='input-group'>";
@@ -83,8 +88,9 @@ function product_detail(){
 			    echo "<input type='hidden' id='product_id' value='$product_id'>";
 			  	echo "<p align='center'><a id='add2cart'><button type='button' class='btn btn-default btn-sm'><font style='font-size:15px'><b>หยิบสินค้า</b></font></button></a></p>";
 			  echo "</div>";
-			 echo "</div>";	
-		echo "</div>";
+			 echo "</div>";
+			}	
+		echo "</div></div>";
 
 
 	echo "<br class='clear'><div class='underline'></div>";
@@ -97,8 +103,6 @@ function product_detail(){
 			echo "<p style='font-size:20px;margin-top:-15px;'>$product_price</p></center>";
 		echo "</div>";
 	}
-
-
 }
 
 ?>

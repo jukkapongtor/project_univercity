@@ -6,6 +6,8 @@
     include("module/webboard/webboard_function.php");
     include("module/users/users_function.php");
     include("module/cart/cart_function.php");
+    include("module/orders/orders_function.php");
+    include("module/transfer/transfer_function.php");
 	connect_db();
 	$module=empty($_GET['module'])?"":$_GET['module'];
     $action=empty($_GET['action'])?"":$_GET['action'];
@@ -211,8 +213,6 @@
                 echo "});";
             }
         }
-
-
         
 ?>
             $("#message_bold").click(function(){
@@ -250,6 +250,9 @@
         </div>
         <div class="header-function">
 <?php
+        $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : index line 260");
+        list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
+        if($sellstatus==1){
         if(!empty($_SESSION['login_name'])){
             echo "<a href='index.php?module=users&action=data_users&menu=2'><div class='header-function-cart'>";
         }else{
@@ -261,8 +264,8 @@
 ?>
                 <img src="images/icon/cart-of-ecommerce.png" width="40" height="40">
             </div></a>
-            
 <?php
+        }
             
 
             if(empty($_SESSION['login_name'])){
