@@ -2,6 +2,7 @@
 	session_start();
 	echo "<meta charset='utf-8'>";
 	include ('function.php');
+	include ('../include/function.php');
 	connect_db();
 	switch ($_GET['data']) {
 		case "provinces";provinces();break;

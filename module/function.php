@@ -1,8 +1,4 @@
 <?php
-function connect_db(){
-	$_SESSION['connect_db']=mysqli_connect("localhost","root","","mumfern") or die("Connect Error");
-	mysqli_query($_SESSION['connect_db'],"SET NAMES utf8");
-}
 function provinces(){
 	$provinces = isset($_POST['select_provinces']) ? $_POST['select_provinces'] : "";
 	$query_districts = mysqli_query($_SESSION['connect_db'],"SELECT AMPHUR_ID,AMPHUR_NAME FROM amphures WHERE PROVINCE_ID='{$provinces}'")or die("ERROR module function line 9");
