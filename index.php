@@ -162,7 +162,7 @@
                 echo "total = product_indetail +amount_incart;";
                 echo "$('#total_amountincart').show();";
                 echo "document.getElementById('total_amountincart').innerHTML =total;";
-                echo "$.post('module/index.php?data=add_cart',{product_id:product_id,amount:product_indetail},function(data){";
+                echo "$.post('module/index.php?data=addproduct_cart',{product_id:product_id,amount:product_indetail},function(data){";
                 echo "});";
                 echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:total},function(data){";
                 echo "});";
@@ -187,7 +187,7 @@
                     echo "document.getElementById('sum_incart_$key').innerHTML =sum;";
                     echo "document.getElementById('total_incart').innerHTML =total;";
                     echo "document.getElementById('total_amountincart').innerHTML=amount_incart;";
-                    echo "$.post('module/index.php?data=add_cart',{product_id:'$key',amount:product_incart},function(data){";
+                    echo "$.post('module/index.php?data=addproduct_cart',{product_id:'$key',amount:product_incart},function(data){";
                     echo "});";
                     echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
                     echo "});";
@@ -205,7 +205,7 @@
                         echo "document.getElementById('sum_incart_$key').innerHTML =sum;";
                         echo "document.getElementById('total_incart').innerHTML =total;";
                         echo "document.getElementById('total_amountincart').innerHTML=amount_incart;";
-                        echo "$.post('module/index.php?data=add_cart',{product_id:'$key',amount:product_incart},function(data){";
+                        echo "$.post('module/index.php?data=addproduct_cart',{product_id:'$key',amount:product_incart},function(data){";
                         echo "});";
                         echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
                         echo "});";

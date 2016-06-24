@@ -54,7 +54,7 @@ function zipcode(){
 	    
 	}
 }
-function add_cart(){
+function addproduct_cart(){
 
 		$_SESSION['cart_id'][$_POST['product_id']]=$_POST['amount'];	
 		
