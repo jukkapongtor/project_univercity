@@ -133,7 +133,7 @@
             var product_indetail = document.getElementById('product_amountindetail').value;
             if(product_indetail>1){
                 product_indetail--;
-                document.getElementById('product_amountindetail').value=product_indetail;   
+                document.getElementById('product_amountindetail').value=product_indetail;
             }
             
         });
@@ -162,12 +162,12 @@
                 echo "total = product_indetail +amount_incart;";
                 echo "$('#total_amountincart').show();";
                 echo "document.getElementById('total_amountincart').innerHTML =total;";
-                //echo "$.post('module/index.php?data=add_cart',{product_id:product_id,amount:product_indetail},function(data){";
-                //echo "});";
-                //echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:total},function(data){";
-                //echo "});";
+                echo "$.post('module/index.php?data=add_cart',{product_id:product_id,amount:product_indetail},function(data){";
+                echo "});";
+                echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:total},function(data){";
+                echo "});";
                 echo "alert('เพิ่มสินค้าลงในตะกร้าแล้ว');";
-                echo "window.location='module/index.php?data=add_cart&product_id='+product_id+'&amount='+product_indetail+'&amounttotal_cart='+total+'';";
+                echo "window.location='index.php?module=product&action=product_detail&product_id="."'+product_id+'"."';";
                 echo "}";
             }
         echo "});";
@@ -187,11 +187,10 @@
                     echo "document.getElementById('sum_incart_$key').innerHTML =sum;";
                     echo "document.getElementById('total_incart').innerHTML =total;";
                     echo "document.getElementById('total_amountincart').innerHTML=amount_incart;";
-                    //echo "$.post('module/index.php?data=add_cart',{product_id:'$key',amount:product_incart},function(data){";
-                    //echo "});";
-                    //echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
-                    //echo "});";
-                    echo "window.location='module/index.php?data=add_cart&update=1&product_id=$key&amount='+product_incart+'&amounttotal_cart='+amount_incart+'';";
+                    echo "$.post('module/index.php?data=add_cart',{product_id:'$key',amount:product_incart},function(data){";
+                    echo "});";
+                    echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
+                    echo "});";
                 echo "});";
                 echo "$('#lower_incart_$key').click(function() {";
                     echo "var product_incart = document.getElementById('product_amountincart_$key').value;";
@@ -206,11 +205,10 @@
                         echo "document.getElementById('sum_incart_$key').innerHTML =sum;";
                         echo "document.getElementById('total_incart').innerHTML =total;";
                         echo "document.getElementById('total_amountincart').innerHTML=amount_incart;";
-                        //echo "$.post('module/index.php?data=add_cart',{product_id:'$key',amount:product_incart},function(data){";
-                        //echo "});";
-                        //echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
-                        //echo "});";
-                        echo "window.location='module/index.php?data=add_cart&update=1&product_id=$key&amount='+product_incart+'&amounttotal_cart='+amount_incart+'';";
+                        echo "$.post('module/index.php?data=add_cart',{product_id:'$key',amount:product_incart},function(data){";
+                        echo "});";
+                        echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
+                        echo "});";
                     echo "}";
                 echo "});";
             }

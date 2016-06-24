@@ -56,14 +56,12 @@ function zipcode(){
 }
 function add_cart(){
 
-		$_SESSION['cart_id'][$_GET['product_id']]=$_GET['amount'];
-		$_SESSION['total_amount']=$_GET['amounttotal_cart'];
-		if(empty($_GET['update'])){
-			echo "<script>window.location='../index.php?module=product&action=product_detail&product_id=$_GET[product_id]'</script>";
-		}else{
-			echo "<script>window.location='../index.php?module=users&action=data_users&menu=2'</script>";
-		}	
+		$_SESSION['cart_id'][$_POST['product_id']]=$_POST['amount'];	
 		
 }
+function amounttotal_cart(){
 
+		$_SESSION['total_amount']=$_POST['amounttotal_cart'];	
+		
+}
 ?>
