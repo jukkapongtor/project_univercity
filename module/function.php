@@ -64,4 +64,10 @@ function amounttotal_cart(){
 		$_SESSION['total_amount']=$_POST['amounttotal_cart'];	
 		
 }
+function plus_like(){
+	 mysqli_query($_SESSION['connect_db'],"INSERT INTO like_status VALUES('','webboard','$_POST[webboard_id]','$_SESSION[login_name]')")or die("ERROR : imodule function line 68");
+}
+function lower_like(){
+	mysqli_query($_SESSION['connect_db'],"DELETE FROM like_status WHERE like_name_id = '$_POST[webboard_id]' AND username ='$_SESSION[login_name]' AND like_name='webboard'")or die("ERROR : imodule function line 71");
+}
 ?>
