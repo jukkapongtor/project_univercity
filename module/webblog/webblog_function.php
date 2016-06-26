@@ -24,13 +24,13 @@ function list_webblog(){
 			case '2': $query_webblog = mysqli_query($_SESSION['connect_db'],"SELECT * FROM webblog WHERE type_blog='ข่าวสาร'")or die("ERROR : webblog function line 24"); break;
 			case '3': $query_webblog = mysqli_query($_SESSION['connect_db'],"SELECT * FROM webblog WHERE type_blog='บทความ'")or die("ERROR : webblog function line 25"); break;
 		}
-		while(list($id_clog,$title_blog,$featured_image,$review_detail,$detail,$rating_blog,$visitor,$type_blog,$blog_date)=mysqli_fetch_row($query_webblog)){
+		while(list($id_blog,$title_blog,$featured_image,$review_detail,$detail,$rating_blog,$visitor,$type_blog,$blog_date)=mysqli_fetch_row($query_webblog)){
 		echo "<div class='col-md-12' style='margin-bottom:20px;'>";
 			echo "<div class='col-md-4'>";
 				if(empty($featured_image)){
-					echo "<div class='webbolg-none-image' >$title_blog</div>";
+					echo "<a href='index.php?module=webblog&action=webblog_detail&webblog_id=$id_blog' style='text-decoration: none;'><div class='webbolg-none-image' >$title_blog</div></a>";
 				}else{
-					echo "<img src='images/webblog/$featured_image' width='100%' height='250px;'>";
+					echo "<a href='index.php?module=webblog&action=webblog_detail&webblog_id=$id_blog' style='text-decoration: none;'><img src='images/webblog/$featured_image' width='100%' height='250px;'></a>";
 				}
 			echo "</div>";
 			echo "<div class='col-md-8'>";
@@ -38,11 +38,28 @@ function list_webblog(){
 					echo "<b>$title_blog</b>";
 				echo "</div>";
 				echo "<div class='content-webblog'>$review_detail</div>";
-				echo "<div class='read-more'></div>";
+				echo "<a href='index.php?module=webblog&action=webblog_detail&webblog_id=$id_blog'><div class='read-more'></div></a>";
 			echo "</div>";	
 		echo "</div>";
 		}
 		
+	echo "</div>";
+}
+function webblog_detail(){
+	$query_webblog = mysqli_query($_SESSION['connect_db'],"SELECT * FROM webblog WHERE id_blog ='$_GET[webblog_id]'")or die("ERROR : webblog function line 49");
+	list($id_blog,$title_blog,$featured_image,$review_detail,$detail,$rating_blog,$visitor,$type_blog,$blog_date)=mysqli_fetch_row($query_webblog);
+	echo "<div class='header-webblog'>";
+	if($type_blog=="ข่าวสาร"){
+			echo "<b>ข่าวสาร : </b>$title_blog";
+	}else{
+			echo "<b>บทความ : </b>$title_blog";
+	}
+	echo "</div>";
+	if(!empty($featured_image)){
+	echo "<center><img class='margintop20' src='images/webblog/$featured_image' width='600px' height='200px' ></center>";
+	}
+	echo "<div class='container-fluid'>";
+		echo "<p class='font20 margintop20'>$detail</p>";
 	echo "</div>";
 }
 ?>

@@ -390,7 +390,7 @@
             while(list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_recom_sale)){
                 echo "<div class='col-md-4' style='padding-top:10px;'>";
                     $folder= ($product_type=="1")?"fern":"pots";
-                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
+                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
                     echo "<p><center><font size='5'>$product_name</font></center></p></a>";
                     if($sellstatus==1){
                     echo "<p class='marginun20'><center><font size='4'>$product_price</font></center></p>";
@@ -405,7 +405,7 @@
             while(list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_recom_sale)){
                 echo "<div class='col-md-4' style='padding-top:10px;'>";
                     $folder= ($product_type=="1")?"fern":"pots";
-                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
+                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
                     echo "<p><center><font size='5'>$product_name</font></center></p></a>";
                     if($sellstatus==1){
                     echo "<p class='marginun20'><center><font size='4'>$product_price</font></center></p>";
@@ -420,7 +420,7 @@
             while(list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_recom_sale)){
                 echo "<div class='col-md-4' style='padding-top:10px;'>";
                     $folder= ($product_type=="1")?"fern":"pots";
-                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
+                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
                     echo "<p><center><font size='5'>$product_name</font></center></p></a>";
                     if($sellstatus==1){
                     echo "<p class='marginun20'><center><font size='4'>$product_price</font></center></p>";
