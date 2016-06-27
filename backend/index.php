@@ -225,8 +225,7 @@
 						 <span >จัดการข้อมูลการขาย</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/tables_simple.html">เพิ่มประเภทสินค้า</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">แก้ไขประเภทสินค้า</a></li>
+						<li><a class="ajax-link" href="ajax/manage_order.php">ดูรายการขาย</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">

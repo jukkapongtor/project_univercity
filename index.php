@@ -2,12 +2,12 @@
     session_start();
 	include("include/function.php");
     include("module/product/product_function.php");
-    include("module/news/news_function.php");
     include("module/webboard/webboard_function.php");
     include("module/users/users_function.php");
     include("module/cart/cart_function.php");
     include("module/orders/orders_function.php");
     include("module/transfer/transfer_function.php");
+    include("module/webblog/webblog_function.php");
 	connect_db();
 	$module=empty($_GET['module'])?"":$_GET['module'];
     $action=empty($_GET['action'])?"":$_GET['action'];
@@ -162,7 +162,7 @@
                 echo "total = product_indetail +amount_incart;";
                 echo "$('#total_amountincart').show();";
                 echo "document.getElementById('total_amountincart').innerHTML =total;";
-                echo "$.post('module/index.php?data=add_cart',{product_id:product_id,amount:product_indetail},function(data){";
+                echo "$.post('module/index.php?data=addproduct_cart',{product_id:product_id,amount:product_indetail},function(data){";
                 echo "});";
                 echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:total},function(data){";
                 echo "});";
@@ -187,7 +187,7 @@
                     echo "document.getElementById('sum_incart_$key').innerHTML =sum;";
                     echo "document.getElementById('total_incart').innerHTML =total;";
                     echo "document.getElementById('total_amountincart').innerHTML=amount_incart;";
-                    echo "$.post('module/index.php?data=add_cart',{product_id:'$key',amount:product_incart},function(data){";
+                    echo "$.post('module/index.php?data=addproduct_cart',{product_id:'$key',amount:product_incart},function(data){";
                     echo "});";
                     echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
                     echo "});";
@@ -205,7 +205,7 @@
                         echo "document.getElementById('sum_incart_$key').innerHTML =sum;";
                         echo "document.getElementById('total_incart').innerHTML =total;";
                         echo "document.getElementById('total_amountincart').innerHTML=amount_incart;";
-                        echo "$.post('module/index.php?data=add_cart',{product_id:'$key',amount:product_incart},function(data){";
+                        echo "$.post('module/index.php?data=addproduct_cart',{product_id:'$key',amount:product_incart},function(data){";
                         echo "});";
                         echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
                         echo "});";
@@ -221,6 +221,34 @@
             });
         });
  </script>
+<?php
+echo "<script>";
+    echo "$(document).ready(function() {";
+            echo "$('#plus_like').click(function(){";
+            if(!empty($_SESSION['login_name'])){
+                echo "var amount_like = parseInt(document.getElementById('like_status').innerHTML);";
+                echo "var rows = parseInt(document.getElementById('like_webboard').value);";
+                echo "if(rows == 0){";
+                    echo "amount_like++;";
+                    echo "$.post('module/index.php?data=plus_like',{webboard_id:$_GET[webboard_id]},function(data){";
+                    echo "});";
+                    echo "document.getElementById('like_status').innerHTML =amount_like;";
+                    echo "document.getElementById('like_webboard').value=1;";
+                echo "}else{";
+                    echo "amount_like--;";
+                    echo "$.post('module/index.php?data=lower_like',{webboard_id:$_GET[webboard_id]},function(data){";
+                    echo "});";
+                    echo "document.getElementById('like_status').innerHTML =amount_like;";
+                    echo "document.getElementById('like_webboard').value=0;";
+                echo "}";
+            }else{
+                echo "alert('ขออภัย ระบบกดถูกใจสามารถทำได้เพียงสมาชิกเท่านั้น');";
+            }
+            echo "});";
+    echo "});";
+echo "</script>";
+?>
+
  
  
 </head>
@@ -237,14 +265,14 @@
 <?php
             switch ($module) {
                 case 'product': $active_menu1="";$active_menu2="header-menu-active";$active_menu3="";$active_menu4=""; break;
-                case 'news': $active_menu1="";$active_menu2="";$active_menu3="header-menu-active";$active_menu4=""; break;
+                case 'webblog': $active_menu1="";$active_menu2="";$active_menu3="header-menu-active";$active_menu4=""; break;
                 case 'webboard': $active_menu1="";$active_menu2="";$active_menu3="";$active_menu4="header-menu-active"; break;
                 default: $active_menu1="header-menu-active";$active_menu2="";$active_menu3="";$active_menu4=""; break;
             }
 
             echo "<a href='index.php'><div class='header-menu-home $active_menu1'><center>หน้าหลัก</center></div></a>";
             echo "<a href='index.php?module=product&action=list_product&menu=1&cate=1'><div class='header-menu-product $active_menu2'><center>รายการสินค้า</center></div></a>";
-            echo "<a href='index.php?module=news&action=news'><div class='header-menu-news $active_menu3'><center>ข่าวสาร</center></div></a>";
+            echo "<a href='index.php?module=webblog&action=list_webblog&webblog_menu=1'><div class='header-menu-webblog $active_menu3'><center>ข่าวสาร</center></div></a>";
             echo "<a href='index.php?module=webboard&action=webboard'><div class='header-menu-webboard $active_menu4'><center>เว็บบอร์ด </center></div></a>";
 ?>
         </div>
@@ -380,15 +408,21 @@
                 <div class="product-recommend-best"><center>สินค้าขายดี</center></div>
                 <div class='product-recommend-center'></div>
             </div>
+<?php
+            $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 64");
+            list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
+?>
             <div class="product-recom-sale-content">
 <?php
             $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price,product_type,product_image FROM product LIMIT 0,6 ");
             while(list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_recom_sale)){
                 echo "<div class='col-md-4' style='padding-top:10px;'>";
                     $folder= ($product_type=="1")?"fern":"pots";
-                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
+                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
                     echo "<p><center><font size='5'>$product_name</font></center></p></a>";
+                    if($sellstatus==1){
                     echo "<p class='marginun20'><center><font size='4'>$product_price</font></center></p>";
+                    }
                 echo "</div>";
             }
 ?>
@@ -399,9 +433,11 @@
             while(list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_recom_sale)){
                 echo "<div class='col-md-4' style='padding-top:10px;'>";
                     $folder= ($product_type=="1")?"fern":"pots";
-                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
+                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
                     echo "<p><center><font size='5'>$product_name</font></center></p></a>";
+                    if($sellstatus==1){
                     echo "<p class='marginun20'><center><font size='4'>$product_price</font></center></p>";
+                    }
                 echo "</div>";
             }
 ?>
@@ -412,9 +448,11 @@
             while(list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_recom_sale)){
                 echo "<div class='col-md-4' style='padding-top:10px;'>";
                     $folder= ($product_type=="1")?"fern":"pots";
-                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
+                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
                     echo "<p><center><font size='5'>$product_name</font></center></p></a>";
+                    if($sellstatus==1){
                     echo "<p class='marginun20'><center><font size='4'>$product_price</font></center></p>";
+                    }
                 echo "</div>";
             }
 ?>

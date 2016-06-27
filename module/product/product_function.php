@@ -20,7 +20,7 @@ function list_product(){
 			if($product_quality==$_GET['cate']){
 				echo "<center><img src='images/icon/no-images.jpg' width='95' height='95' style='border-radius:100px;border:5px solid #248a32;' >";
 			}else{
-				echo "<center><a href='index.php?module=product&action=list_product&menu=$_GET[menu]&cate=$product_quality'><img src='images/icon/no-images.jpg' class='select-cate-product_$number' style='width: 100px;height: 100px;border-radius: 100px;'></a>";
+				echo "<center><a href='index.php?module=product&action=list_product&menu=$_GET[menu]&cate=$product_quality' ><img src='images/icon/no-images.jpg' class='select-cate-product_$number' style='width: 100px;height: 100px;border-radius: 100px;'></a>";
 			}
 				echo "<p style='font-size:25px;margin-top:5px'>$quality_name</p></center>";
 			$number++;
@@ -34,16 +34,21 @@ function list_product(){
 		echo "</div>";
 	echo "</div>";
 	echo "<div class='container-fluid'>";
-	$query_type =  mysqli_query($_SESSION['connect_db'],"SELECT type_name FROM type WHERE product_type='$_GET[menu]'")or die("ERROR : product_function line 30");
+	$query_type =  mysqli_query($_SESSION['connect_db'],"SELECT type_name FROM type WHERE product_type='$_GET[menu]'")or die("ERROR : product_function line 37");
 	list($type_product) = mysqli_fetch_row($query_type);
-	$query_cate = mysqli_query($_SESSION['connect_db'],"SELECT quality_name FROM quality WHERE quality_type='$_GET[menu]' AND product_quality='$_GET[cate]'")or die("ERROR : product_function line 32");
+	$query_cate = mysqli_query($_SESSION['connect_db'],"SELECT quality_name FROM quality WHERE quality_type='$_GET[menu]' AND product_quality='$_GET[cate]'")or die("ERROR : product_function line 39");
 	list($cate_name)=mysqli_fetch_row($query_cate);
 	echo "<h3><b>รายการสินค้า / ร้านการสินค้าประเภท$type_product / หมวดหมู่$cate_name</b></h3>";
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price,product_type,product_image FROM product WHERE product_type='$_GET[menu]' AND product_quality='$_GET[cate]'")or die("ERROR : product_function line 30");
+	$quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 42");
+    list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price,product_type,product_image FROM product WHERE product_type='$_GET[menu]' AND product_quality='$_GET[cate]'")or die("ERROR : product_function line 44");
 	while (list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_product)) {
 		echo "<div class='col-md-3' style='margin-top:20px'>";
 			$folder = ($product_type==1)?"fern":"pots";
-			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id'><img src='images/$folder/$product_image' width='100%' height='300'><p><font style='font-size:20px'>$product_name</font></p></a><p class='marginun20'><font size='3'>$product_price</font></p> ";
+			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$folder/$product_image' width='100%' height='300'><p><font style='font-size:20px'>$product_name</font></p></a>";
+			if($sellstatus==1){
+			echo "<p class='marginun20'><font size='3'>$product_price</font></p> ";
+			}
 		echo "</div>";
 	}
 	echo "</div>";

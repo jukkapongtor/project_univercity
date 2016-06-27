@@ -10404,6 +10404,33 @@ INSERT INTO `users` (`username`, `passwd`, `fullname`, `lastname`, `image`, `pho
 -- --------------------------------------------------------
 
 --
+-- โครงสร้างตาราง `webblog`
+--
+
+CREATE TABLE IF NOT EXISTS `webblog` (
+  `id_blog` char(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `title_blog` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `featured_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `review_detail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `detail` text COLLATE utf8_unicode_ci,
+  `rating_blog` int(11) DEFAULT NULL,
+  `visitor` int(11) DEFAULT NULL,
+  `type_blog` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `blog_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- dump ตาราง `webblog`
+--
+
+INSERT INTO `webblog` (`id_blog`, `title_blog`, `featured_image`, `review_detail`, `detail`, `rating_blog`, `visitor`, `type_blog`, `blog_date`) VALUES
+('', '', '', '', 'ooppp', 0, 0, '', '2016-06-22 18:47:26'),
+('', '', '', '', 'asd', 0, 0, '', '2016-06-22 18:51:15'),
+('', 'asd', '', '', 'asd', 0, 0, 'ข่าวสาร', '2016-06-22 18:52:14');
+
+-- --------------------------------------------------------
+
+--
 -- โครงสร้างตาราง `webboard`
 --
 
@@ -10451,7 +10478,7 @@ CREATE TABLE IF NOT EXISTS `web_page` (
 --
 
 INSERT INTO `web_page` (`web_page_id`, `logo`, `nameshop_eng`, `nameshop_thai`, `detail_shop`, `sellproduct_status`) VALUES
-(1, 'asdasd', 'asdasd', 'asdasd', 'asdasd', 1);
+(1, 'asdasd', 'asdasd', 'asdasd', 'asdasd', 2);
 
 -- --------------------------------------------------------
 

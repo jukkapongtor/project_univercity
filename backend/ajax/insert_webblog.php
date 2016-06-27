@@ -13,7 +13,7 @@
 
 	if (empty($_POST['title_blog'])|| empty($_POST['detail'])|| empty($_POST['typeblog'])) {
 			
-			echo "<script> alert('กรุณากรอกข้อมูลให้ครบ') </script>";
+			echo "<script> alert('กรุณากรอกข้อมูลให้ครบ');window.location='../#ajax/manage_webblog.php' </script>";
 	}else{
 
 	$date = date("Y-m-d H:i:s");

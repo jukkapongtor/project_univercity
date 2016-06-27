@@ -25,6 +25,7 @@ function order_insert(){
 		}
 		$number++;
 	}
+	
 	mysqli_query($_SESSION['connect_db'],$sql_insert_orderdetail)or die("ERROR : order function line 28");
 	unset($_SESSION['cart_id']);
 	unset($_SESSION['total_amount']);
