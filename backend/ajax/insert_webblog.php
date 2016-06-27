@@ -8,7 +8,7 @@
 	if (empty($img)) {
 		$img="";
 	}else{
-	copy($_FILES['featured_image']['tmp_name'],"../../images/blog/$img");
+	copy($_FILES['featured_image']['tmp_name'],"../../images/webblog/$img");
 	}
 
 	if (empty($_POST['title_blog'])|| empty($_POST['detail'])|| empty($_POST['typeblog'])) {

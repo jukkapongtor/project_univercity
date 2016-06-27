@@ -23,6 +23,7 @@
 <button class="blog-add" type="submit" data-toggle="modal" data-target="#addblog">สร้างบล็อก <img src="../images/icon/add-web-page.png" width="20px" ></button>
 
 
+
 <div class="modal fade" id="addblog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -83,11 +84,27 @@
   </div>
 </div>
 
+<table class="table" style="margin-top:10px; "   >
+	<tr><th>รูปหน้าปก</th><th>ชื่อบทความ</th><th>ประเภท</th><th>วันเดือนปี</th><th>คนเข้าชม</th><th>คะแนน</th></tr>
 <?php
 	
-	$show = "SELECT title_blog,featured_image,rating_blog,visitor,type_blog,blog_date "
+	$query_blog = mysqli_query($_SESSION['connect_db'], "SELECT title_blog,featured_image,rating_blog,visitor,type_blog,blog_date FROM webblog") or die("ERROR : manage webblog line 88");
+
+	while (list($title_blog,$featured_image,$rating_blog,$visitor,$type_blog,$blog_date )=mysqli_fetch_row($query_blog)){
+
+		echo "<tr><th><img src = '../images/user/$featured_image' width='25px' height='25px'></th>";
+		echo "<td>$title_blog</td>";
+		echo "<td>$type_blog</td>";
+		echo "<td>$blog_date</td>";
+		echo "<td>$visitor</td>";
+		echo "<td>$rating_blog</td>";
+		echo "</tr>";
+
+		
+	}
 
 
 
 
 ?>
+</table>
