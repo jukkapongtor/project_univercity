@@ -1,6 +1,5 @@
 <?php
 	session_start();
-	echo "<meta charset='utf-8'>";
 	include ('../include/function.php');
 	connect_db();
 	include ('function.php');

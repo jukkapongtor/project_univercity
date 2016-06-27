@@ -28,6 +28,7 @@ function districts(){
 		while(list($subdistricts_code,$subdistricts_name)=mysqli_fetch_row($query_subdistricts)){
 			echo "<option value='$subdistricts_code'>$subdistricts_name</option>";
 		}
+		
 	}else{
 		if($districts=="null"){
 			echo "<option>เลือกตำบล</option>";

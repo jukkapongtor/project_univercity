@@ -219,7 +219,11 @@
                 var message = document.getElementById('webboard_message').value;
                 document.getElementById('webboard_message').value= message+"<b></b>";
             });
+        });
+ </script>
 <?php
+echo "<script>";
+    echo "$(document).ready(function() {";
             echo "$('#plus_like').click(function(){";
             if(!empty($_SESSION['login_name'])){
                 echo "var amount_like = parseInt(document.getElementById('like_status').innerHTML);";
@@ -241,9 +245,10 @@
                 echo "alert('ขออภัย ระบบกดถูกใจสามารถทำได้เพียงสมาชิกเท่านั้น');";
             }
             echo "});";
+    echo "});";
+echo "</script>";
 ?>
-        });
- </script>
+
  
  
 </head>
