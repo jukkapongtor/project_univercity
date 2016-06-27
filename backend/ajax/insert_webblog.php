@@ -21,5 +21,8 @@
 	$sql = "INSERT INTO webblog VALUES ('','$_POST[title_blog]','$img','$_POST[review_detail]','$_POST[detail]','0','0','$_POST[typeblog]','$date') ";
 	mysqli_query($_SESSION['connect_db'],$sql)or die("ERROR : backend insert_webblog line 16");
 		
-}		  
+	echo "<script></script>";
+}	
+
+
 ?>
