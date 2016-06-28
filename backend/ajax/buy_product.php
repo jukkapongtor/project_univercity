@@ -14,7 +14,7 @@ $(document).ready(function() {
         e.preventDefault();
         if(x < max_fields){ //max input box allowed
             x++; //text box increment
-            $(wrapper).append('<div style="margin-bottom:30px;" > </div><div class="remove" style="margin-bottom:10px;"> <div class="col-md-3"><input type="text" class="form-control" name="mytext[]"></div><div class="col-md-3"><input type="text" class="form-control" name="mytext[]"></div><div class="col-md-2"><input type="text" class="form-control" name="mytext[]"></div><div class="col-md-2"><input type="text" class="form-control" name="mytext[]"></div><a href="#" class="remove_field">Remove</a></div>'); //add input box
+            $(wrapper).append(' <div class="remove" style="margin-bottom:20px"><div class="col-md-1" style="margin-bottom:20px">ประเภท </div><div class="col-md-2" style="margin-bottom:20px"><input type="text" class="form-control" name="mytext[]"></div><div class="col-md-1" style="margin-bottom:20px">ชื่อสินค้า</div><div class="col-md-2" style="margin-bottom:20px"><input type="text" class="form-control" name="mytext[]"></div><div class="col-md-1" style="margin-bottom:20px">จำนวน</div><div class="col-md-1" style="margin-bottom:20px"><input type="text" class="form-control" name="mytext[]"></div><div class="col-md-1" style="margin-bottom:20px">ราคา(หน่วย)</div><div class="col-md-2" style="margin-bottom:20px"><input type="text" class="form-control" name="mytext[]"></div><button  class="remove_field">Remove</button></div></div>'); //add input box
         }
     });
     
@@ -42,14 +42,23 @@ $(document).ready(function() {
     <h3 class="panel-title">รายการซื้อสินค้า</h3>
   </div>
   <div class="panel-body">
+<?php
+	$date = date("Y-m-d");
+?>
+  <p><b>รายการซื้อเข้าประจำวันที่ : </b><?php echo "$date"; ?></p>
+  	<form>
     <div class="input_fields_wrap" >
-	    
-	    <div class="col-md-3"><input type="text" class='form-control' name="mytext[]"></div>
-	    <div class="col-md-3"><input type="text" class='form-control' name="mytext[]"></div>
-	    <div class="col-md-2"><input type="text" class='form-control' name="mytext[]"></div>
-	    <div class="col-md-2"><input type="text" class='form-control' name="mytext[]"></div>
-	    <div class="col-md-2"><button class="add_field_button">Add More Fields</button></div>
-	   
+    	<div class="col-md-1" style='margin-bottom:20px'>ประเภท </div>
+	    <div class="col-md-2" style='margin-bottom:20px'><input type="text" class='form-control' name="mytext[]"></div>
+	    <div class="col-md-1" style='margin-bottom:20px'>ชื่อสินค้า</div>
+	    <div class="col-md-2" style='margin-bottom:20px'><input type="text" class='form-control' name="mytext[]"></div>
+	    <div class="col-md-1" style='margin-bottom:20px'>จำนวน</div>
+	    <div class="col-md-1" style='margin-bottom:20px'><input type="text" class='form-control' name="mytext[]"></div>
+	    <div class="col-md-1" style='margin-bottom:20px'>ราคา(หน่วย)</div>
+	    <div class="col-md-2" style='margin-bottom:20px'><input type="text" class='form-control' name="mytext[]"></div>
+	    <button class="add_field_button" style='margin-bottom:20px'>Add </button>
 	</div>
+	<p align='right'><button class='btn btn-sm btn-success'>เพิ่มรายการซื้อเข้า</button></p>
+	</form>
   </div>
 </div>

@@ -216,8 +216,8 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/buy_product.php">สินค้าสำหรับขายต่อ</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">สินค้าใช้ในร้าน</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">ค่าขนส่ง</a></li>
+						<li><a class="ajax-link" href="ajax/buy_product.php">สินค้าใช้ในร้าน</a></li>
+						<li><a class="ajax-link" href="ajax/buy_product.php">ค่าขนส่ง</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -266,7 +266,6 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/manage_customer.php">ดูข้อมูลผู้ใช้งาน</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">สถานะผู้ใช้งาน</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -275,11 +274,11 @@
 						 <span >จัดการข้มูลพนักงาน</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/tables_simple.html">ดูข้อมูลผู้ใช้งาน</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">สถานะผู้ใช้งาน</a></li>
+						<li><a class="ajax-link" href="ajax/form_employee.php">ฟอร์มเพิ่มพนักงาน</a></li>
+						<li><a class="ajax-link" href="ajax/list_employee.php">แสดงรายชื่อพนักงาน</a></li>
 					</ul>
 				</li>
-
+<!--
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-bar-chart-o"></i>
@@ -297,7 +296,7 @@
 				</li>
 									
 			
-<!--
+
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-table"></i>
