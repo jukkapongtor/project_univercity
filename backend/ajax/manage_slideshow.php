@@ -76,26 +76,32 @@
     <div class='container-fluid'>
 <?php
 		$query_slide=mysqli_query($_SESSION['connect_db'],"SELECT slide.slide_id,product.product_id,product.product_name,type.type_name,product.product_image,slide.slide_detail,slide.slide_image FROM slide LEFT JOIN product ON slide.product_id=product.product_id LEFT JOIN type ON product.product_type = type.product_type ")or die("ERROR : backend slide line 78");
+		
+		echo "<br>";
 		$number=1;
 		while(list($slide_id,$product_id,$product_name,$type_name,$product_image,$slide_detail,$slide_image)=mysqli_fetch_row($query_slide)){
-					$active= ($number==0)?"active":"";
-					echo "<div class='item $active home-slide'>";
-					if(empty($product_id)){
-						$folder='slide';
-						$image=$slide_image;
-					}else{
-						$folder = ($type_name=="เฟิร์น")?"fern":$type_name;
-						$folder = ($folder=="กระถาง")?"pots":$folder;
-						$image = $product_image;
-					}
-					  $product_name = (!empty($product_name))?$product_name:"";
-	                  echo "<img src='../images/$folder/$image' style='width:100%;height:100%' alt='...'>";
-	                  echo "<div class='carousel-caption'>";
-	                    echo "<h4>$product_name</h4>$slide_detail";
-	                  echo "</div>";
-	                echo "</div>";
-					$number++;
+			echo "<div class='col-md-6' style='margin-top:20px;'>";
+				echo "<p align='center'><b>รูปภาพสไลด์ที่ $number</b></p>";
+				if(empty($product_id)){
+					$folder='slide';
+					$image=$slide_image;
+				}else{
+					$folder = ($type_name=="เฟิร์น")?"fern":$type_name;
+					$folder = ($folder=="กระถาง")?"pots":$folder;
+					$image = $product_image;
 				}
+				//$product_name = (!empty($product_name))?$product_name:"";
+	            echo "<img src='../images/$folder/$image' style='width:100%;height:250px' alt='...'>";
+	            echo "<div class='col-md-12' style='margin-top:10px;'><p><b>เลือหภาพจากสินค้า : </b></p></div>";
+	            echo "<div class='col-md-5'><p><b>เลือหภาพจากบนเครื่อง : </b></p></div><div class='col-md-7'><input type='file' name='image_slide'></div>";
+	            echo "<div class='col-md-12'><p><b>คำอธิบายภาพ : </b></p>";
+	            echo "<p><textarea class='form-control' name='slide_explan' style='width:100%;height:100px;'></textarea></p>";
+	            echo "</div>";;
+			echo "</div>";
+			$number++;
+		}
+		echo "<div class='col-md-12' style='margin-top:20px'><p align='center'><button class='btn btn-sm btn-success'>เปลี่ยนภาพสไลด์</button></p></div>";
+		
 ?>
     </div>
 </div>
