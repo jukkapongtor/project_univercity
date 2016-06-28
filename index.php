@@ -463,6 +463,13 @@ echo "</script>";
         </div>
         <div class="col-md-2"></div>
     </div>
+    <div class="footer" >
+        <div class="container-fluid">
+                <p align="right" class="font26" style='color:white'><b>ที่อยู่ร้านมุมเฟิร์น</b></p>
+                <p align="right" class="font20" style='color:white'>ตลากคำเที่ยง ล็อค f208-f209 ตำบล ป่าตัน อำเภอเมือง จังหวัดเชียงใหม่ 50300</p>
+                <p align="right" class="font20" style='color:white'>เบอร์โทร : 081-8055024 &nbsp;&nbsp;E-mail : veerada@mumfern.com</p>
+        </div>
+    </div>
 </div>
 <div class="display_mobile">
     

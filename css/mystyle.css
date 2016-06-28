@@ -217,6 +217,11 @@ div {
 	margin-top: 20px;
 
 }
+.footer{
+	background:#506153;
+	border-top:3px solid #56a561;
+	width:100%;
+}
 @media screen and (max-width:720px){
 		
 }
