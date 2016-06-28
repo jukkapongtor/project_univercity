@@ -21,8 +21,9 @@
 <!--Start Dashboard 1-->
 <div id="dashboard-header" class="row">
 	<a href='../index.php'><div class="col-md-4" style="height:100px;margin-bottom:20px;"><div style='background:#376fff;width:100%;height:100%;color:#fff;border-radius:5px;font-size:30px;padding:20px 30px;'><img src='../images/icon/browser.png'>&nbsp;&nbsp;เยี่ยมชมเว็บไซต์</div></div></a>
-	<div class="col-md-4" style="height:100px;margin-bottom:20px;"><div style='background:#376fff;width:100%;height:100%;color:#fff;border-radius:5px;font-size:30px;padding:20px 30px;'>asd</div></div>
-	<div class="col-md-4" style="height:100px;margin-bottom:20px;"><div style='background:#376fff;width:100%;height:100%;color:#fff;border-radius:5px;font-size:30px;padding:20px 30px;'>asd</div></div>
+	<!--<div class="col-md-4" style="height:100px;margin-bottom:20px;"><div style='background:#376fff;width:100%;height:100%;color:#fff;border-radius:5px;font-size:30px;padding:20px 30px;'>asd</div></div>-->
+	<!--<div class="col-md-4" style="height:100px;margin-bottom:20px;"><div style='background:#376fff;width:100%;height:100%;color:#fff;border-radius:5px;font-size:30px;padding:20px 30px;'>asd</div></div>-->
+<!--
 	<div class="col-xs-12 col-sm-4 col-md-5">
 		<h3>Hello, Dashboard!</h3>
 	</div>
@@ -52,9 +53,11 @@
 			</div>
 		</div>
 	</div>
+-->
 </div>
 <!--End Dashboard 1-->
 <!--Start Dashboard 2-->
+<!--
 <div class="row-fluid">
 	<div id="dashboard_links" class="col-xs-12 col-sm-2 pull-right">
 		<ul class="nav nav-pills nav-stacked">
@@ -68,7 +71,9 @@
 		</ul>
 	</div>
 	<div id="dashboard_tabs" class="col-xs-12 col-sm-10">
+-->
 		<!--Start Dashboard Tab 1-->
+<!--
 		<div id="dashboard-overview" class="row" style="visibility: visible; position: relative;">
 			<div id="ow-marketplace" class="col-sm-12 col-md-6">
 				<div id="ow-setting">
@@ -205,8 +210,10 @@
 				</div>
 			</div>
 		</div>
+-->
 		<!--End Dashboard Tab 1-->
 		<!--Start Dashboard Tab 2-->
+<!--
 		<div id="dashboard-clients" class="row" style="visibility: hidden; position: absolute;">
 			<div class="row one-list-message">
 				<div class="col-xs-1"><i class="fa fa-users"></i></div>
@@ -272,16 +279,20 @@
 				<div class="col-xs-2 message-date">12/29/13</div>
 			</div>
 		</div>
+-->
 		<!--End Dashboard Tab 2-->
 		<!--Start Dashboard Tab 3-->
+<!--
 		<div id="dashboard-graph" class="row" style="width:100%; visibility: hidden; position: absolute;" >
 			<div class="col-xs-12">
 				<h4 class="page-header">OS Platform Statistics</h4>
 				<div id="stat-graph" style="height: 300px;"></div>
 			</div>
 		</div>
+-->
 		<!--End Dashboard Tab 3-->
 		<!--Start Dashboard Tab 4-->
+<!--
 		<div id="dashboard-servers" class="row" style="visibility: hidden; position: absolute;">
 			<div class="col-xs-12 col-sm-6 col-md-4 ow-server">
 				<h4 class="page-header text-right"><i class="fa fa-windows"></i>#SRV-APP</h4>
@@ -407,8 +418,10 @@
 				<a href="#" class="col-xs-4 col-sm-2 btn-default text-center"><i class="fa fa-user"></i> <b>19985</b> <span>Clients</span></a>
 			</div>
 		</div>
+-->
 		<!--End Dashboard Tab 4-->
 		<!--Start Dashboard Tab 5-->
+<!--
 		<div id="dashboard-planning" class="row" style="visibility: hidden; position: absolute;">
 				<div class="col-xs-12 col-sm-6">
 					<h4 class="page-header">Planned projects</h4>
@@ -474,16 +487,20 @@
 					</div>
 				</div>
 		</div>
+-->
 		<!--End Dashboard Tab 5-->
 		<!--Start Dashboard Tab 6-->
+<!--
 		<div id="dashboard-netmap" class="row" style="visibility: hidden; position: absolute;">
 			<div class="col-xs-12">
 				<h4 class="page-header">Network map(mesh topology)</h4>
 				<canvas id="springy-demo" width="900" height="480" />
 			</div>
 		</div>
+-->
 		<!--End Dashboard Tab 6-->
 		<!--Start Dashboard Tab 7-->
+<!--
 		<div id="dashboard-stock" class="row" style="visibility: hidden; position: absolute;">
 			<div class="col-xs-12">
 				<h4 class="page-header">Stocks from Yahoo Finance</h4>
@@ -504,10 +521,13 @@
 				</div>
 			</div>
 		</div>
+-->
 		<!--End Dashboard Tab 7-->
+<!--
 	</div>
 	<div class="clearfix"></div>
 </div>
+-->
 <!--End Dashboard 2 -->
 <div style="height: 40px;"></div>
 <script type="text/javascript">

@@ -401,6 +401,11 @@ echo "</script>";
             <p  class='marginun20'><center><font size='5' >และร้านเรายังนำกระถางมาขายซึ่งมีหลากหลายรูปแบบให้เลือก ให้เหมาะสมกับเฟิร์นที่ทางร้านขาย</font></center></p>
             <br>
             <div class="clear"></div>
+<?php
+            $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 64");
+            list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
+            if($sellstatus==1){
+?>            
             <div class="product-recommend">
                 <div class='product-recommend-center'></div>
                 <div class="product-recommend-sale"><center>สินค้าลดราคา</center></div>
@@ -409,8 +414,7 @@ echo "</script>";
                 <div class='product-recommend-center'></div>
             </div>
 <?php
-            $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 64");
-            list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
+            }
 ?>
             <div class="product-recom-sale-content">
 <?php
