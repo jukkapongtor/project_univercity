@@ -10,3 +10,21 @@
     font-style: normal;
 
 }
+.con1{
+	margin-top: 40px;
+}
+.img1{
+ display: block;
+-webkit-transform: rotate(90deg);
+}
+.content1{
+	
+	font-size: 25px;
+}
+.con2{
+	margin-top: 40px;
+}
+.content2{
+	margin-top: 40px;
+	font-size: 25px;
+}
