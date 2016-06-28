@@ -17,7 +17,7 @@
 	}
 
 	$stock=(empty($_POST['product_stock']))?"product_stock='0'":"product_stock='1'";
-	$sql= "UPDATE product SET product_name='$_POST[product_name]',product_price='$_POST[product_price]',product_detail='$_POST[product_detail]',product_type='$_POST[product_type]',product_quality='$_POST[product_quality]',product_size='$_POST[product_size]',$stock  $image WHERE product_id='$_POST[product_id]'";
+	$sql= "UPDATE product SET product_name='$_POST[product_name]',product_price_web='$_POST[product_price_web]',product_detail='$_POST[product_detail]',product_type='$_POST[product_type]',product_quality='$_POST[product_quality]',product_size='$_POST[product_size]',$stock  $image WHERE product_id='$_POST[product_id]'";
 	mysqli_query($_SESSION['connect_db'],$sql)or die("ERROR : backend quality_update line 9");
 
 	echo "<script>window.location='../#ajax/product_list.php'</script>";

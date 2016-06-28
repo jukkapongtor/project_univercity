@@ -212,11 +212,12 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-table"></i>
-						 <span >จัดการข้อมูลซื้อเข้า</span>
+						 <span >จัดการค่าใช้จ่าย</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/tables_simple.html">เพิ่มประเภทสินค้า</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">แก้ไขประเภทสินค้า</a></li>
+						<li><a class="ajax-link" href="ajax/buy_product.php">สินค้าสำหรับขายต่อ</a></li>
+						<li><a class="ajax-link" href="ajax/tables_datatables.html">สินค้าใช้ในร้าน</a></li>
+						<li><a class="ajax-link" href="ajax/tables_datatables.html">ค่าขนส่ง</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">

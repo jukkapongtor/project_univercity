@@ -9,8 +9,8 @@ function show_cart(){
 		$num=1;
 		$total_price=0;
 		foreach ($_SESSION['cart_id'] as $key => $value) {
-			$query_product =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product.product_price,type.type_name,product.product_image FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id ='$key'")or die("ERROR : cart function line 11");
-			list($product_id,$product_name,$product_price,$type_name,$product_image)=mysqli_fetch_row($query_product);
+			$query_product =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product.product_price_web,type.type_name,product.product_image FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id ='$key'")or die("ERROR : cart function line 11");
+			list($product_id,$product_name,$product_price_web,$type_name,$product_image)=mysqli_fetch_row($query_product);
 			echo "<tr>";
 				echo "<td><p class='font20' align='center'>$num</p></td>";
 				$file = ($type_name=='เฟิร์น')?"fern":$type_name;
@@ -21,7 +21,7 @@ function show_cart(){
 				}
 				echo "<td><img src='images/$file/$product_image' width='50px'></td>";
 				echo "<td><p class='font20'>$product_name</p></td>";
-				echo "<td><p class='font20' align='center'>".number_format($product_price)."</p></td>";
+				echo "<td><p class='font20' align='center'>".number_format($product_price_web)."</p></td>";
 
 
 				echo "<td style='width:100px;'>";
@@ -35,7 +35,7 @@ function show_cart(){
 				      echo "</span>";
 				    echo "</div>";
 				echo "</td>";
-				$sum = $value * $product_price;
+				$sum = $value * $product_price_web;
 				$total_price+=$sum;
 				echo "<td><p class='font20' align='right' id='sum_incart_$product_id'>".number_format($sum)."</p></td>";
 			echo "</tr>";

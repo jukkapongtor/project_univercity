@@ -22,8 +22,8 @@
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
 <?php
-		$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price,product_detail,product_type,product_quality,product_size,product_stock FROM product WHERE product_id='$_GET[product_id]'")or die("ERROR : product_function line 26");
-		list($product_id,$product_name,$product_price,$product_detail,$product_type,$product_quality,$product_size,$product_stock)=mysqli_fetch_row($query_product);
+		$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price_web,product_detail,product_type,product_quality,product_size,product_stock FROM product WHERE product_id='$_GET[product_id]'")or die("ERROR : product_function line 26");
+		list($product_id,$product_name,$product_price_web,$product_detail,$product_type,$product_quality,$product_size,$product_stock)=mysqli_fetch_row($query_product);
 ?>			<form method="post" action="ajax/product_update.php" enctype="multipart/form-data">
 				<div class='col-md-12' style="margin-top:20px;">
 					<div class="panel panel-default">
@@ -89,7 +89,7 @@
 					    	</tr>
 					    	<tr>
 						    	<td><p align='right'><b>ราคาสินค้า : </b></p></td>
-						    	<td><input class='form-control' type='text' name='product_price' value="<?php echo "$product_price";?>"></td>
+						    	<td><input class='form-control' type='text' name='product_price_web' value="<?php echo "$product_price_web";?>"></td>
 					    	</tr>
 					    	<tr>
 						    	<td><p align='right'><b>สถานะสินค้า : </b></p></td>

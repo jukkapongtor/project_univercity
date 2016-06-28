@@ -74,7 +74,7 @@
 		    	</tr>
 		    	<tr>
 			    	<td><p align='right'><b>ราคาสินค้า : </b></p></td>
-			    	<td><input class='form-control' type='text' name='product_price'></td>
+			    	<td><input class='form-control' type='text' name='product_price_web'></td>
 		    	</tr>
 		    	<tr>
 			    	<td><p align='right'><b>สถานะสินค้า : </b></p></td>

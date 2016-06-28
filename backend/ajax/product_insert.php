@@ -4,7 +4,7 @@
 	include("../../include/function.php");
 	connect_db();
 
-	if(empty($_POST['product_name'])||empty($_POST['product_type'])||empty($_POST['product_quality'])||empty($_POST['product_detail'])||empty($_POST['product_size'])||empty($_POST['product_price'])){
+	if(empty($_POST['product_name'])||empty($_POST['product_type'])||empty($_POST['product_quality'])||empty($_POST['product_detail'])||empty($_POST['product_size'])||empty($_POST['product_price_web'])){
 
 		echo "<script>alert('กรุณากรอกข้อมูลให้ครบถ้วน');window.location='../#ajax/product_add.php'</script>";
 	}else{
@@ -17,9 +17,9 @@
 
 
 		$_POST['product_stock'] = (empty($_POST['product_stock']))?0:1;
-		$sql ="INSERT INTO product VALUES('','$_POST[product_name]','$_POST[product_price]','$_POST[product_detail]','$_POST[product_type]','$_POST[product_quality]','$_POST[product_size]','$_POST[product_stock]','$image_name')";
+		$sql ="INSERT INTO product VALUES('','$_POST[product_name]','$_POST[product_price_web]','$_POST[product_price_web]','','','$_POST[product_detail]','$_POST[product_type]','$_POST[product_quality]','$_POST[product_size]','','$_POST[product_stock]','$image_name')";
 		mysqli_query($_SESSION['connect_db'],$sql)or die("ERROR : backend product insert line 21");
-		echo "<script>alert('กรุณากรอกข้อมูลให้ครบถ้วน');window.location='../#ajax/product_add.php'</script>";
+		echo "<script>alert('เพิ่มสินค้าเรียบร้อยแล้ว');window.location='../#ajax/product_add.php'</script>";
 
 	}
 

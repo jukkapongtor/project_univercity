@@ -41,13 +41,13 @@ function list_product(){
 	echo "<h3><b>รายการสินค้า / ร้านการสินค้าประเภท$type_product / หมวดหมู่$cate_name</b></h3>";
 	$quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 42");
     list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price,product_type,product_image FROM product WHERE product_type='$_GET[menu]' AND product_quality='$_GET[cate]'")or die("ERROR : product_function line 44");
-	while (list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_product)) {
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price_web,product_type,product_image FROM product WHERE product_type='$_GET[menu]' AND product_quality='$_GET[cate]'")or die("ERROR : product_function line 44");
+	while (list($product_id,$product_name,$product_price_web,$product_type,$product_image)=mysqli_fetch_row($query_product)) {
 		echo "<div class='col-md-3' style='margin-top:20px'>";
 			$folder = ($product_type==1)?"fern":"pots";
 			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$folder/$product_image' width='100%' height='300'><p><font style='font-size:20px'>$product_name</font></p></a>";
 			if($sellstatus==1){
-			echo "<p class='marginun20'><font size='3'>$product_price</font></p> ";
+			echo "<p class='marginun20'><font size='3'>$product_price_web</font></p> ";
 			}
 		echo "</div>";
 	}
@@ -56,8 +56,8 @@ function list_product(){
 
 function product_detail(){
 	
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product.product_price,product.product_detail,type.type_name,quality.quality_name,size.size_name,product.product_stock,product.product_image FROM product INNER JOIN type ON product.product_type = type.product_type INNER JOIN quality ON product.product_quality = quality.product_quality INNER JOIN size ON product.product_size = size.product_size WHERE product.product_id='$_GET[product_id]'")or die("ERROR : product_function line 47");
-	list($product_id,$product_name,$product_price,$product_detail,$product_type,$product_quality,$product_size,$product_stock,$product_image)=mysqli_fetch_row($query_product);
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product.product_price_web,product.product_detail,type.type_name,quality.quality_name,size.size_name,product.product_stock,product.product_image FROM product INNER JOIN type ON product.product_type = type.product_type INNER JOIN quality ON product.product_quality = quality.product_quality INNER JOIN size ON product.product_size = size.product_size WHERE product.product_id='$_GET[product_id]'")or die("ERROR : product_function line 47");
+	list($product_id,$product_name,$product_price_web,$product_detail,$product_type,$product_quality,$product_size,$product_stock,$product_image)=mysqli_fetch_row($query_product);
 		echo "<center><h4 style='margin-top:30px;font-size:45px'><b>$product_name</b></h4></center>";
 		echo "<div class='container-fluid'><div class='col-md-5'style='margin-top:20px'>";
 			$file = ($product_type=="เฟิร์น")?"fern":"pots";
@@ -69,7 +69,7 @@ function product_detail(){
 			$quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 64");
 	        list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
 	        if($sellstatus==1){
-				echo "<p style='font-size:25px'><b>ราคาสินค้า : </b> $product_price &nbsp;<b>บาท/(Bath)</b></p>";
+				echo "<p style='font-size:25px'><b>ราคาสินค้า : </b> $product_price_web &nbsp;<b>บาท/(Bath)</b></p>";
 			}
 			echo "<p style='font-size:25px'><b>ประเภทสินค้า : </b> $product_type</p>";
 			echo "<p style='font-size:25px'><b>หมวดหมู่สินค้า : </b> $product_quality</p>";
@@ -99,13 +99,13 @@ function product_detail(){
 
 
 	echo "<br class='clear'><div class='underline'></div>";
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price,product_type,product_image FROM product ORDER BY RAND() LIMIT 4")or die("ERROR : product_function line 65");
-	while (list($product_id,$product_name,$product_price,$product_type,$product_image)=mysqli_fetch_row($query_product)) {
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price_web,product_type,product_image FROM product ORDER BY RAND() LIMIT 4")or die("ERROR : product_function line 65");
+	while (list($product_id,$product_name,$product_price_web,$product_type,$product_image)=mysqli_fetch_row($query_product)) {
 		echo "<div class='col-md-3' style='margin-top:20px'>";
 			$file = ($product_type==1)?"fern":"pots";
 			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$file/$product_image' width='100%' height='200px'>";
 			echo "<p style='font-size:25px;'>$product_name</p></a>";
-			echo "<p style='font-size:20px;margin-top:-15px;'>$product_price</p></center>";
+			echo "<p style='font-size:20px;margin-top:-15px;'>$product_price_web</p></center>";
 		echo "</div>";
 	}
 }

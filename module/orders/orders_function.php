@@ -1,35 +1,42 @@
 <?php
 function order_insert(){
+
 	$total_price = 0;
 	$total_amount  = 0;
 	foreach ($_SESSION['cart_id'] as $key => $value) {
-		$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_name,product_price FROM product WHERE product_id='$key'")or die("ERROR : order function line 5");
-		list($product_name,$product_price)=mysqli_fetch_row($query_product);
-		$total_price+=($product_price*$value);
+		$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_name,product_price_web FROM product WHERE product_id='$key'")or die("ERROR : order function line 5");
+		list($product_name,$product_price_web)=mysqli_fetch_row($query_product);
+		$total_price+=($product_price_web*$value);
 		$total_amount +=$value;
 	}
-
-	$date_order = date("Y-m-d H:i:s");
-	$sql_insert_order = "INSERT INTO orders VALUES('','$_SESSION[login_name]','$date_order','24:00:00','1','$total_amount','$total_price','')";
-	mysqli_query($_SESSION['connect_db'],$sql_insert_order)or die("ERROR : order function line 14");
-	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders ORDER BY order_id DESC")or die("ERROR : order function line 15");
-	list($order_id) = mysqli_fetch_row($query_order);
-	$sql_insert_orderdetail ="INSERT INTO order_detail VALUES";
-	$number=1;
-	foreach ($_SESSION['cart_id'] as $key => $value) {
-		if(!empty($value)){
-			$sql_insert_orderdetail.= "('','$order_id','$key','$value')";
+	if($total_amount!=0){
+		$date_order = date("Y-m-d H:i:s");
+		$sql_insert_order = "INSERT INTO orders VALUES('','$_SESSION[login_name]','$date_order','24:00:00','1','$total_amount','$total_price','')";
+		mysqli_query($_SESSION['connect_db'],$sql_insert_order)or die("ERROR : order function line 14");
+		$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders ORDER BY order_id DESC")or die("ERROR : order function line 15");
+		list($order_id) = mysqli_fetch_row($query_order);
+		$sql_insert_orderdetail ="INSERT INTO order_detail VALUES";
+		$number=1;
+		foreach ($_SESSION['cart_id'] as $key => $value) {
+			
+			if($number!=count($_SESSION['cart_id']) && (!empty($value))&&$number!=1){
+				$sql_insert_orderdetail.=",";
+				
+			}
+			if($value!=0){
+				$sql_insert_orderdetail.= "('','$order_id','$key','$value')";
+				$number++;
+			}
+			
 		}
-		if($number!=count($_SESSION['cart_id'] )&&!empty($value)){
-			$sql_insert_orderdetail.=",";
-		}
-		$number++;
+		echo "$sql_insert_orderdetail";
+		mysqli_query($_SESSION['connect_db'],$sql_insert_orderdetail)or die("ERROR : order function line 28");
+		unset($_SESSION['cart_id']);
+		unset($_SESSION['total_amount']);
+		echo "<script>window.location='index.php?module=users&action=data_users&menu=3'</script>";
+	}else{
+		echo "<script>alert('กรุณาเพิ่มจำนวนสินค้าก่อนทำการยืนยันการซื้อ');window.location='index.php?module=users&action=data_users&menu=2';</script>";
 	}
-	
-	mysqli_query($_SESSION['connect_db'],$sql_insert_orderdetail)or die("ERROR : order function line 28");
-	unset($_SESSION['cart_id']);
-	unset($_SESSION['total_amount']);
-	echo "<script>window.location='index.php?module=users&action=data_users&menu=3'</script>";
 }
 
 function order_list(){
@@ -80,14 +87,14 @@ function order_list(){
 				        echo "<thead><tr><th>ลำดับ</th><th>ชื่อสินค้า</th><th>ราคา(ชิ้น)</th><th>จำนวน</th><th>รวมราคา</th></tr></thead><tbody>";
 				        $num=1;
 				        $total_price=0;
-				        $query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,product.product_price,order_detail.total_amount FROM order_detail LEFT JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = '$order_id'")or die("ERROR : order function line 82");
-				        while(list($product_name,$product_price,$total_amount)=mysqli_fetch_row($query_orderdetail)){
+				        $query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,product.product_price_web,order_detail.total_amount FROM order_detail LEFT JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = '$order_id'")or die("ERROR : order function line 82");
+				        while(list($product_name,$product_price_web,$total_amount)=mysqli_fetch_row($query_orderdetail)){
 				     		echo "<tr>";
 				     			echo "<td>$num</td>";
 				     			echo "<td>$product_name</td>";
-				     			echo "<td>$product_price</td>";
+				     			echo "<td>$product_price_web</td>";
 				     			echo "<td>$total_amount</td>";
-				     			$sum=$product_price*$total_amount;
+				     			$sum=$product_price_web*$total_amount;
 				     			$total_price+=$sum;
 				     			echo "<td>".number_format($sum)."</td>";
 				     		echo "</tr>";
