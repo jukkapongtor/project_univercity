@@ -8,8 +8,9 @@
 	mysqli_query($_SESSION['connect_db'],"DELETE FROM product WHERE product_type='$_GET[delete_type_id]'")or die("ERROR : backend type_delete_type_id line 8");
 	mysqli_query($_SESSION['connect_db'],"DELETE FROM quality WHERE quality_type='$_GET[delete_type_id]'")or die("ERROR : backend type_delete_type_id line 9");
 	mysqli_query($_SESSION['connect_db'],"DELETE FROM type WHERE product_type='$_GET[delete_type_id]'")or die("ERROR : backend type_delete_type_id line 10");
+	mysqli_query($_SESSION['connect_db'],"DELETE FROM size WHERE type_id='$_GET[delete_type_id]'")or die("ERROR : backend type_delete_type_id line 11");
 	
 	$folder = iconv("utf-8","tis-620",$type_name);
 	rmdir("../../images/{$folder}");
-	echo "<script>window.location='../#ajax/type_edit.php';</script>";
+	echo "<script>window.location='../#ajax/type_manage.php';</script>";
 ?>

@@ -182,9 +182,10 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-table"></i>
-						 <span >จัดการรายการสินค้า</span>
+						 <span >จัดการสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="ajax/type_manage.php">จัดการประเภทสินค้า</a></li>
 						<li><a class="ajax-link" href="ajax/product_add.php">เพิ่มรายการสินค้า</a></li>
 						<li><a class="ajax-link" href="ajax/product_list.php">แก้ไขรายการสินค้า</a></li>
 					</ul>
