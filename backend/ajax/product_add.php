@@ -24,61 +24,70 @@
 		  <div class="panel-heading"><h3>ฟอร์มเพิ่มรายการสินค้า</h3></div>
 		  <div class="panel-body">
 		    กรุณากรอกข้อมูลให้ครบตามเครื่องหมาย *<br><br>
-		    <table>
+		    <table width="100%">
 		    	<tr>
-		    		<td><p align='right'><b>ชื่อสินค้า : </b></p></td>
-		    		<td><input class='form-control' type='text' name='product_name'></td>
+		    		<td width="30%"><p><b>ชื่อสินค้า</b></p></td>
+		    		<td width="5%"><p><b>&nbsp;:&nbsp;</b></p></td>
+		    		<td width="65%"><p><input class='form-control' type='text' name='product_name'></p></td>
 		    	</tr>
 		    	<tr>
-		    		<td><p align='right'><b>ประเภทสินค้า : </b></p></td>
+		    		<td><p><b>ประเภทสินค้า</b></p></td>
+		    		<td><p><b>&nbsp;:&nbsp;</b></p></td>
 		    		<td>
 <?php			$query_type=mysqli_query($_SESSION['connect_db'],"SELECT product_type,type_name FROM type")or die("ERROR : product_add line 21");
-				echo "<select  name='product_type'>";
+				echo "<p><select class='form-control'  name='product_type'>";
 		    	while(list($product_type,$type_name)=mysqli_fetch_row($query_type)){
 		    		echo "<option value='$product_type'>$type_name</option>";
 		    	}
-		    	echo "</select>";
+		    	echo "</select></p>";
 ?>	
 					</td>
 		    	</tr>
 		    	<tr>
-		    		<td><p align='right'><b>หมวดหมู่สินค้า : </b></p></td>
+		    		<td><p><b>หมวดหมู่สินค้า</b></p></td>
+		    		<td><p><b>&nbsp;:&nbsp;</b></p></td>
 		    		<td>
 <?php			$query_quality=mysqli_query($_SESSION['connect_db'],"SELECT product_quality,quality_name FROM quality")or die("ERROR : product_add line 33");
-				echo "<select  name='product_quality'>";
+				echo "<p><select class='form-control' name='product_quality'>";
 		    	while(list($product_quality,$quality_name)=mysqli_fetch_row($query_quality)){
 		    		echo "<option value='$product_quality'>$quality_name</option>";
 		    	}
-		    	echo "</select>";
+		    	echo "</select></p>";
 ?>			    			
 		    		</td>
 		    	</tr>
 		    	<tr>
-		    		<td><p align='right'><b>รายละเอียดสินค้า : </b></p></td>
-		    		<td><textarea class='form-control'  name='product_detail'></textarea></td>
-		    	</tr>
-		    	<tr>
-		    		<td><p align='right'><b>ขนาดสินค้า : </b></p></td><td>
+		    		<td><p><b>ขนาดสินค้า</b></p></td>
+		    		<td><p><b>&nbsp;:&nbsp;</b></p></td>
+		    		<td>
 <?php			$query_size=mysqli_query($_SESSION['connect_db'],"SELECT product_size,size_name FROM size")or die("ERROR : product_add line 33");
-				echo "<select  name='product_size'>";
+				echo "<p><select class='form-control'  name='product_size'>";
 		    	while(list($product_size,$size_name)=mysqli_fetch_row($query_size)){
 		    		echo "<option value='$product_size'>$size_name</option>";
 		    	}
-		    	echo "</select>";
+		    	echo "</select></p>";
 ?>				    		
 		    		</td>
 		    	</tr>
 		    	<tr>
-			    	<td><p align='right'><b>รูปภาพ : </b></p></td>
-			    	<td><input type='file' name='product_image'></td>
+		    		<td valign="top"><p><b>รายละเอียดสินค้า</b></p></td>
+		    		<td valign="top"><p><b>&nbsp;:&nbsp;</b></p></td>
+		    		<td><p><textarea class='form-control'  name='product_detail'></textarea></p></td>
 		    	</tr>
 		    	<tr>
-			    	<td><p align='right'><b>ราคาสินค้า : </b></p></td>
-			    	<td><input class='form-control' type='text' name='product_price_web'></td>
+			    	<td><p><b>รูปภาพ</b></p></td>
+		    		<td><p><b>&nbsp;:&nbsp;</b></p></td>
+			    	<td><p><input type='file' name='product_image'></p></td>
 		    	</tr>
 		    	<tr>
-			    	<td><p align='right'><b>สถานะสินค้า : </b></p></td>
-			    	<td><input type='checkbox' name='product_stock' value='1'>พร้อมจำหน่าย</td>
+			    	<td><p><b>ราคาสินค้า</b></p></td>
+		    		<td><p><b>&nbsp;:&nbsp;</b></p></td>
+			    	<td><p><input class='form-control' type='text' name='product_price_web'></p></td>
+		    	</tr>
+		    	<tr>
+			    	<td><p><b>สถานะสินค้า</b></p></td>
+		    		<td><p><b>&nbsp;:&nbsp;</b></p></td>
+			    	<td><p><input type='checkbox' name='product_stock' value='1'>&nbsp;&nbsp;พร้อมจำหน่าย</p></td>
 		    	</tr>
 		    </table>
 		    <p align="right"><input class='btn btn-sm btn-success' type='submit' value="เพิ้มสินค้า"></p>

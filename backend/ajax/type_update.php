@@ -50,6 +50,6 @@
 	$folder_new = iconv("utf-8","tis-620",$_POST['type_name']);
 
 	rename("../../images/{$folder_old}","../../images/{$folder_new}");
-	//echo "<script>window.location='../#ajax/type_edit.php'</script>";
+	echo "<script>window.location='../#ajax/type_manage.php'</script>";
 
 ?>

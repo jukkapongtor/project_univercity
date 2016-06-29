@@ -121,15 +121,21 @@ $(document).ready(function() {
 					    			echo "<div class='input_fields_wrap2' >";
 					    			$query_size = mysqli_query($_SESSION['connect_db'],"SELECT product_size,size_name FROM size WHERE type_id ='$product_type'")or die("ERROR : backend type_edit line 103");
 					    			$num=1;
-					    			while(list($product_size,$size_name)=mysqli_fetch_row($query_size)){
-					    				if($num==1){
-					    					$num++;
-					    					echo "<div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' name='unit_name[]' value='$size_name'></div>";
-					    					echo "<button class='add_field_button2 btn btn-primary' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/add.png' width='12px' height='12px' ></button>";
-					    				}else{
-					    					echo "<div class='remove2' style='margin-bottom:2px'><div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' name='unit_name[]' value='$size_name'></div><button  class='remove_field2 btn btn-danger' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/minus.png' width='12px' height='12px' ></button></div>";
-					    				}
-					    				echo "<input type='hidden' name='size_id[]' value='$product_size'>";
+					    			$rows = mysqli_num_rows($query_size);
+					    			if(empty($rows)){
+					    				echo "<div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' name='unit_name[]'></div>";
+						    			echo "<button class='add_field_button2 btn btn-primary' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/add.png' width='12px' height='12px' ></button>";
+					    			}else{
+						    			while(list($product_size,$size_name)=mysqli_fetch_row($query_size)){
+						    				if($num==1){
+						    					$num++;
+						    					echo "<div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' name='unit_name[]' value='$size_name'></div>";
+						    					echo "<button class='add_field_button2 btn btn-primary' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/add.png' width='12px' height='12px' ></button>";
+						    				}else{
+						    					echo "<div class='remove2' style='margin-bottom:2px'><div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' name='unit_name[]' value='$size_name'></div><button  class='remove_field2 btn btn-danger' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/minus.png' width='12px' height='12px' ></button></div>";
+						    				}
+						    				echo "<input type='hidden' name='size_id[]' value='$product_size'>";
+						    			}
 					    			}
 					    			echo "</div>";
 					    		echo "</td>";
