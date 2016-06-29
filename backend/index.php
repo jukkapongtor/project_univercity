@@ -186,6 +186,7 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/type_manage.php">จัดการประเภทสินค้า</a></li>
+						<li><a class="ajax-link" href="ajax/quality_manage.php">จัดการหมวดหมู่สินค้า</a></li>
 						<li><a class="ajax-link" href="ajax/product_add.php">เพิ่มรายการสินค้า</a></li>
 						<li><a class="ajax-link" href="ajax/product_list.php">แก้ไขรายการสินค้า</a></li>
 					</ul>
