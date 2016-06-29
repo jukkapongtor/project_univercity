@@ -194,26 +194,6 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-table"></i>
-						 <span >จัดการประเภทสินค้า</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/type_add.php">เพิ่มประเภทสินค้า</a></li>
-						<li><a class="ajax-link" href="ajax/type_edit.php">แก้ไขประเภทสินค้า</a></li>
-					</ul>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
-						 <span >จัดการหมวดหมู่สินค้า</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/quality_add.php">เพิ่มหมวดหมู่สินค้า</a></li>
-						<li><a class="ajax-link" href="ajax/quality_edit.php">แก้ไขหมวดหมู่สินค้า</a></li>
-					</ul>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
 						 <span >จัดการค่าใช้จ่าย</span>
 					</a>
 					<ul class="dropdown-menu">
