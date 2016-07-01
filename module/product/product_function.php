@@ -41,73 +41,192 @@ function list_product(){
 	echo "<h3><b>รายการสินค้า / ร้านการสินค้าประเภท$type_product / หมวดหมู่$cate_name</b></h3>";
 	$quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 42");
     list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price_web,product_type,product_image FROM product WHERE product_type='$_GET[menu]' AND product_quality='$_GET[cate]'")or die("ERROR : product_function line 44");
-	while (list($product_id,$product_name,$product_price_web,$product_type,$product_image)=mysqli_fetch_row($query_product)) {
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_type='$_GET[menu]' AND product.product_quality='$_GET[cate]'")or die("ERROR : product_function line 44");
+	while (list($product_id,$product_name,$product_type)=mysqli_fetch_row($query_product)) {
 		echo "<div class='col-md-3' style='margin-top:20px'>";
-			$folder = ($product_type==1)?"fern":"pots";
-			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$folder/$product_image' width='100%' height='300'><p><font style='font-size:20px'>$product_name</font></p></a>";
-			if($sellstatus==1){
-			echo "<p class='marginun20'><font size='3'>$product_price_web</font></p> ";
-			}
+		$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
+		list($product_image_detail)=mysqli_fetch_row($query_image);
+		$path= (empty($product_image_detail))?"icon/no-images.jpg":"$product_type/$product_image_detail";
+			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='300'><p><font style='font-size:20px'>$product_name</font></p></a>";
 		echo "</div>";
 	}
 	echo "</div>";
 }
 
 function product_detail(){
-	
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product.product_price_web,product.product_detail,type.type_name,quality.quality_name,size.size_name,product.product_stock,product.product_image FROM product INNER JOIN type ON product.product_type = type.product_type INNER JOIN quality ON product.product_quality = quality.product_quality INNER JOIN size ON product.product_size = size.product_size WHERE product.product_id='$_GET[product_id]'")or die("ERROR : product_function line 47");
-	list($product_id,$product_name,$product_price_web,$product_detail,$product_type,$product_quality,$product_size,$product_stock,$product_image)=mysqli_fetch_row($query_product);
-		echo "<center><h4 style='margin-top:30px;font-size:45px'><b>$product_name</b></h4></center>";
-		echo "<div class='container-fluid'><div class='col-md-5'style='margin-top:20px'>";
-			$file = ($product_type=="เฟิร์น")?"fern":"pots";
-			echo "<img src='images/$file/$product_image' width='100%' height='500' style='border-radius:5px;'>";
-		echo "</div>";
-		echo "<div class='col-md-7' style='margin-top:20px'>";
-			$product_detail =(empty($product_detail))?"ไม่มีรายละเอียดของข้อมูลสินค้า":$product_detail;
-			echo "<p style='font-size:25px'><b>รายละเอียดสินค้า :</b><br>&nbsp;&nbsp;&nbsp;&nbsp;$product_detail</p>";
-			$quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 64");
-	        list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
-	        if($sellstatus==1){
-				echo "<p style='font-size:25px'><b>ราคาสินค้า : </b> $product_price_web &nbsp;<b>บาท/(Bath)</b></p>";
-			}
-			echo "<p style='font-size:25px'><b>ประเภทสินค้า : </b> $product_type</p>";
-			echo "<p style='font-size:25px'><b>หมวดหมู่สินค้า : </b> $product_quality</p>";
-			echo "<p style='font-size:25px'><b>ขนาดสินค้า : </b> $product_size</p>";
-			echo "<p style='font-size:25px'><b>สถานะสินค้า : </b> $product_stock</p>";
-			echo "<div class='row'>";
-			if($sellstatus==1){
-			  echo "<div class='col-lg-3'></div>";
-			  echo "<div class='col-lg-4'>";
-			    echo "<div class='input-group'>";
-			      echo "<span class='input-group-btn'>";
-			        echo "<button class='btn btn-default' id='lower_indetail' type='button'>ลบ</button>";
-			      echo "</span>";
-			      echo "<input type='text' class='form-control' id='product_amountindetail' value='1'>";
-			      echo "<span class='input-group-btn'>";
-			        echo "<button class='btn btn-default' id='push_indetail' type='button'>บวก</button>";
-			      echo "</span>";
-			    echo "</div>";
-			  echo "</div>";
-			  echo "<div class='col-lg-2'>";
-			    echo "<input type='hidden' id='product_id' value='$product_id'>";
-			  	echo "<p align='center'><a id='add2cart'><button type='button' class='btn btn-default btn-sm'><font style='font-size:15px'><b>หยิบสินค้า</b></font></button></a></p>";
-			  echo "</div>";
-			 echo "</div>";
-			}	
-		echo "</div></div>";
 
+	$quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 64");
+	list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
+	$query_product_detail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,product.product_detail,quality.quality_name,product.product_stock,type.type_name FROM product LEFT JOIN quality ON product.product_quality = quality.product_quality LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id='$_GET[product_id]'")or die("ERROR : product_function line 59");
+	list($product_name,$product_detail,$quality_name,$product_stock,$product_type)=mysqli_fetch_row($query_product_detail);
+	echo "<div class='container-fluid'>";
+	    echo "<div class='col-md-5'style='margin-top:20px'>";
+	    $query_images_detail = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$_GET[product_id]'")or die("ERROR : product_function line 200");
+	    $number_image=1;
+	    $row_image = mysqli_num_rows($query_images_detail);
+	    if(!empty($row_image)){
+		    while(list($product_image_detail)=mysqli_fetch_row($query_images_detail)){
+		    	$path= (empty($product_image_detail))?"icon/no-images.jpg":"$product_type/$product_image_detail";
+		    	if($number_image==1){
+		    	echo "<div class='col-md-12'>";
+					echo "<img src='images/$path' width='100%' height='350' style='border-radius:5px;'>";
+				echo "</div>";
+				$number_image++;
+				}
+				echo "<div class='col-md-3' style='padding:5px'>";
+					echo "<img src='images/$path' width='100%' height='75' style='border-radius:5px;'>";
+				echo "</div>";
+			}
+		}else{
+			echo "<div class='col-md-12'>";
+				echo "<img src='images/icon/no-images.jpg' width='100%' height='350' style='border-radius:5px;'>";
+			echo "</div>";
+		}
+	    echo "</div>";
+	    echo "<div class='col-md-7'style='margin-top:20px'>";
+		   	 echo "<table width='100%' style='font-size:22px'>";
+	     		echo "<tr>";
+	      			echo "<td width='25%'><p><b>ชื่อสินต้า</b></p></td>";
+	      			echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
+	      			echo "<td><p>$product_name</p></td>";
+	      		echo "</tr>";
+	      		echo "<tr>";
+	      			echo "<td><p><b>รายละเอียดสินค้า</b></p></td>";
+	      			echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
+	      			$product_detail =(empty($product_detail))?"ไม่มีรายละเอียดของข้อมูลสินค้า":$product_detail;
+	      			echo "<td><p>$product_detail</p></td>";
+	      		echo "</tr>";
+	      		echo "<tr>";
+	      			echo "<td><p><b>ประเภทสินค้า</b></p></td>";
+	      			echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
+	      			echo "<td><p>$product_type</p></td>";
+				echo "</tr>";
+				echo "<tr>";
+					echo "<td><p><b>หมวดหมู่สินค้า</b></p></td>";
+					echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
+					echo "<td><p>$quality_name</p></td>";
+				echo "</tr>";
+				echo "<tr>";
+					echo "<td><p><b>สถานะสินค้า</b></p></td>";
+					echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
+					$stock = (empty($product_stock))?"ไม่พร้อมจำหน่าย":"พร้อมจำหน่าย";
+					echo "<td><p>$stock</p></td>";
+				echo "</tr>";
+				echo "<tr>";
+					echo "<td valign='top'><p><b>ขนาดสินค้า</b></p></td>";
+					echo "<td valign='top'><p><b>&nbsp;:&nbsp;</b></p></td>";
+					echo "<td>";
+					$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size.product_size_id,size.size_name,product_size.product_amount_keep,product_size.product_amount_shop,product_size.product_amount_web,product_size.product_price_shop,product_size.product_sprice_shop,product_size.product_price_web,product_size.product_sprice_web FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size WHERE product_size.product_id ='$_GET[product_id]'");
+					$number=1;
+					
+					while(list($size_id,$size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
+						echo "<div class='col-md-12'><p><b>ขนาดสินที่ $number : </b> $size_name</p></div>";	
+						echo "<div class='col-md-3' style='font-size:18px;'><p><b>จำนวน</b></p></div>";
+						echo "<div class='col-md-3' style='font-size:18px;'><p>$product_amount_web</p></div>";
+						if($sellstatus==1){
+						echo "<div class='col-md-3' style='font-size:18px;'><p><b>ราคา(Batn)</b></p></div>";
+						echo "<div class='col-md-3' style='font-size:18px;'><p>$product_price_web</p></div>";
+						}
+						$number++;
+						if($sellstatus==1){
+						  echo "<div class='col-lg-2'></div>";
+						  echo "<div class='col-lg-6'>";
+						    echo "<div class='input-group'>";
+						      echo "<span class='input-group-btn'>";
+						        echo "<button class='btn btn-default' id='lower_indetail_$size_id' type='button'>ลบ</button>";
+						      echo "</span>";
+						      echo "<input type='text' class='form-control' id='product_amountindetail_$size_id' value='0'>";
+						      echo "<span class='input-group-btn'>";
+						        echo "<button class='btn btn-default' id='push_indetail_$size_id' type='button'>บวก</button>";
+						      echo "</span>";
+						    echo "</div>";
+						  echo "</div>";
+						  echo "<div class='col-lg-2'>";
+						    echo "<input type='hidden' id='product_id' value='$_GET[product_id]'>";
+						  	echo "<p align='center'><a id='add2cart_$size_id'><button type='button' class='btn btn-default btn-sm'><font style='font-size:15px'><b>หยิบสินค้า</b></font></button></a></p>";
+						  echo "</div>";
+						 echo "</div>";
+						}	
+					    
+					  echo "</div>";
+					}
+					echo "</td>";
+				echo "</tr>";
+			echo "</table>";
+		echo "</div>";
+	echo "</div>";
 
 	echo "<br class='clear'><div class='underline'></div>";
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price_web,product_type,product_image FROM product ORDER BY RAND() LIMIT 4")or die("ERROR : product_function line 65");
-	while (list($product_id,$product_name,$product_price_web,$product_type,$product_image)=mysqli_fetch_row($query_product)) {
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product LEFT JOIN type ON product.product_type = type.product_type ORDER BY RAND() LIMIT 4")or die("ERROR : product_function line 65");
+	while (list($product_id,$product_name,$product_type)=mysqli_fetch_row($query_product)) {
 		echo "<div class='col-md-3' style='margin-top:20px'>";
-			$file = ($product_type==1)?"fern":"pots";
-			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$file/$product_image' width='100%' height='200px'>";
+			$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
+			list($product_image_detail)=mysqli_fetch_row($query_image);
+			$path= (empty($product_image_detail))?"icon/no-images.jpg":"$product_type/$product_image_detail";
+			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='200px'>";
 			echo "<p style='font-size:25px;'>$product_name</p></a>";
-			echo "<p style='font-size:20px;margin-top:-15px;'>$product_price_web</p></center>";
 		echo "</div>";
 	}
+
+	echo "<script>";
+		echo "$(document).ready(function() {";
+			$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size_id,product_amount_web FROM product_size WHERE product_size.product_id ='$_GET[product_id]'");
+					$number=1;
+			while(list($size_id,$product_amount_web)=mysqli_fetch_row($query_size)){
+			echo "$('#push_indetail_$size_id').click(function() {";
+	            echo "var product_indetail = document.getElementById('product_amountindetail_$size_id').value;";
+	            echo "var max_product = $product_amount_web;";
+	            echo "product_indetail++;";
+	            echo "if(product_indetail<=max_product){";
+	            echo "document.getElementById('product_amountindetail_$size_id').value=product_indetail;";
+	            echo "}else{";
+	            echo "alert('สินค้าไม่พอจำหน่าย');";
+	            echo "}";
+	        echo "});";
+	        echo "$('#lower_indetail_$size_id').click(function() {";
+	            echo "var product_indetail = document.getElementById('product_amountindetail_$size_id').value;";
+	            echo "if(product_indetail>1){";
+	                echo "product_indetail--;";
+	                echo "document.getElementById('product_amountindetail_$size_id').value=product_indetail;";
+	            echo "}";
+	        echo "});";
+        
+	        echo "$('#add2cart_$size_id').click(function() {";
+	            if(empty($_SESSION['login_name'])){
+	                echo "alert('การซื้อสินค้าทำได้เฉพาะสมาชิกเท่านั้น');";
+	            }else{
+	                echo "stop=0;";
+	                echo "var product_id = document.getElementById('product_id').value;";
+	                if(!empty($_SESSION['cart_id'])){
+	                    foreach ($_SESSION['cart_id'] as $key => $value) {
+	                        echo "if('$key'=='$size_id'){";
+	                            echo "alert('สินค้าชิ้นนี้ถูกเพิ่มในตะกร้าสินค้าเรียบร้อยแล้ว');";
+	                            echo "stop=1;";
+	                        echo "}";
+	                    }
+	                }
+	                echo "if(stop==0){";
+	                echo "var product_indetail = parseInt(document.getElementById('product_amountindetail_$size_id').value);";
+	                echo "var amount_incart = parseInt(document.getElementById('total_amountincart').innerHTML);";
+	                echo "if(isNaN(amount_incart)){";
+	                   echo " amount_incart =0;";
+	                echo "}";
+	                echo "total = product_indetail +amount_incart;";
+	                echo "$('#total_amountincart').show();";
+	                echo "document.getElementById('total_amountincart').innerHTML =total;";
+	                echo "$.post('module/index.php?data=addproduct_cart',{product_id:product_id,amount:product_indetail,size_id:$size_id},function(data){";
+	                echo "});";
+	                echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:total},function(data){";
+	                echo "});";
+	                echo "alert('เพิ่มสินค้าลงในตะกร้าแล้ว');";
+	                echo "window.location='index.php?module=product&action=product_detail&product_id="."'+product_id+'"."';";
+	                echo "}";
+	            }
+	        echo "});";
+			}
+		echo "});";
+	echo "</script>";
+
 }
 
 ?>

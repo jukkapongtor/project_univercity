@@ -123,54 +123,8 @@
             });
             return false;
         });
-
-        $('#push_indetail').click(function() {
-            var product_indetail = document.getElementById('product_amountindetail').value;
-            product_indetail++;
-            document.getElementById('product_amountindetail').value=product_indetail;
-        });
-        $('#lower_indetail').click(function() {
-            var product_indetail = document.getElementById('product_amountindetail').value;
-            if(product_indetail>1){
-                product_indetail--;
-                document.getElementById('product_amountindetail').value=product_indetail;
-            }
-            
-        });
 <?php
-        
-        echo "$('#add2cart').click(function() {";
-            if(empty($_SESSION['login_name'])){
-                echo "alert('การซื้อสินค้าทำได้เฉพาะสมาชิกเท่านั้น');";
-            }else{
-                echo "stop=0;";
-                echo "var product_id = document.getElementById('product_id').value;";
-                if(!empty($_SESSION['cart_id'])){
-                    foreach ($_SESSION['cart_id'] as $key => $value) {
-                        echo "if('$key'==product_id){";
-                            echo "alert('สินค้าชิ้นนี้ถูกเพิ่มในตะกร้าสินค้าเรียบร้อยแล้ว');";
-                            echo "stop=1;";
-                        echo "}";
-                    }
-                }
-                echo "if(stop==0){";
-                echo "var product_indetail = parseInt(document.getElementById('product_amountindetail').value);";
-                echo "var amount_incart = parseInt(document.getElementById('total_amountincart').innerHTML);";
-                echo "if(isNaN(amount_incart)){";
-                   echo " amount_incart =0;";
-                echo "}";
-                echo "total = product_indetail +amount_incart;";
-                echo "$('#total_amountincart').show();";
-                echo "document.getElementById('total_amountincart').innerHTML =total;";
-                echo "$.post('module/index.php?data=addproduct_cart',{product_id:product_id,amount:product_indetail},function(data){";
-                echo "});";
-                echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:total},function(data){";
-                echo "});";
-                echo "alert('เพิ่มสินค้าลงในตะกร้าแล้ว');";
-                echo "window.location='index.php?module=product&action=product_detail&product_id="."'+product_id+'"."';";
-                echo "}";
-            }
-        echo "});";
+/*
         if(!empty($_SESSION['cart_id'])){
             foreach ($_SESSION['cart_id'] as $key => $value) {
                 $query_price_product = mysqli_query($_SESSION['connect_db'],"SELECT product_price_web FROM product WHERE product_id='$key'")or die("ERROR index line 174");
@@ -213,7 +167,7 @@
                 echo "});";
             }
         }
-        
+*/
 ?>
             $("#message_bold").click(function(){
                 var message = document.getElementById('webboard_message').value;
