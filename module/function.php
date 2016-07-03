@@ -71,4 +71,8 @@ function plus_like(){
 function lower_like(){
 	mysqli_query($_SESSION['connect_db'],"DELETE FROM like_status WHERE like_name_id = '$_POST[webboard_id]' AND username ='$_SESSION[login_name]' AND like_name='webboard'")or die("ERROR : imodule function line 71");
 }
+function close_web(){
+		$_SESSION['web_close']=1;
+		echo "<script>window.location='../index.php'</script>";
+}
 ?>

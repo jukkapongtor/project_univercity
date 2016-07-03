@@ -127,6 +127,14 @@
                 var message = document.getElementById('webboard_message').value;
                 document.getElementById('webboard_message').value= message+"<b></b>";
             });
+
+            $("#button-close-web").click(function(){
+                $("#close-web").hide();
+                $("#button-close-web").hide();
+                $("#image-close-web").hide();
+                $.post('module/index.php?data=close_web',{close_web:1},function(data){
+                });
+            });
         });
  </script>
 <?php
@@ -166,6 +174,16 @@ echo "</script>";
 <!-- Button trigger modal -->
 
 <div class="display_com">
+<?php
+    $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT open_web FROM web_page")or die("ERROR : index line 260");
+    list($open_web)=mysqli_fetch_row($quality_sellstatus);
+    if($open_web==1){
+        if(empty($_SESSION['web_close'])){
+            echo "<div id='close-web'></div>";
+        }      
+    }
+    
+?>
     <div class="header">
         <a href='index.php' style='text-decoration: none;'><div class="header-logo">
             <div class="header-logo-img"><img src="images/icon/logomumfern.png" width="100%" height="100%"></div>
@@ -258,17 +276,24 @@ echo "</script>";
     </div>
     <div class="clear"></div>
     <div class="container-fluid"> 
+    
         <div class="col-md-2"></div>
         <div class="col-md-8" style="background:#fff;padding:60px 0px 10px 0px;">
 <?php
+        if($open_web==1){
+            if(empty($_SESSION['web_close'])){   
+                echo "<div id='button-close-web'><img src='images/icon/close.png' width='19' height='19'></div>";
+                echo "<img src ='images/background/close-web.png' id='image-close-web'>";
+            }
+        }
         if(!empty($module)){
             get_module($module,$action);
         }else{
 ?>
             <div id="carousel-example-generic" class="carousel slide " data-ride="carousel">
               <!-- Indicators -->
-              <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+              <ol class="carousel-indicators" style="z-index:1">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active" ></li>
                 <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                 <li data-target="#carousel-example-generic" data-slide-to="2"></li>
               </ol>
