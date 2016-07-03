@@ -123,52 +123,6 @@
             });
             return false;
         });
-<?php
-/*
-        if(!empty($_SESSION['cart_id'])){
-            foreach ($_SESSION['cart_id'] as $key => $value) {
-                $query_price_product = mysqli_query($_SESSION['connect_db'],"SELECT product_price_web FROM product WHERE product_id='$key'")or die("ERROR index line 174");
-                list($product_price_web)=mysqli_fetch_row($query_price_product);
-                echo "$('#push_incart_$key').click(function() {";
-                    echo "var product_incart = document.getElementById('product_amountincart_$key').value;";
-                    echo "var total_incart = parseInt(document.getElementById('total_incart').innerHTML);";
-                    echo "var amount_incart = parseInt(document.getElementById('total_amountincart').innerHTML);";
-                    echo "product_incart++;";
-                    echo "document.getElementById('product_amountincart_$key').value=product_incart;";
-                    echo "var sum = product_incart * $product_price_web;";
-                    echo "var total = $product_price_web + total_incart;";
-                    echo "amount_incart++;";
-                    echo "document.getElementById('sum_incart_$key').innerHTML =sum;";
-                    echo "document.getElementById('total_incart').innerHTML =total;";
-                    echo "document.getElementById('total_amountincart').innerHTML=amount_incart;";
-                    echo "$.post('module/index.php?data=addproduct_cart',{product_id:'$key',amount:product_incart},function(data){";
-                    echo "});";
-                    echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
-                    echo "});";
-                echo "});";
-                echo "$('#lower_incart_$key').click(function() {";
-                    echo "var product_incart = document.getElementById('product_amountincart_$key').value;";
-                    echo "var total_incart = parseInt(document.getElementById('total_incart').innerHTML);";
-                    echo "var amount_incart = parseInt(document.getElementById('total_amountincart').innerHTML);";
-                    echo "if(product_incart>0){";
-                        echo "product_incart--;";
-                        echo "document.getElementById('product_amountincart_$key').value=product_incart;";
-                        echo "var sum = product_incart * $product_price_web;";
-                        echo "var total = total_incart - $product_price_web ;";
-                        echo "amount_incart--;";
-                        echo "document.getElementById('sum_incart_$key').innerHTML =sum;";
-                        echo "document.getElementById('total_incart').innerHTML =total;";
-                        echo "document.getElementById('total_amountincart').innerHTML=amount_incart;";
-                        echo "$.post('module/index.php?data=addproduct_cart',{product_id:'$key',amount:product_incart},function(data){";
-                        echo "});";
-                        echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
-                        echo "});";
-                    echo "}";
-                echo "});";
-            }
-        }
-*/
-?>
             $("#message_bold").click(function(){
                 var message = document.getElementById('webboard_message').value;
                 document.getElementById('webboard_message').value= message+"<b></b>";
@@ -176,6 +130,7 @@
         });
  </script>
 <?php
+/*
 echo "<script>";
     echo "$(document).ready(function() {";
             echo "$('#plus_like').click(function(){";
@@ -201,6 +156,7 @@ echo "<script>";
             echo "});";
     echo "});";
 echo "</script>";
+*/
 ?>
 
  

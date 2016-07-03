@@ -57,7 +57,7 @@ function zipcode(){
 }
 function addproduct_cart(){
 
-		$_SESSION['cart_id'][$_POST['size_id']] =array("product_id"=>"$_POST[product_id]","amount"=>"$_POST[amount]");	
+		$_SESSION['cart_id'][$_POST['product_size_id']] =array("product_id"=>"$_POST[product_id]","amount"=>"$_POST[amount]");	
 		
 }
 function amounttotal_cart(){

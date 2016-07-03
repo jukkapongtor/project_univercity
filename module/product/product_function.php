@@ -116,10 +116,10 @@ function product_detail(){
 					echo "<td valign='top'><p><b>ขนาดสินค้า</b></p></td>";
 					echo "<td valign='top'><p><b>&nbsp;:&nbsp;</b></p></td>";
 					echo "<td>";
-					$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size.product_size_id,size.size_name,product_size.product_amount_keep,product_size.product_amount_shop,product_size.product_amount_web,product_size.product_price_shop,product_size.product_sprice_shop,product_size.product_price_web,product_size.product_sprice_web FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size WHERE product_size.product_id ='$_GET[product_id]'");
+					$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size.product_size_id,product_size.size_id,size.size_name,product_size.product_amount_keep,product_size.product_amount_shop,product_size.product_amount_web,product_size.product_price_shop,product_size.product_sprice_shop,product_size.product_price_web,product_size.product_sprice_web FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size WHERE product_size.product_id ='$_GET[product_id]'");
 					$number=1;
 					
-					while(list($size_id,$size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
+					while(list($product_size_id,$size_id,$size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
 						echo "<div class='col-md-12'><p><b>ขนาดสินที่ $number : </b> $size_name</p></div>";	
 						echo "<div class='col-md-3' style='font-size:18px;'><p><b>จำนวน</b></p></div>";
 						echo "<div class='col-md-3' style='font-size:18px;'><p>$product_amount_web</p></div>";
@@ -133,17 +133,17 @@ function product_detail(){
 						  echo "<div class='col-lg-6'>";
 						    echo "<div class='input-group'>";
 						      echo "<span class='input-group-btn'>";
-						        echo "<button class='btn btn-default' id='lower_indetail_$size_id' type='button'>ลบ</button>";
+						        echo "<button class='btn btn-default' id='lower_indetail_$product_size_id' type='button'>ลบ</button>";
 						      echo "</span>";
-						      echo "<input type='text' class='form-control' id='product_amountindetail_$size_id' value='0'>";
+						      echo "<input type='text' class='form-control' id='product_amountindetail_$product_size_id' value='0'>";
 						      echo "<span class='input-group-btn'>";
-						        echo "<button class='btn btn-default' id='push_indetail_$size_id' type='button'>บวก</button>";
+						        echo "<button class='btn btn-default' id='push_indetail_$product_size_id' type='button'>บวก</button>";
 						      echo "</span>";
 						    echo "</div>";
 						  echo "</div>";
 						  echo "<div class='col-lg-2'>";
 						    echo "<input type='hidden' id='product_id' value='$_GET[product_id]'>";
-						  	echo "<p align='center'><a id='add2cart_$size_id'><button type='button' class='btn btn-default btn-sm'><font style='font-size:15px'><b>หยิบสินค้า</b></font></button></a></p>";
+						  	echo "<p align='center'><a id='add2cart_$product_size_id'><button type='button' class='btn btn-default btn-sm'><font style='font-size:15px'><b>หยิบสินค้า</b></font></button></a></p>";
 						  echo "</div>";
 						 echo "</div>";
 						}	
@@ -170,28 +170,28 @@ function product_detail(){
 
 	echo "<script>";
 		echo "$(document).ready(function() {";
-			$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size_id,product_amount_web FROM product_size WHERE product_size.product_id ='$_GET[product_id]'");
+			$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size_id,size_id,product_amount_web FROM product_size WHERE product_size.product_id ='$_GET[product_id]'");
 					$number=1;
-			while(list($size_id,$product_amount_web)=mysqli_fetch_row($query_size)){
-			echo "$('#push_indetail_$size_id').click(function() {";
-	            echo "var product_indetail = document.getElementById('product_amountindetail_$size_id').value;";
+			while(list($product_size_id,$size_id,$product_amount_web)=mysqli_fetch_row($query_size)){
+			echo "$('#push_indetail_$product_size_id').click(function() {";
+	            echo "var product_indetail = document.getElementById('product_amountindetail_$product_size_id').value;";
 	            echo "var max_product = $product_amount_web;";
 	            echo "product_indetail++;";
 	            echo "if(product_indetail<=max_product){";
-	            echo "document.getElementById('product_amountindetail_$size_id').value=product_indetail;";
+	            echo "document.getElementById('product_amountindetail_$product_size_id').value=product_indetail;";
 	            echo "}else{";
 	            echo "alert('สินค้าไม่พอจำหน่าย');";
 	            echo "}";
 	        echo "});";
-	        echo "$('#lower_indetail_$size_id').click(function() {";
-	            echo "var product_indetail = document.getElementById('product_amountindetail_$size_id').value;";
-	            echo "if(product_indetail>1){";
+	        echo "$('#lower_indetail_$product_size_id').click(function() {";
+	            echo "var product_indetail = document.getElementById('product_amountindetail_$product_size_id').value;";
+	            echo "if(product_indetail>=1){";
 	                echo "product_indetail--;";
-	                echo "document.getElementById('product_amountindetail_$size_id').value=product_indetail;";
+	                echo "document.getElementById('product_amountindetail_$product_size_id').value=product_indetail;";
 	            echo "}";
 	        echo "});";
         
-	        echo "$('#add2cart_$size_id').click(function() {";
+	        echo "$('#add2cart_$product_size_id').click(function() {";
 	            if(empty($_SESSION['login_name'])){
 	                echo "alert('การซื้อสินค้าทำได้เฉพาะสมาชิกเท่านั้น');";
 	            }else{
@@ -199,27 +199,29 @@ function product_detail(){
 	                echo "var product_id = document.getElementById('product_id').value;";
 	                if(!empty($_SESSION['cart_id'])){
 	                    foreach ($_SESSION['cart_id'] as $key => $value) {
-	                        echo "if('$key'=='$size_id'){";
+	                        echo "if('$key'=='$product_size_id'){";
 	                            echo "alert('สินค้าชิ้นนี้ถูกเพิ่มในตะกร้าสินค้าเรียบร้อยแล้ว');";
 	                            echo "stop=1;";
 	                        echo "}";
 	                    }
 	                }
 	                echo "if(stop==0){";
-	                echo "var product_indetail = parseInt(document.getElementById('product_amountindetail_$size_id').value);";
+	                echo "var product_indetail = parseInt(document.getElementById('product_amountindetail_$product_size_id').value);";
 	                echo "var amount_incart = parseInt(document.getElementById('total_amountincart').innerHTML);";
-	                echo "if(isNaN(amount_incart)){";
-	                   echo " amount_incart =0;";
-	                echo "}";
-	                echo "total = product_indetail +amount_incart;";
-	                echo "$('#total_amountincart').show();";
-	                echo "document.getElementById('total_amountincart').innerHTML =total;";
-	                echo "$.post('module/index.php?data=addproduct_cart',{product_id:product_id,amount:product_indetail,size_id:$size_id},function(data){";
-	                echo "});";
-	                echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:total},function(data){";
-	                echo "});";
-	                echo "alert('เพิ่มสินค้าลงในตะกร้าแล้ว');";
-	                echo "window.location='index.php?module=product&action=product_detail&product_id="."'+product_id+'"."';";
+	                echo "if(product_indetail!=0){";
+		                echo "if(isNaN(amount_incart)){";
+		                   echo " amount_incart =0;";
+		                echo "}";
+		                echo "total = product_indetail +amount_incart;";
+		                echo "$('#total_amountincart').show();";
+		                echo "document.getElementById('total_amountincart').innerHTML =total;";
+		                echo "$.post('module/index.php?data=addproduct_cart',{product_id:product_id,amount:product_indetail,product_size_id:$product_size_id},function(data){";
+		                echo "});";
+		                echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:total},function(data){";
+		                echo "});";
+		                echo "alert('เพิ่มสินค้าลงในตะกร้าแล้ว');";
+		                echo "window.location='index.php?module=product&action=product_detail&product_id="."'+product_id+'"."';";
+		                echo "}";
 	                echo "}";
 	            }
 	        echo "});";
