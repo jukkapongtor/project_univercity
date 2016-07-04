@@ -80,8 +80,8 @@ function data_users(){
 	        list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
 	        if($sellstatus==1){
 			echo "<a href='index.php?module=users&action=data_users&menu=2'><p class='font20 margin0 $action_menu_user2'>&nbsp;&nbsp;สินค้าในตะกร้า</p></a>";
-			echo "<a href='index.php?module=users&action=data_users&menu=3'><p class='font20 margin0 $action_menu_user3'>&nbsp;&nbsp;สถานะการซื้อสินค้า</p></a>";
-			echo "<a href='index.php?module=users&action=data_users&menu=4'><p class='font20 margin0 $action_menu_user4'>&nbsp;&nbsp;ประวัติการซื้อสินค้า</b></p></a>";
+			echo "<a href='index.php?module=users&action=data_users&menu=3&order_status=1'><p class='font20 margin0 $action_menu_user3'>&nbsp;&nbsp;สถานะการซื้อสินค้า</p></a>";
+			echo "<a href='index.php?module=users&action=data_users&menu=4&order_status=4'><p class='font20 margin0 $action_menu_user4'>&nbsp;&nbsp;ประวัติการซื้อสินค้า</b></p></a>";
 			}
 		echo "</div>";
 		echo "<div class='col-md-9'>";

@@ -222,6 +222,36 @@ div {
 	border-top:3px solid #56a561;
 	width:100%;
 }
+.order-status{
+	width: 100%;
+	font-size: 20px;
+	border-bottom:1px #ddd solid;
+	margin-bottom: 10px;
+	font-weight: bold;
+	color: #1c5d25;
+	float: left; 
+}
+.order-status1,.order-status2,.order-status3,.order-status4{
+	float: left;
+	padding: 5px;
+	width: 15%;
+	color: #1c5d25;
+}
+.order-status-center{
+	width: 20%;
+	height: 10px;
+	float: left;
+}
+.order-status-active{
+	background: #248a32;
+	border-bottom:1px solid #1c5d25;
+	color:white;
+}
+.order-status1:hover,.order-status2:hover,.order-status3:hover,.order-status4:hover{
+	background: #56c665;
+	border-bottom:1px #56c665 solid;
+	color: #fff;
+} 
 #close-web{
 	position: fixed;
 	width: 100%;
