@@ -64,6 +64,7 @@ function data_users(){
 		echo "<div class='col-md-3 datausers_menu'>";
 		$query_users = mysqli_query($_SESSION['connect_db'],"SELECT fullname,lastname,image FROM users WHERE username ='$_SESSION[login_name]'")or die("ERROR users function line 64");
 		list($fullname,$lastname,$image)=mysqli_fetch_row($query_users);
+		$image = (empty($image))?"user.png":$image;
 			echo "<p><center><img src='images/user/$image' width='150' height='150'></center></p><br>";
 			echo "<p align='center'><img src='images/icon/black-user-shape.png' width='24' style='margin-top:-8px'>&nbsp;<font size='5'><b>ยินดีต้อนรับ</b></font></p>";
 			$name = (empty($fullname)AND empty($lastname))?"ไม่ระบุชื่อหรือนามสกุล":"$fullname $lastname";

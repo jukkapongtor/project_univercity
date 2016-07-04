@@ -1,42 +1,63 @@
 <?php
 function order_insert(){
 
-	$total_price = 0;
-	$total_amount  = 0;
-	foreach ($_SESSION['cart_id'] as $key => $value) {
-		$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_name,product_price_web FROM product WHERE product_id='$key'")or die("ERROR : order function line 5");
-		list($product_name,$product_price_web)=mysqli_fetch_row($query_product);
-		$total_price+=($product_price_web*$value);
-		$total_amount +=$value;
-	}
-	if($total_amount!=0){
-		$date_order = date("Y-m-d H:i:s");
-		$sql_insert_order = "INSERT INTO orders VALUES('','$_SESSION[login_name]','$date_order','24:00:00','1','$total_amount','$total_price','')";
-		mysqli_query($_SESSION['connect_db'],$sql_insert_order)or die("ERROR : order function line 14");
-		$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders ORDER BY order_id DESC")or die("ERROR : order function line 15");
-		list($order_id) = mysqli_fetch_row($query_order);
-		$sql_insert_orderdetail ="INSERT INTO order_detail VALUES";
-		$number=1;
-		foreach ($_SESSION['cart_id'] as $key => $value) {
-			
-			if($number!=count($_SESSION['cart_id']) && (!empty($value))&&$number!=1){
-				$sql_insert_orderdetail.=",";
-				
-			}
-			if($value!=0){
-				$sql_insert_orderdetail.= "('','$order_id','$key','$value')";
-				$number++;
-			}
-			
-		}
-		echo "$sql_insert_orderdetail";
-		mysqli_query($_SESSION['connect_db'],$sql_insert_orderdetail)or die("ERROR : order function line 28");
-		unset($_SESSION['cart_id']);
-		unset($_SESSION['total_amount']);
-		echo "<script>window.location='index.php?module=users&action=data_users&menu=3'</script>";
+	if(empty($_POST['fullname'])||empty($_POST['lastname'])||empty($_POST['phone'])||empty($_POST['house_no'])||empty($_POST['subdistrict'])||empty($_POST['districts'])||empty($_POST['province'])||empty($_POST['zipcode'])){
+		echo "<script>alert('กรุณากรอกข้อมูลผู้ใช้ให้ครบถ้วน');window.location='index.php?module=users&action=data_users&menu=2';</script>";
 	}else{
-		echo "<script>alert('กรุณาเพิ่มจำนวนสินค้าก่อนทำการยืนยันการซื้อ');window.location='index.php?module=users&action=data_users&menu=2';</script>";
+		if($_POST['address']=="user"){
+			$query_address = mysqli_query($_SESSION['connect_db'],"SELECT provinces.PROVINCE_NAME,amphures.AMPHUR_NAME,districts.DISTRICT_NAME FROM provinces LEFT JOIN amphures ON provinces.PROVINCE_ID = provinces.PROVINCE_ID LEFT JOIN districts ON amphures.AMPHUR_ID=districts.AMPHUR_ID WHERE provinces.PROVINCE_ID='$_POST[province]' AND amphures.AMPHUR_ID='$_POST[districts]' AND districts.DISTRICT_CODE='$_POST[subdistrict]'")or die("ERROR : users function line 312");
+			list($province,$district,$subdistrict)=mysqli_fetch_row($query_address);
+			$update_users = "UPDATE users SET fullname='$_POST[fullname]',lastname='$_POST[lastname]',phone='$_POST[phone]',house_no='$_POST[house_no]',village_no='$_POST[village_no]',alley='$_POST[alley]',lane='$_POST[lane]',road='$_POST[road]',sub_district='$subdistrict',district='$district',province='$province',postal_code='$_POST[zipcode]' WHERE username='$_SESSION[login_name]'";
+			mysqli_query($_SESSION['connect_db'],$update_users)or die("ERROR : order function line 12");
+			$village_no =(empty($_POST['village_no']))?"":" หมู่ $_POST[village_no]";
+			$alley =(empty($_POST['alley']))?"":" ตรอก $_POST[alley]";
+			$lane =(empty($_POST['lane']))?"":" ซอย $_POST[lane]";
+			$road =(empty($_POST['road']))?"":" ถนน $_POST[road]";
+			$message_address = "ชื่อนามสกุล ".$_POST['fullname'].$_POST['lastname']."<br>บ้านเลขที่ ".$_POST['house_no'].$village_no.$alley.$lane.$road." ตำบล ".$subdistrict."<br>อำเภอ ".$district."จังหวัด ".$province.$_POST['zipcode']."<br>"."เบอร์โทรศัพท์ ".$_POST['phone'];
+		}else{
+			$query_address = mysqli_query($_SESSION['connect_db'],"SELECT provinces.PROVINCE_NAME,amphures.AMPHUR_NAME,districts.DISTRICT_NAME FROM provinces LEFT JOIN amphures ON provinces.PROVINCE_ID = provinces.PROVINCE_ID LEFT JOIN districts ON amphures.AMPHUR_ID=districts.AMPHUR_ID WHERE provinces.PROVINCE_ID='$_POST[province]' AND amphures.AMPHUR_ID='$_POST[districts]' AND districts.DISTRICT_CODE='$_POST[subdistrict]'")or die("ERROR : users function line 312");
+			list($province,$district,$subdistrict)=mysqli_fetch_row($query_address);
+			$village_no =(empty($_POST['village_no']))?"":" หมู่ $_POST[village_no]";
+			$alley =(empty($_POST['alley']))?"":" ตรอก $_POST[alley]";
+			$lane =(empty($_POST['lane']))?"":" ซอย $_POST[lane]";
+			$road =(empty($_POST['road']))?"":" ถนน $_POST[road]";
+			$message_address = "ชื่อนามสกุล ".$_POST['fullname'].$_POST['lastname']."<br>บ้านเลขที่ ".$_POST['house_no'].$village_no.$alley.$lane.$road." ตำบล ".$subdistrict."<br>อำเภอ ".$district."จังหวัด ".$province.$_POST['zipcode']."<br>"."เบอร์โทรศัพท์ ".$_POST['phone'];
+		}
+
+		$total_price = 0;
+		$total_amount  = 0;
+		foreach ($_SESSION['cart_id'] as $key => $value) {
+			$query_price = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_price_web FROM product_size WHERE product_size_id='$key'")or die("ERROR : order function line 5");
+			list($product_id,$product_price_web)=mysqli_fetch_row($query_price);
+			$total_price+=($product_price_web*$value['amount']);
+			$total_amount +=$value['amount'];
+		}
+		if($total_amount!=0){
+			$date_order = date("Y-m-d H:i:s");
+			$sql_insert_order = "INSERT INTO orders VALUES('','$_SESSION[login_name]','$date_order','24:00:00','1','$total_amount','$total_price','','$message_address')";
+			mysqli_query($_SESSION['connect_db'],$sql_insert_order)or die("ERROR : order function line 14");
+			$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders ORDER BY order_id DESC")or die("ERROR : order function line 15");
+			list($order_id) = mysqli_fetch_row($query_order);
+			$sql_insert_orderdetail ="INSERT INTO order_detail VALUES";
+			$number=1;
+			foreach ($_SESSION['cart_id'] as $key => $value) {
+				if((!empty($value['amount']))&&$number!=1){
+					$sql_insert_orderdetail.=",";
+				}
+				if($value['amount']!=0){
+					$sql_insert_orderdetail.= "('','$order_id','$key','$value[amount]')";
+					$number++;
+				}
+			}
+			mysqli_query($_SESSION['connect_db'],$sql_insert_orderdetail)or die("ERROR : order function line 28");
+			unset($_SESSION['cart_id']);
+			unset($_SESSION['total_amount']);
+			echo "<script>window.location='index.php?module=users&action=data_users&menu=3'</script>";
+		}else{
+			echo "<script>alert('กรุณาเพิ่มจำนวนสินค้าก่อนทำการยืนยันการซื้อ');window.location='index.php?module=users&action=data_users&menu=2';</script>";
+		}
 	}
+	
 }
 
 function order_list(){
