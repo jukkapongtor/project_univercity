@@ -294,30 +294,32 @@ echo "</script>";
             <div id="carousel-example-generic" class="carousel slide " data-ride="carousel">
               <!-- Indicators -->
               <ol class="carousel-indicators" style="z-index:1">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active" ></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+<?php
+                $query_slide=mysqli_query($_SESSION['connect_db'],"SELECT * FROM slide ")or die("ERROR : backend slide line 29");;
+                $row=mysqli_num_rows($query_slide);
+                for($i=0;$i<$row;$i++){
+                    $active = ($i==0)?"class='active'":"";
+                    echo "<li data-target='#carousel-example-generic' data-slide-to='$i' $active></li>";
+                }
+?>
               </ol>
               <!-- Wrapper for slides -->
               <div class="carousel-inner home-slide" role="listbox">
-                <div class="item active home-slide ">
-                  <img src="images/fern/20150818_182251_001.jpg" style="width:100%;height:100%" alt="...">
-                  <div class="carousel-caption">
-                    ...
-                  </div>
-                </div>
-                <div class="item home-slide ">
-                  <img src="images/fern/20150819_074210.jpg." style="width:100%;height:100%" alt="...">
-                  <div class="carousel-caption">
-                    ...
-                  </div>
-                </div>
-                <div class="item home-slide ">
-                  <img src="images/fern/20150819_074317.jpg" style="width:100%;height:100%" alt="...">
-                  <div class="carousel-caption">
-                    ...
-                  </div>
-                </div>
+<?php
+                $number=0;
+                while(list($slide_id,$slide_image,$header_slide,$slide_detail)=mysqli_fetch_row($query_slide)){
+                    $active= ($number==0)?"active":"";
+                    echo "<div class='item $active home-slide'>";
+                      $header_slide = (!empty($header_slide))?$header_slide:"";
+                      $path =(empty($slide_image))?"icon/no-images.jpg":"slide/$slide_image";
+                      echo "<img src='images/$path' style='width:100%;height:100%' alt='...'>";
+                      echo "<div class='carousel-caption'>";
+                        echo "<h4 style='font-size:36px;'>$header_slide</h4><p class=font20>$slide_detail</p>";
+                      echo "</div>";
+                    echo "</div>";
+                    $number++;
+                }
+?>
               </div>
 
               <!-- Controls -->
