@@ -67,13 +67,13 @@
 			<div id="top-panel" class="col-xs-12 col-sm-10">
 				<div class="row">
 					<div class="col-xs-8 col-sm-4">
-						<div id="search">
+						<!--<div id="search">
 							<input type="text" placeholder="search"/>
 							<i class="fa fa-search"></i>
-						</div>
+						</div>-->
 					</div>
 					<div class="col-xs-4 col-sm-8 top-panel-right">
-						<a href="#" class="about hidden-xs">about</a>
+						<!--<a href="#" class="about hidden-xs">about</a>-->
 						<ul class="nav navbar-nav pull-right panel-menu">
 							<li class="hidden-xs">
 								<a href="index.php" class="modal-link">

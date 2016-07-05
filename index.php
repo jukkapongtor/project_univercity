@@ -175,19 +175,20 @@ echo "</script>";
 
 <div class="display_com">
 <?php
-    $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT open_web FROM web_page")or die("ERROR : index line 260");
-    list($open_web)=mysqli_fetch_row($quality_sellstatus);
+    $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT * FROM web_page WHERE web_page_id='1'")or die("ERROR : index line 260");
+    list($web_page_id,$logo,$nameshop,$header_detail_shop,$detail_shop,$image_content2,$header_content2,$content2,$image_content3,$header_content3,$content3,$sellproduct_status,$open_web)=mysqli_fetch_row($quality_sellstatus);
     if($open_web==1){
         if(empty($_SESSION['web_close'])){
             echo "<div id='close-web'></div>";
         }      
     }
-    
 ?>
     <div class="header">
         <a href='index.php' style='text-decoration: none;'><div class="header-logo">
-            <div class="header-logo-img"><img src="images/icon/logomumfern.png" width="100%" height="100%"></div>
-            <font color="#1c5d25" size="5"><p style="margin-top:16px;"><b>MUMFERN SHOP[ร้าน มุมเฟิร์น]</b></p></font>
+<?php
+            echo "<div class='header-logo-img'><img src='images/icon/$logo' width='100%' height='100%''></div>";
+            echo "<font color='#1c5d25' size='5'><p style='margin-top:16px;''><b>$nameshop</b></p></font>";
+?>
         </div></a>
         <div class="header-menu">
 <?php
@@ -330,13 +331,13 @@ echo "</script>";
               </a>
             </div>
             <br>
-            <center><h1><b>MUMFERN SHOP</b></h1></center>
-            <center><h2  class='marginun20'><b>ร้าน มุมเฟิร์น</b></h2></center>
-            <p><center><font size='5'>ร้านมุมเฟิร์น เป็นร้านค้าขายต้นไม้ประเภทเฟิร์น เราจะขายสินค้าประเภทเฟิร์นเป็นหลัก ซึ่งมีหลายประเภท</font></center></p>
-            <p  class='marginun20'><center><font size='5' >และร้านเรายังนำกระถางมาขายซึ่งมีหลากหลายรูปแบบให้เลือก ให้เหมาะสมกับเฟิร์นที่ทางร้านขาย</font></center></p>
-            <br>
-            <div class="clear"></div>
-<?php
+<?php           
+            echo "<center><h1><b>$nameshop</b></h1></center>";
+            echo "<center><h2  class='marginun20'><b>$header_detail_shop</b></h2></center>";
+            echo "<div width='100%' style='padding:0px 30px;'><p><center><font size='5'>$detail_shop</font></center></p></div>";
+            echo "<br>";
+            echo "<div class='clear'></div>";
+
             $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 64");
             list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
             if($sellstatus==1){
@@ -395,22 +396,30 @@ echo "</script>";
             </div>
             <div class="col-md-12 con1" >
                 <div class="col-md-6">
-                    <img src="images/webpage/20150819_074754.jpg" width="100%" >
+<?php
+                    echo "<img src='images/webpage/$image_content2' width='100%' height='400px'>";
+?>
                     
                 </div>
                 <div class="col-md-6 ">
-                    <p class="content1">ร้านมุมเฟิร์น เป็นร้านขายต้นไม้ประเภทเฟิร์น และขายกระถางหลากหลายรูปแบบ ร้านมุมเฟิร์นตั้งอยู่ที่ ตลาดคำเที่ยง จังหวัดเชียงใหม่ ร้านมุมเฟิร์นได้เปิดเป็นร้านขายเฟิร์นมาได้ 8 ปี โดยเริ่มจากกการขายเฟิร์น และเพิ่มการขายกระถางในเวลาต่อมา ภายในร้านมีเฟิร์นหลากหลายประเภทให้เลือกซื้อ เลือกหากันมากมาย</p>
+<?php
+                    echo "<p class='content1'><b>$header_content2</b></p>";
+                    echo "<p class='content1'>$content2</p>";
+?>
                 </div>
             </div>
             
             <div class="col-md-12 con2" >
                 <div class="col-md-5">
-                    <p class="content2" >ทางร้านมุมเฟิร์นทำการขายทั้งขายปลีก และขายส่งเฟิร์นกับกระถางให้กับลูกค้าทั้งหน้าร้านที่ตลาดคำเที่ยงแล้ว ก็ยังมีบริการรับส่งสินค้าทั่วประเทศตามรายการสั่งซื้อ
-                    ซึ่งลูกค้าสามารถเยี่ยมชมสินค้าของร้านได้ในเว็บไซต์  หากท่านสนใจสินค้าใด ก็สามารถติดต่อสอบถามสินค้าตามที่อยู่ด้านล่างค่ะ และหากลูกค้าท่านใดมีขอสอบถามหรืออยากได้ความรู้เพิ่มเติมสามารถเข้าไปอ่านในหน้าบทความของเว็บไซต์ หรือฝากคำถามไว้ในกระทู้เพิ่มเติมได้ค่ะ 
-                    </p>
+<?php
+                    echo "<p class='content2'><b>$header_content3</b></p>";
+                    echo "<p class='content2'>$content3</p>";
+?>
                 </div>
                 <div class="col-md-7">
-                    <img src="images/webpage/IMG_0239.JPG" class="img1" width="100%">
+<?php
+                    echo "<img src='images/webpage/$image_content3' width='100%' height='400px'>";
+?>
                 </div>
             </div>
 
