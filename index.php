@@ -187,7 +187,7 @@ echo "</script>";
     <div class="header">
         <a href='index.php' style='text-decoration: none;'><div class="header-logo">
             <div class="header-logo-img"><img src="images/icon/logomumfern.png" width="100%" height="100%"></div>
-            <font color="#1c5d25" size="5"><p style="margin-top:16px;"><b>MUMFERN SHOP</b></p></font>
+            <font color="#1c5d25" size="5"><p style="margin-top:16px;"><b>MUMFERN SHOP[ร้าน มุมเฟิร์น]</b></p></font>
         </div></a>
         <div class="header-menu">
 <?php
