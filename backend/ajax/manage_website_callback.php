@@ -1,3 +1,3 @@
 <?php
-	echo "<script>window.location='../#ajax/manage_website.php';</script>";
+	echo "<script>window.location='../#ajax/dashboard.php';</script>";
 ?>

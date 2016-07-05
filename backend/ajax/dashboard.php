@@ -1,3 +1,61 @@
+<?php
+	session_start();
+	include("../../include/function.php");
+	connect_db();
+?>
+<script>
+	$(document).ready(function() {
+<?php
+		$query_webpage = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status,open_web FROM web_page ")or die("ERROR : backend manage_website line 65");
+		list($sellproduct_status,$open_web)=mysqli_fetch_row($query_webpage);
+		
+		echo "$('#switch_onoff_buywebsite').click(function(){";
+		if($sellproduct_status==1){
+			echo "$('.on-buywebsite1').hide();";
+			echo "$('.off-buywebsite1').hide();";
+			echo "$('.on-buywebsite2').show();";
+			echo "$('.off-buywebsite2').show();";
+			echo "$.post('ajax/function.php?data=switch_onoff_buywebsite',{switch_onoff_buywebsite:2},function(data){";
+			echo "});";
+			echo "alert('ปืดระบบการขายสินค้าเรียบร้อยแลว');";
+			echo "window.location='ajax/manage_website_callback.php';";
+		}else{
+			echo "$('.on-buywebsite1').show();";
+			echo "$('.off-buywebsite1').show();";
+			echo "$('.on-buywebsite2').hide();";
+			echo "$('.off-buywebsite2').hide();";
+			echo "$.post('ajax/function.php?data=switch_onoff_buywebsite',{switch_onoff_buywebsite:1},function(data){";
+			echo "});";
+			echo "alert('เปืดระบบการขายสินค้าเรียบร้อยแลว');";
+			echo "window.location='ajax/manage_website_callback.php';";
+		}
+		echo "});";
+
+		echo "$('#switch_onoff_openweb').click(function(){";
+		if($open_web==1){
+			echo "$('.on-buywebsite3').hide();";
+			echo "$('.off-buywebsite3').hide();";
+			echo "$('.on-buywebsite4').show();";
+			echo "$('.off-buywebsite4').show();";
+			echo "$.post('ajax/function.php?data=switch_onoff_openweb',{switch_onoff_openweb:2},function(data){";
+			echo "});";
+			echo "alert('ปิดการแจ้งเตือนการปรับปรุงเว็บไซต์ เรียบร้อยแล้ว');";
+			echo "window.location='ajax/manage_website_callback.php';";
+		}else{
+			echo "$('.on-buywebsite3').show();";
+			echo "$('.off-buywebsite3').show();";
+			echo "$('.on-buywebsite4').hide();";
+			echo "$('.off-buywebsite4').hide();";
+			echo "$.post('ajax/function.php?data=switch_onoff_openweb',{switch_onoff_openweb:1},function(data){";
+			echo "});";
+			echo "alert('เปิดการแจ้งเตือนการปรับปรุงเว็บไซต์ เรียบร้อยแล้ว');";
+			echo "window.location='ajax/manage_website_callback.php';";
+		}
+		echo "});";
+?>
+	});
+	
+</script>
 <!--Start Breadcrumb-->
 <div class="row">
 	<div id="breadcrumb" class="col-xs-12">
@@ -20,9 +78,73 @@
 <!--End Breadcrumb-->
 <!--Start Dashboard 1-->
 <div id="dashboard-header" class="row">
-	<a href='../index.php'><div class="col-md-4" style="height:100px;margin-bottom:20px;"><div style='background:#376fff;width:100%;height:100%;color:#fff;border-radius:5px;font-size:30px;padding:20px 30px;'><img src='../images/icon/browser.png'>&nbsp;&nbsp;เยี่ยมชมเว็บไซต์</div></div></a>
-	<!--<div class="col-md-4" style="height:100px;margin-bottom:20px;"><div style='background:#376fff;width:100%;height:100%;color:#fff;border-radius:5px;font-size:30px;padding:20px 30px;'>asd</div></div>-->
-	<!--<div class="col-md-4" style="height:100px;margin-bottom:20px;"><div style='background:#376fff;width:100%;height:100%;color:#fff;border-radius:5px;font-size:30px;padding:20px 30px;'>asd</div></div>-->
+	<div class="container-fluid">
+		<a href='../index.php'><div class="col-md-4" style="height:140px;margin-bottom:20px;"><img src="../images/icon/showwebsite.png" width="100%" height="100%"></div></a>
+		<div class="col-md-4" style="height:140px;margin-bottom:20px;"><div style='background:#376fff;width:100%;height:100%;color:#fff;border-radius:5px;font-size:30px;padding:20px 30px;'>asd</div></div>
+		<div class="col-md-4" style="margin-bottom:20px;padding:0px;">
+			<div class="panel panel-default">
+			  <div class="panel-heading" style="padding:0px;"><h4 align="center"><b>จัดกาารสถานะเว็บไซต์</b></h4></div>
+			  <div class="panel-body">
+			    <div class="col-md-12">
+					<div class="col-md-8"><p style="margin-top:5px;">เว็บไซต์พร้อมขายของ</p></div>
+					<div class="col-md-4">
+						<a href='#ajax/manage_website.php' id="switch_onoff_buywebsite">
+							<div class='on-off-buywebsite'>
+	<?php
+						$query_webpage = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : backend manage_website line 65");
+						list($sellproduct_status)=mysqli_fetch_row($query_webpage);
+						$hidden_onbuywebsite =($sellproduct_status==1)?"":"style='display:none'";
+						$hidden_offbuywebsite =($sellproduct_status==2)?"":"style='display:none'";
+						echo "<div class='on-buywebsite1' $hidden_onbuywebsite>";
+							echo "<b>ON</b>";
+						echo "</div>";
+						echo "<div class='off-buywebsite1' $hidden_onbuywebsite>";
+							echo "<b>OFF</b>";
+						echo "</div>";
+						echo "<div class='on-buywebsite2' $hidden_offbuywebsite>";
+							echo "<b>ON</b>";
+						echo "</div>";
+						echo "<div class='off-buywebsite2' $hidden_offbuywebsite>";
+							echo "<b>OFF</b>";
+						echo "</div>";
+	?>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-8"><p style="margin-top:5px;">แจ้งเตือนการปรับปรุงเว็บไซต์</p></div>
+					<div class="col-md-4">
+						<a href='#ajax/manage_website.php' id="switch_onoff_openweb">
+							<div class='on-off-buywebsite'>
+	<?php
+						$query_webpage = mysqli_query($_SESSION['connect_db'],"SELECT open_web FROM web_page")or die("ERROR : backend manage_website line 65");
+						list($open_web)=mysqli_fetch_row($query_webpage);
+						$hidden_onopenweb =($open_web==1)?"":"style='display:none'";
+						$hidden_offopenweb =($open_web==2)?"":"style='display:none'";
+						echo "<div class='on-buywebsite3' $hidden_onopenweb>";
+							echo "<b>ON</b>";
+						echo "</div>";
+						echo "<div class='off-buywebsite3' $hidden_onopenweb>";
+							echo "<b>OFF</b>";
+						echo "</div>";
+						echo "<div class='on-buywebsite4' $hidden_offopenweb>";
+							echo "<b>ON</b>";
+						echo "</div>";
+						echo "<div class='off-buywebsite4' $hidden_offopenweb>";
+							echo "<b>OFF</b>";
+						echo "</div>";
+	?>
+							</div>
+						</a>
+					</div>
+				</div>
+			  </div>
+			</div>
+			
+		</div>
+	</div>
+	
 <!--
 	<div class="col-xs-12 col-sm-4 col-md-5">
 		<h3>Hello, Dashboard!</h3>
