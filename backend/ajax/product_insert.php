@@ -18,9 +18,9 @@
 
 		$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id FROM product ORDER BY product_id DESC")or die("ERROR : product insert line 21");
 		list($product_id)=mysqli_fetch_row($query_product);
-		$sql_insert_product_size = "INSERT INTO product_size VALUES('','$product_id','".$_POST['product_size'][0]."','".$_POST['product_amount_keep'][0]."','".$_POST['product_amount_shop'][0]."','".$_POST['product_amount_web'][0]."','".$_POST['product_price_shop'][0]."','0','".$_POST['product_price_web'][0]."','0')";
+		$sql_insert_product_size = "INSERT INTO product_size VALUES('','$product_id','".$_POST['product_size'][0]."','0','0','0','".$_POST['product_price_shop'][0]."','0','".$_POST['product_price_web'][0]."','0')";
 		for($i=1;$i<count($_POST['product_size']);$i++){
-			$sql_insert_product_size .= ",('','$product_id','".$_POST['product_size'][$i]."','".$_POST['product_amount_keep'][$i]."','".$_POST['product_amount_shop'][$i]."','".$_POST['product_amount_web'][$i]."','".$_POST['product_price_shop'][$i]."','0','".$_POST['product_price_web'][$i]."','0')";
+			$sql_insert_product_size .= ",('','$product_id','".$_POST['product_size'][$i]."','0','0','0','".$_POST['product_price_shop'][$i]."','0','".$_POST['product_price_web'][$i]."','0')";
 		}
 		mysqli_query($_SESSION['connect_db'],$sql_insert_product_size)or die("ERROR : backend porduct insert line 25");
 

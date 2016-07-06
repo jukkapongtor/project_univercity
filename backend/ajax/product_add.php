@@ -36,7 +36,7 @@ $(document).ready(function() {
         e.preventDefault();
         if(x < max_fields){ //max input box allowed
             x++; //text box increment
-            $(wrapper).append(' <div class="remove col-md-12" style="margin-bottom:2px;padding:0px"><div class="col-md-10" style="padding:0"><p><select class="form-control" id="product_size'+x+'"  name="product_size[]"><option value="">--เลือกขนาดสินค้า--</option></select></p></div><button  class="remove_field btn btn-danger" style="padding:0px 3px;width:27px;height:27px;margin-bottom:2px"><img src="../images/icon/minus.png" width="12px" height="12px" ></button><div class="col-md-12" style="padding:0"><div class="col-md-3" style="padding:0;margin-bottom:4px">จำนวนบนเว็บ</div><div class="col-md-3" style="padding:2px;margin-bottom:4px"><input type="text" class="form-control" name="product_amount_web[]" style="margin-top:-5px;"></div><div class="col-md-3" style="padding:0;margin-bottom:4px">ราคาบนเว็บ</div><div class="col-md-3" style="padding:2px;;margin-bottom:4px"><input type="text" class="form-control" name="product_price_web[]" style="margin-top:-5px;"></div><div class="col-md-3" style="padding:0">จำนวนในร้าน</div><div class="col-md-3" style="padding:2px;;margin-bottom:4px"><input type="text" class="form-control" name="product_amount_shop[]" style="margin-top:-5px;;margin-bottom:4px"></div><div class="col-md-3" style="padding:0;margin-bottom:4px">ราคาในร้าน</div><div class="col-md-3" style="padding:2px;margin-bottom:4px"><input type="text" class="form-control" name="product_price_shop[]" style="margin-top:-5px;"></div><div class="col-md-8" style="padding:2px;margin-bottom:4px">จำนวนสินค้าที่ต้องการเก็บ(ไม่ขาย)</div><div class="col-md-4" style="padding:2px;margin-bottom:4px"><input type="text" class="form-control" name="product_amount_keep[]" style="margin-top:-5px;"></div></div></div></div>'); //add input box
+            $(wrapper).append(' <div class="remove col-md-12" style="margin-bottom:2px;padding:0px"><div class="col-md-10" style="padding:0"><p><select class="form-control" id="product_size'+x+'"  name="product_size[]"><option value="">--เลือกขนาดสินค้า--</option></select></p></div><button  class="remove_field btn btn-danger" style="padding:0px 3px;width:27px;height:27px;margin-bottom:2px"><img src="../images/icon/minus.png" width="12px" height="12px" ></button><div class="col-md-12" style="padding:0"></div><div class="col-md-4" style="padding:0;margin-bottom:4px">ราคาบนเว็บ</div><div class="col-md-6" style="padding:2px;;margin-bottom:4px"><input type="text" class="form-control" name="product_price_web[]" style="margin-top:-5px;"></div><div class="col-md-4" style="padding:0;margin-bottom:4px">ราคาในร้าน</div><div class="col-md-6" style="padding:2px;margin-bottom:4px"><input type="text" class="form-control" name="product_price_shop[]" style="margin-top:-5px;"></div></div></div></div></div>'); //add input box
         }
     });
     
@@ -128,16 +128,10 @@ $(document).ready(function() {
 				    	</select></p></div>
 				    	<button class="add_field_button btn btn-primary" style="padding:0px 3px;width:27px;height:27px;margin-bottom:2px"><img src='../images/icon/add.png' width="12px" height="12px" ></button>
 				    	<div class='col-md-12' style='padding:0'>
-							<div class='col-md-3' style='padding:0;margin-bottom:4px'>จำนวนบนเว็บ</div>
-							<div class='col-md-3' style='padding:2px;margin-bottom:4px'><input type='text' class='form-control' name='product_amount_web[]' style="margin-top:-5px;"></div>
-							<div class='col-md-3' style='padding:0;margin-bottom:4px'>ราคาบนเว็บ</div>
-							<div class='col-md-3' style='padding:2px;;margin-bottom:4px'><input type='text' class='form-control' name='product_price_web[]' style="margin-top:-5px;"></div>
-							<div class='col-md-3' style='padding:0'>จำนวนในร้าน</div>
-							<div class='col-md-3' style='padding:2px;;margin-bottom:4px'><input type='text' class='form-control' name='product_amount_shop[]' style="margin-top:-5px;;margin-bottom:4px"></div>
-							<div class='col-md-3' style='padding:0;margin-bottom:4px'>ราคาในร้าน</div>
-							<div class='col-md-3' style='padding:2px;margin-bottom:4px'><input type='text' class='form-control' name='product_price_shop[]' style="margin-top:-5px;"></div>
-							<div class='col-md-8' style='padding:2px;margin-bottom:4px'>จำนวนสินค้าที่ต้องการเก็บ(ไม่ขาย)</div>
-							<div class='col-md-4' style='padding:2px;margin-bottom:4px'><input type='text' class='form-control' name='product_amount_keep[]' style="margin-top:-5px;"></div>
+							<div class='col-md-4' style='padding:0;margin-bottom:4px'>ราคาบนเว็บ</div>
+							<div class='col-md-6' style='padding:2px;;margin-bottom:4px'><input type='text' class='form-control' name='product_price_web[]' style="margin-top:-5px;"></div>
+							<div class='col-md-4' style='padding:0;margin-bottom:4px'>ราคาในร้าน</div>
+							<div class='col-md-6' style='padding:2px;margin-bottom:4px'><input type='text' class='form-control' name='product_price_shop[]' style="margin-top:-5px;"></div>
 						</div>
 		    		</div>
 		    		</td>
@@ -219,8 +213,8 @@ $(document).ready(function() {
 							      			echo "<td><p>$product_name</p></td>";
 							      		echo "</tr>";
 							      		echo "<tr>";
-							      			echo "<td><p><b>รายละเอียดสินค้า</b></p></td>";
-							      			echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
+							      			echo "<td valign='top'><p><b>รายละเอียดสินค้า</b></p></td>";
+							      			echo "<td valign='top'><p><b>&nbsp;:&nbsp;</b></p></td>";
 							      			$product_detail =(empty($product_detail))?"ไม่มีรายละเอียดของข้อมูลสินค้า":$product_detail;
 							      			echo "<td><p>$product_detail</p></td>";
 							      		echo "</tr>";

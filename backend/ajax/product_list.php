@@ -84,7 +84,7 @@
 		$page=$_GET['page'];
 		$start_row=($page-1)*10;
 	}
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product.product_image,type.type_name FROM product LEFT JOIN type ON product.product_type = type.product_type LEFT JOIN quality ON product.product_quality = quality.product_quality WHERE product.product_name LIKE '%$keywords%' $sql_type $sql_quality ORDER BY product.product_id DESC  LIMIT $start_row,10")or die("ERROR : backend product list line 72");
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product_image.product_image,type.type_name FROM product LEFT JOIN type ON product.product_type = type.product_type LEFT JOIN quality ON product.product_quality = quality.product_quality LEFT JOIN product_image ON product.product_id = product_image.product_id WHERE product.product_name LIKE '%$keywords%' $sql_type $sql_quality ORDER BY product.product_id DESC  LIMIT $start_row,10")or die("ERROR : backend product list line 87");
 	$number =0;
 	while(list($product_id,$product_name,$product_image,$type_name)=mysqli_fetch_row($query_product)){
 
@@ -92,11 +92,97 @@
 			echo "<div class='col-md-1' style='margin-bottom:20px; height:300px;'></div>";
 		}
 		echo "<div class='col-md-2' style='margin-bottom:20px; height:300px;'>";
-			$folder = ($type_name=="เฟิร์น")?"fern":$type_name;
-			$folder = ($folder=='กระถาง')?"pots":$folder;
-			echo "<a href='ajax/product_detail_id.php?product_id=$product_id'><center><p><img src='../images/$folder/$product_image' width='100%' height='200px' style='border-radius:5px;'></p>";
-			echo "<p>$product_name</p></a>";
-			echo "<p><a href='ajax/product_edit_id.php?product_id=$product_id'><button class='btn btn-xs btn-warning' type='button' >แก้ไขข้อมูล</button></a>&nbsp;<a href='ajax/product_delete.php?product_id=$product_id' onclick='return confirm(\"คุณต้องการลบรายการสินค้า$product_name ใช่หรือไม่\")'><button class='btn btn-xs btn-danger' type='button' >ลบข้อมูล</button></a></p></a></center>";
+			echo "<center><p><img src='../images/$type_name/$product_image' width='100%' height='200px' style='border-radius:5px;'></p>";
+			echo "<p>$product_name</p>";
+			echo "<p><button class='btn btn-xs btn-warning' type='button' data-toggle='modal' data-target='#$product_id'>แก้ไขข้อมูล</button>";
+			echo "&nbsp;<a href='ajax/product_delete.php?product_id=$product_id' onclick='return confirm(\"คุณต้องการลบรายการสินค้า$product_name ใช่หรือไม่\")'><button class='btn btn-xs btn-danger' type='button' >ลบข้อมูล</button></a></p></a></center>";
+				echo "<div class='modal fade' id='$product_id' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
+				  echo "<div class='modal-dialog modal-lg' role='document'>";
+				    echo "<div class='modal-content'>";
+				      echo "<div class='modal-header'>";
+				        echo "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
+				        echo "<h4 class='modal-title' id='myModalLabel'>แก้ไขสินค้า$product_name</h4>";
+				      echo "</div>";
+				      echo "<div class='modal-body'>";
+				      	$query_product_detail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_detail,quality.quality_name,product.product_stock FROM product LEFT JOIN quality ON product.product_quality = quality.product_quality WHERE product.product_id='$product_id'")or die("ERROR : product_function line 196");
+						list($product_detail,$quality_name,$product_stock)=mysqli_fetch_row($query_product_detail);
+				        echo "<div class='container-fluid'>";
+				        echo "<div class='col-md-5'>";
+				        	$query_images_detail = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'")or die("ERROR : product_function line 200");
+							    $number_image=1;
+							    while(list($product_image_detail)=mysqli_fetch_row($query_images_detail)){
+							    	if($number_image==1){
+							    	echo "<div class='col-md-12'>";
+										echo "<img src='../images/$type_name/$product_image_detail' width='100%' height='350' style='border-radius:5px;'>";
+									echo "</div>";
+									$number_image++;
+									}
+									echo "<div class='col-md-3' style='padding:5px'>";
+										echo "<img src='../images/$type_name/$product_image_detail' width='100%' height='75' style='border-radius:5px;'>";
+									echo "</div>";
+								}
+				        echo "</div>";
+				        echo "<div class='col-md-7'>";
+				        	echo "<table width='100%'>";
+							      		echo "<tr>";
+							      			echo "<td width='25%'><p><b>ชื่อสินค้า</b></p></td>";
+							      			echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
+							      			echo "<td><p>$product_name</p></td>";
+							      		echo "</tr>";
+							      		echo "<tr>";
+							      			echo "<td valign='top'><p><b>รายละเอียดสินค้า</b></p></td>";
+							      			echo "<td valign='top'><p><b>&nbsp;:&nbsp;</b></p></td>";
+							      			$product_detail =(empty($product_detail))?"ไม่มีรายละเอียดของข้อมูลสินค้า":$product_detail;
+							      			echo "<td><p>$product_detail</p></td>";
+							      		echo "</tr>";
+							      		echo "<tr>";
+							      			echo "<td><p><b>ประเภทสินค้า</b></p></td>";
+							      			echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
+							      			echo "<td><p>$type_name</p></td>";
+							      		echo "</tr>";
+							      		echo "<tr>";
+							      			echo "<td><p><b>หมวดหมู่สินค้า</b></p></td>";
+							      			echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
+							      			echo "<td><p>$quality_name</p></td>";
+							      		echo "</tr>";
+							      		echo "<tr>";
+							      			echo "<td><p><b>สถานะสินค้า</b></p></td>";
+							      			echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
+							      			$stock = (empty($product_stock))?"ไม่พร้อมจำหน่าย":"พร้อมจำหน่าย";
+							      			echo "<td><p>$stock</p></td>";
+							      		echo "</tr>";
+							      		echo "<tr>";
+							      			echo "<td valign='top'><p><b>ขนาดสินค้า</b></p></td>";
+							      			echo "<td valign='top'><p><b>&nbsp;:&nbsp;</b></p></td>";
+							      			echo "<td>";
+							      			$query_size =mysqli_query($_SESSION['connect_db'],"SELECT size.size_name,product_size.product_amount_keep,product_size.product_amount_shop,product_size.product_amount_web,product_size.product_price_shop,product_size.product_sprice_shop,product_size.product_price_web,product_size.product_sprice_web FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size WHERE product_size.product_id ='$product_id'");
+							      			$num=1;
+							      			$row_size = mysqli_num_rows($query_size);
+							      			if($row_size>0){
+							      			while(list($size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
+							      				echo "<table>";
+							      				echo "<tr><td><p><b>ขนาดสินที่ $num</b></td><td><p><b>&nbsp;:&nbsp;</b></p></td><td><p> $size_name</p></td></tr>";	
+							      				echo "<tr><td><p><b>ราคาบนเว็บไซตฺ(Batn)</b></p></td><td><p><b>&nbsp;:&nbsp;</b></p></td>";
+							      				echo "<td><p>$product_price_web</p></td></tr>";
+							      				echo "<tr><td><p><b>ราคาในร้าน(Batn)</b></p></td><td><p><b>&nbsp;:&nbsp;</b></p></td>";
+							      				echo "<td><p>$product_price_shop</p></td></tr>";
+							      				echo "</table>";
+							      				$num++;
+							      			}
+							      			}
+							      			echo "</td>";
+							      		echo "</tr>";
+							      	echo "</table>";
+				        echo "</div>";
+				        echo "</div>";
+				      echo "</div>";
+				      echo "<div class='modal-footer'>";
+				        echo "<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>";
+				        echo "<button type='button' class='btn btn-primary'>Save changes</button>";
+				      echo "</div>";
+				    echo "</div>";
+				  echo "</div>";
+				echo "</div>";
 		echo "</div>";
 		$number++;
 		

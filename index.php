@@ -18,6 +18,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>MUMFERN SHOP</title>
+ <meta name="keywords" content="ขายเฟิร์น เฟิร์นเชียงใหม่ ขายกระถาง เฟิืร๋นสวย ราคาถูก">
  <link rel="shortcut icon" href="images/icon/logomumfern.png" />
  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
  <link rel="stylesheet" type="text/css" href="css/mystyle.css">
