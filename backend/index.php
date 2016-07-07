@@ -217,8 +217,7 @@
 						 <span >รายงานการขายสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/tables_simple.html">เพิ่มประเภทสินค้า</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">แก้ไขประเภทสินค้า</a></li>
+						<li><a class="ajax-link" href="ajax/test.php">#</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -227,8 +226,7 @@
 						 <span >รายงานการซื้อสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/tables_simple.html">เพิ่มประเภทสินค้า</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">แก้ไขประเภทสินค้า</a></li>
+						<li><a class="ajax-link" href="ajax/test.php">#</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -238,7 +236,6 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/qrcode_generator.php">เพิ่มคิวอาร์โค้ด</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">แก้ไขปคิวอาร์โค้ด</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">

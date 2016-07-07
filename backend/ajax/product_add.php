@@ -236,16 +236,10 @@ $(document).ready(function() {
 							      			$number=1;
 							      			while(list($size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
 							      				echo "<div class='col-md-12'><p><b>ขนาดสินที่ $number : </b> $size_name</p></div>";	
-							      				echo "<div class='col-md-4' style='font-size:13px;'><p><b>จำนวนบนเว็บ</b></p></div>";
-							      				echo "<div class='col-md-2' style='font-size:13px;'><p>$product_amount_web</p></div>";
 							      				echo "<div class='col-md-4' style='font-size:13px;'><p><b>ราคา(Batn)</b></p></div>";
-							      				echo "<div class='col-md-2' style='font-size:13px;'><p>$product_price_web</p></div>";
-							      				echo "<div class='col-md-4' style='font-size:13px;'><p><b>จำนวนในร้าน</b></p></div>";
-							      				echo "<div class='col-md-2' style='font-size:13px;'><p>$product_amount_shop</p></div>";
+							      				echo "<div class='col-md-6' style='font-size:13px;'><p>$product_price_web</p></div>";
 							      				echo "<div class='col-md-4' style='font-size:13px;'><p><b>ราคา(Batn)</b></p></div>";
-							      				echo "<div class='col-md-2' style='font-size:13px;'><p>$product_price_shop</p></div>";
-							      				echo "<div class='col-md-7' style='font-size:13px;'><p><b>จำนวนสินค้าที่เก็บ(ไม่ขาย)</b></p></div>";
-							      				echo "<div class='col-md-5' style='font-size:13px;'><p>$product_amount_keep</p></div>";
+							      				echo "<div class='col-md-6' style='font-size:13px;'><p>$product_price_shop</p></div>";
 							      				$number++;
 							      			}
 							      			echo "</td>";
