@@ -173,6 +173,7 @@ echo "</script>";
  
 </head>
 <body>
+<?php include_once("analyticstracking.php") ?>
 <!-- Button trigger modal -->
 
 <div class="display_com">
