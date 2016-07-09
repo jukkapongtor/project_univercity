@@ -3,7 +3,7 @@
 
 	include("../include/function.php");
 	connect_db();
-
+	date_default_timezone_set('Asia/Bangkok');
 	if(!empty($_SESSION['login_name'])&&$_SESSION['login_type']==1){
 ?>
 <!DOCTYPE html>
@@ -26,6 +26,7 @@
 		<link href="plugins/justified-gallery/justifiedGallery.css" rel="stylesheet">
 		<link href="css/style_v2.css" rel="stylesheet">
 		<link href="css/style_v3.css" rel="stylesheet">
+<<<<<<< HEAD
 		<link href="plugins/chartist/chartist.min.css" rel="stylesheet">
 	  <link rel="stylesheet" href="css/font-awesome.min.css">
 	  <link rel="stylesheet" href="css/froala_editor.css">
@@ -43,6 +44,8 @@
 
 
 		
+=======
+>>>>>>> refs/remotes/origin/master
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 				<script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
@@ -85,13 +88,13 @@
 			<div id="top-panel" class="col-xs-12 col-sm-10">
 				<div class="row">
 					<div class="col-xs-8 col-sm-4">
-						<div id="search">
+						<!--<div id="search">
 							<input type="text" placeholder="search"/>
 							<i class="fa fa-search"></i>
-						</div>
+						</div>-->
 					</div>
 					<div class="col-xs-4 col-sm-8 top-panel-right">
-						<a href="#" class="about hidden-xs">about</a>
+						<!--<a href="#" class="about hidden-xs">about</a>-->
 						<ul class="nav navbar-nav pull-right panel-menu">
 							<li class="hidden-xs">
 								<a href="index.php" class="modal-link">
@@ -200,31 +203,13 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-table"></i>
-						 <span >จัดการรายการสินค้า</span>
+						 <span >จัดการสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="ajax/type_manage.php">จัดการประเภทสินค้า</a></li>
+						<li><a class="ajax-link" href="ajax/quality_manage.php">จัดการหมวดหมู่สินค้า</a></li>
 						<li><a class="ajax-link" href="ajax/product_add.php">เพิ่มรายการสินค้า</a></li>
 						<li><a class="ajax-link" href="ajax/product_list.php">แก้ไขรายการสินค้า</a></li>
-					</ul>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
-						 <span >จัดการประเภทสินค้า</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/type_add.php">เพิ่มประเภทสินค้า</a></li>
-						<li><a class="ajax-link" href="ajax/type_edit.php">แก้ไขประเภทสินค้า</a></li>
-					</ul>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
-						 <span >จัดการหมวดหมู่สินค้า</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/quality_add.php">เพิ่มหมวดหมู่สินค้า</a></li>
-						<li><a class="ajax-link" href="ajax/quality_edit.php">แก้ไขหมวดหมู่สินค้า</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -233,9 +218,8 @@
 						 <span >จัดการค่าใช้จ่าย</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/buy_product.php">สินค้าสำหรับขายต่อ</a></li>
-						<li><a class="ajax-link" href="ajax/buy_product.php">สินค้าใช้ในร้าน</a></li>
-						<li><a class="ajax-link" href="ajax/buy_product.php">ค่าขนส่ง</a></li>
+						<li><a class="ajax-link" href="ajax/buy_product.php">สินค้าสำหรับขาย</a></li>
+						<li><a class="ajax-link" href="ajax/supplyes_manage.php">วัสดุสิ้นเปลือง</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -253,8 +237,7 @@
 						 <span >รายงานการขายสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/tables_simple.html">เพิ่มประเภทสินค้า</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">แก้ไขประเภทสินค้า</a></li>
+						<li><a class="ajax-link" href="ajax/report_sell_day.php">รายงานการขายรายวัน</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -263,8 +246,7 @@
 						 <span >รายงานการซื้อสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/tables_simple.html">เพิ่มประเภทสินค้า</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">แก้ไขประเภทสินค้า</a></li>
+						<li><a class="ajax-link" href="ajax/test.php">#</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -274,7 +256,6 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/qrcode_generator.php">เพิ่มคิวอาร์โค้ด</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">แก้ไขปคิวอาร์โค้ด</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -302,6 +283,7 @@
 						<i class="fa fa-bar-chart-o"></i>
 						<span class="hidden-xs">Charts</span>
 					</a>
+	
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/charts_xcharts.html">xCharts</a></li>
 						<li><a class="ajax-link" href="ajax/charts_flot.html">Flot Charts</a></li>
@@ -313,7 +295,7 @@
 					</ul>
 				</li>
 									
-			
+		
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
@@ -500,6 +482,7 @@
 <script src="plugins/tinymce/jquery.tinymce.min.js"></script>
 <!-- All functions for this theme + document.ready processing -->
 <script src="js/devoops.js"></script>
+<script src="../canvas/canvasjs.min.js"></script>
 <?php
 	}else{
 		echo "<meta charset='utf-8'><script>alert('คุณไม่ได้รับสิทธื์ในการใช้งานระบบในส่วนนี้');window.location='../';</script>";

@@ -18,6 +18,8 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>MUMFERN SHOP</title>
+ <meta name="keywords" content="ขายเฟิร์น เฟิร์นเชียงใหม่ ขายกระถาง เฟิืร๋นสวย ราคาถูก">
+ <link rel="shortcut icon" href="images/icon/logomumfern.png" />
  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
  <link rel="stylesheet" type="text/css" href="css/mystyle.css">
  <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
@@ -123,105 +125,22 @@
             });
             return false;
         });
-
-        $('#push_indetail').click(function() {
-            var product_indetail = document.getElementById('product_amountindetail').value;
-            product_indetail++;
-            document.getElementById('product_amountindetail').value=product_indetail;
-        });
-        $('#lower_indetail').click(function() {
-            var product_indetail = document.getElementById('product_amountindetail').value;
-            if(product_indetail>1){
-                product_indetail--;
-                document.getElementById('product_amountindetail').value=product_indetail;
-            }
-            
-        });
-<?php
-        
-        echo "$('#add2cart').click(function() {";
-            if(empty($_SESSION['login_name'])){
-                echo "alert('การซื้อสินค้าทำได้เฉพาะสมาชิกเท่านั้น');";
-            }else{
-                echo "stop=0;";
-                echo "var product_id = document.getElementById('product_id').value;";
-                if(!empty($_SESSION['cart_id'])){
-                    foreach ($_SESSION['cart_id'] as $key => $value) {
-                        echo "if('$key'==product_id){";
-                            echo "alert('สินค้าชิ้นนี้ถูกเพิ่มในตะกร้าสินค้าเรียบร้อยแล้ว');";
-                            echo "stop=1;";
-                        echo "}";
-                    }
-                }
-                echo "if(stop==0){";
-                echo "var product_indetail = parseInt(document.getElementById('product_amountindetail').value);";
-                echo "var amount_incart = parseInt(document.getElementById('total_amountincart').innerHTML);";
-                echo "if(isNaN(amount_incart)){";
-                   echo " amount_incart =0;";
-                echo "}";
-                echo "total = product_indetail +amount_incart;";
-                echo "$('#total_amountincart').show();";
-                echo "document.getElementById('total_amountincart').innerHTML =total;";
-                echo "$.post('module/index.php?data=addproduct_cart',{product_id:product_id,amount:product_indetail},function(data){";
-                echo "});";
-                echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:total},function(data){";
-                echo "});";
-                echo "alert('เพิ่มสินค้าลงในตะกร้าแล้ว');";
-                echo "window.location='index.php?module=product&action=product_detail&product_id="."'+product_id+'"."';";
-                echo "}";
-            }
-        echo "});";
-        if(!empty($_SESSION['cart_id'])){
-            foreach ($_SESSION['cart_id'] as $key => $value) {
-                $query_price_product = mysqli_query($_SESSION['connect_db'],"SELECT product_price_web FROM product WHERE product_id='$key'")or die("ERROR index line 174");
-                list($product_price_web)=mysqli_fetch_row($query_price_product);
-                echo "$('#push_incart_$key').click(function() {";
-                    echo "var product_incart = document.getElementById('product_amountincart_$key').value;";
-                    echo "var total_incart = parseInt(document.getElementById('total_incart').innerHTML);";
-                    echo "var amount_incart = parseInt(document.getElementById('total_amountincart').innerHTML);";
-                    echo "product_incart++;";
-                    echo "document.getElementById('product_amountincart_$key').value=product_incart;";
-                    echo "var sum = product_incart * $product_price_web;";
-                    echo "var total = $product_price_web + total_incart;";
-                    echo "amount_incart++;";
-                    echo "document.getElementById('sum_incart_$key').innerHTML =sum;";
-                    echo "document.getElementById('total_incart').innerHTML =total;";
-                    echo "document.getElementById('total_amountincart').innerHTML=amount_incart;";
-                    echo "$.post('module/index.php?data=addproduct_cart',{product_id:'$key',amount:product_incart},function(data){";
-                    echo "});";
-                    echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
-                    echo "});";
-                echo "});";
-                echo "$('#lower_incart_$key').click(function() {";
-                    echo "var product_incart = document.getElementById('product_amountincart_$key').value;";
-                    echo "var total_incart = parseInt(document.getElementById('total_incart').innerHTML);";
-                    echo "var amount_incart = parseInt(document.getElementById('total_amountincart').innerHTML);";
-                    echo "if(product_incart>0){";
-                        echo "product_incart--;";
-                        echo "document.getElementById('product_amountincart_$key').value=product_incart;";
-                        echo "var sum = product_incart * $product_price_web;";
-                        echo "var total = total_incart - $product_price_web ;";
-                        echo "amount_incart--;";
-                        echo "document.getElementById('sum_incart_$key').innerHTML =sum;";
-                        echo "document.getElementById('total_incart').innerHTML =total;";
-                        echo "document.getElementById('total_amountincart').innerHTML=amount_incart;";
-                        echo "$.post('module/index.php?data=addproduct_cart',{product_id:'$key',amount:product_incart},function(data){";
-                        echo "});";
-                        echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
-                        echo "});";
-                    echo "}";
-                echo "});";
-            }
-        }
-        
-?>
             $("#message_bold").click(function(){
                 var message = document.getElementById('webboard_message').value;
                 document.getElementById('webboard_message').value= message+"<b></b>";
             });
+
+            $("#button-close-web").click(function(){
+                $("#close-web").hide();
+                $("#button-close-web").hide();
+                $("#image-close-web").hide();
+                $.post('module/index.php?data=close_web',{close_web:1},function(data){
+                });
+            });
         });
  </script>
 <?php
+/*
 echo "<script>";
     echo "$(document).ready(function() {";
             echo "$('#plus_like').click(function(){";
@@ -247,19 +166,32 @@ echo "<script>";
             echo "});";
     echo "});";
 echo "</script>";
+*/
 ?>
 
  
  
 </head>
 <body>
+<?php include_once("analyticstracking.php") ?>
 <!-- Button trigger modal -->
 
 <div class="display_com">
+<?php
+    $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT * FROM web_page WHERE web_page_id='1'")or die("ERROR : index line 260");
+    list($web_page_id,$logo,$nameshop,$header_detail_shop,$detail_shop,$image_content2,$header_content2,$content2,$image_content3,$header_content3,$content3,$sellproduct_status,$open_web)=mysqli_fetch_row($quality_sellstatus);
+    if($open_web==1){
+        if(empty($_SESSION['web_close'])){
+            echo "<div id='close-web'></div>";
+        }      
+    }
+?>
     <div class="header">
         <a href='index.php' style='text-decoration: none;'><div class="header-logo">
-            <div class="header-logo-img"><img src="images/icon/logomumfern.png" width="100%" height="100%"></div>
-            <font color="#1c5d25" size="5"><p style="margin-top:16px;"><b>MUMFERN SHOP</b></p></font>
+<?php
+            echo "<div class='header-logo-img'><img src='images/icon/$logo' width='100%' height='100%''></div>";
+            echo "<font color='#1c5d25' size='5'><p style='margin-top:16px;''><b>$nameshop</b></p></font>";
+?>
         </div></a>
         <div class="header-menu">
 <?php
@@ -348,40 +280,49 @@ echo "</script>";
     </div>
     <div class="clear"></div>
     <div class="container-fluid"> 
+    
         <div class="col-md-2"></div>
         <div class="col-md-8" style="background:#fff;padding:60px 0px 10px 0px;">
 <?php
+        if($open_web==1){
+            if(empty($_SESSION['web_close'])){   
+                echo "<div id='button-close-web'><img src='images/icon/close.png' width='19' height='19'></div>";
+                echo "<img src ='images/background/close-web.png' id='image-close-web'>";
+            }
+        }
         if(!empty($module)){
             get_module($module,$action);
         }else{
 ?>
             <div id="carousel-example-generic" class="carousel slide " data-ride="carousel">
               <!-- Indicators -->
-              <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+              <ol class="carousel-indicators" style="z-index:1">
+<?php
+                $query_slide=mysqli_query($_SESSION['connect_db'],"SELECT * FROM slide ")or die("ERROR : backend slide line 29");;
+                $row=mysqli_num_rows($query_slide);
+                for($i=0;$i<$row;$i++){
+                    $active = ($i==0)?"class='active'":"";
+                    echo "<li data-target='#carousel-example-generic' data-slide-to='$i' $active></li>";
+                }
+?>
               </ol>
               <!-- Wrapper for slides -->
               <div class="carousel-inner home-slide" role="listbox">
-                <div class="item active home-slide ">
-                  <img src="images/fern/20150818_182251_001.jpg" style="width:100%;height:100%" alt="...">
-                  <div class="carousel-caption">
-                    ...
-                  </div>
-                </div>
-                <div class="item home-slide ">
-                  <img src="images/fern/20150819_074210.jpg." style="width:100%;height:100%" alt="...">
-                  <div class="carousel-caption">
-                    ...
-                  </div>
-                </div>
-                <div class="item home-slide ">
-                  <img src="images/fern/20150819_074317.jpg" style="width:100%;height:100%" alt="...">
-                  <div class="carousel-caption">
-                    ...
-                  </div>
-                </div>
+<?php
+                $number=0;
+                while(list($slide_id,$slide_image,$header_slide,$slide_detail)=mysqli_fetch_row($query_slide)){
+                    $active= ($number==0)?"active":"";
+                    echo "<div class='item $active home-slide'>";
+                      $header_slide = (!empty($header_slide))?$header_slide:"";
+                      $path =(empty($slide_image))?"icon/no-images.jpg":"slide/$slide_image";
+                      echo "<img src='images/$path' style='width:100%;height:100%' alt='...'>";
+                      echo "<div class='carousel-caption'>";
+                        echo "<h4 style='font-size:36px;'>$header_slide</h4><p class=font20>$slide_detail</p>";
+                      echo "</div>";
+                    echo "</div>";
+                    $number++;
+                }
+?>
               </div>
 
               <!-- Controls -->
@@ -395,13 +336,13 @@ echo "</script>";
               </a>
             </div>
             <br>
-            <center><h1><b>MUMFERN SHOP</b></h1></center>
-            <center><h2  class='marginun20'><b>ร้าน มุมเฟิร์น</b></h2></center>
-            <p><center><font size='5'>ร้านมุมเฟิร์น เป็นร้านค้าขายต้นไม้ประเภทเฟิร์น เราจะขายสินค้าประเภทเฟิร์นเป็นหลัก ซึ่งมีหลายประเภท</font></center></p>
-            <p  class='marginun20'><center><font size='5' >และร้านเรายังนำกระถางมาขายซึ่งมีหลากหลายรูปแบบให้เลือก ให้เหมาะสมกับเฟิร์นที่ทางร้านขาย</font></center></p>
-            <br>
-            <div class="clear"></div>
-<?php
+<?php           
+            echo "<center><h1><b>$nameshop</b></h1></center>";
+            echo "<center><h2  class='marginun20'><b>$header_detail_shop</b></h2></center>";
+            echo "<div width='100%' style='padding:0px 30px;'><p><center><font size='5'>$detail_shop</font></center></p></div>";
+            echo "<br>";
+            echo "<div class='clear'></div>";
+
             $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 64");
             list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
             if($sellstatus==1){
@@ -418,67 +359,72 @@ echo "</script>";
 ?>
             <div class="product-recom-sale-content">
 <?php
-            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price_web,product_type,product_image FROM product LIMIT 0,6 ");
-            while(list($product_id,$product_name,$product_price_web,$product_type,$product_image)=mysqli_fetch_row($query_recom_sale)){
+            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product LEFT JOIN type ON product.product_type =type.product_type LIMIT 0,6 ");
+            while(list($product_id,$product_name,$type_name)=mysqli_fetch_row($query_recom_sale)){
                 echo "<div class='col-md-4' style='padding-top:10px;'>";
-                    $folder= ($product_type=="1")?"fern":"pots";
-                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
+                $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
+                list($product_image)=mysqli_fetch_row($query_image);
+                $path= (empty($product_image))?"icon/no-images.jpg":"$type_name/$product_image";
+                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='300px'><br>";
                     echo "<p><center><font size='5'>$product_name</font></center></p></a>";
-                    if($sellstatus==1){
-                    echo "<p class='marginun20'><center><font size='4'>$product_price_web</font></center></p>";
-                    }
                 echo "</div>";
             }
 ?>
             </div>
             <div class="product-recom-new-content">
 <?php
-            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price_web,product_type,product_image FROM product LIMIT 6,6 ");
-            while(list($product_id,$product_name,$product_price_web,$product_type,$product_image)=mysqli_fetch_row($query_recom_sale)){
+            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product LEFT JOIN type ON product.product_type =type.product_type LIMIT 6,6 ");
+            while(list($product_id,$product_name,$type_name)=mysqli_fetch_row($query_recom_sale)){
                 echo "<div class='col-md-4' style='padding-top:10px;'>";
-                    $folder= ($product_type=="1")?"fern":"pots";
-                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
+                $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
+                list($product_image)=mysqli_fetch_row($query_image);
+                $path= (empty($product_image))?"icon/no-images.jpg":"$type_name/$product_image";
+                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='300px'><br>";
                     echo "<p><center><font size='5'>$product_name</font></center></p></a>";
-                    if($sellstatus==1){
-                    echo "<p class='marginun20'><center><font size='4'>$product_price_web</font></center></p>";
-                    }
                 echo "</div>";
             }
 ?>
             </div>
             <div class="product-recom-best-content">
 <?php
-            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_name,product_price_web,product_type,product_image FROM product LIMIT 12,6 ");
-            while(list($product_id,$product_name,$product_price_web,$product_type,$product_image)=mysqli_fetch_row($query_recom_sale)){
+            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product LEFT JOIN type ON product.product_type =type.product_type LIMIT 12,6 ");
+            while(list($product_id,$product_name,$type_name)=mysqli_fetch_row($query_recom_sale)){
                 echo "<div class='col-md-4' style='padding-top:10px;'>";
-                    $folder= ($product_type=="1")?"fern":"pots";
-                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$folder/$product_image' width='100%' height='300px'><br>";
+                $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
+                list($product_image)=mysqli_fetch_row($query_image);
+                $path= (empty($product_image))?"icon/no-images.jpg":"$type_name/$product_image";
+                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='300px'><br>";
                     echo "<p><center><font size='5'>$product_name</font></center></p></a>";
-                    if($sellstatus==1){
-                    echo "<p class='marginun20'><center><font size='4'>$product_price_web</font></center></p>";
-                    }
                 echo "</div>";
             }
 ?>
             </div>
             <div class="col-md-12 con1" >
                 <div class="col-md-6">
-                    <img src="images/webpage/20150819_074754.jpg" width="100%" >
+<?php
+                    echo "<img src='images/webpage/$image_content2' width='100%' height='400px'>";
+?>
                     
                 </div>
                 <div class="col-md-6 ">
-                    <p class="content1">ร้านมุมเฟิร์น เป็นร้านขายต้นไม้ประเภทเฟิร์น และขายกระถางหลากหลายรูปแบบ ร้านมุมเฟิร์นตั้งอยู่ที่ ตลาดคำเที่ยง จังหวัดเชียงใหม่ ร้านมุมเฟิร์นได้เปิดเป็นร้านขายเฟิร์นมาได้ 8 ปี โดยเริ่มจากกการขายเฟิร์น และเพิ่มการขายกระถางในเวลาต่อมา ภายในร้านมีเฟิร์นหลากหลายประเภทให้เลือกซื้อ เลือกหากันมากมาย</p>
+<?php
+                    echo "<p class='content1'><b>$header_content2</b></p>";
+                    echo "<p class='content1'>$content2</p>";
+?>
                 </div>
             </div>
             
             <div class="col-md-12 con2" >
                 <div class="col-md-5">
-                    <p class="content2" >ทางร้านมุมเฟิร์นทำการขายทั้งขายปลีก และขายส่งเฟิร์นกับกระถางให้กับลูกค้าทั้งหน้าร้านที่ตลาดคำเที่ยงแล้ว ก็ยังมีบริการรับส่งสินค้าทั่วประเทศตามรายการสั่งซื้อ
-                    ซึ่งลูกค้าสามารถเยี่ยมชมสินค้าของร้านได้ในเว็บไซต์  หากท่านสนใจสินค้าใด ก็สามารถติดต่อสอบถามสินค้าตามที่อยู่ด้านล่างค่ะ และหากลูกค้าท่านใดมีขอสอบถามหรืออยากได้ความรู้เพิ่มเติมสามารถเข้าไปอ่านในหน้าบทความของเว็บไซต์ หรือฝากคำถามไว้ในกระทู้เพิ่มเติมได้ค่ะ 
-                    </p>
+<?php
+                    echo "<p class='content2'><b>$header_content3</b></p>";
+                    echo "<p class='content2'>$content3</p>";
+?>
                 </div>
                 <div class="col-md-7">
-                    <img src="images/webpage/IMG_0239.JPG" class="img1" width="100%">
+<?php
+                    echo "<img src='images/webpage/$image_content3' width='100%' height='400px'>";
+?>
                 </div>
             </div>
 

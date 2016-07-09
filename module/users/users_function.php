@@ -64,6 +64,7 @@ function data_users(){
 		echo "<div class='col-md-3 datausers_menu'>";
 		$query_users = mysqli_query($_SESSION['connect_db'],"SELECT fullname,lastname,image FROM users WHERE username ='$_SESSION[login_name]'")or die("ERROR users function line 64");
 		list($fullname,$lastname,$image)=mysqli_fetch_row($query_users);
+		$image = (empty($image))?"user.png":$image;
 			echo "<p><center><img src='images/user/$image' width='150' height='150'></center></p><br>";
 			echo "<p align='center'><img src='images/icon/black-user-shape.png' width='24' style='margin-top:-8px'>&nbsp;<font size='5'><b>ยินดีต้อนรับ</b></font></p>";
 			$name = (empty($fullname)AND empty($lastname))?"ไม่ระบุชื่อหรือนามสกุล":"$fullname $lastname";
@@ -79,8 +80,8 @@ function data_users(){
 	        list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
 	        if($sellstatus==1){
 			echo "<a href='index.php?module=users&action=data_users&menu=2'><p class='font20 margin0 $action_menu_user2'>&nbsp;&nbsp;สินค้าในตะกร้า</p></a>";
-			echo "<a href='index.php?module=users&action=data_users&menu=3'><p class='font20 margin0 $action_menu_user3'>&nbsp;&nbsp;สถานะการซื้อสินค้า</p></a>";
-			echo "<a href='index.php?module=users&action=data_users&menu=4'><p class='font20 margin0 $action_menu_user4'>&nbsp;&nbsp;ประวัติการซื้อสินค้า</b></p></a>";
+			echo "<a href='index.php?module=users&action=data_users&menu=3&order_status=1'><p class='font20 margin0 $action_menu_user3'>&nbsp;&nbsp;สถานะการซื้อสินค้า</p></a>";
+			echo "<a href='index.php?module=users&action=data_users&menu=4&order_status=4'><p class='font20 margin0 $action_menu_user4'>&nbsp;&nbsp;ประวัติการซื้อสินค้า</b></p></a>";
 			}
 		echo "</div>";
 		echo "<div class='col-md-9'>";

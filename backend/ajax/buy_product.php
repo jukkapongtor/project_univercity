@@ -5,22 +5,25 @@
 ?>
 <script>
 $(document).ready(function() {
-    var max_fields      = 10; //maximum input boxes allowed
-    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
-    var add_button      = $(".add_field_button"); //Add button ID
-    
-    var x = 1; //initlal text box count
-    $(add_button).click(function(e){ //on add input button click
-        e.preventDefault();
-        if(x < max_fields){ //max input box allowed
-            x++; //text box increment
-            $(wrapper).append(' <div class="remove" style="margin-bottom:20px"><div class="col-md-1" style="margin-bottom:20px">ประเภท </div><div class="col-md-2" style="margin-bottom:20px"><input type="text" class="form-control" name="mytext[]"></div><div class="col-md-1" style="margin-bottom:20px">ชื่อสินค้า</div><div class="col-md-2" style="margin-bottom:20px"><input type="text" class="form-control" name="mytext[]"></div><div class="col-md-1" style="margin-bottom:20px">จำนวน</div><div class="col-md-1" style="margin-bottom:20px"><input type="text" class="form-control" name="mytext[]"></div><div class="col-md-1" style="margin-bottom:20px">ราคา(หน่วย)</div><div class="col-md-2" style="margin-bottom:20px"><input type="text" class="form-control" name="mytext[]"></div><button  class="remove_field">Remove</button></div></div>'); //add input box
-        }
+    $('#product_type').change(function() {
+    	$.ajax({
+            type: 'POST',
+            data: {product_type: document.getElementById('product_type').value},
+            url: 'ajax/select_product_size.php?data=quality',
+            success: function(data) {$('#product_quality').html(data);}
+        });
+    	return false;
     });
-    
-    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-        e.preventDefault(); $(this).parent('.remove').remove(); x--;
-    })
+
+    $('#product_quality').change(function() {
+    	$.ajax({
+            type: 'POST',
+            data: {product_quality: document.getElementById('product_quality').value},
+            url: 'ajax/function.php?data=product_list',
+            success: function(data) {$('#product_list').html(data);}
+        });
+    	return false;
+    });
 });
 </script>
 <div class="row">
@@ -45,20 +48,37 @@ $(document).ready(function() {
 <?php
 	$date = date("Y-m-d");
 ?>
-  <p><b>รายการซื้อเข้าประจำวันที่ : </b><?php echo "$date"; ?></p>
-  	<form>
-    <div class="input_fields_wrap" >
-    	<div class="col-md-1" style='margin-bottom:20px'>ประเภท </div>
-	    <div class="col-md-2" style='margin-bottom:20px'><input type="text" class='form-control' name="mytext[]"></div>
-	    <div class="col-md-1" style='margin-bottom:20px'>ชื่อสินค้า</div>
-	    <div class="col-md-2" style='margin-bottom:20px'><input type="text" class='form-control' name="mytext[]"></div>
-	    <div class="col-md-1" style='margin-bottom:20px'>จำนวน</div>
-	    <div class="col-md-1" style='margin-bottom:20px'><input type="text" class='form-control' name="mytext[]"></div>
-	    <div class="col-md-1" style='margin-bottom:20px'>ราคา(หน่วย)</div>
-	    <div class="col-md-2" style='margin-bottom:20px'><input type="text" class='form-control' name="mytext[]"></div>
-	    <button class="add_field_button" style='margin-bottom:20px'>Add </button>
-	</div>
-	<p align='right'><button class='btn btn-sm btn-success'>เพิ่มรายการซื้อเข้า</button></p>
-	</form>
+  <div class="col-md-12">
+  	<p><b>รายการซื้อเข้าประจำวันที่ : </b><?php echo "$date"; ?></p>
+  </div>
+  <div class="col-md-6">
+  	<p><b>เลือกประเภทสินค้าและหมวดหมู่สินค้า</b></p>
+  	<div class="container-fluid">
+  		<div class="col-md-4"><p>เลือกประเภทสินค้า</p></div>
+	  	<div class="col-md-8"> 
+	  		<select class="form-control" id="product_type">
+	  			<option>--เลือกประเภทสินค้า--</option>
+<?php
+			$query_type=mysqli_query($_SESSION['connect_db'],"SELECT * FROM type")or die("ERROR backend buy product line 42 ");
+			while (list($type_id,$type_name)=mysqli_fetch_row($query_type)) {
+				echo "<option value='$type_id'>$type_name</option>";
+			}
+?>
+	  		</select>
+	  	</div>	
+  	</div>
+  	<div class="container-fluid">
+  		<div class="col-md-4"><p>เลือกหมวดหมู่สินค้า</p></div>
+	  	<div class="col-md-8">
+	  		<select class="form-control" id="product_quality">
+	  			<option>--เลือกหมวดหมู่สินค้า--</option>
+	  		</select>
+	  	</div>	
+  	</div>
+  	<div class="container-fluid" id='product_list' style="padding:0px;"></div>
+  </div>
+  <div class="col-md-6" id='product_detail'>
+  	
+  </div>
   </div>
 </div>

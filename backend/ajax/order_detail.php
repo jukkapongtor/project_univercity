@@ -98,23 +98,24 @@ $(document).ready(function() {
 	    	}
 	    echo "</table>";
 	    echo "<table class='table table-hover table-striped' style='margin-top:20px;'>";
-		    echo "<thead><tr><th>ลำดับ</th><th>ชื่อสินค้า</th><th>ราคา(ชิ้น)</th><th>จำนวน</th><th>รวมราคา</th></tr></thead><tbody>";
+		    echo "<thead><tr><th>ลำดับ</th><th>ชื่อสินค้า</th><th>ขนาดสินค้า</th><th>ราคา(ชิ้น)</th><th>จำนวน</th><th>รวมราคา</th></tr></thead><tbody>";
 		    $num=1;
 		    $total_price=0;
-		    $query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,product.product_price,order_detail.total_amount FROM order_detail LEFT JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = '$order_id'")or die("ERROR : order function line 82");
-		    while(list($product_name,$product_price,$total_amount)=mysqli_fetch_row($query_orderdetail)){
+		    $query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,size.size_name,product_size.product_price_web,order_detail.amount FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN product ON product.product_id = product_size.product_id LEFT JOIN size ON product_size.size_id = size.product_size WHERE order_detail.order_id = '$order_id'")or die("ERROR : order function line 82");
+		    while(list($product_name,$size_name,$product_price_web,$total_amount)=mysqli_fetch_row($query_orderdetail)){
 		  		echo "<tr>";
 		   			echo "<td>$num</td>";
-		   			echo "<td>$product_name</td>";
-		   			echo "<td>$product_price</td>";
-		   			echo "<td>$total_amount</td>";
-		   			$sum=$product_price*$total_amount;
-		   			$total_price+=$sum;
-		   			echo "<td><p align='right'>".number_format($sum)."</p></td>";
+				    echo "<td>$product_name</td>";
+				    echo "<td>$size_name</td>";
+				    echo "<td>$product_price_web</td>";
+				    echo "<td>$total_amount</td>";
+				    $sum=$product_price_web*$total_amount;
+				    $total_price+=$sum;
+				    echo "<td><p align='right'>".number_format($sum)."</p></td>";
 		  		echo "</tr>";
 		   		$num++;
 		      }
-		    echo "<tr><td colspan='4' align='right'><b>รวมยอดเงินทั้งหมด</b></td><td><p align='right'>".number_format($total_price)."</p></td></tr>";
+		    echo "<tr><td colspan='5' align='right'><b>รวมยอดเงินทั้งหมด</b></td><td><p align='right'>".number_format($total_price)."</p></td></tr>";
 		echo "</tbody></table>";
 	  echo "</div>";
 	echo "</div>";

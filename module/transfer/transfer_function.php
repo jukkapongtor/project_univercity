@@ -11,7 +11,7 @@ function check_transfer(){
 
 		mysqli_query($_SESSION['connect_db'],$sqli_insert_transfer);
 		mysqli_query($_SESSION['connect_db'],$sqli_update_order);
-		echo "<script>alert('ยืนยันการชำระเงิน');window.location='index.php?module=users&action=data_users&menu=3'</script>";
+		echo "<script>alert('ยืนยันการชำระเงิน');window.location='index.php?module=users&action=data_users&menu=3&order_status=2'</script>";
 	}
 	
 }
