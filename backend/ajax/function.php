@@ -2,6 +2,7 @@
 session_start();
 include("../../include/function.php");
 connect_db();
+date_default_timezone_set('Asia/Bangkok');
 switch ($_GET['data']) {
 	case 'switch_onoff_buywebsite':
 		mysqli_query($_SESSION['connect_db'],"UPDATE web_page SET sellproduct_status ='$_POST[switch_onoff_buywebsite]' WHERE web_page_id='1'"); 
@@ -105,6 +106,70 @@ switch ($_GET['data']) {
 		
 <?php
 	break;
+	case 'select_order':
+		$day = substr($_POST['date'],0,2);
+		$month = substr($_POST['date'],3,2);
+		$year = substr($_POST['date'],6,4);
+		$date_select="$year-$month-$day";
+		$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id,total_amount,total_price FROM orders WHERE DATE(order_date)='$date_select' AND (order_status='3' OR order_status='4') ")or die("ERROR : report_sell_day line 47");
+		$rows = mysqli_num_rows($query_order);
+		if($rows<=0){
+			echo "<p><b>ไม่พบรายการขาย</p>";
+		}else{
+?>
+		<table class="table">
+			<tr><th>ลำดับ</th><th>ลำดับ</th><th>จำนวน</th><th>ราคา</th></tr>
+<?php
+			$num=1;
+			while (list($order_id,$total_amount,$total_price)=mysqli_fetch_row($query_order)) {
+				echo "<tr>";
+					echo "<td>$num</td>";
+					echo "<td>$order_id</td>";
+					echo "<td>$total_amount</td>";
+					echo "<td>$total_price</td>";
+				echo "</tr>";
+				$num++;
+			}
+?>
+		</table>
+	<script>
+<?php
+	$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE DATE(order_date)='$date_select' AND (order_status='3' OR order_status='4') ")or die("ERROR : report_sell_day line 47");
+	$rows = mysqli_num_rows($query_order);
+	if($rows>0){
+		$num=0;
+		while (list($order_id)=mysqli_fetch_row($query_order)) {
+			$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN product ON product_size.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 47");
+			while (list($amount,$product_name,$size_name)=mysqli_fetch_row($query_order_detail)) {
+				$order_detail[$num]=array("name"=>"$product_name ($size_name)","amount"=>"$amount");
+				$num++;
+			}
+		}
+	echo "var chart = new CanvasJS.Chart('chartContainer', {";
+		echo "title:{"; 
+			echo "text: 'รายงานการขายวันที่ $_POST[date]'  ";             
+		echo "},"; 
+		echo "data: [   ";           
+		echo "{";
+			echo "type: 'column',";		
+			echo "dataPoints: [";
+
+			foreach ($order_detail as $key => $value) {
+				echo "{ label: '$value[name]',  y: $value[amount]  },";
+			}
+			echo "]";
+		echo "}";
+		echo "]";
+	echo "});";
+	echo "chart.render();";
+	}
+?>
+	</script>
+<?php
+	}
+
+	break;
+	
 	default: break;
 }
 

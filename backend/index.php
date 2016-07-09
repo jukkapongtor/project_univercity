@@ -3,7 +3,7 @@
 
 	include("../include/function.php");
 	connect_db();
-
+	date_default_timezone_set('Asia/Bangkok');
 	if(!empty($_SESSION['login_name'])&&$_SESSION['login_type']==1){
 ?>
 <!DOCTYPE html>
@@ -26,7 +26,6 @@
 		<link href="plugins/justified-gallery/justifiedGallery.css" rel="stylesheet">
 		<link href="css/style_v2.css" rel="stylesheet">
 		<link href="css/style_v3.css" rel="stylesheet">
-		<link href="plugins/chartist/chartist.min.css" rel="stylesheet">
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 				<script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
@@ -199,7 +198,6 @@
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/buy_product.php">สินค้าสำหรับขาย</a></li>
 						<li><a class="ajax-link" href="ajax/supplyes_manage.php">วัสดุสิ้นเปลือง</a></li>
-						<li><a class="ajax-link" href="ajax/buy_product.php">ค่าขนส่ง</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -217,7 +215,7 @@
 						 <span >รายงานการขายสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/test.php">#</a></li>
+						<li><a class="ajax-link" href="ajax/report_sell_day.php">รายงานการขายรายวัน</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -263,6 +261,7 @@
 						<i class="fa fa-bar-chart-o"></i>
 						<span class="hidden-xs">Charts</span>
 					</a>
+	
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/charts_xcharts.html">xCharts</a></li>
 						<li><a class="ajax-link" href="ajax/charts_flot.html">Flot Charts</a></li>
@@ -274,7 +273,7 @@
 					</ul>
 				</li>
 									
-			
+		
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
@@ -461,6 +460,7 @@
 <script src="plugins/tinymce/jquery.tinymce.min.js"></script>
 <!-- All functions for this theme + document.ready processing -->
 <script src="js/devoops.js"></script>
+<script src="../canvas/canvasjs.min.js"></script>
 <?php
 	}else{
 		echo "<meta charset='utf-8'><script>alert('คุณไม่ได้รับสิทธื์ในการใช้งานระบบในส่วนนี้');window.location='../';</script>";
