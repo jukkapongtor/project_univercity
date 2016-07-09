@@ -80,3 +80,8 @@
   width: 100%;  
   height: 400px;
 }
+.text-editor{
+    width: 81%;
+    margin: auto;
+    text-align: left;
+}

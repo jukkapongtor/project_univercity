@@ -27,14 +27,32 @@
 		<link href="css/style_v2.css" rel="stylesheet">
 		<link href="css/style_v3.css" rel="stylesheet">
 		<link href="plugins/chartist/chartist.min.css" rel="stylesheet">
+	  <link rel="stylesheet" href="css/font-awesome.min.css">
+	  <link rel="stylesheet" href="css/froala_editor.css">
+	  <link rel="stylesheet" href="css/froala_style.css">
+	  <link rel="stylesheet" href="css/plugins/code_view.css">
+	  <link rel="stylesheet" href="css/plugins/colors.css">
+	  <link rel="stylesheet" href="css/plugins/emoticons.css">
+	  <link rel="stylesheet" href="css/plugins/image_manager.css">
+	  <link rel="stylesheet" href="css/plugins/image.css">
+	  <link rel="stylesheet" href="css/plugins/line_breaker.css">
+	  <link rel="stylesheet" href="css/plugins/table.css">
+	  <link rel="stylesheet" href="css/plugins/char_counter.css">
+	  <link rel="stylesheet" href="css/plugins/video.css">
+	  <link rel="stylesheet" href="css/codemirror.min.css">
+
+
+		
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 				<script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
 				<script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>
 		<![endif]-->
+		
 	</head>
 
 <body>
+
 <!--Start Header-->
 <div id="screensaver">
 	<canvas id="canvas"></canvas>
@@ -488,6 +506,43 @@
 	}
 
 ?>
+
+  <script type="text/javascript" src="js/codemirror.min.js"></script>
+  <script type="text/javascript" src="js/xml.min.js"></script>
+  <script type="text/javascript" src="js/froala_editor.min.js"></script>
+  <script type="text/javascript" src="js/plugins/align.min.js"></script>
+  <script type="text/javascript" src="js/plugins/code_beautifier.min.js"></script>
+  <script type="text/javascript" src="js/plugins/code_view.min.js"></script>
+  <script type="text/javascript" src="js/plugins/colors.min.js"></script>
+  <script type="text/javascript" src="js/plugins/draggable.min.js"></script>
+  <script type="text/javascript" src="js/plugins/emoticons.min.js"></script>
+  <script type="text/javascript" src="js/plugins/font_size.min.js"></script>
+  <script type="text/javascript" src="js/plugins/font_family.min.js"></script>
+  <script type="text/javascript" src="js/plugins/image.min.js"></script>
+  <script type="text/javascript" src="js/plugins/image_manager.min.js"></script>
+  <script type="text/javascript" src="js/plugins/line_breaker.min.js"></script>
+  <script type="text/javascript" src="js/plugins/link.min.js"></script>
+  <script type="text/javascript" src="js/plugins/lists.min.js"></script>
+  <script type="text/javascript" src="js/plugins/paragraph_format.min.js"></script>
+  <script type="text/javascript" src="js/plugins/paragraph_style.min.js"></script>
+  <script type="text/javascript" src="js/plugins/table.min.js"></script>
+  <script type="text/javascript" src="js/plugins/video.min.js"></script>
+  <script type="text/javascript" src="js/plugins/url.min.js"></script>
+  <script type="text/javascript" src="js/plugins/entities.min.js"></script>
+  <script type="text/javascript" src="js/plugins/char_counter.min.js"></script>
+  <script type="text/javascript" src="js/plugins/inline_style.min.js"></script>
+  <script type="text/javascript" src="js/plugins/save.min.js"></script>
+
+  <script>
+    $(function(){
+      $('#edit').froalaEditor({
+         toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'emoticons', 'paragraphFormat', 'paragraphStyle', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'insertLink', 'insertImage', 'insertTable', 'insertFile', 'undo', 'redo', 'html'],
+
+        enter: $.FroalaEditor.ENTER_P,
+        height: 400
+      })
+    });
+  </script>
 </body>
 
 </html>
