@@ -17,17 +17,19 @@ $(document).ready(function() {
   $("#datepicker").change(function(){
   	document.getElementById("report_sell_day").innerHTML=document.getElementById("datepicker").value;
   	$.post('ajax/function.php?data=select_order',{date:innerHTML=document.getElementById("datepicker").value},function(data){
+  		alert(data);
   		$('#list_order').html(data);
   		if(data=="<p><b>ไม่พบรายการขาย</p>"){
   			document.getElementById("chartContainer").innerHTML="";
   		}
+
     });
   });
 });
 </script>
 <script type="text/javascript">
 
-window.onload = function () {
+
 <?php
 	$date_select = date("Y-m-d");
 	$date = date("d-m-Y");
@@ -58,7 +60,7 @@ window.onload = function () {
 	echo "chart.render();";
 	}
 ?>
-}
+
 </script>
 </head>
 <div class="row">
