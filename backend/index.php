@@ -238,6 +238,8 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/report_sell_day.php">รายงานการขายรายวัน</a></li>
+						<li><a class="ajax-link" href="ajax/report_sell_month.php">รายงานการขายรายเดือน</a></li>
+						<li><a class="ajax-link" href="ajax/report_sell_year.php">รายงานการขายรายปี</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -246,7 +248,9 @@
 						 <span >รายงานการซื้อสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/test.php">#</a></li>
+						<li><a class="ajax-link" href="ajax/report_buy_day.php">รายงานการซื้อรายวัน</a></li>
+						<li><a class="ajax-link" href="ajax/report_buy_month.php">รายงานการซื้อรายเดือน</a></li>
+						<li><a class="ajax-link" href="ajax/report_buy_year.php">รายงานการซื้อรายปี</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -255,7 +259,7 @@
 						 <span >จัดการคิวอาร์โค้ด</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/qrcode_generator.php">เพิ่มคิวอาร์โค้ด</a></li>
+						<li><a class="ajax-link" href="ajax/qrcode_generator.php">พิมพ์คิวอาร์โค้ด</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -273,7 +277,12 @@
 						 <span >จัดการข้อมูลพนักงาน</span>
 					</a>
 					<ul class="dropdown-menu">
+<<<<<<< HEAD
 						<li><a class="ajax-link" href="ajax/employee_manage.php">ข้อมูลพนักงาน</a></li>
+=======
+						<li><a class="ajax-link" href="ajax/employee_form.php">ฟอร์มเพิ่มพนักงาน</a></li>
+						<li><a class="ajax-link" href="ajax/employee_list.php">แสดงรายชื่อพนักงาน</a></li>
+>>>>>>> refs/remotes/origin/master
 					</ul>
 				</li>
 <!--

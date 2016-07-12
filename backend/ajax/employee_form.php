@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
     session_start();
     echo "<meta charset='utf8'>";
     include("../../include/function.php");
@@ -499,3 +500,24 @@ $(document).ready(function() {
 });
 </script>
 </body>
+=======
+	session_start();
+	include("../../include/function.php");
+	connect_db();
+
+?>
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<a href="#" class="show-sidebar">
+			<i class="fa fa-bars"></i>
+		</a>
+		<ol class="breadcrumb pull-left">
+			<li><a href="#">จัดการข้อมูลพนักงาน</a></li>
+			<li><a href="#">ฟอร์มเพิ่มพนักงาน</a></li>
+		</ol>
+		<div id="social" class="pull-right">
+			<a href="#"><i class="fa fa-facebook"></i></a>
+		</div>
+	</div>
+</div>
+>>>>>>> refs/remotes/origin/master

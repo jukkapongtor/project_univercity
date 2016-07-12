@@ -138,10 +138,21 @@ switch ($_GET['data']) {
 	$rows = mysqli_num_rows($query_order);
 	if($rows>0){
 		$num=0;
+
+		$order_detail =array();
 		while (list($order_id)=mysqli_fetch_row($query_order)) {
 			$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN product ON product_size.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 47");
 			while (list($amount,$product_name,$size_name)=mysqli_fetch_row($query_order_detail)) {
-				$order_detail[$num]=array("name"=>"$product_name ($size_name)","amount"=>"$amount");
+				$check_dubble=0;
+				foreach ($order_detail as $key => $value) {
+					if($value['name']=="$product_name ($size_name)"){
+						$order_detail[$key]['amount']=$value['amount']+$amount;
+						$check_dubble=1;
+					}
+				}
+				if($check_dubble==0){
+					$order_detail[$num]=array("name"=>"$product_name ($size_name)","amount"=>"$amount");
+				}
 				$num++;
 			}
 		}
