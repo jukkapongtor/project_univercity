@@ -270,11 +270,10 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-table"></i>
-						 <span >จัดการข้มูลพนักงาน</span>
+						 <span >จัดการข้อมูลพนักงาน</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/form_employee.php">ฟอร์มเพิ่มพนักงาน</a></li>
-						<li><a class="ajax-link" href="ajax/list_employee.php">แสดงรายชื่อพนักงาน</a></li>
+						<li><a class="ajax-link" href="ajax/employee_manage.php">ข้อมูลพนักงาน</a></li>
 					</ul>
 				</li>
 <!--
