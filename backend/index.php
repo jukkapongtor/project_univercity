@@ -252,11 +252,11 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-table"></i>
-						 <span >จัดการข้อมูลพนักงาน</span>
+						 <span >จัดการข้มูลพนักงาน</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/employee_form.php">ฟอร์มเพิ่มพนักงาน</a></li>
-						<li><a class="ajax-link" href="ajax/employee_list.php">แสดงรายชื่อพนักงาน</a></li>
+						<li><a class="ajax-link" href="ajax/form_employee.php">ฟอร์มเพิ่มพนักงาน</a></li>
+						<li><a class="ajax-link" href="ajax/list_employee.php">แสดงรายชื่อพนักงาน</a></li>
 					</ul>
 				</li>
 <!--

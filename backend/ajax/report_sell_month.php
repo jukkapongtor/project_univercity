@@ -7,10 +7,18 @@
 <script>
 	$(document).ready(function() {
 		$("#select_date").click(function(){
+			var year = document.getElementById("select_year").value;
+			var month = document.getElementById("select_month").value;
+			$.post('ajax/function.php?data=report_sell_day',{year:year,month:month},function(data){
+		  		$('#report_month').html(data);
 
+		    });
 		});
+		
 	});
+
 </script>
+
 <div class="row">
 	<div id="breadcrumb" class="col-xs-12">
 		<a href="#" class="show-sidebar">
@@ -67,4 +75,9 @@
 			</div>
 		  </div>
 		</div>
+</div>
+
+<div class="container-fluid">
+	<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+	<div id='report_month'></div>
 </div>

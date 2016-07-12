@@ -11,13 +11,13 @@ $(document).ready(function() {
   $(function() {
     $( "#datepicker" ).datepicker({
       changeMonth: true,
-      changeYear: true
+      changeYear: true,
+      yearRange:"c-30:c+0"
     });
   });
   $("#datepicker").change(function(){
   	document.getElementById("report_sell_day").innerHTML=document.getElementById("datepicker").value;
   	$.post('ajax/function.php?data=select_order',{date:innerHTML=document.getElementById("datepicker").value},function(data){
-  		alert(data);
   		$('#list_order').html(data);
   		if(data=="<p><b>ไม่พบรายการขาย</p>"){
   			document.getElementById("chartContainer").innerHTML="";

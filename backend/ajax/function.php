@@ -180,7 +180,221 @@ switch ($_GET['data']) {
 	}
 
 	break;
+	case 'report_sell_month':
+
+
+?>
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr><th>ลำดับ</th><th>รายการ</th><th>จำนวน(หน้าร้าน)</th><th>ยอดขาย(หน้าร้าน)</th><th>จำนวน(เว็บไซต์)</th><th>ยอดขาย(เว็บไซต์)</th></tr>
+				</thead>
+				<tbody>
+<?php
+					$query_name_month =mysqli_query($_SESSION['connect_db'],"SELECT month_id,month_name FROM month")or die("ERROR : report_sell_day line 185");
+					while (list($month_id,$month_name)=mysqli_fetch_row($query_name_month)) {
+						echo "<tr>";
+							echo "<td>$month_id</td>";
+							echo "<td>รายงานเดือน $month_name</td>";
+							echo "<td>0</td>";
+							echo "<td>0</td>";
+							$query_report_month =mysqli_query($_SESSION['connect_db'],"SELECT SUM(total_amount),SUM(total_price) FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$_POST[year]' AND (order_status='3' OR order_status='4')")or die("ERROR : function line 222");
+							list($total_amount,$total_price)=mysqli_fetch_row($query_report_month);
+							$total_amount = (empty($total_amount))?0:$total_amount;
+							$total_price = (empty($total_price))?0:$total_price;
+							echo "<td>$total_amount</td>";
+							echo "<td>$total_price</td>";
+						echo "</tr>";
+					}
+?>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-1"></div>
+	<script>
+<?php
+	$query_report_month =mysqli_query($_SESSION['connect_db'],"SELECT month_id,month_name FROM month")or die("ERROR : report_sell_day line 185");
+	while (list($month_id,$month_name)=mysqli_fetch_row($query_report_month)) {
+		$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_date,SUM(total_amount),SUM(total_price) FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$_POST[year]' AND (order_status='3' OR order_status='4')")or die("ERROR : report_sell_day line 47");
+		list($date,$total_amount,$total_price)=mysqli_fetch_row($query_order_detail);
+		$repot_month[]=array("month_name"=>"$month_name","total_price"=>"$total_price");
+	}
+	echo "var chart = new CanvasJS.Chart('chartContainer', {";
+		echo "title:{"; 
+			echo "text: 'รายงานการขายปี $_POST[year]'  ";             
+		echo "},"; 
+		echo "data: [   ";           
+		echo "{";
+			echo "type: 'column',";		
+			echo "dataPoints: [";
+
+			foreach ($repot_month as $key => $value) {
+				$value['total_price'] = (empty($value['total_price']))?0:$value['total_price'];
+				echo "{ label: '$value[month_name]',  y: $value[total_price]  },";
+			}
+			echo "]";
+		echo "}";
+		echo "]";
+	echo "});";
+	echo "chart.render();";
 	
+?>
+	</script>
+<?php
+	break;
+
+	case 'report_sell_day':
+		$month = $_POST['month'];
+		$year = $_POST['year'];
+
+		$feb = ($year%4==0)?29:28;
+		$day =array(1=>31,2=>$feb,3=>31,4=>30,5=>31,6=>30,7=>31,8=>31,9=>30,10=>31,11=>30,12=>31);
+		echo "<br>";
+?>
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr><th>ลำดับ</th><th>รายการ</th><th>จำนวน(หน้าร้าน)</th><th>ยอดขาย(หน้าร้าน)</th><th>จำนวน(เว็บไซต์)</th><th>ยอดขาย(เว็บไซต์)</th></tr>
+				</thead>
+				<tbody>
+<?php
+				for($i=1;$i<=$day[$month];$i++){
+					$query_report_day =mysqli_query($_SESSION['connect_db'],"SELECT SUM(total_amount),SUM(total_price) FROM orders WHERE DAY(order_date)='$i' AND MONTH(order_date)='$month' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4')")or die("ERROR : function line 222");
+					list($total_amount,$total_price)=mysqli_fetch_row($query_report_day);
+					echo "<tr>";
+						echo "<td>$i</td>";
+						echo "<td>";
+?>
+							<a data-toggle="modal" data-target="<?php echo "#day_$i";?>" style='text-decoration:none;cursor:pointer'><?php echo "ยอดขายประจำวันที่ $i" ?></a>
+							<div class="modal fade" id="<?php echo "day_$i";?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							  <div class="modal-dialog  modal-lg" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							        <h4 class="modal-title" id="myModalLabel"><?php echo "ยอดขายประจำวันที่ $i-$month-$year" ?></h4>
+							      </div>
+							      <div class="modal-body">
+<?php
+									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE DAY(order_date)='$i' AND MONTH(order_date)='$month' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4')")or die("ERROR : report_sell_day line 247");
+									$rows = mysqli_num_rows($query_order);
+									if($rows>0){
+										$num=0;
+										$order_detail =array();
+										while (list($order_id)=mysqli_fetch_row($query_order)) {
+											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,product_size.product_price_web FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN product ON product_size.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 47");
+
+
+											while (list($amount,$product_name,$size_name,$product_price_web)=mysqli_fetch_row($query_order_detail)) {
+												$check_dubble=0;
+												foreach ($order_detail as $key => $value) {
+													if($value['name']=="$product_name" AND $value['size']=="$size_name"){
+														$order_detail[$key]['amount']=$value['amount']+$amount;
+														$order_detail[$key]['price']=$value['price']+$product_price_web;
+														$check_dubble=1;
+													}
+												}
+												if($check_dubble==0){
+													$order_detail[$num]=array("name"=>"$product_name","size"=>"$size_name","amount"=>"$amount","price"=>"$product_price_web");
+												}
+												$num++;
+											}
+										}
+?>		
+										<div class="panel panel-success">
+										  <div class="panel-heading"><?php echo "<h4>รายละเอียดยอดขายบนเว็บไซต์ประจำวันที่ $i-$month-$year</h4>" ?></div>
+										  <div class="panel-body">
+<?php
+											echo "<table class='table table-hover table-striped'>";
+												echo "<tr>";
+													echo "<th><p>ชื่อสินค้า</p></th>";
+													echo "<th><p>ขนาดสินค้า</p></th>";
+													echo "<th><p>จำนวน</p></th>";
+													echo "<th><p>ราคา</p></th>";
+													echo "<th><p>รวมราคา</p></th>";
+												echo "</tr>";
+											$total_price=0;
+											foreach ($order_detail as $key => $value) {
+												echo "<tr>";
+													echo "<td><p>$value[name]</p></td>";
+													echo "<td><p>$value[size]</p></td>";
+													echo "<td><p>$value[amount]</p></td>";
+													echo "<td><p>$value[price]</p></td>";
+													echo "<td><p>".($value['amount']*$value['price'])."</p></td>";
+													$total_price +=($value['amount']*$value['price']);
+												echo "</tr>";
+											}
+												echo "<tr>";
+													echo "<td colspan='4'><p align='right'>รวมราคาทั้งหมด</p></td>";
+													echo "<td><p>".$total_price."</p></td>";
+												echo "</tr>";
+											echo "</table>";
+?>
+										  </div>
+										</div>
+<?php
+										
+									}else{
+										echo "<div class='panel panel-success'>";
+										  echo "<div class='panel-heading'><h4>รายละเอียดยอดขายบนเว็บไซต์ประจำวันที่ $i-$month-$year</h4></div>";
+										  echo "<div class='panel-body'>";
+											echo "<h3>ไม่พบข้อมูลการขายสินค้า</h3>";
+										  echo "</div>";
+										echo "</div>";
+									}
+?>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+<?php
+						echo "</td>";
+						echo "<td>0</td>";
+						echo "<td>0</td>";
+						$total_amount =(empty($total_amount))?0:$total_amount;
+						echo "<td>".number_format($total_amount)."</td>";
+						$total_price =(empty($total_price))?0:$total_price;
+						echo "<td>".number_format($total_price)."</td>";
+					echo "</tr>";
+				}
+?>				
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-1"></div>
+		<script>
+<?php
+		for($i=1;$i<=$day[$month];$i++){
+			$query_report_day =mysqli_query($_SESSION['connect_db'],"SELECT SUM(total_amount),SUM(total_price) FROM orders WHERE DAY(order_date)='$i' AND MONTH(order_date)='$month' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4')")or die("ERROR : function line 222");
+			list($total_amount,$total_price)=mysqli_fetch_row($query_report_day);
+			$repot_month[]=array("day"=>"$i","total_price"=>"$total_price");
+		}
+		echo "var chart = new CanvasJS.Chart('chartContainer', {";
+			echo "title:{";
+				$query_month =  mysqli_query($_SESSION['connect_db'],"SELECT month_name FROM month WHERE month_id='$month'")or die("ERROR : function line 229");
+				list($month_name)=mysqli_fetch_row($query_month);
+				echo "text: 'รายงานการขายเดือน $month_name ปี $year'  ";             
+			echo "},"; 
+			echo "data: [   ";           
+			echo "{";
+				echo "type: 'column',";		
+				echo "dataPoints: [";
+
+				foreach ($repot_month as $key => $value) {
+					$value['total_price'] = (empty($value['total_price']))?0:$value['total_price'];
+					echo "{ label: '$value[day]',  y: $value[total_price]  },";
+				}
+				echo "]";
+			echo "}";
+			echo "]";
+		echo "});";
+		echo "chart.render();";
+?>
+		</script>
+<?php
+
+	break;
 	default: break;
 }
 
