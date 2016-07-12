@@ -237,7 +237,7 @@
 						 <span >จัดการคิวอาร์โค้ด</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/qrcode_generator.php">พิมพ์คิวอาร์โค้ด</a></li>
+						<li><a class="ajax-link" href="ajax/phpqrcode/">พิมพ์คิวอาร์โค้ด</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">

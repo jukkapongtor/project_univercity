@@ -395,6 +395,16 @@ switch ($_GET['data']) {
 <?php
 
 	break;
+	/*
+	case 'select_size':
+		$query_product_type = mysqli_query($_SESSION['connect_db'],"SELECT product_type FROM product WHERE product_id='$_POST[product]'")or die("ERROR backend function line 399");
+		list($product_type)=mysqli_fetch_row($query_product_type);
+		$query_type = mysqli_query($_SESSION['connect_db'],"SELECT product_size,size_name FROM size WHERE type_id='$product_type'")or die("ERROR backend function line 401");
+		while (list($product_size,$size_name)=mysqli_fetch_row($query_type)) {
+			echo "<option value='$product_size'>$size_name</option>";
+		}
+	break;
+	*/
 	default: break;
 }
 
