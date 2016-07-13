@@ -22,7 +22,25 @@ function register(){
 		echo "</div>";
 		echo "<div class='col-md-2' style='margin-top:20px'> </div>";
 		echo "<div class='col-md-12' style='margin-top:20px'>";
-			echo "<center><input type='checkbox' name='condition' value='1'><font style='font-size:22px'>&nbsp;ยอมรับ&nbsp;<a href='#'>เงื่อนไขการให้บริการ</a></font></center>";
+			echo "<center><input type='checkbox' name='condition' value='1'><font style='font-size:22px'>&nbsp;ยอมรับ&nbsp;<a data-toggle='modal' data-target='#condition' style='text-decoration:none;cursor:pointer'>เงื่อนไขการให้บริการ</a></font></center>";
+?>
+				<div class="modal fade" id="condition" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">เงื่อนไขการให้บริการ</h4>
+				      </div>
+				      <div class="modal-body">
+				        ...
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+<?php
 		echo "</div>";
 		echo "<div class='col-md-3' style='margin-top:20px'> </div>";
 		echo "<div class='col-md-6' style='margin-top:20px;margin-bottom:50px;'>";
@@ -50,8 +68,8 @@ function insert_user(){
 	if($_POST['passwd']!=$_POST['conpasswd']){
 		echo "<script>alert('Password กับ Confirm Password ไม่สอดคล้องกัน');window.location='index.php?module=users&action=register'</script>";
 	}	
-	mysqli_query($_SESSION['connect_db'],"INSERT INTO users VALUES ('$_POST[username]','$_POST[passwd]','','','','','','','$_POST[user_email]','3' )") or die ("ERROR : users_function line 36 ") ;
-	echo "<script>window.location='index.php'</script>";
+	mysqli_query($_SESSION['connect_db'],"INSERT INTO users VALUES ('$_POST[username]','$_POST[passwd]','','','','','$_POST[user_email]','3','','','','','','','','','' )") or die ("ERROR : users_function line 36 ") ;
+	echo "<script>alert('สมัครสมาชิกเสร็จสิ้น สามารถลงชื่อเข้าใช้งานระบบได้แล้ว');window.location='index.php'</script>";
 	}
 
 
@@ -65,10 +83,10 @@ function data_users(){
 		$query_users = mysqli_query($_SESSION['connect_db'],"SELECT fullname,lastname,image FROM users WHERE username ='$_SESSION[login_name]'")or die("ERROR users function line 64");
 		list($fullname,$lastname,$image)=mysqli_fetch_row($query_users);
 		$image = (empty($image))?"user.png":$image;
-			echo "<p><center><img src='images/user/$image' width='150' height='150'></center></p><br>";
+			echo "<p><center><img src='images/user/$image' id='blah' width='150' height='150'></center></p><br>";
 			echo "<p align='center'><img src='images/icon/black-user-shape.png' width='24' style='margin-top:-8px'>&nbsp;<font size='5'><b>ยินดีต้อนรับ</b></font></p>";
 			$name = (empty($fullname)AND empty($lastname))?"ไม่ระบุชื่อหรือนามสกุล":"$fullname $lastname";
-			echo "<p class='font20' style='padding-left:18px;'><b>ชื่อ : </b>$fullname $lastname</p>";
+			echo "<p class='font20' style='padding-left:18px;'><b>ชื่อ : </b>$name</p>";
 			switch ($_GET['menu']) {
 				case '1': $action_menu_user1 ="active-datausers-menu";$action_menu_user2 ="";$action_menu_user3 ="";$action_menu_user4 ="";$action_menu_user5 =""; break;
 				case '2': $action_menu_user1 ="";$action_menu_user2 ="active-datausers-menu";$action_menu_user3 ="";$action_menu_user4 ="";$action_menu_user5 =""; break;
@@ -154,7 +172,18 @@ function edit_user(){
 	echo "</div>";
 	echo "<div class='col-md-12' >";
 		echo "<p class='font20'><b>ที่อยู่ที่ใช้ในการจัดส่ง</b></p>";
-		echo "<form action='index.php?module=users&action=update_users' method='post'><center><table width='80%'>";
+		echo "<form action='index.php?module=users&action=update_users' method='post' enctype='multipart/form-data'><center><table width='80%'>";
+			echo "<tr>";
+				echo "<td>";
+					echo "<p class='font20'><b>รูปภาพ</b></p>";
+				echo "</td>";
+				echo "<td>";
+					echo "<p class='font20'><b>&nbsp;:&nbsp;</b></p>";
+				echo "</td>";
+				echo "<td colspan='4'>";
+					echo "<p class='font16'><input type='file' name='user_image' multiple onchange=\"document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])\"></p>";
+				echo "</td>";
+			echo "</tr>";
 			echo "<tr>";
 				echo "<td>";
 					echo "<p class='font20'><b>ชื่อ</b></p>";
@@ -349,7 +378,14 @@ function update_passwd(){
 function update_users(){
 	$query_address = mysqli_query($_SESSION['connect_db'],"SELECT provinces.PROVINCE_NAME,amphures.AMPHUR_NAME,districts.DISTRICT_NAME FROM provinces LEFT JOIN amphures ON provinces.PROVINCE_ID = provinces.PROVINCE_ID LEFT JOIN districts ON amphures.AMPHUR_ID=districts.AMPHUR_ID WHERE provinces.PROVINCE_ID='$_POST[province]' AND amphures.AMPHUR_ID='$_POST[districts]' AND districts.DISTRICT_CODE='$_POST[subdistrict]'")or die("ERROR : users function line 312");
 	list($province,$district,$subdistrict)=mysqli_fetch_row($query_address);
-	$update_users = "UPDATE users SET fullname='$_POST[fullname]',lastname='$_POST[lastname]',phone='$_POST[phone]',type='',house_no='$_POST[house_no]',village_no='$_POST[village_no]',alley='$_POST[alley]',lane='$_POST[lane]',road='$_POST[road]',sub_district='$subdistrict',district='$district',province='$province',postal_code='$_POST[zipcode]' WHERE username='$_SESSION[login_name]'";
+
+	if(!empty($_FILES['user_image']['name'])){
+		copy($_FILES['user_image']['tmp_name'],"images/user/".$_FILES['user_image']['name']);
+		$image=",image='".$_FILES['user_image']['name']."'";
+	}else{
+		$image="";
+	}
+	$update_users = "UPDATE users SET fullname='$_POST[fullname]',lastname='$_POST[lastname]',phone='$_POST[phone]',type='',house_no='$_POST[house_no]',village_no='$_POST[village_no]',alley='$_POST[alley]',lane='$_POST[lane]',road='$_POST[road]',sub_district='$subdistrict',district='$district',province='$province',postal_code='$_POST[zipcode]' $image WHERE username='$_SESSION[login_name]'";
 	mysqli_query($_SESSION['connect_db'],$update_users)or die("ERROR : users function line 312");
 
 	echo "<script>alert('บันทึกข้อมูลผู้ใช้เสร็จสิ้น');window.location='index.php?module=users&action=data_users&menu=1'</script>";
