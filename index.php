@@ -67,7 +67,7 @@
             $count_cate = mysqli_num_rows($query_cate);
             for($i=1;$i<=$count_cate;$i++){
                 echo "$('.select-cate-product_$i').mouseenter(function(){";
-                    echo "$('.select-cate-product_$i').css({'width':'95','height':'95','border':'solid 5px #42b752'});";
+                    echo "$('.select-cate-product_$i').css({'width':'100','height':'100','border':'solid 5px #42b752'});";
                 echo "});";
                 echo "$('.select-cate-product_$i').mouseleave(function(){";
                     echo "$('.select-cate-product_$i').css({'width':'100','height':'100','border':'0px'});";

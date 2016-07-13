@@ -19,7 +19,7 @@
 	</div>
 </div>
 <div class='col-md-6' style="margin-top:20px;">
-    <form method="post" action="ajax/quality_insert.php">
+    <form method="post" action="ajax/quality_insert.php" enctype='multipart/form-data'>
     <div class="panel panel-default">
         <div class="panel-heading"><h3>ฟอร์มเพิ่มหมวดหมู่สินค้า</h3></div>
         <div class="panel-body">
@@ -44,6 +44,15 @@
                     <td><p align='right'><b>ชื่อหมวดหมู่สินค้า : </b>&nbsp;&nbsp;</p></td>
                     <td>
                         <input type="text" class="form-control" name='quality_name' >
+                    </td>
+                </tr>
+                <tr>    
+                    <td colspan="2"><p><b>เลือกรูปภาพหมวดหมู่สินค้า</b></p></td>
+                </tr>
+                <tr>    
+                    <td><p align='center'><b><img src='../images/icon/no-images.jpg' id='blah' width='95' height='95' style='border-radius:100px;border:5px solid #eee;' ></td>
+                    <td>
+                        <input type="file" name='quality_image' multiple onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
                     </td>
                 </tr>
             </table>
@@ -75,7 +84,7 @@
                     echo "</div>";
                     echo "<div class='col-md-2' >";
                     echo "<b><button class='btn btn-info btn-sm' quality='button' data-toggle='modal' data-target='#$product_quality' style='padding:0px 3px;'>แก้ไขข้อมูล</button></b>";
-                    echo "<form method='post' action='ajax/quality_update.php'>";
+                    echo "<form method='post' action='ajax/quality_update.php' enctype='multipart/form-data'>";
                     echo "<div class='modal fade' id='$product_quality' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
                       echo "<div class='modal-dialog' role='document'>";
                         echo "<div class='modal-content'>";
@@ -98,12 +107,24 @@
                                         echo "</td>";
                                     echo "</tr>";
                                     echo "<tr>";
-                                    $query_typeanme = mysqli_query($_SESSION['connect_db'],"SELECT quality_name FROM quality WHERE product_quality ='$product_quality'")or die("ERROR : backend type_edit line 54");
-                                    list($quality_name)=mysqli_fetch_row($query_typeanme);
+                                    $query_typeanme = mysqli_query($_SESSION['connect_db'],"SELECT quality_name,quality_image FROM quality WHERE product_quality ='$product_quality'")or die("ERROR : backend type_edit line 54");
+                                    list($quality_name,$quality_image)=mysqli_fetch_row($query_typeanme);
                                         echo "<td><p align='right'><b>ชื่อหมวดหมู่สินค้า : </b>&nbsp;&nbsp;</p></td>";
                                         echo "<td><input class='form-control' type='text' name='quality_name' value='$quality_name'></td>";
                                         echo "<input type='hidden' name='quality_id' value='$product_quality'>";
                                     echo "</tr>";
+
+                                    echo "<tr> ";   
+                                        echo "<td colspan='2'><p><b>เลือกรูปภาพหมวดหมู่สินค้า</b></p></td>";
+                                    echo "</tr>";
+                                    echo "<tr>";
+                                        $quality_img = (empty($quality_image))?"no-images.jpg":$quality_image;
+                                        echo "<td><p align='center'><b><img src='../images/icon/$quality_img' id='blah_$product_quality'  width='95' height='95' style='border-radius:100px;border:5px solid #eee;' ></td>";
+                                        echo "<td>";
+                                            echo "<input type='file' name='quality_image'  multiple onchange=\"document.getElementById('blah_$product_quality').src = window.URL.createObjectURL(this.files[0])\" >";
+                                        echo "</td>";
+                                    echo "</tr>";
+
                                 echo "</table>";
                           echo "</div>";
                           echo "<div class='modal-footer'>";

@@ -11,16 +11,18 @@ function list_product(){
 			echo "</div>";
 		echo "</div>";
 		echo "<div class='col-md-9' style='padding-top:10px;padding-right:0px'>";
-		$query_cate = mysqli_query($_SESSION['connect_db'],"SELECT product_quality,quality_name FROM quality WHERE quality_type='$_GET[menu]'")or die("ERROR : product_function line 14");
+		$query_cate = mysqli_query($_SESSION['connect_db'],"SELECT product_quality,quality_name,quality_image FROM quality WHERE quality_type='$_GET[menu]'")or die("ERROR : product_function line 14");
 		$number=1;
 		$num_cate = mysqli_num_rows($query_cate);
 		if(!empty($num_cate)){
-		while (list($product_quality,$quality_name)=mysqli_fetch_row($query_cate)) {
+		while (list($product_quality,$quality_name,$quality_image)=mysqli_fetch_row($query_cate)) {
 			echo "<div class='col-md-3'>";
 			if($product_quality==$_GET['cate']){
-				echo "<center><img src='images/icon/no-images.jpg' width='95' height='95' style='border-radius:100px;border:5px solid #248a32;' >";
+				$quality_img = (empty($quality_image))?"no-images.jpg":$quality_image;
+				echo "<center><img src='images/icon/$quality_img' width='100' height='100' style='border-radius:100px;border:5px solid #248a32;' >";
 			}else{
-				echo "<center><a href='index.php?module=product&action=list_product&menu=$_GET[menu]&cate=$product_quality' ><img src='images/icon/no-images.jpg' class='select-cate-product_$number' style='width: 100px;height: 100px;border-radius: 100px;'></a>";
+				$quality_img = (empty($quality_image))?"no-images.jpg":$quality_image;
+				echo "<center><a href='index.php?module=product&action=list_product&menu=$_GET[menu]&cate=$product_quality' ><img src='images/icon/$quality_img' class='select-cate-product_$number' style='width: 100px;height: 100px;border-radius: 100px;'></a>";
 			}
 				echo "<p style='font-size:25px;margin-top:5px'>$quality_name</p></center>";
 			$number++;
