@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
     session_start();
     echo "<meta charset='utf8'>";
     include("../../include/function.php");
@@ -27,10 +26,10 @@
 
 <body>
 
-    <form action="ajax/" method="POST" enctype="multipart/form-data">
+    <form action="ajax/employee_insert.php" method="POST" enctype="multipart/form-data">
 
-        <!--รูปภาพ-->
-
+        <input  type="file" name="employee_img">
+        <br>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">เพิ่มข้อมูลพื้นฐาน</h3>
@@ -72,7 +71,7 @@
             <tr>
                 <td style="padding:10px;">รหัสบัตรประชาชน : </td>
                 <td style="padding:10px;">
-                    <input type="text" class="form-control" name="id_people" required>
+                    <input type="text" class="form-control" name="id_card" required>
                 </td>
             </tr> 
              <tr>
@@ -151,7 +150,7 @@
                
                     <td style="padding: 10px">ศาสนา :</td>
                     <td style="padding: 10px;">
-                        <select name="personnel_religious"  class="form-control">
+                        <select name="religious"  class="form-control">
                               <option value="ไม่ระบุ">ไม่ระบุ</option>
                               <option value="พุทธ">พุทธ</option>
                               <option value="อิสลาม">อิสลาม</option>
@@ -168,12 +167,13 @@
                     <td style="padding: 10px">สถานะภาพ :</td>
                     <td style="padding: 10px;">
                         <select class="form-control" name="mate_status" required="">
+                            <option value="ไม่ระบุ">ไม่ระบุ</option>
                             <option value="โสด">โสด</option>
                             <option value="สมรส">สมรส</option>
                             <option value="หย่าร้าง">หย่าร้าง</option>
                             <option value="หม้าย">หม้าย</option>
-                            <option value="ไม่ระบุ">ไม่ระบุ</option>
-                        </select>
+                        </select>  
+                        
                     </td>
                 </tr>
                 <tr>
@@ -197,7 +197,7 @@
                     <tr>
                         <td style="padding:10px; width: 15%; " >บ้านเลขที่ :</td>
                         <td style="padding:10px;">
-                            <input type="text" class="form-control" name="address_number_hrt">
+                            <input type="text" class="form-control" name="address_hrt">
                         </td>
                     
                         <td style="padding:10px;" >หมู่ :</td>
@@ -280,27 +280,27 @@
                 <table>
                     <tr>
                         <td style="padding:10px;" >บ้านเลขที่ :</td>
-                        <td>
+                        <td style="padding:10px;">
                             <input type="text" class="form-control" name="address_number">
                         </td>
                         <td style="padding:10px;" >หมู่ :</td>
-                        <td>
+                        <td style="padding:10px;">
                             <input type="text" class="form-control" name="village_no">
                         </td>
                     </tr>
                     <tr>
                         <td style="padding:10px;" >ชื่อหมู่บ้าน :</td>
-                        <td>
+                        <td style="padding:10px;">
                             <input type="text" class="form-control" name="village">
                         </td>
                         <td style="padding:10px;" >ชื่อซอย :</td>
-                        <td>
+                        <td style="padding:10px;">
                             <input type="text" class="form-control" name="alley">
                         </td>
                     </tr>
                     <tr>
                         <td style="padding:10px;" >ถนน :</td>
-                        <td>
+                        <td style="padding:10px;">
                             <input type="text" class="form-control" name="road">
                         </td>
                     </tr>
@@ -369,14 +369,10 @@
             
          <!--______________________________________________________________________________-->
                     <tr>
-                        <td style="padding:10px;">ชื่อภาษาไทย : </td>
+                        <td style="padding:10px;">ชื่อ-นามสกุล : </td>
                         <td style="padding:10px;" >
                             <input type="text" class="form-control" name="name_er" required>
-                        </td>
-                        <td style="padding:10px;">นามสกุลภาษาไทย : </td>
-                        <td style="padding:10px;">
-                            <input type="text" class="form-control" name="surname_er" required>
-                        </td>
+                       
                     </tr>
                     <tr>
                         <td style="padding: 10px;">เบอร์โทรศัพท์ :</td>
@@ -500,24 +496,4 @@ $(document).ready(function() {
 });
 </script>
 </body>
-=======
-	session_start();
-	include("../../include/function.php");
-	connect_db();
 
-?>
-<div class="row">
-	<div id="breadcrumb" class="col-xs-12">
-		<a href="#" class="show-sidebar">
-			<i class="fa fa-bars"></i>
-		</a>
-		<ol class="breadcrumb pull-left">
-			<li><a href="#">จัดการข้อมูลพนักงาน</a></li>
-			<li><a href="#">ฟอร์มเพิ่มพนักงาน</a></li>
-		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
-	</div>
-</div>
->>>>>>> refs/remotes/origin/master

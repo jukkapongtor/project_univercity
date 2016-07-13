@@ -277,12 +277,9 @@
 						 <span >จัดการข้อมูลพนักงาน</span>
 					</a>
 					<ul class="dropdown-menu">
-<<<<<<< HEAD
+
 						<li><a class="ajax-link" href="ajax/employee_manage.php">ข้อมูลพนักงาน</a></li>
-=======
-						<li><a class="ajax-link" href="ajax/employee_form.php">ฟอร์มเพิ่มพนักงาน</a></li>
-						<li><a class="ajax-link" href="ajax/employee_list.php">แสดงรายชื่อพนักงาน</a></li>
->>>>>>> refs/remotes/origin/master
+
 					</ul>
 				</li>
 <!--
