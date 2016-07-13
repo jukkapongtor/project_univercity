@@ -26,7 +26,6 @@
 		<link href="plugins/justified-gallery/justifiedGallery.css" rel="stylesheet">
 		<link href="css/style_v2.css" rel="stylesheet">
 		<link href="css/style_v3.css" rel="stylesheet">
-<<<<<<< HEAD
 		<link href="plugins/chartist/chartist.min.css" rel="stylesheet">
 	  <link rel="stylesheet" href="css/font-awesome.min.css">
 	  <link rel="stylesheet" href="css/froala_editor.css">
@@ -41,11 +40,6 @@
 	  <link rel="stylesheet" href="css/plugins/char_counter.css">
 	  <link rel="stylesheet" href="css/plugins/video.css">
 	  <link rel="stylesheet" href="css/codemirror.min.css">
-
-
-		
-=======
->>>>>>> refs/remotes/origin/master
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 				<script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
@@ -277,14 +271,7 @@
 						 <span >จัดการข้มูลพนักงาน</span>
 					</a>
 					<ul class="dropdown-menu">
-<<<<<<< HEAD
-
 						<li><a class="ajax-link" href="ajax/employee_manage.php">ข้อมูลพนักงาน</a></li>
-
-=======
-						<li><a class="ajax-link" href="ajax/form_employee.php">ฟอร์มเพิ่มพนักงาน</a></li>
-						<li><a class="ajax-link" href="ajax/list_employee.php">แสดงรายชื่อพนักงาน</a></li>
->>>>>>> refs/remotes/origin/master
 					</ul>
 				</li>
 <!--

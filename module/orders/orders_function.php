@@ -27,8 +27,14 @@ function order_insert(){
 		$total_price = 0;
 		$total_amount  = 0;
 		foreach ($_SESSION['cart_id'] as $key => $value) {
-			$query_price = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_price_web FROM product_size WHERE product_size_id='$key'")or die("ERROR : order function line 5");
-			list($product_id,$product_price_web)=mysqli_fetch_row($query_price);
+			$query_price = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_price_web,product_amount_web FROM product_size WHERE product_size_id='$key'")or die("ERROR : order function line 5");
+			list($product_id,$product_price_web,$product_amount_web)=mysqli_fetch_row($query_price);
+			$remain = $product_amount_web - $value['amount'];
+			if($remain<0){
+				echo "<script>alert('ขออภัยสินค้าถูกซื้อไปก่อนหน้านี่แล้ว กรุณาลดจำนวนสินค้า หรือเลือกสินค้าชิ้นใหม่');window.location='index.php?module=users&action=data_users&menu=2';</script>";
+			}else{
+				mysqli_query($_SESSION['connect_db'],"UPDATE product_size SET product_amount_web='$remain' WHERE product_size_id='$key'")or die("ERROR : order function line 36");
+			}
 			$total_price+=($product_price_web*$value['amount']);
 			$total_amount +=$value['amount'];
 		}
@@ -52,7 +58,7 @@ function order_insert(){
 			mysqli_query($_SESSION['connect_db'],$sql_insert_orderdetail)or die("ERROR : order function line 28");
 			unset($_SESSION['cart_id']);
 			unset($_SESSION['total_amount']);
-			echo "<script>window.location='index.php?module=users&action=data_users&menu=3&order_status=1'</script>";
+			echo "<script>alert('สั่งซื้อสินค้าเรียบร้อยแล้ว');window.location='index.php?module=users&action=data_users&menu=3&order_status=1'</script>";
 		}else{
 			echo "<script>alert('กรุณาเพิ่มจำนวนสินค้าก่อนทำการยืนยันการซื้อ');window.location='index.php?module=users&action=data_users&menu=2';</script>";
 		}
@@ -83,7 +89,7 @@ function order_list(){
 	  echo "</div>";
 	echo "</div>";
 	if(empty($row)){
-		echo "<center><h1 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>ไม่เคยมีสถานะซื้อสินค้า</b></h1></center>";
+		echo "<center><h1 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>ลูกค้ายังไม่เคยสั่งซื้อสินค้าจากร้านมุมเฟิร์น</b></h1></center>";
 	}else{
 
 		echo "<center><h1 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>สถานะการซื้อของสินค้า</b></h1></center>";
@@ -104,8 +110,24 @@ function order_list(){
 		echo "<table class='table table-striped table-hover font20'>";
 			echo "<tr><th align='center'>ลำดับ</th><th align='center'>รหัสซื้อสินค้า</th><th align='center'>เวลาที่ซื้อสินค้า</th><th align='center'>เวลาในการชำระเงิน</th><th align='center'>สถานะการซื้อสินค้า</th><!--<th align='center'>จำนวนสินค้า</th><th align='center'>ราคา</th>--><th align='center'>ข้อมูล</th></tr>";
 		$number=1;
+
 		$color=array("background:#dddddd;border:1px solid #bbb","background:#428bca;border:1px solid #256faf","background:#f0ad4e;border:1px solid #dfa451","background:#5bc0de;border:1px solid #2987a3","background:#5cb85c;border:1px solid #3c963c","background:#d9534f;border:1px solid #b53834");
-		$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_username='$_SESSION[login_name]' AND order_status='$_GET[order_status]'")or die("ERROR : order function line 21");
+		$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE order_username='$_SESSION[login_name]' AND order_status='$_GET[order_status]'")or die("ERROR : order function line 21");
+		$all_row = mysqli_num_rows($query_order);
+
+		$total_page = ceil($all_row/5);
+		if(empty($_GET['page'])){
+			$page=1;
+			$start_row=0;
+		}
+		else{
+			$page=$_GET['page'];
+			$start_row=($page-1)*5;
+		}
+		for($a=1;$a<$page;$a++){
+		  	$number+=5;
+		}
+		$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_username='$_SESSION[login_name]' AND order_status='$_GET[order_status]' LIMIT $start_row,5")or die("ERROR : order function line 21");
 		while(list($order_id,$order_username,$order_date,$order_date_limit,$order_status,$total_amount,$total_price,$tracking_id)=mysqli_fetch_row($query_order)){
 			echo "<tr>";
 				echo "<td>$number</td>";
@@ -133,7 +155,9 @@ function order_list(){
 				        echo "<p class='font20'><b>รายละเอียดการซื้อสินค้ารหัส : </b>$order_id</p>";
 				        echo "<table class='table table-hover table-striped font20'>";
 				        echo "<thead><tr><th>ลำดับ</th><th>ชื่อสินค้า</th><th>ขนาดสินค้า</th><th>ราคา(ชิ้น)</th><th>จำนวน</th><th>รวมราคา</th></tr></thead><tbody>";
+
 				        $num=1;
+				        
 				        $total_price=0;
 				        $query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,size.size_name,product_size.product_price_web,order_detail.amount FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN product ON product.product_id = product_size.product_id LEFT JOIN size ON product_size.size_id = size.product_size WHERE order_detail.order_id = '$order_id'")or die("ERROR : order function line 111");
 				        while(list($product_name,$size_name,$product_price_web,$total_amount)=mysqli_fetch_row($query_orderdetail)){
@@ -169,7 +193,39 @@ function order_list(){
 			$number++;
 		}
 		echo "</table>";
+		if($total_page>1){
+		echo "<div class='col-md-12'>";
+			echo "<center><nav><ul class='pagination'>";
+			  echo "<li><a href='index.php?module=users&action=data_users&menu=3&order_status=$_GET[order_status]&page=1'>หน้าแรก</a></li>";
+			  $preview = ($page-1);
+			  $preview = ($preview<1)?1:$preview;
+			  echo "<li><a href='index.php?module=users&action=data_users&menu=3&order_status=$_GET[order_status]&page=$preview'><<</a></li>";
+		for($i=1;$i<=$total_page;$i++){
+				$active = ($page==$i)?"active":"";
+			  echo "<li class='$active'><a href='index.php?module=users&action=data_users&menu=3&order_status=$_GET[order_status]&page=$i'>$i</a></li>";
+		}	
+			  $next = ($page+1);
+			  $next = ($next>$total_page)?$total_page:$next;
+			  echo "<li><a href='index.php?module=users&action=data_users&menu=3&order_status=$_GET[order_status]&page=$next'>>></a></li>";
+			  echo "<li><a href='index.php?module=users&action=data_users&menu=3&order_status=$_GET[order_status]&page=$total_page'>หน้าสุดท้าย</a></li>";
+			echo "</ul></nav></center>";
+		echo "</div>";
+		}
 	}
 	
+}
+function order_success(){
+	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_username='$_SESSION[login_name]' AND order_status='4'")or die("ERROR : order function line 218");
+	$row = mysqli_num_rows($query_order);
+	if($row>0){
+		echo "<table class='table table-striped table-hover font20'>";
+			echo "<tr><th align='center'>ลำดับ</th><th align='center'>รหัสซื้อสินค้า</th><th align='center'>เวลาที่ซื้อสินค้า</th><th align='center'>เวลาในการชำระเงิน</th><th align='center'>สถานะการซื้อสินค้า</th><!--<th align='center'>จำนวนสินค้า</th><th align='center'>ราคา</th>--><th align='center'>ข้อมูล</th></tr>";
+		while(list($order_id,$order_username,$order_date,$order_date_limit,$order_status,$total_amount,$total_price,$tracking_id)=mysqli_fetch_row($query_order)){
+
+		}
+		echo "</table>";
+	}else{
+		echo "<center><h1 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>ลูกค้ายังไม่เคยซื้อสินค้าจากร้านมุมเฟิร์น</b></h1></center>";
+	}
 }
 ?>

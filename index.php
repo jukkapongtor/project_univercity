@@ -186,6 +186,7 @@ echo "</script>";
         }      
     }
 ?>
+    <div class='header-top'></div>
     <div class="header">
         <a href='index.php' style='text-decoration: none;'><div class="header-logo">
 <?php
@@ -361,13 +362,15 @@ echo "</script>";
 <?php
             $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product LEFT JOIN type ON product.product_type =type.product_type LIMIT 0,6 ");
             while(list($product_id,$product_name,$type_name)=mysqli_fetch_row($query_recom_sale)){
-                echo "<div class='col-md-4' style='padding-top:10px;'>";
+                echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4' style='padding-top:10px;'>";
+                    echo "<div class='div-recom'>";
+                        echo "<b><p align='center' class='div-recom-content'>$product_name</p></b>";
+                    echo "</div>";
                 $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
                 list($product_image)=mysqli_fetch_row($query_image);
                 $path= (empty($product_image))?"icon/no-images.jpg":"$type_name/$product_image";
-                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='300px'><br>";
-                    echo "<p><center><font size='5'>$product_name</font></center></p></a>";
-                echo "</div>";
+                    echo "<img src='images/$path' width='100%' height='400px'><br>";
+                echo "</div></a>";
             }
 ?>
             </div>
@@ -375,13 +378,15 @@ echo "</script>";
 <?php
             $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product LEFT JOIN type ON product.product_type =type.product_type LIMIT 6,6 ");
             while(list($product_id,$product_name,$type_name)=mysqli_fetch_row($query_recom_sale)){
-                echo "<div class='col-md-4' style='padding-top:10px;'>";
+                echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4' style='padding-top:10px;'>";
+                    echo "<div class='div-recom'>";
+                        echo "<b><p align='center' class='div-recom-content'>$product_name</p></b>";
+                    echo "</div>";
                 $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
                 list($product_image)=mysqli_fetch_row($query_image);
                 $path= (empty($product_image))?"icon/no-images.jpg":"$type_name/$product_image";
-                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='300px'><br>";
-                    echo "<p><center><font size='5'>$product_name</font></center></p></a>";
-                echo "</div>";
+                    echo "<img src='images/$path' width='100%' height='400px'><br>";
+                echo "</div></a>";
             }
 ?>
             </div>
@@ -389,20 +394,22 @@ echo "</script>";
 <?php
             $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product LEFT JOIN type ON product.product_type =type.product_type LIMIT 12,6 ");
             while(list($product_id,$product_name,$type_name)=mysqli_fetch_row($query_recom_sale)){
-                echo "<div class='col-md-4' style='padding-top:10px;'>";
+                echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4' style='padding-top:10px;'>";
+                    echo "<div class='div-recom'>";
+                        echo "<b><p align='center' class='div-recom-content'>$product_name</p></b>";
+                    echo "</div>";
                 $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
                 list($product_image)=mysqli_fetch_row($query_image);
                 $path= (empty($product_image))?"icon/no-images.jpg":"$type_name/$product_image";
-                    echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='300px'><br>";
-                    echo "<p><center><font size='5'>$product_name</font></center></p></a>";
-                echo "</div>";
+                    echo "<img src='images/$path' width='100%' height='400px'><br>";
+                echo "</div></a>";
             }
 ?>
             </div>
             <div class="col-md-12 con1" >
                 <div class="col-md-6">
 <?php
-                    echo "<img src='images/webpage/$image_content2' width='100%' height='400px'>";
+                    echo "<img src='images/webpage/$image_content2' width='100%' height='550px'>";
 ?>
                     
                 </div>
@@ -423,7 +430,7 @@ echo "</script>";
                 </div>
                 <div class="col-md-7">
 <?php
-                    echo "<img src='images/webpage/$image_content3' width='100%' height='400px'>";
+                    echo "<img align='right' src='images/webpage/$image_content3' width='90%' height='550px'>";
 ?>
                 </div>
             </div>
