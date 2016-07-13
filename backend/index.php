@@ -259,7 +259,7 @@
 						 <span >จัดการคิวอาร์โค้ด</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/qrcode_generator.php">พิมพ์คิวอาร์โค้ด</a></li>
+						<li><a class="ajax-link" href="ajax/phpqrcode/">พิมพ์คิวอาร์โค้ด</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -274,12 +274,17 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-table"></i>
-						 <span >จัดการข้อมูลพนักงาน</span>
+						 <span >จัดการข้มูลพนักงาน</span>
 					</a>
 					<ul class="dropdown-menu">
+<<<<<<< HEAD
 
 						<li><a class="ajax-link" href="ajax/employee_manage.php">ข้อมูลพนักงาน</a></li>
 
+=======
+						<li><a class="ajax-link" href="ajax/form_employee.php">ฟอร์มเพิ่มพนักงาน</a></li>
+						<li><a class="ajax-link" href="ajax/list_employee.php">แสดงรายชื่อพนักงาน</a></li>
+>>>>>>> refs/remotes/origin/master
 					</ul>
 				</li>
 <!--

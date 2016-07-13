@@ -65,11 +65,12 @@ $(document).ready(function() {
 		
 		$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_status='1' ")or die("ERROR : order function line 21");
 		$row = mysqli_num_rows($query_order);
+		echo "<div id='show_order'>";
 		if(empty($row)){
 			echo "<center><h1 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>ไม่พบรายการขายสินค้า</b></h1></center>";
 		}else{
 			echo "<center><h4 style='background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>สถานะการขายสินค้า</b></h4></center>";
-			echo "<div id='show_order'>";
+			
 			echo "<table class='table table-striped table-hover'>";
 				echo "<tr><th align='center'>ลำดับ</th><th align='center'>รหัสซื้อสินค้า</th><th align='center'>วันที่สั่งซื้อ</th><th align='center'>สถานะการซื้อสินค้า</th><!--<th align='center'>จำนวนสินค้า</th><th align='center'>ราคา</th>--><th align='center'>ผู้ชื้อ</th></tr>";
 			$number=1;
@@ -88,9 +89,9 @@ $(document).ready(function() {
 				$number++;
 			}
 			echo "</table>";
-			echo "</div>";
+			
 		}
-		
+		echo "</div>";
 ?>
 	</div>
 	<div class='col-md-6' id='order_detail'>

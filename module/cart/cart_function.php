@@ -8,8 +8,6 @@ function show_cart(){
 			echo "<tr><th><p class='font20' align='center'><b>ลำดับ</b></p></th><th><p class='font20'><b>รูปภาพ</b></p></th><th><p class='font20'><b>ชื่อสินค้า</b></p></th><th><p class='font20' align='center'><b>ขนาด</b></p></th><th><p class='font20' align='center'><b>ราคา(ต่อชิ้น)</b></p></th><th><p class='font20' align='center'><b>จำนวน</b></p></th><th><p class='font20' align='center'><b>รวมราคา</b></p></th></tr>";
 		$num=1;
 		$total_price=0;
-	echo "<pre>".print_r($_SESSION['cart_id'],true)."</pre>";
-
 		foreach ($_SESSION['cart_id'] as $key => $value) {
 			$query_product =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id ='$value[product_id]'")or die("ERROR : cart function line 12");
 			list($product_id,$product_name,$type_name)=mysqli_fetch_row($query_product);
