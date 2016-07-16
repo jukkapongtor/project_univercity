@@ -61,7 +61,10 @@ function list_product(){
 }
 
 function product_detail(){
-
+	if(!empty($_SESSION['login_type'])&&$_SESSION['login_type']==2){
+		echo "<script>window.location='shop/index.php?module=product&action=product_detail&product_id=$_GET[product_id]'</script>";
+	}
+	
 	$quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 64");
 	list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
 	$query_product_detail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,product.product_detail,quality.quality_name,product.product_stock,type.type_name FROM product LEFT JOIN quality ON product.product_quality = quality.product_quality LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id='$_GET[product_id]'")or die("ERROR : product_function line 59");
@@ -93,7 +96,7 @@ function product_detail(){
 	    echo "<div class='col-md-7'style='margin-top:20px'>";
 		   	 echo "<table width='100%' style='font-size:22px'>";
 	     		echo "<tr>";
-	      			echo "<td width='25%'><p><b>ชื่อสินต้า</b></p></td>";
+	      			echo "<td width='25%'><p><b>ชื่อสินค้า</b></p></td>";
 	      			echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
 	      			echo "<td><p>$product_name</p></td>";
 	      		echo "</tr>";

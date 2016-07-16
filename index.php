@@ -214,7 +214,7 @@ echo "</script>";
         $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : index line 260");
         list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
         if($sellstatus==1){
-        if(!empty($_SESSION['login_name'])){
+        if(!empty($_SESSION['login_name'])&&$_SESSION['login_type']==3){
             echo "<a href='index.php?module=users&action=data_users&menu=2'><div class='header-function-cart'>";
         }else{
             echo "<a href='' ><div class='header-function-cart'>";
@@ -262,7 +262,10 @@ echo "</script>";
                     if($_SESSION['login_type']==1){
                         echo "<a href='backend/' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;จัดการข้อมูลหลังร้าน</p></a>";
                     }
-                    if($_SESSION['login_type']!=1){
+                    if($_SESSION['login_type']==2){
+                        echo "<a href='shop/' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;ขายสินค้าในร้าน</p></a>";
+                    }
+                    if($_SESSION['login_type']==3){
                         echo "<a href='index.php?module=users&action=data_users&menu=1' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;ข้อมูลผู้ใช้งาน</p></a>";
                     }
                         echo "</div>

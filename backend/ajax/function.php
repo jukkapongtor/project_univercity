@@ -23,16 +23,18 @@ switch ($_GET['data']) {
 		}
 	echo "});";
 	echo "</script>";
-		$query_product=mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product_image.product_image,quality.quality_name,type.type_name FROM product LEFT JOIN product_image ON product.product_id = product_image.product_id LEFT JOIN quality ON product.product_quality = quality.product_quality LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_quality='$_POST[product_quality]'");
+		$query_product=mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,quality.quality_name,type.type_name FROM product  LEFT JOIN quality ON product.product_quality = quality.product_quality LEFT JOIN type ON product.product_type = type.product_type  WHERE product.product_quality='$_POST[product_quality]'");
 		$row =mysqli_num_rows($query_product);
 		echo "<div class='container-fluid' style='margin-top:30px;padding:0px;'>";
 		if($row<=0){
 			echo "<div class='col-md-12'><p><b>ไม่พบรายการสินค้า</b></p></div>";
 		}else{
 			echo "<p><b>รายการสินค้าแบ่งตามประเภทและหมวดหมู่</b></p>";
-			while (list($product_id,$product_name,$product_image,$quality_name,$type_name)=mysqli_fetch_row($query_product)) {
+			while (list($product_id,$product_name,$quality_name,$type_name)=mysqli_fetch_row($query_product)) {
 				echo "<div class='col-md-4' style='margin-bottom:40px;pading:5px;'>";
 					echo "<input type='hidden' id='product_$product_id' value='$product_id'>";
+					$query_image=mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
+					list($product_image)=mysqli_fetch_row($query_image);
 					echo "<a id='select_$product_id' style='cursor:pointer'><p align='center'><img src='../images/$type_name/$product_image' width='90%' height='180px' ></p>";
 					echo "<p align='center'><b>$product_name</b></p></a>";
 				echo "</div>";

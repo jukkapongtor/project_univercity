@@ -40,7 +40,7 @@ function order_insert(){
 		}
 		if($total_amount!=0){
 			$date_order = date("Y-m-d H:i:s");
-			$sql_insert_order = "INSERT INTO orders VALUES('','$_SESSION[login_name]','$date_order','24:00:00','1','$total_amount','$total_price','','$message_address')";
+			$sql_insert_order = "INSERT INTO orders VALUES('','$_SESSION[login_name]','$date_order','24:00:00','1','$total_amount','$total_price','','$message_address','web')";
 			mysqli_query($_SESSION['connect_db'],$sql_insert_order)or die("ERROR : order function line 14");
 			$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders ORDER BY order_id DESC")or die("ERROR : order function line 15");
 			list($order_id) = mysqli_fetch_row($query_order);
