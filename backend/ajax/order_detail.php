@@ -6,7 +6,7 @@
 <script>
 $(document).ready(function() {
 <?php
-	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE order_status='2'")or die("ERROR : order detail line 9");
+	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE order_status='2' AND type_order='web'")or die("ERROR : order detail line 9");
 	while(list($order_id)=mysqli_fetch_row($query_order)){
 		echo "$('#transfer_error_$order_id').click(function(){";
 			echo "var message_error = document.getElementById('message_error_$order_id').value;";
@@ -26,7 +26,7 @@ $(document).ready(function() {
 			echo "}";
 		echo "});";
 	}
-	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE order_status='3'")or die("ERROR : order detail line 29");
+	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE order_status='3' AND type_order='web'")or die("ERROR : order detail line 29");
 	while(list($order_id)=mysqli_fetch_row($query_order)){
 		echo "$('#transfer_tracking_$order_id').click(function(){";
 			echo "var order_id = document.getElementById('order_id_$order_id').value;";
@@ -47,7 +47,7 @@ $(document).ready(function() {
 </script>
 <?php
 	$order_id = isset($_POST['order_id']) ? $_POST['order_id'] : "";
-	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_id='$order_id'")or die("ERROR : backend order detail line 6");
+	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_id='$order_id' AND type_order='web'")or die("ERROR : backend order detail line 6");
 	list($order_id,$order_username,$order_date,$order_date_limit,$order_status,$total_amount,$total_price,$tracking_id)=mysqli_fetch_row($query_order);
 
 	echo "<div class='panel panel-primary'>";

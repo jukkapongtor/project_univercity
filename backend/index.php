@@ -222,7 +222,8 @@
 						 <span >จัดการข้อมูลการขาย</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/manage_order.php">ดูรายการขาย</a></li>
+						<li><a class="ajax-link" href="ajax/manage_order.php">ดูรายการขายบนเว็บไซต์</a></li>
+						<li><a class="ajax-link" href="ajax/manage_order_shop.php">ดูรายการขายในร้าน</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">

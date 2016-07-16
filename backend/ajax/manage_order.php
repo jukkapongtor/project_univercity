@@ -37,7 +37,7 @@ $(document).ready(function() {
 		</a>
 		<ol class="breadcrumb pull-left">
 			<li><a href="#">จัดการข้อมูลผู้ใช้งาน</a></li>
-			<li><a href="#">ดูรายการขาย</a></li>
+			<li><a href="#">ดูรายการขายบนเว็บไซต์</a></li>
 		</ol>
 		<div id="social" class="pull-right">
 			<a href="#"><i class="fa fa-facebook"></i></a>
@@ -63,7 +63,7 @@ $(document).ready(function() {
 		  echo "</div>";
 		echo "</div>";
 		
-		$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_status='1' ")or die("ERROR : order function line 21");
+		$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_status='1' AND type_order='web' ")or die("ERROR : order function line 21");
 		$row = mysqli_num_rows($query_order);
 		echo "<div id='show_order'>";
 		if(empty($row)){

@@ -8,7 +8,7 @@
 <script>
 $(document).ready(function() {
 <?php
-	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE order_status='$_POST[order_status]'")or die("ERROR : order function line 21");
+	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE order_status='$_POST[order_status]' AND type_order='web'")or die("ERROR : order function line 21");
 	$row = mysqli_num_rows($query_order);
 	if($row!=0){
 		while(list($order_id)=mysqli_fetch_row($query_order)){
@@ -24,7 +24,7 @@ $(document).ready(function() {
 });
 </script>
 <?php
-	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_status='$_POST[order_status]'")or die("ERROR : select order line 7");
+	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_status='$_POST[order_status]' AND type_order='web'")or die("ERROR : select order line 7");
 	$number=1;
 	echo "<table class='table table-striped table-hover'>";
 	echo "<tr><th align='center'>ลำดับ</th><th align='center'>รหัสซื้อสินค้า</th><th align='center'>วันที่สั่งซื้อ</th><th align='center'>สถานะการซื้อสินค้า</th><!--<th align='center'>จำนวนสินค้า</th><th align='center'>ราคา</th>--><th align='center'>ผู้ชื้อ</th></tr>";
