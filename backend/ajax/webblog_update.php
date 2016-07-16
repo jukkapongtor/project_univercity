@@ -22,15 +22,15 @@
 		$date = date("Y-m-d H:i:s");
 
 
-		$sql ="UPDATE webblog SET title_blog='$_POST[title_blog]',review_detail='$_POST[review_detail]',detail='$_POST[detail]',type_blog='$_POST[typeblog]',blog_date='$date' $img WHERE id_blog='$_POST[blog]'" or die("ERROR : backend webblog update line 20");
+		$sql ="UPDATE webblog SET title_blog='$_POST[title_blog]',review_detail='$_POST[review_detail]',detail='$_POST[detail]',type_blog='$_POST[typeblog]',blog_date='$date' $img WHERE id_blog='$_POST[blog]'" or die("ERROR : backend webblog update line 25");
 
 
 		mysqli_query($_SESSION['connect_db'],$sql)or die("ERROR : backend insert_webblog line 25");
 
-		echo "$sql";
+		
 
 
-		//echo "<script>window.location='../#ajax/manage_webblog.php';</script>";
+		echo "<script>window.location='../#ajax/manage_webblog.php';</script>";
 	
 }
 
