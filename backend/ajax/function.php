@@ -407,6 +407,52 @@ switch ($_GET['data']) {
 		}
 	break;
 	*/
+	case 'order_detail_shop':
+?>
+		<div class="panel panel-primary">
+		  <div class="panel-heading">
+		  	<h1 class="panel-title" style="font-size:18px">รายละเอียดการขายสินค้ารหัส <?php echo "$_POST[order_id]";?></h1>
+		  </div>
+		  <div class="panel-body">
+<?php
+			$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_date,order_username FROM orders WHERE order_id='$_POST[order_id]'")or die("ERROR : backend function line 418");
+			list($order_date,$order_username )=mysqli_fetch_row($query_order);
+			echo "<p><b>วันที่ขาย : </b> $order_date</p>";
+			echo "<p><b>ผู้ขายสินค้า : </b> $order_username</p>";
+			echo "<table class='table table-hover table-striped' style='font-size:13px'>";      
+				$total_price=0;
+				$query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,size.size_name,product_size.product_price_shop,order_detail.amount,type.type_name FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN product ON product.product_id = product_size.product_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN type ON product.product_type = type.product_type WHERE order_detail.order_id = '$_POST[order_id]'")or die("ERROR : order function line 111");
+				while(list($product_id,$product_name,$size_name,$product_price_shop,$total_amount,$type_name)=mysqli_fetch_row($query_orderdetail)){
+			     		echo "<tr>";
+			     			$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id = '$product_id'")or die("ERROR : cart function line 16");
+							list($product_image)=mysqli_fetch_row($query_image);
+							$path = (empty($product_image))?"icon/no-images.jpg":"$type_name/$product_image";
+							echo "<td><img src='../images/$path' width='100' height='130'></td>";
+			     			echo "<td>";
+			     				echo "<p>$product_name ($size_name)</p>";
+			     				echo "<p><b>จำนวนสินค้า :</b> $total_amount</p>";
+			     				echo "<p><b>ราคาต่อชิ้น :</b> ".number_format($product_price_shop,2)."</p>";
+			     				$sum=$product_price_shop*$total_amount;
+			     				$total_price+=$sum;
+			     				echo "<p><b>รวมราคา :</b> ".number_format($sum,2)."</p>";
+			     			echo "</td>";
+			     			/*
+			     			echo "<td>$size_name</td>";
+			    			echo "<td>$product_price_shop</td>";
+			     			echo "<td>$total_amount</td>";
+			     			$sum=$product_price_shop*$total_amount;
+			     			$total_price+=$sum;
+			     			echo "<td>".number_format($sum)."</td>";
+			     			*/
+			    		echo "</tr>";
+				}
+				echo "<tr><td colspan='2' align='right'><b>รวมยอดเงินทั้งหมด</b> ".number_format($total_price,2)."</td></tr>";
+			echo "</tbody></table>";
+?>
+		  </div>
+		</div>
+<?php
+	break;
 	default: break;
 }
 

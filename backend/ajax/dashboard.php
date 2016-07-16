@@ -80,10 +80,33 @@
 <div id="dashboard-header" class="row">
 	<div class="container-fluid">
 		<a href='../index.php'><div class="col-md-4" style="height:140px;margin-bottom:20px;"><img src="../images/icon/showwebsite.png" width="100%" height="100%"></div></a>
-		<div class="col-md-4" style="height:140px;margin-bottom:20px;"><div style='background:#376fff;width:100%;height:100%;color:#fff;border-radius:5px;font-size:30px;padding:20px 30px;'>asd</div></div>
+		<div class="col-md-4" style="height:140px;margin-bottom:20px;"><div style='width:100%;height:100%;border-radius:5px;'>
+		<h4><b>สถานะการแจ้งเตือน</b></h4>
+			<ul class="nav navbar-nav pull-right panel-menu">
+				<li class="hidden-xs">
+					<a href="index.php" class="modal-link">
+						<i class="fa fa-bell"></i>
+						<span class="badge">7</span>
+					</a>
+				</li>
+				<li class="hidden-xs">
+					<a class="ajax-link" href="ajax/calendar.html">
+						<i class="fa fa-calendar"></i>
+						<span class="badge">7</span>
+					</a>
+				</li>
+				<li class="hidden-xs">
+					<a href="ajax/page_messages.html" class="ajax-link">
+						<i class="fa fa-envelope"></i>
+						<span class="badge">7</span>
+					</a>
+				</li>
+			</ul>
+
+		</div></div>
 		<div class="col-md-4" style="margin-bottom:20px;padding:0px;">
 			<div class="panel panel-default">
-			  <div class="panel-heading" style="padding:0px;"><h4 align="center"><b>จัดกาารสถานะเว็บไซต์</b></h4></div>
+			  <div class="panel-heading" style="padding:5px;"><h4 align="center" style="margin:0px;"><b>จัดกาารสถานะเว็บไซต์</b></h4></div>
 			  <div class="panel-body">
 			    <div class="col-md-12">
 					<div class="col-md-8"><p style="margin-top:5px;">เว็บไซต์พร้อมขายของ</p></div>
@@ -112,7 +135,7 @@
 						</a>
 					</div>
 				</div>
-				<div class="col-md-12">
+				<div class="col-md-12" style="margin-bottom:0px;">
 					<div class="col-md-8"><p style="margin-top:5px;">แจ้งเตือนการปรับปรุงเว็บไซต์</p></div>
 					<div class="col-md-4">
 						<a href='#ajax/manage_website.php' id="switch_onoff_openweb">
