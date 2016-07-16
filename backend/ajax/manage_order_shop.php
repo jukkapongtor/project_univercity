@@ -4,14 +4,6 @@
 	connect_db();
 ?>
 <script>
-$(document).ready(function() {
-	$('#oreder_status_$status_id').click(function(){
-		var status = document.getElementById('oreder_status_$status_id').value;
-		$.post('ajax/function.php?data=order_detail_shop',{order_detail:status},function(data){
-			$('#show_order').html(data);
-        });
-	});
-});
 function order_detail_shop(ele) {
 		var order_id = ele.getAttribute("order_id");
 		$.post('ajax/function.php?data=order_detail_shop',{order_id:order_id},function(data){
