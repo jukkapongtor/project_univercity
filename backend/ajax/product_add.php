@@ -159,7 +159,7 @@ $(document).ready(function() {
 			    	<td><p><input type='checkbox' name='product_stock' value='1'>&nbsp;&nbsp;พร้อมจำหน่าย</p></td>
 		    	</tr>
 		    </table>
-		    <p align="right"><input class='btn btn-sm btn-success' type='submit' value="เพิ้มสินค้า"></p>
+		    <p align="right"><input class='btn btn-sm btn-success' type='submit' value="เพิ่มสินค้า"></p>
 		  </div>
 		</div>
 	</div>
@@ -208,7 +208,7 @@ $(document).ready(function() {
 							    echo "<div class='col-md-7'style='margin-top:20px'>";
 							    	 echo "<table width='100%' >";
 							      		echo "<tr>";
-							      			echo "<td width='25%'><p><b>ชื่อสินต้า</b></p></td>";
+							      			echo "<td width='25%'><p><b>ชื่อสินค้า</b></p></td>";
 							      			echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
 							      			echo "<td><p>$product_name</p></td>";
 							      		echo "</tr>";
@@ -236,10 +236,10 @@ $(document).ready(function() {
 							      			$number=1;
 							      			while(list($size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
 							      				echo "<div class='col-md-12'><p><b>ขนาดสินที่ $number : </b> $size_name</p></div>";	
-							      				echo "<div class='col-md-4' style='font-size:13px;'><p><b>ราคา(Batn)</b></p></div>";
-							      				echo "<div class='col-md-6' style='font-size:13px;'><p>$product_price_web</p></div>";
-							      				echo "<div class='col-md-4' style='font-size:13px;'><p><b>ราคา(Batn)</b></p></div>";
-							      				echo "<div class='col-md-6' style='font-size:13px;'><p>$product_price_shop</p></div>";
+							      				echo "<div class='col-md-8' style='font-size:14px;'><p><b>ราคาบนเว็บไซต์(Batn)</b></p></div>";
+							      				echo "<div class='col-md-4' style='font-size:14px;'><p>$product_price_web</p></div>";
+							      				echo "<div class='col-md-8' style='font-size:14px;'><p><b>ราคาในร้าน(Batn)</b></p></div>";
+							      				echo "<div class='col-md-4' style='font-size:14px;'><p>$product_price_shop</p></div>";
 							      				$number++;
 							      			}
 							      			echo "</td>";

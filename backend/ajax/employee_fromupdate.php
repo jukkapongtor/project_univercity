@@ -39,7 +39,7 @@
 
         <input  type="file" name="employee_img">
         <br>
-        <div class="panel panel-default">
+        <div class="panel panel-danger">
             <div class="panel-heading">
                 <h3 class="panel-title">แก้ไขข้อมูลพื้นฐาน</h3>
             </div>
@@ -123,7 +123,7 @@
                 </table>
             </div>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-danger">
             <div class="panel-heading">
                 <h3 class="panel-title">แก้ไขข้อมูลส่วนตัว</h3>
             </div>
@@ -225,7 +225,7 @@
             </div>
         </div>
 
-         <div class="panel panel-default">
+         <div class="panel panel-danger">
             <div class="panel-heading">
                 <h3 class="panel-title">แก้ไขที่อยู่ตามทะเบียนบ้าน</h3>
             </div>
@@ -338,7 +338,7 @@
             </div>
         </div>
 
-         <div class="panel panel-default">
+         <div class="panel panel-danger">
             <div class="panel-heading">
                 <h3 class="panel-title">แก้ไขที่อยู่ที่ติดต่อได้</h3>
             </div>
@@ -445,7 +445,7 @@
             </div>
         </div>
 
-         <div class="panel panel-default">
+         <div class="panel panel-danger">
             <div class="panel-heading">
                 <h3 class="panel-title">ติดต่อฉุกเฉิน</h3>
             </div>

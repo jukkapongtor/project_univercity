@@ -15,6 +15,7 @@
 		<meta name="description" content="description">
 		<meta name="author" content="DevOOPS">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+
 			<link href="plugins/bootstrap/bootstrap.css" rel="stylesheet">
 			<link href="plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
 			<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -40,6 +41,7 @@
 			<link rel="stylesheet" href="css/plugins/char_counter.css">
 			<link rel="stylesheet" href="css/plugins/video.css">
 			<link rel="stylesheet" href="css/codemirror.min.css">
+
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -223,7 +225,8 @@
 						 <span >จัดการข้อมูลการขาย</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/manage_order.php">ดูรายการขาย</a></li>
+						<li><a class="ajax-link" href="ajax/manage_order.php">ดูรายการขายบนเว็บไซต์</a></li>
+						<li><a class="ajax-link" href="ajax/manage_order_shop.php">ดูรายการขายในร้าน</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">

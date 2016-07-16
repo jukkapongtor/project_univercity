@@ -41,14 +41,23 @@ div {
 	margin-top: 30px;
 	border-bottom: 2px solid #ccc;
 	width: 100%;
+}
+.header-top{
+	width: 100%;
+	height: 4px;
+	background-image:url("../images/background/header-top.png");
+	position: fixed;
+	z-index: 3;
 }	
 .header{
+	margin-top: 4px;
 	width: 100%;
 	height: 60px;
-	background-image: url("../images/background/header.png");
+	background:#cfffd6;
 	position: fixed;
 	z-index: 2;
-
+	border-radius: 0px 0px 15px 15px;
+	box-shadow: 5px 1px 10px #444;
 }
 .header-logo,.header-menu,.header-function{
 	float: left;
@@ -91,10 +100,12 @@ div {
 	height: 60px;
 	padding: 10px;
 	float: right;
+	border-radius:0px 0px 15px 0px; 
 	
 }
 .header-function-cart{
 	background:#248a32;
+
 }
 
 .header-function-cart:hover{
@@ -137,6 +148,26 @@ div {
 }
 .product-recom-new-content,.product-recom-best-content{
 	display: none;
+}
+.div-recom{
+	width:90%;
+	height:400px;
+	position:absolute;
+}
+.div-recom:hover{
+	background-image: url("../images/background/black.png");
+}
+.div-recom-content{
+	margin-top:170px;
+	background:white;
+	color:#666;
+	font-size:50px;
+	opacity: 0;
+	border-left:1px #ddd solid;
+	border-right:1px #ddd solid;
+}
+.div-recom:hover .div-recom-content{
+	opacity:1;
 }
 .datausers_menu{
 	background: #00e;

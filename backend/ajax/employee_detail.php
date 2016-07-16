@@ -4,9 +4,23 @@
     include("../../include/function.php");
     connect_db();
 ?>
-<head>
-    <title></title>
-</head>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#profile').click(function(){
+            var employee_id = document.getElementById('employee_id').value;
+            alert(employee_id);
+            $.post('ajax/function.php?data=profile',{employee_id:employee_id},function(data){
+                $('#employee-detail').html(data);
+            });
+        });
+        $('#salary').click(function(){
+            var employee_id = document.getElementById('employee_id').value;
+            $.post('ajax/function.php?data=salary',{employee_id:employee_id},function(data){
+                $('#employee-detail').html(data);
+            });
+        });
+    });
+</script>
 <?php
 $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_img, titlename, name_thai, surname_thai, name_eng, surname_eng, id_card, phone_number, email, birth_date, blood_group, personnel_nationality, personnel_race, religious, mate_status, mate_name, address_hrt, village_no_hrt, village_hrt, alley_hrt, road_hrt, province_hrt, districts_hrt, subdistrict_hrt, zipcode_hrt, phone_hrt, address_number, village_no, village, alley, road, province, districts, subdistrict, zipcode, phone, titlename_er, name_er, phone_er, status_er FROM employee WHERE employee_id='$_GET[employee_id]' ") or die("ERROR : employee_fromupdate line 30");
 
@@ -32,18 +46,18 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
 </div>
 
 <!--______________________________________________________________________________________-->
+    <input type="hidden" id="employee_id" value="<?php echo "$employee_id"; ?>" >
     <div class="col-md-8" id="employee-detail" >    
-        <div class="panel panel-default" style="width:100% " >
+        <div class="panel panel-info" style="width:100% " >
             <div class="panel-heading">
+            
                 <h3 class="panel-title">ประวัติส่วนตัว</h3>
             </div>
             <div class="panel-body">
          <!--______________________________________________________________________________-->  
                  
-        <div class="col-md-12" style="margin-top:20px; border: 1px solid;">
-            <div class="col-md-2" ></div>
-                <div class="col-md-8">
-                    <table align="center" width="100%" border="1" >  
+                <div class="col-md-12" style="margin-top:20px;">
+                    <table align="center" width="100%">  
                         <tr>
                             <td width="50%" align="right" style="padding:10px;">ชื่อ-นามสกุล : </td>
                             <td style="padding:10px;" >
@@ -78,18 +92,13 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
          <!--______________________________________________________________________________-->
                     </table>
                 </div>
-            <div class="col-md-2"></div>
-        </div>
         
 
 <!--______________________________________________-->
     
     <div class="col-md-12">
         <hr style="border-width: 2px;" >
-        <div class="col-md-2" ></div>
-        <div class="col-md-8">
-            
-            <table align="center" width="100%" border="1">
+            <table align="center" width="100%">
                 <tr>
                     <td width="50%" align="right" style="padding:10px;">วันเกิด : </td>
                     <td style="padding: 10px;">
@@ -133,51 +142,44 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
                     </td>
                 </tr>
             </table>
-        </div>
-        <div class="col-md-2" ></div>
     </div>
 
 
-    <div class="col-md-12">
-<hr style="border-width: 2px;" >
-        <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <table width="100%" >
+        <div class="col-md-12">
+            <hr style="border-width: 2px;" >
+                <table width="100%">
                     <tr>
-                        <td align="center"  style="padding:10px; background-color: #87CEFA; " colspan="2" >ที่อยู่ตามทะเบียนบ้าน</td>
-                    </tr>
-                    <tr>
-                        <td width="50%" align="right" style="padding:10px;" >บ้านเลขที่ :</td>
+                        <td width="50%" align="right" style="padding:10px;" >บ้านเลขที่(ตามทะเบียนบ้าน) :</td>
                         <td width="50%" style="padding:10px;">
                             <?php echo "$address_hrt";?>
                         </td>
                     </tr>
                     <tr>
-                        <td align="right" style="padding:10px;" >หมู่ :</td>
+                        <td align="right" style="padding:10px;" >หมู่(ตามทะเบียนบ้าน) :</td>
                         <td style="padding:10px;">
                             <?php echo "$village_no_hrt"; ?>
                         </td>
                     </tr>
                     <tr>
-                        <td align="right" style="padding:10px;" >ชื่อหมู่บ้าน :</td>
+                        <td align="right" style="padding:10px;" >ชื่อหมู่บ้าน(ตามทะเบียนบ้าน) :</td>
                         <td style="padding:10px;">
                             <?php echo "$village_hrt"; ?>
                         </td>
                     </tr>
                     <tr>
-                        <td align="right" style="padding:10px;" >ชื่อซอย :</td>
+                        <td align="right" style="padding:10px;" >ชื่อซอย(ตามทะเบียนบ้าน) :</td>
                         <td style="padding:10px;">
                            <?php echo "$alley_hrt"; ?>
                         </td>
                     </tr>
                     <tr>
-                        <td align="right" style="padding:10px;" >ถนน :</td>
+                        <td align="right" style="padding:10px;" >ถนน(ตามทะเบียนบ้าน) :</td>
                         <td style="padding:10px;">
                             <?php echo "$road_hrt"; ?>
                         </td>
                     </tr>
                     <tr>
-                        <td align="right" style="padding:10px;" >จังหวัด :</td>
+                        <td align="right" style="padding:10px;" >จังหวัด(ตามทะเบียนบ้าน) :</td>
                         <td style="padding:10px;">
                             
 <?php
@@ -191,7 +193,7 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
                         </td>
                     </tr>
                     <tr>                    
-                        <td align="right" style="padding:10px;" >เขต/อำเภอ :</td>
+                        <td align="right" style="padding:10px;" >เขต/อำเภอ(ตามทะเบียนบ้าน) :</td>
                         <td style="padding:10px;">
 <?php
                    
@@ -204,7 +206,7 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
                     </tr>
 
                     <tr>
-                        <td align="right" style="padding:10px;" >แขวง/ตำบล :</td>
+                        <td align="right" style="padding:10px;" >แขวง/ตำบล(ตามทะเบียนบ้าน) :</td>
                         <td style="padding:10px;">
                             
 <?php
@@ -217,60 +219,56 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
 
                     <tr>
 
-                        <td align="right" style="padding:10px;">รหัสไปรษณีย์ :</td>
+                        <td align="right" style="padding:10px;">รหัสไปรษณีย์(ตามทะเบียนบ้าน) :</td>
                         <td style="padding:10px;">
                             <?php echo "$zipcode_hrt"; ?>
                         </td>
                     </tr>
 
                     <tr>
-                        <td align="right" style="padding:10px;">เบอร์โทรศัพท์ :</td>
+                        <td align="right" style="padding:10px;">เบอร์โทรศัพท์(ตามทะเบียนบ้าน) :</td>
                         <td style="padding:10px;">
                             <?php echo "$phone_hrt"; ?>
                         </td>
                     </tr>
                 </table>
             </div>
-         <div class="col-md-2"></div>
-    </div>
 
-<div class="col-md-12">  
-    <hr style="border-width: 2px;" >
-        <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <table width="100%" border="1">
+        <div class="col-md-12">  
+            <hr style="border-width: 2px;" >
+               <table width="100%">
                     <tr>
-                        <td align="right" width="50%" style="padding:10px;" >บ้านเลขที่ :</td>
+                        <td align="right" width="50%" style="padding:10px;" >บ้านเลขที่(ใช้ติดต่อ) :</td>
                         <td width="50%" style="padding:10px;">
                             <?php echo "$address_number"; ?>
                         </td>
                     </tr>
                     <tr>
-                        <td  align="right" style="padding:10px;" >หมู่ :</td>
+                        <td  align="right" style="padding:10px;" >หมู่(ใช้ติดต่อ) :</td>
                         <td style="padding:10px;">
                             <?php echo "$village_no"; ?>
                         </td>
                     </tr>
                     <tr>
-                        <td  align="right" style="padding:10px;" >ชื่อหมู่บ้าน :</td>
+                        <td  align="right" style="padding:10px;" >ชื่อหมู่บ้าน(ใช้ติดต่อ) :</td>
                         <td style="padding:10px;">
                             <?php echo "$village"; ?>
                         </td>
                     </tr>
                     <tr>
-                        <td  align="right" style="padding:10px;" >ชื่อซอย :</td>
+                        <td  align="right" style="padding:10px;" >ชื่อซอย(ใช้ติดต่อ) :</td>
                         <td style="padding:10px;">
                            <?php echo "$alley"; ?>
                         </td>
                     </tr>
                     <tr>
-                        <td  align="right" style="padding:10px;" >ถนน :</td>
+                        <td  align="right" style="padding:10px;" >ถนน(ใช้ติดต่อ) :</td>
                         <td style="padding:10px;">
                            <?php echo "$road"; ?>
                         </td>
                     </tr>
                     <tr>
-                        <td  align="right" style="padding:10px;" >จังหวัด :</td>
+                        <td  align="right" style="padding:10px;" >จังหวัด(ใช้ติดต่อ) :</td>
                         <td style="padding:10px;">
 <?php
                       $query_provinces = mysqli_query($_SESSION['connect_db'],"SELECT PROVINCE_ID,PROVINCE_NAME FROM provinces WHERE PROVINCE_ID='$province'")or die("ERROR : employee detail line 190");
@@ -281,7 +279,7 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
                         </td>
                     </tr>
                     <tr>    
-                        <td  align="right" style="padding:10px;" >เขต/อำเภอ :</td>
+                        <td  align="right" style="padding:10px;" >เขต/อำเภอ(ใช้ติดต่อ) :</td>
                         <td style="padding:10px;">
 <?php
                      $query_disrtict = mysqli_query($_SESSION['connect_db'],"SELECT AMPHUR_ID,AMPHUR_NAME FROM amphures WHERE PROVINCE_ID = '$isset_province' AND AMPHUR_ID='$districts'")or die("ERROR :employee detail line 206");
@@ -292,7 +290,7 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
                         </td>
                     </tr>
                     <tr>
-                        <td  align="right" style="padding:10px;" >แขวง/ตำบล :</td>
+                        <td  align="right" style="padding:10px;" >แขวง/ตำบล(ใช้ติดต่อ) :</td>
                         <td style="padding:10px;">
                            
  <?php
@@ -303,29 +301,25 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
                         </td>
                     </tr>
                     <tr>
-                        <td  align="right" style="padding:10px;">รหัสไปรษณีย์ :</td>
+                        <td  align="right" style="padding:10px;">รหัสไปรษณีย์(ใช้ติดต่อ) :</td>
                         <td style="padding:10px;">
                             <?php echo "$zipcode"; ?>
                         </td>
                     </tr>
                     <tr>
-                        <td  align="right" style="padding:10px;">เบอร์โทรศัพท์ :</td>
+                        <td  align="right" style="padding:10px;">เบอร์โทรศัพท์(ใช้ติดต่อ) :</td>
                         <td style="padding:10px;">
                             <?php echo "$phone"; ?>
                         </td>
                     </tr>
                 </table>
-            </div>
-            <div class="col-md-2" ></div>
-            </div>
-
+        </div>
+            
 
          <!--________________________________________________________-->
-    <div class="col-md-12">
-   <hr style="border-width: 2px;" >
-        <div class="col-md-2" ></div>
-            <div class="col-md-8" >
-                <table width="100%" border="1">
+        <div class="col-md-12">
+            <hr style="border-width: 2px;" >
+                <table width="100%">
                     <tr>
                         <td width="50%" align="right" style="padding:10px;">ชื่อ-นามสกุล(ติดต่อฉุกเฉิน) : </td>
                         <td width="50%" style="padding:10px;" >
@@ -346,9 +340,7 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
                     </tr>
 
                 </table>
-            </div>
-        <div class="col-md-2" ></div>
-    </div>
+        </div>
 </div>
 </div> <!--panal--> 
 </div> <!-- end onpanal col-md-8--> 
@@ -369,8 +361,8 @@ if (empty($image)) {
         <!--______________________________________________________________________________--> 
 <div class="col-md-12">
     <div class="list-group">
-        <a href="#" class="list-group-item" id="profile" >ประวัติส่วนตัว</a>
-        <a href="#" class="list-group-item" id="salary" >ข้อมูลเงินเดือน</a>
+        <a class="list-group-item " id="profile" >ประวัติส่วนตัว</a>
+        <a class="list-group-item " id="salary" >ข้อมูลเงินเดือน</a>
     </div>
 </div>    
 
