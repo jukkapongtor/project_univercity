@@ -183,12 +183,12 @@
 				<li>
 					<a href="ajax/dashboard.php" class="ajax-link">
 						<i class="fa fa-dashboard"></i>
-						<span class="hidden-xs">Dashborad</span>
+						<span class="hidden-xs">หน้าแดชบอร์ด</span>
 					</a>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
+						<i><img src="../images/icon/website-design.png" width="16px" ></i>
 						 <span >จัดการเว็บไซต์</span>
 					</a>
 					<ul class="dropdown-menu">
@@ -199,7 +199,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
+						<i><img src="../images/icon/box-closed.png" width="16px" ></i>
 						 <span >จัดการสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
@@ -211,7 +211,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
+						<i><img src="../images/icon/shopping.png" width="16px" ></i>
 						 <span >จัดการค่าใช้จ่าย</span>
 					</a>
 					<ul class="dropdown-menu">
@@ -221,8 +221,8 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
-						 <span >จัดการข้อมูลการขาย</span>
+						<i><img src="../images/icon/income.png" width="16px" ></i>
+						 <span >จัดการรายได้</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/manage_order.php">ดูรายการขายบนเว็บไซต์</a></li>
@@ -231,7 +231,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
+						<i><img src="../images/icon/money.png" width="16px" ></i>
 						 <span >รายงานการขายสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
@@ -242,7 +242,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
+						<i><img src="../images/icon/delivery.png" width="16px" ></i>
 						 <span >รายงานการซื้อสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
@@ -253,7 +253,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
+						<i><img src="../images/icon/qr-code.png" width="16px" ></i>
 						 <span >จัดการคิวอาร์โค้ด</span>
 					</a>
 					<ul class="dropdown-menu">
@@ -262,7 +262,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
+						<i><img src="../images/icon/users-silhouette.png" width="16px" ></i>
 						 <span >จัดการข้อมูลผู้ใช้งาน</span>
 					</a>
 					<ul class="dropdown-menu">
@@ -271,7 +271,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
+						<i><img src="../images/icon/employee.png" width="16px" ></i>
 						 <span >จัดการข้อมูลพนักงาน</span>
 					</a>
 					<ul class="dropdown-menu">

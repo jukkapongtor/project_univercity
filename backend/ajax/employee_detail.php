@@ -45,6 +45,7 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
     </div>
 </div>
 
+
 <!--______________________________________________________________________________________-->
     <input type="hidden" id="employee_id" value="<?php echo "$employee_id"; ?>" >
     <div class="col-md-8" id="employee-detail" >    

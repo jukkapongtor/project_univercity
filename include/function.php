@@ -19,7 +19,7 @@ function check_login(){
 			$_SESSION['login_name']=$username;
 			$_SESSION['login_type']=$type; //เก็บค่า user ประเภทไหน
 			if($_SESSION['login_type']==1){
-				echo "<script>window.location='../backend/</script>";	
+				echo "<script>window.location='../backend/'</script>";	
 			}elseif($_SESSION['login_type']==2){
 				echo "<script>window.location='../shop/'</script>";	
 			}elseif($_SESSION['login_type']==3){
