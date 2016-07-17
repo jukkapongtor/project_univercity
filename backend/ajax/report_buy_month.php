@@ -63,7 +63,6 @@
 <div class="container-fluid">
 	<div id="chartContainer" style="height: 300px; width: 100%;">
 		<script>
-			  window.onload = function () {
 			  	var month = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
 			  	<?php
 			  		$year = date("Y");
@@ -105,7 +104,6 @@
 			    });
 
 			    chart.render();
-			  }
 		</script>
 	</div>
 	<div id='report_month'></div>
