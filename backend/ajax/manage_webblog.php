@@ -48,8 +48,8 @@
 	$query_blog = mysqli_query($_SESSION['connect_db'], "SELECT id_blog,title_blog,featured_image,rating_blog,visitor,type_blog,blog_date FROM webblog") or die("ERROR : manage webblog line 88");
 
 	while (list($blog_id,$title_blog,$featured_image,$rating_blog,$visitor,$type_blog,$blog_date )=mysqli_fetch_row($query_blog)){
-
-		echo "<tbody><tr><td><img src = '../images/webblog/$featured_image' width='35px' height=35px'></td>";
+		$path = (empty($featured_image))?"icon/no-images.jpg":"webblog/$featured_image";
+		echo "<tbody><tr><th><img src = '../images/$path' width='35px' height=35px'></th>";
 		echo "<td>$title_blog</td>";
 		echo "<td>$type_blog</td>";
 		echo "<td>$blog_date</td>";

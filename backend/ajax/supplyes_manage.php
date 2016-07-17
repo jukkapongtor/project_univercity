@@ -14,7 +14,7 @@ $(document).ready(function() {
         e.preventDefault();
         if(x < max_fields){ //max input box allowed
             x++; //text box increment
-            $(wrapper).append(' <div class="remove" style="margin-bottom:20px"><div class="col-md-2" style="padding-bottom:10px;">ชื่อวัสดุ</div><div class="col-md-4" style="padding-bottom:10px;"><input type="text" class="form-control" name="supply_name[]"></div><div class="col-md-2" style="padding-bottom:10px;">ราคา(หน่วย)</div><div class="col-md-4" style="padding-bottom:10px;"><input type="text" class="form-control" onkeyup="cal'+(x+1)+'()" id="supply_price'+(x+1)+'" name="supply_price[]"></div><div class="col-md-2" style="padding-bottom:10px;">จำนวน</div><div class="col-md-4" style="padding-bottom:10px;"><input type="text" class="form-control" onkeyup="cal'+(x+1)+'()" id="supply_amount'+(x+1)+'" name="supply_amount[]"></div><div class="col-md-2" style="padding-bottom:10px;">หน่วย</div><div class="col-md-4" style="padding-bottom:10px;"><input type="text" class="form-control" name="supply_unit[]"></div><div class="col-md-2" style="padding-bottom:10px;">ราคารวม</div><div class="col-md-8" style="padding-bottom:10px;"><input type="text" class="form-control" id="total_price'+(x+1)+'" ></div><button  class="remove_field btn btn-danger" style="padding:0px 3px;width:27px;height:27px;margin-bottom:2px"><img src="../images/icon/minus.png" width="12px" height="12px" ></button></div>'); //add input box
+            $(wrapper).append(' <div class="remove" style="margin-bottom:20px"><div class="col-md-2" style="padding-bottom:10px;">ชื่อวัสดุ</div><div class="col-md-4" style="padding-bottom:10px;"><input type="text" class="form-control" name="supply_name[]"></div><div class="col-md-2" style="padding-bottom:10px;">ราคา(หน่วย)</div><div class="col-md-4" style="padding-bottom:10px;"><input type="text" class="form-control" onkeyup="cal'+(x+1)+'()" id="supply_price'+(x+1)+'" name="supply_price[]"></div><div class="col-md-2" style="padding-bottom:10px;">จำนวน</div><div class="col-md-4" style="padding-bottom:10px;"><input type="text" class="form-control" onkeyup="cal'+(x+1)+'()" id="supply_amount'+(x+1)+'" name="supply_amount[]"></div><div class="col-md-2" style="padding-bottom:10px;">หน่วย</div><div class="col-md-4" style="padding-bottom:10px;"><input type="text" class="form-control" name="supply_unit[]"></div><div class="col-md-2" style="padding-bottom:10px;">ราคารวม</div><div class="col-md-8" style="padding-bottom:10px;"><input type="text" class="form-control" id="total_price'+(x+1)+'" disabled></div><button  class="remove_field btn btn-danger" style="padding:0px 3px;width:27px;height:27px;margin-bottom:2px"><img src="../images/icon/minus.png" width="12px" height="12px" ></button></div>'); //add input box
         }
     });
     
@@ -71,7 +71,7 @@ echo "</script>";
 	  			<div class="col-md-2" style="padding-bottom:10px;">หน่วย</div>
 	  			<div class="col-md-4" style="padding-bottom:10px;"><input type="text" class='form-control' name="supply_unit[]"></div>
 	  			<div class="col-md-2" style="padding-bottom:10px;">ราคารวม</div>
-	  			<div class="col-md-8" style="padding-bottom:10px;"><input type="text" class='form-control' id='total_price1' value="0"></div>
+	  			<div class="col-md-8" style="padding-bottom:10px;"><input type="text" class='form-control' id='total_price1' value="0" disabled></div>
 	  			<div class="col-md-2" style="padding-bottom:10px;padding-left:0px"><button class="add_field_button btn btn-primary" style="padding:0px 3px;width:27px;height:27px;margin-bottom:2px"><img src='../images/icon/add.png' width="12px" height="12px" ></button></div>
 	  		</div>
 		<p align='right'><button class='btn btn-sm btn-success'>เพิ่มรายการซื้อเข้า</button></p>
@@ -86,22 +86,33 @@ echo "</script>";
 	  </div>
 	  <div class="panel-body">
 <?php
-		echo "<table class='table table-hover table-striped'>";
-		echo "<tr><th><center>ลำดับ</th><th>ชื่อวัสดุ</th><th>ราคา</th><th>จำนวน(หน่วย)</th><th>ราคาทั้งหมด</th></tr>";
-		$query_buysupply = mysqli_query($_SESSION['connect_db'],"SELECT * FROM buy_supply")or die("ERROR : supply manage line 89");
-		$number=1;
-		while(list($buy_id,$supply_name,$supply_amount,$supply_price,$supply_unit,$supply_date)=mysqli_fetch_row($query_buysupply)){
-			echo "<tr>";
-				echo "<td align='center'>$number</td>";
-				echo "<td>$supply_name</td>";
-				echo "<td>$supply_price</td>";
-				echo "<td>$supply_amount $supply_unit</td>";
-				$sum = $supply_price * $supply_amount;
-				echo "<td align='right'>$sum</td>";
-				$number++;
-			echo "</tr>";
+		echo "<p>รายการที่ซื้อเข้าวัสดุสิ้นเปลืองย้อนหลัง 3 วัน</p>";
+		$date5day = array();
+		$query_sup5day =  mysqli_query($_SESSION['connect_db'],"SELECT supply_date FROM buy_supply GROUP BY DATE(supply_date) ORDER BY DATE(supply_date) DESC LIMIT 0,3")or die("ERROR : supply manage line 91");
+		while (list($supply_date)=mysqli_fetch_row($query_sup5day)) {
+			$supply_date =substr($supply_date, 0,10);
+			array_push($date5day, $supply_date);
 		}
-		echo "</table>";
+		foreach ($date5day as $key => $value) {
+			echo "<b>รายการที่ซื้อเข้าวัสดุสิ้นเปลืองวันที่ : </b>$value";
+			echo "<table class='table table-hover table-striped table-bordered'>";
+			echo "<tr><th><center>ลำดับ</th><th><center>ชื่อวัสดุ</th><th><center>ราคา</th><th><center>จำนวน(หน่วย)</th><th><center>ราคาทั้งหมด</th></tr>";
+			$query_buysupply = mysqli_query($_SESSION['connect_db'],"SELECT * FROM buy_supply WHERE DATE(supply_date)='$value'")or die("ERROR : supply manage line 89");
+			$number=1;
+			while(list($buy_id,$supply_name,$supply_amount,$supply_price,$supply_unit,$supply_date)=mysqli_fetch_row($query_buysupply)){
+				echo "<tr>";
+					echo "<td align='center' width='10%'>$number</td>";
+					echo "<td width='25%'>$supply_name</td>";
+					echo "<td align='right' width='20%'>".number_format($supply_price,2)." ฿</td>";
+					echo "<td width='20%'>$supply_amount $supply_unit</td>";
+					$sum = $supply_price * $supply_amount;
+					echo "<td align='right'>".number_format($sum,2)." ฿</td>";
+					$number++;
+				echo "</tr>";
+			}
+			echo "</table>";
+		}
+		
 ?>
 	  </div>
 	</div>	

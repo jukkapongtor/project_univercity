@@ -25,6 +25,7 @@ function check_login(){
 			}elseif($_SESSION['login_type']==3){
 				echo "<script>window.location='../'</script>";	
 			}
+
 		}else{
 		    echo "<script>alert('คุณกรอก username หรือ password ผิดผลาด กรุณาล็อคอินเข้าสู่ระบบใหม่')</script>";
 	        echo "<script>window.location='index.php'</script>";
