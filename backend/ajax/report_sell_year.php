@@ -9,7 +9,13 @@
 		$("#select_date").click(function(){
 			var year = document.getElementById("select_year").value;
 			$.post('ajax/function.php?data=report_sell_month',{year:year},function(data){
-		  		$('#report_year').html(data);
+				if(data=="<center><h3 style='margin-top:50px;'><font color='red'>!!! </font>กรุณาเลือกข้อมูลในการแสดง ก่อนกดปุ่ม \"ตกลง\" <font color='red'> !!! </font></h3></center>"){
+					$('#chartContainer').hide();
+		  			$('#report_year').html(data);
+				}else{
+					$('#chartContainer').show();
+		  			$('#report_year').html(data);
+		  		}
 		    });
 		});
 		

@@ -182,9 +182,10 @@ switch ($_GET['data']) {
 	}
 
 	break;
+//-----------------------แสดงกราฟขายรายปี
 	case 'report_sell_month':
 
-
+		if(!empty($_POST['year'])){
 ?>
 		<div class="col-md-1"></div>
 		<div class="col-md-10">
@@ -271,12 +272,16 @@ switch ($_GET['data']) {
 ?>
 	</script>
 <?php
+		}else{
+			echo "<center><h3 style='margin-top:50px;'><font color='red'>!!! </font>กรุณาเลือกข้อมูลในการแสดง ก่อนกดปุ่ม \"ตกลง\" <font color='red'> !!! </font></h3></center>";
+		}
 	break;
-
+//------------------------------แสดงงกราฟรายเดือน
 	case 'report_sell_day':
 		$month = $_POST['month'];
 		$year = $_POST['year'];
 
+		if(!empty($month)&&!empty($year)){
 		$feb = ($year%4==0)?29:28;
 		$day =array(1=>31,2=>$feb,3=>31,4=>30,5=>31,6=>30,7=>31,8=>31,9=>30,10=>31,11=>30,12=>31);
 		echo "<br>";
@@ -527,8 +532,11 @@ switch ($_GET['data']) {
 ?>
 		</script>
 <?php
-
+		}else{
+			echo "<center><h3 style='margin-top:50px;'><font color='red'>!!! </font>กรุณาเลือกวันที่ในการแสดงข้อมูล ก่อนกดปุ่ม \"ตกลง\"<font color='red'> !!! </font></h3></center>";
+		}
 	break;
+//--------------------------------------จบการแสดงกราฟรายเดือน
 	/*
 	case 'select_size':
 		$query_product_type = mysqli_query($_SESSION['connect_db'],"SELECT product_type FROM product WHERE product_id='$_POST[product]'")or die("ERROR backend function line 399");
