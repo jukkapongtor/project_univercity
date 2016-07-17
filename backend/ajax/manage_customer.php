@@ -30,7 +30,7 @@
 	while (list($username,$fullname,$image,$email,$type)=mysqli_fetch_row($query_user)) {
 
 		
-		echo "<tr'><td width ='20px'><center>$number</center></td>";
+		echo "<tr><td width ='20px'><center>$number</center></td>";
 		if (empty($image)) {
 			$image="<center><img src='../images/icon/no-images.jpg' width='65px' height='65px' ></center>";
 		}else{

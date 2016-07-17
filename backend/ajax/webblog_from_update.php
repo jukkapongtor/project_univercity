@@ -26,7 +26,7 @@
 	</div>
 </div>
 <?php
-   $edit_blog = mysqli_query($_SESSION['connect_db'], "SELECT id_blog,title_blog,featured_image,review_detail,detail,type_blog FROM webblog WHERE id_blog='$_GET[id_blog]' ") or die("ERROR : manage webblog line 123");
+   $edit_blog = mysqli_query($_SESSION['connect_db'], "SELECT id_blog,title_blog,featured_image,review_detail,detail,type_blog FROM webblog WHERE id_blog='$_GET[id_blog]' ") or die("ERROR : webblog_from_up line 29");
 
       list($idblog,$titleblog,$featuredimage,$reviewdetail,$detail,$typeblog)=mysqli_fetch_row($edit_blog)
 

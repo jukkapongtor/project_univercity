@@ -12,8 +12,8 @@
 	}
 
 	
-    $sql = "INSERT INTO employee VALUES ('','$img', '$_PORT[titlename]', '$_PORT[name_thai]', '$_PORT[surname_thai]', '$_PORT[name_eng]', '$_PORT[surname_eng]', '$_PORT[id_card]', '$_PORT[phone_number]', '$_PORT[email]', '$_PORT[birth_date]', '$_PORT[blood_group]', '$_PORT[personnel_nationality]', '$_PORT[personnel_race]', '$_PORT[religious]', '$_PORT[mate_status]', '$_PORT[mate_name]', '$_PORT[address_hrt]', '$_PORT[village_no_hrt]', '$_PORT[village_hrt]', '$_PORT[alley_hrt]', '$_PORT[road_hrt]', '$_PORT[province_hrt]', '$_PORT[districts_hrt]', '$_PORT[subdistrict_hrt]', '$_PORT[zipcode_hrt]', '$_PORT[phone_hrt]', '$_PORT[address_number]', '$_PORT[village_no]', '$_PORT[village]', '$_PORT[alley]', '$_PORT[road]', '$_PORT[province]', '$_PORT[districts]', '$_PORT[subdistrict]', '$_PORT[zipcode]', '$_PORT[phone]', '$_PORT[titlename_er]', '$_PORT[name_er]', '$_PORT[phone_er]', '$_PORT[status_er]', '2') ";
-	mysqli_query($_SESSION['connect_db'],$sql)or die("ERROR : backend insert_webblog line 16");
+    $sql = "INSERT INTO employee VALUES ('','$img', '$_POST[titlename]', '$_POST[name_thai]', '$_POST[surname_thai]', '$_POST[name_eng]', '$_POST[surname_eng]', '$_POST[id_card]', '$_POST[phone_number]', '$_POST[email]', '$_POST[birth_date]', '$_POST[blood_group]', '$_POST[personnel_nationality]', '$_POST[personnel_race]', '$_POST[religious]', '$_POST[mate_status]', '$_POST[mate_name]', '$_POST[address_hrt]', '$_POST[village_no_hrt]', '$_POST[village_hrt]', '$_POST[alley_hrt]', '$_POST[road_hrt]', '$_POST[province_hrt]', '$_POST[districts_hrt]', '$_POST[subdistrict_hrt]', '$_POST[zipcode_hrt]', '$_POST[phone_hrt]', '$_POST[address_number]', '$_POST[village_no]', '$_POST[village]', '$_POST[alley]', '$_POST[road]', '$_POST[province]', '$_POST[districts]', '$_POST[subdistrict]', '$_POST[zipcode]', '$_POST[phone]', '$_POST[titlename_er]', '$_POST[name_er]', '$_POST[phone_er]', '$_POST[status_er]', '2') ";
+	mysqli_query($_SESSION['connect_db'],$sql)or die("ERROR : backend employee_insert line 16");
 
 	echo "<script> window.location='../#ajax/employee_manage.php'</script>";
 
