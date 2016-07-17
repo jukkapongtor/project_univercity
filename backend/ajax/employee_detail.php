@@ -39,9 +39,6 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
             <li><a href="#">รายละเอียดพนักงาน <?php echo "\"$name_thai $surname_thai\""; ?></a>
 
         </ol>
-        <div id="social" class="pull-right">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-        </div>
     </div>
 </div>
 

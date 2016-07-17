@@ -13,8 +13,5 @@
 			<li><a href="#">รายงานการซื้อสินค้า</a></li>
 			<li><a href="#">รายงานการซื้อรายวัน</a></li>
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>

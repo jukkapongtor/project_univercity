@@ -39,9 +39,6 @@ $(document).ready(function() {
 			<li><a href="#">จัดการข้อมูลผู้ใช้งาน</a></li>
 			<li><a href="#">ดูรายการขายบนเว็บไซต์</a></li>
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 <div class="row">

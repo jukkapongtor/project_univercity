@@ -13,9 +13,6 @@
 			<li><a href="#">แสดงรายการสินค้า</a></li>
 			<li><a href="#">แก้ไขสินค้า</a></li>
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 <div class="container-fluid">

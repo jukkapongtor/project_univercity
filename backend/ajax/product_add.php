@@ -76,9 +76,6 @@ $(document).ready(function() {
 			<li><a href="#">เพิ่มรายการสินค้า</a></li>
 
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 <form method="post" action="ajax/product_insert.php" enctype="multipart/form-data">

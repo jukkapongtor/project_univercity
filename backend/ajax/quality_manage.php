@@ -13,9 +13,6 @@
 			<li><a href="#">จัดการหมวดหมู่สินค้า</a></li>
 
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 <div class='col-md-6' style="margin-top:20px;">

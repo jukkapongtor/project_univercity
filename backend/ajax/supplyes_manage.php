@@ -45,9 +45,6 @@ echo "</script>";
 			<li><a href="#">จัดการค่าใช้จ่าย</a></li>
 			<li><a href="#">วัสดุสิ้นเปลือง</a></li>
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 <div class="col-md-6">

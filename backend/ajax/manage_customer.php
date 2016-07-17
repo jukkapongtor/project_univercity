@@ -13,9 +13,6 @@
 			<li><a href="#">ข้อมูลผู้ใช้งาน</a></li>
 
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 <?php

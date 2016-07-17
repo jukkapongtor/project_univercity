@@ -23,9 +23,6 @@ $(document).ready(function(){
 			<li><a href="#">รายงานการซื้อสินค้า</a></li>
 			<li><a href="#">รายงานการซื้อรายปี</a></li>
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 <div class='panel panel-info'>

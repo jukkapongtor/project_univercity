@@ -18,9 +18,6 @@
 			<li><a href="#">ข้อมูลพนักงาน</a></li>
 
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 
