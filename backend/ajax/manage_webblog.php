@@ -49,7 +49,8 @@
 
 	while (list($blog_id,$title_blog,$featured_image,$rating_blog,$visitor,$type_blog,$blog_date )=mysqli_fetch_row($query_blog)){
 
-		echo "<tbody><tr><th><img src = '../images/webblog/$featured_image' width='35px' height=35px'></th>";
+		$path = (empty($featured_image))?"icon/no-images.jpg":"webblog/$featured_image";
+		echo "<tbody><tr><th><img src = '../images/$path' width='35px' height=35px'></th>";
 		echo "<td>$title_blog</td>";
 		echo "<td>$type_blog</td>";
 		echo "<td>$blog_date</td>";

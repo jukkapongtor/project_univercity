@@ -90,6 +90,7 @@
 					<div class="col-xs-4 col-sm-8 top-panel-right">
 						<!--<a href="#" class="about hidden-xs">about</a>-->
 						<ul class="nav navbar-nav pull-right panel-menu">
+						<!--
 							<li class="hidden-xs">
 								<a href="index.php" class="modal-link">
 									<i class="fa fa-bell"></i>
@@ -108,6 +109,7 @@
 									<span class="badge">7</span>
 								</a>
 							</li>
+						-->
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
 									<i class="fa fa-angle-down pull-right" style='float:right;'></i>
@@ -232,7 +234,7 @@
 						 <span >รายงานการขายสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/report_sell_day.php">รายงานการขายรายวัน</a></li>
+						<!--<li><a class="ajax-link" href="ajax/report_sell_day.php">รายงานการขายรายวัน</a></li>-->
 						<li><a class="ajax-link" href="ajax/report_sell_month.php">รายงานการขายรายเดือน</a></li>
 						<li><a class="ajax-link" href="ajax/report_sell_year.php">รายงานการขายรายปี</a></li>
 					</ul>
@@ -243,7 +245,7 @@
 						 <span >รายงานการซื้อสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/report_buy_day.php">รายงานการซื้อรายวัน</a></li>
+						<!--<li><a class="ajax-link" href="ajax/report_buy_day.php">รายงานการซื้อรายวัน</a></li>-->
 						<li><a class="ajax-link" href="ajax/report_buy_month.php">รายงานการซื้อรายเดือน</a></li>
 						<li><a class="ajax-link" href="ajax/report_buy_year.php">รายงานการซื้อรายปี</a></li>
 					</ul>
