@@ -110,11 +110,14 @@
 			echo "axisY: {";
 	        echo "title: \"ยอดขาย\"";
 	      	echo "},";
+	      	echo "toolTip: {";
+				echo "shared: true";
+			echo "},";
 	      	echo "animationEnabled: true,"; 
 			echo "data: [   ";           
 			echo "{";
 				echo "type: 'column',";		
-				
+				echo "name: 'ยอดขายบนเว็บไซต์',";
 				echo "legendText: \"ยอดขายบนเว็บไซต์\",";
 				echo "showInLegend: true,";
 				echo "dataPoints: [";	
@@ -127,6 +130,7 @@
 			echo "},";
 			echo "{";
 				echo "type: 'column',";
+				echo "name: 'ยอดขายในร้าน',";
 				echo "legendText: \"ยอดขายในร้าน\",";
 				echo "showInLegend: true,";		
 				echo "dataPoints: [";
@@ -169,7 +173,7 @@
 							    <div class="modal-content">
 							      <div class="modal-header">
 							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							        <h4 class="modal-title" id="myModalLabel"><?php echo "ยอดขายประจำวันที่ $i-$month-$year" ?></h4>
+							        <h4 class="modal-title" id="myModalLabel"><?php echo "ยอดขายประจำวันที่ $i $month_name $year" ?></h4>
 							      </div>
 							      <div class="modal-body">
 <?php
@@ -200,7 +204,7 @@
 										}
 ?>		
 										<div class="panel panel-success">
-										  <div class="panel-heading"><?php echo "<h4>รายละเอียดยอดขายบนเว็บไซต์ประจำวันที่ $i-$month-$year</h4>" ?></div>
+										  <div class="panel-heading"><?php echo "<h4>รายละเอียดยอดขายบนเว็บไซต์</h4>" ?></div>
 										  <div class="panel-body">
 <?php
 											echo "<table class='table table-hover table-striped'>";
@@ -217,14 +221,14 @@
 													echo "<td><p>$value[name]</p></td>";
 													echo "<td><p>$value[size]</p></td>";
 													echo "<td><p>$value[amount]</p></td>";
-													echo "<td><p>$value[price]</p></td>";
-													echo "<td><p>".($value['amount']*$value['price'])."</p></td>";
+													echo "<td align='right'><p>".number_format($value['price'],2)." ฿</p></td>";
+													echo "<td align='right'><p>".number_format(($value['amount']*$value['price']),2)." ฿</p></td>";
 													$total_price +=($value['amount']*$value['price']);
 												echo "</tr>";
 											}
 												echo "<tr>";
 													echo "<td colspan='4'><p align='right'>รวมราคาทั้งหมด</p></td>";
-													echo "<td><p>".$total_price."</p></td>";
+													echo "<td align='right'><p>".number_format($total_price,2)." ฿</p></td>";
 												echo "</tr>";
 											echo "</table>";
 ?>
@@ -234,9 +238,9 @@
 										
 									}else{
 										echo "<div class='panel panel-success'>";
-										  echo "<div class='panel-heading'><h4>รายละเอียดยอดขายบนเว็บไซต์ประจำวันที่ $i-$month-$year</h4></div>";
+										  echo "<div class='panel-heading'><h4>รายละเอียดยอดขายบนเว็บไซต์</h4></div>";
 										  echo "<div class='panel-body'>";
-											echo "<h3>ไม่พบข้อมูลการขายสินค้า</h3>";
+											echo "<center><h4><font color='red'> !!! </font>ไม่พบข้อมูลการขายสินค้า<font color='red'> !!! </font></h4></center>";
 										  echo "</div>";
 										echo "</div>";
 									}
@@ -267,7 +271,7 @@
 										}
 ?>		
 										<div class="panel panel-success">
-										  <div class="panel-heading"><?php echo "<h4>รายละเอียดยอดขายในร้านประจำวันที่ $i-$month-$year</h4>" ?></div>
+										  <div class="panel-heading"><?php echo "<h4>รายละเอียดยอดขายในร้าน</h4>" ?></div>
 										  <div class="panel-body">
 <?php
 											echo "<table class='table table-hover table-striped'>";
@@ -284,14 +288,14 @@
 													echo "<td><p>$value[name]</p></td>";
 													echo "<td><p>$value[size]</p></td>";
 													echo "<td><p>$value[amount]</p></td>";
-													echo "<td><p>$value[price]</p></td>";
-													echo "<td><p>".($value['amount']*$value['price'])."</p></td>";
+													echo "<td align='right'><p>".number_format($value['price'],2)." ฿</p></td>";
+													echo "<td align='right'><p>".number_format(($value['amount']*$value['price']),2)." ฿</p></td>";
 													$total_price +=($value['amount']*$value['price']);
 												echo "</tr>";
 											}
 												echo "<tr>";
 													echo "<td colspan='4'><p align='right'>รวมราคาทั้งหมด</p></td>";
-													echo "<td><p>".$total_price."</p></td>";
+													echo "<td align='right'><p>".number_format($total_price,2)." ฿</p></td>";
 												echo "</tr>";
 											echo "</table>";
 ?>
@@ -301,9 +305,9 @@
 										
 									}else{
 										echo "<div class='panel panel-success'>";
-										  echo "<div class='panel-heading'><h4>รายละเอียดยอดขายในร้านประจำวันที่ $i-$month-$year</h4></div>";
+										  echo "<div class='panel-heading'><h4>รายละเอียดยอดขายในร้าน</h4></div>";
 										  echo "<div class='panel-body'>";
-											echo "<h3>ไม่พบข้อมูลการขายสินค้า</h3>";
+											echo "<center><h4><font color='red'> !!! </font>ไม่พบข้อมูลการขายสินค้า<font color='red'> !!! </font></h4></center>";
 										  echo "</div>";
 										echo "</div>";
 									}
