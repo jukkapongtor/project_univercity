@@ -245,12 +245,12 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i><img src="../images/icon/delivery.png" width="16px" ></i>
-						 <span >รายงานการซื้อสินค้า</span>
+						 <span >รายงานค่าใช้จ่าย</span>
 					</a>
 					<ul class="dropdown-menu">
 						<!--<li><a class="ajax-link" href="ajax/report_buy_day.php">รายงานการซื้อรายวัน</a></li>-->
-						<li><a class="ajax-link" href="ajax/report_buy_month.php">รายงานการซื้อรายเดือน</a></li>
-						<li><a class="ajax-link" href="ajax/report_buy_year.php">รายงานการซื้อรายปี</a></li>
+						<li><a class="ajax-link" href="ajax/report_buy_month.php">รายงานค่าใช้จ่ายรายเดือน</a></li>
+						<li><a class="ajax-link" href="ajax/report_buy_year.php">รายงานค่าใช้จ่ายรายปี</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
