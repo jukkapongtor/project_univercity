@@ -298,7 +298,7 @@ switch ($_GET['data']) {
 					$query_report_day =mysqli_query($_SESSION['connect_db'],"SELECT SUM(total_amount),SUM(total_price),type_order FROM orders WHERE DAY(order_date)='$i' AND MONTH(order_date)='$month' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4')")or die("ERROR : function line 222");
 					list($total_amount,$total_price_order,$type_order)=mysqli_fetch_row($query_report_day);
 					echo "<tr>";
-						echo "<td>$i</td>";
+						echo "<td align='center'>$i</td>";
 						echo "<td>";
 ?>
 							<a data-toggle="modal" data-target="<?php echo "#day_$i";?>" style='text-decoration:none;cursor:pointer'><?php echo "ยอดขายประจำวันที่ $i" ?></a>
@@ -454,19 +454,19 @@ switch ($_GET['data']) {
 <?php
 						echo "</td>";
 						if($type_order=="web"){
-							echo "<td>0</td>";
-							echo "<td>0</td>";
+							echo "<td align='right'>0</td>";
+							echo "<td align='right'>0  ฿</td>";
 							$total_amount =(empty($total_amount))?0:$total_amount;
-							echo "<td>".number_format($total_amount)."</td>";
+							echo "<td align='right'>".number_format($total_amount)."</td>";
 							$total_price_order =(empty($total_price_order))?0:$total_price_order;
-							echo "<td>".number_format($total_price_order)."</td>";
+							echo "<td align='right'>".number_format($total_price_order,2)." ฿</td>";
 						}else{
 							$total_amount =(empty($total_amount))?0:$total_amount;
-							echo "<td>".number_format($total_amount)."</td>";
+							echo "<td align='right'>".number_format($total_amount)."</td>";
 							$total_price_order =(empty($total_price_order))?0:$total_price_order;
-							echo "<td>".number_format($total_price_order)."</td>";
-							echo "<td>0</td>";
-							echo "<td>0</td>";	
+							echo "<td align='right'>".number_format($total_price_order,2)." ฿</td>";
+							echo "<td align='right'>0</td>";
+							echo "<td align='right'>0  ฿</td>";	
 						}
 						
 					echo "</tr>";
@@ -510,7 +510,7 @@ switch ($_GET['data']) {
 
 				foreach ($repot_month as $key => $value) {
 					$value['total_price'] = (empty($value['total_price']))?0:$value['total_price'];
-					echo "{ label: '$value[day]',  y: $value[total_price]  },";
+					echo "{ label: 'วันที่ $value[day]',  y: $value[total_price]  },";
 				}
 				echo "]";
 			echo "},";
@@ -522,7 +522,7 @@ switch ($_GET['data']) {
 
 				foreach ($repot_month_shop as $key => $value) {
 					$value['total_price'] = (empty($value['total_price']))?0:$value['total_price'];
-					echo "{ label: '$value[day]',  y: $value[total_price]  },";
+					echo "{ label: 'วันที่ $value[day]',  y: $value[total_price]  },";
 				}
 				echo "]";
 			echo "}";

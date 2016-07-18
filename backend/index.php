@@ -15,7 +15,7 @@
 		<meta name="description" content="description">
 		<meta name="author" content="DevOOPS">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-
+			<link rel="shortcut icon" href="images/icon/logomumfern.png" />
 			<link href="plugins/bootstrap/bootstrap.css" rel="stylesheet">
 			<link href="plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
 			<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -251,6 +251,17 @@
 						<!--<li><a class="ajax-link" href="ajax/report_buy_day.php">รายงานการซื้อรายวัน</a></li>-->
 						<li><a class="ajax-link" href="ajax/report_buy_month.php">รายงานการซื้อรายเดือน</a></li>
 						<li><a class="ajax-link" href="ajax/report_buy_year.php">รายงานการซื้อรายปี</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i><img src="../images/icon/progress-report.png" width="16px" ></i>
+						 <span >รายงานผลกำไรขาดทุน</span>
+					</a>
+					<ul class="dropdown-menu">
+						<!--<li><a class="ajax-link" href="ajax/report_buy_day.php">รายงานการซื้อรายวัน</a></li>-->
+						<li><a class="ajax-link" href="ajax/report_profit_month.php">ผลกำไรขาดทุนรายเดือน</a></li>
+						<li><a class="ajax-link" href="ajax/report_profit_year.php">ผลกำไรขาดทุนรายปี</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">

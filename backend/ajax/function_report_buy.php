@@ -54,7 +54,7 @@ switch ($_GET['data']) {
 	<div class="col-md-6">
 		<table class="table table-hover table-striped">
 			<thead>
-				<tr><th><center>ลำดับ</th><th><center>รายการ</center></th><th><center>ยอดขาย(เว็บไซต์)</th></tr>
+				<tr><th><center>ลำดับ</th><th><center>รายการ</center></th><th><center>ยอดซื้อ</th></tr>
 			</thead>
 			<tbody>
 			<?php
@@ -202,7 +202,7 @@ switch ($_GET['data']) {
 	<div class="col-md-6">
 		<table class="table table-hover table-striped">
 			<thead>
-				<tr><th><center>ลำดับ</th><th><center>รายการ</center></th><th><center>ยอดขาย(เว็บไซต์)</th></tr>
+				<tr><th><center>ลำดับ</th><th><center>รายการ</center></th><th><center>ยอดซื้อ</th></tr>
 			</thead>
 			<tbody>
 			<?php
@@ -217,7 +217,7 @@ switch ($_GET['data']) {
 					echo "<tr>";
 						echo "<td align='center'>$i</td>";
 						echo "<td>";
-							echo "<a style='text-decoration: none;cursor:pointer' data-toggle='modal' data-target='#$i'>".$month[$i-1]."</a></center>";
+							echo "<a style='text-decoration: none;cursor:pointer' data-toggle='modal' data-target='#$i'>ยอดการซื้อประจำเดือน ".$month[$i-1]."</a></center>";
 ?>
 							<!-- Modal -->
 							<div class="modal fade" id="<?php echo $i ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -225,7 +225,7 @@ switch ($_GET['data']) {
 							    <div class="modal-content">
 							      <div class="modal-header">
 							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							        <h4 class="modal-title" id="myModalLabel"><?php echo "ยอดการซื้อของประจำวันที่ $i";?></h4>
+							        <h4 class="modal-title" id="myModalLabel"><?php echo "ยอดการซื้อประจำเดือน ".$month[$i-1];?></h4>
 							      </div>
 							      <div class="modal-body">
 <?php

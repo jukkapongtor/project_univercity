@@ -135,7 +135,7 @@ $(document).ready(function(){
 	<div class="col-md-6">
 		<table class="table table-hover table-striped">
 			<thead>
-				<tr><th><center>ลำดับ</th><th><center>รายการ</center></th><th><center>ยอดขาย(เว็บไซต์)</th></tr>
+				<tr><th><center>ลำดับ</th><th><center>รายการ</center></th><th><center>ยอดซื้อ</th></tr>
 			</thead>
 			<tbody>
 			<?php
