@@ -48,7 +48,7 @@ switch ($_GET['data']) {
 		list($product_id,$product_name,$product_image,$type_name)=mysqli_fetch_row($query_product_detail);
 ?>
 		<div class="panel panel-default">
-		  <div class="panel-heading">ซื้อเข้าสินค้า<?php echo "$product_name";?></div>
+		  <div class="panel-heading">ต้นทุนสินค้า<?php echo "$product_name";?></div>
 		  <div class="panel-body">
 		    <div class="container-fluid" style='padding:0px'>
 		    	<div class='col-md-12' style='padding:0px'>
@@ -63,7 +63,7 @@ switch ($_GET['data']) {
 		    				<td><p><?php echo "$product_name"; ?></p></td>
 		    			</tr>
 		    			<tr>
-		    				<th valign="top"><p>จำนวนที่ซื้อเข้า</p></th>
+		    				<th valign="top"><p>จำนวนต้นทุนสินค้า</p></th>
 		    				<th valign="top" width="5%"><p>&nbsp;:&nbsp;</p></th>
 		    				<td>
 		    					<table width="100%">
@@ -99,7 +99,7 @@ switch ($_GET['data']) {
 		    				</td>
 		    			</tr>
 		    		</table>
-		    		<p align="right"><input class='btn btn-sm btn-success' type="submit" value="บันทึกการซื้อเข้า"></p>
+		    		<p align="right"><input class='btn btn-sm btn-success' type="submit" value="บันทึกราคาต้นทุน"></p>
 		    		</form>
 		    	</div>
 		    </div>

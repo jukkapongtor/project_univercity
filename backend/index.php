@@ -217,8 +217,8 @@
 						 <span >จัดการค่าใช้จ่าย</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/buy_product.php">สินค้าสำหรับขาย</a></li>
-						<li><a class="ajax-link" href="ajax/supplyes_manage.php">วัสดุสิ้นเปลือง</a></li>
+						<li><a class="ajax-link" href="ajax/buy_product.php">ต้นทุนสินค้า</a></li>
+						<li><a class="ajax-link" href="ajax/supplyes_manage.php">ค่าใช้จ่ายในร้าน</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
