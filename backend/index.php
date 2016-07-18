@@ -41,7 +41,7 @@
 			<link rel="stylesheet" href="css/plugins/char_counter.css">
 			<link rel="stylesheet" href="css/plugins/video.css">
 			<link rel="stylesheet" href="css/codemirror.min.css">
-
+			<link rel="stylesheet" type="text/css" href="../sweetalert/sweetalert.css">
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -529,7 +529,7 @@
   <script type="text/javascript" src="js/plugins/char_counter.min.js"></script>
   <script type="text/javascript" src="js/plugins/inline_style.min.js"></script>
   <script type="text/javascript" src="js/plugins/save.min.js"></script>
-
+  <script src="../sweetalert/sweetalert.min.js"></script> 
   <script>
     $(function(){
       $('#edit').froalaEditor({

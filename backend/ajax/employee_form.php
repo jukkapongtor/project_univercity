@@ -25,66 +25,77 @@
 
     <form action="ajax/employee_insert.php" method="POST" enctype="multipart/form-data">
 
-        <input  type="file" name="employee_img">
+        
         <br>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">เพิ่มข้อมูลพื้นฐาน</h3>
             </div>
             <div class="panel-body">
+                <div class="container-fluid" style="padding:0px">
+                <div class="col-md-9">
          <!--______________________________________________________________________________-->  
-                <table>  
-                <tr>
-                <td style="padding:10px;" >คำนำหน้าชื่อ : </td> 
-                <td style="padding:10px;">
-                    <input type="radio" name="titlename" value="นาย" >นาย
-                    <input type="radio" name="titlename" value="นาง" >นาง
-                    <input type="radio" name="titlename" value="นางสาว" >นางสาว
-                </td>
-                </tr>
-            
-         <!--______________________________________________________________________________-->
-                <tr>
-                    <td style="padding:10px;">ชื่อภาษาไทย : </td>
-                    <td style="padding:10px;" >
-                        <input type="text" class="form-control" name="name_thai" required>
-                    </td>
-                    <td style="padding:10px;">นามสกุลภาษาไทย : </td>
+                    <table>  
+                    <tr>
+                    <td style="padding:10px;" >คำนำหน้าชื่อ : </td> 
                     <td style="padding:10px;">
-                        <input type="text" class="form-control" name="surname_thai" required>
+                        <input type="radio" name="titlename" value="นาย" >นาย
+                        <input type="radio" name="titlename" value="นาง" >นาง
+                        <input type="radio" name="titlename" value="นางสาว" >นางสาว
                     </td>
-                </tr>
-                <tr>
-                    <td style="padding:10px;">ชื่อภาษาอังกฤษ : </td>
-                    <td style="padding:10px;" >
-                        <input type="text" class="form-control" name="name_eng" required>
-                    </td>
-                     <td style="padding:10px;">นามสกุลภาษาอังกฤษ : </td>
-                    <td style="padding:10px;" >
-                        <input type="text" class="form-control" name="surname_eng" required>
-                    </td>
-                </tr>
-            <!--______________________________________________________________________________-->  
-            <tr>
-                <td style="padding:10px;">รหัสบัตรประชาชน : </td>
-                <td style="padding:10px;">
-                    <input type="text" class="form-control" name="id_card" required>
-                </td>
-            </tr> 
-             <tr>
-                <td style="padding:10px;">เบอร์โทรศัพท์ : </td>
-                <td style="padding:10px;">
-                    <input type="text" class="form-control" name="phone_number" required>
-                </td>
-            </tr> 
-            <tr>
-                <td style="padding:10px;">อีเมล์ : </td>
-                <td style="padding:10px;">
-                    <input type="text" class="form-control" name="email" >
-                </td>
-            </tr> 
+                    </tr>
+                
          <!--______________________________________________________________________________-->
-                </table>
+                    <tr>
+                        <td style="padding:10px;">ชื่อภาษาไทย : </td>
+                        <td style="padding:10px;" >
+                            <input type="text" class="form-control" name="name_thai" required>
+                        </td>
+                        <td style="padding:10px;">นามสกุลภาษาไทย : </td>
+                        <td style="padding:10px;">
+                            <input type="text" class="form-control" name="surname_thai" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;">ชื่อภาษาอังกฤษ : </td>
+                        <td style="padding:10px;" >
+                            <input type="text" class="form-control" name="name_eng" required>
+                        </td>
+                        <td style="padding:10px;">นามสกุลภาษาอังกฤษ : </td>
+                        <td style="padding:10px;" >
+                            <input type="text" class="form-control" name="surname_eng" required>
+                        </td>
+                    </tr>
+         <!--______________________________________________________________________________-->  
+                <tr>
+                    <td style="padding:10px;">รหัสบัตรประชาชน : </td>
+                    <td style="padding:10px;">
+                        <input type="text" class="form-control" name="id_card" required>
+                    </td>
+                    <td style="padding:10px;">เลือกรูปภาพ : </td>
+                    <td style="padding:10px;" >
+                        <input  type="file" name="employee_img"  multiple onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                    </td>
+                </tr> 
+                 <tr>
+                    <td style="padding:10px;">เบอร์โทรศัพท์ : </td>
+                    <td style="padding:10px;">
+                        <input type="text" class="form-control" name="phone_number" required>
+                    </td>
+                </tr> 
+                <tr>
+                    <td style="padding:10px;">อีเมล์ : </td>
+                    <td style="padding:10px;">
+                        <input type="text" class="form-control" name="email" >
+                    </td>
+                </tr> 
+         <!--______________________________________________________________________________-->
+                    </table>
+                </div>
+                <div class="col-md-3">
+                    <img id='blah' src="../images/icon/no-images.jpg" style="border:1px solid #000;width:100%;height:300px">
+                </div>
+                </div>
             </div>
         </div>
         <div class="panel panel-default">
