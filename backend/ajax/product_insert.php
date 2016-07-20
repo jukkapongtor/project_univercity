@@ -3,6 +3,14 @@
 	echo "<meta charset='utf8'>";
 	include("../../include/function.php");
 	connect_db();
+?>
+<head>
+	<link rel="stylesheet" type="text/css" href="../../sweetalert/sweetalert.css">
+	<script src="plugins/jquery/jquery.min.js"></script>
+	<script src="../../sweetalert/sweetalert.min.js"></script> 
+</head>
+<body>
+<?php
 	echo "<meta charset='utf-8'>";
 	//echo "<pre>".print_r($_POST['product_size'],true)."</pre>";
 	//echo "<pre>".print_r($_FILES['product_image'],true)."</pre>";
@@ -24,9 +32,9 @@
 		}
 		mysqli_query($_SESSION['connect_db'],$sql_insert_product_size)or die("ERROR : backend porduct insert line 25");
 
-		$query_type=$query_type = mysqli_query($_SESSION['connect_db'],"SELECT type_name FROM type WHERE  product_type='$_POST[product_type]'")or die("ERROR : backend porduct insert line 27");
-		list($type_name)=mysqli_fetch_row($query_type);
-		$folder = iconv("utf-8","tis-620",$type_name);
+		$query_type=mysqli_query($_SESSION['connect_db'],"SELECT type_name_eng FROM type WHERE  product_type='$_POST[product_type]'")or die("ERROR : backend porduct insert line 27");
+		list($type_name_eng)=mysqli_fetch_row($query_type);
+		$folder = iconv("utf-8","tis-620",$type_name_eng);
 		copy($_FILES['product_image']['tmp_name'][0],"../../images/$folder/".$_FILES['product_image']['name'][0]);
 		$sql_insert_product_image = "INSERT INTO product_image VALUES('','$product_id','".$_FILES['product_image']['name'][0]."')";
 		for($i=1;$i<count($_FILES['product_image']['name']);$i++){
@@ -47,8 +55,8 @@
 		$sql ="INSERT INTO product VALUES('','$_POST[product_name]','$_POST[product_price_web]','$_POST[product_price_web]','','','$_POST[product_detail]','$_POST[product_type]','$_POST[product_quality]','$_POST[product_size]','','$_POST[product_stock]','$image_name')";
 		mysqli_query($_SESSION['connect_db'],$sql)or die("ERROR : backend product insert line 21");
 		*/
-		echo "<script>alert('เพิ่มสินค้าเรียบร้อยแล้ว');window.location='../#ajax/product_add.php'</script>";
-		
+		echo "<script>swal({title:'',text: \"เพิ่มสินค้าเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='../#ajax/product_add.php';})</script>";
 	}
 	
 ?>
+</body>

@@ -2,7 +2,8 @@
 function order_insert(){
 
 	if(empty($_POST['fullname'])||empty($_POST['lastname'])||empty($_POST['phone'])||empty($_POST['house_no'])||empty($_POST['subdistrict'])||empty($_POST['districts'])||empty($_POST['province'])||empty($_POST['zipcode'])){
-		echo "<script>alert('กรุณากรอกข้อมูลผู้ใช้ให้ครบถ้วน');window.location='index.php?module=users&action=data_users&menu=2';</script>";
+		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+		echo "<script>swal({title:'',text: \"กรุณากรอกข้อมูลผู้ใช้ให้ครบถ้วน\",type:'error',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=users&action=data_users&menu=2';})</script>";
 	}else{
 		if($_POST['address']=="user"){
 			$query_address = mysqli_query($_SESSION['connect_db'],"SELECT provinces.PROVINCE_NAME,amphures.AMPHUR_NAME,districts.DISTRICT_NAME FROM provinces LEFT JOIN amphures ON provinces.PROVINCE_ID = provinces.PROVINCE_ID LEFT JOIN districts ON amphures.AMPHUR_ID=districts.AMPHUR_ID WHERE provinces.PROVINCE_ID='$_POST[province]' AND amphures.AMPHUR_ID='$_POST[districts]' AND districts.DISTRICT_CODE='$_POST[subdistrict]'")or die("ERROR : users function line 312");
@@ -31,7 +32,7 @@ function order_insert(){
 			list($product_id,$product_price_web,$product_amount_web)=mysqli_fetch_row($query_price);
 			$remain = $product_amount_web - $value['amount'];
 			if($remain<0){
-				echo "<script>alert('ขออภัยสินค้าถูกซื้อไปก่อนหน้านี่แล้ว กรุณาลดจำนวนสินค้า หรือเลือกสินค้าชิ้นใหม่');window.location='index.php?module=users&action=data_users&menu=2';</script>";
+				echo "<script>swal({title:'',text: \"ขออภัยสินค้าถูกซื้อไปก่อนหน้านี่แล้ว\",type:'warning',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=users&action=data_users&menu=2';})</script>";
 			}else{
 				mysqli_query($_SESSION['connect_db'],"UPDATE product_size SET product_amount_web='$remain' WHERE product_size_id='$key'")or die("ERROR : order function line 36");
 			}
@@ -58,9 +59,11 @@ function order_insert(){
 			mysqli_query($_SESSION['connect_db'],$sql_insert_orderdetail)or die("ERROR : order function line 28");
 			unset($_SESSION['cart_id']);
 			unset($_SESSION['total_amount']);
-			echo "<script>alert('สั่งซื้อสินค้าเรียบร้อยแล้ว');window.location='index.php?module=users&action=data_users&menu=3&order_status=1'</script>";
+			echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+			echo "<script>swal({title:'',text: \"สั่งซื้อสินค้าเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=users&action=data_users&menu=3&order_status=1';})</script>";
 		}else{
-			echo "<script>alert('กรุณาเพิ่มจำนวนสินค้าก่อนทำการยืนยันการซื้อ');window.location='index.php?module=users&action=data_users&menu=2';</script>";
+			echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+			echo "<script>swal({title:'',text: \"กรุณาเพิ่มจำนวนสินค้าก่อนทำการยืนยันการซื้อ\",type:'error',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=users&action=data_users&menu=2';})</script>";
 		}
 	}
 	
@@ -108,7 +111,7 @@ function order_list(){
             echo "<div class='order-status-center'></div>";
         echo "</div>";
 		echo "<table class='table table-striped table-hover font20'>";
-			echo "<tr><th align='center'>ลำดับ</th><th align='center'>รหัสซื้อสินค้า</th><th align='center'>เวลาที่ซื้อสินค้า</th><th align='center'>เวลาในการชำระเงิน</th><th align='center'>สถานะการซื้อสินค้า</th><!--<th align='center'>จำนวนสินค้า</th><th align='center'>ราคา</th>--><th align='center'>ข้อมูล</th></tr>";
+			echo "<tr><th align='center'>ลำดับ</th><th align='center'>รหัสซื้อสินค้า</th><th align='center'>เวลาที่ซื้อสินค้า</th><!--<th align='center'>เวลาในการชำระเงิน</th>--><th align='center'>สถานะการซื้อสินค้า</th><!--<th align='center'>จำนวนสินค้า</th><th align='center'>ราคา</th>--><th align='center'>ข้อมูล</th></tr>";
 		$number=1;
 
 		$color=array("background:#dddddd;border:1px solid #bbb","background:#428bca;border:1px solid #256faf","background:#f0ad4e;border:1px solid #dfa451","background:#5bc0de;border:1px solid #2987a3","background:#5cb85c;border:1px solid #3c963c","background:#d9534f;border:1px solid #b53834");
@@ -133,7 +136,7 @@ function order_list(){
 				echo "<td>$number</td>";
 				echo "<td>$order_id</td>";
 				echo "<td>".substr($order_date,0,10)."</td>";
-				echo "<td>$order_date_limit</td>";
+				//echo "<td>$order_date_limit</td>";
 				$quert_status = mysqli_query($_SESSION['connect_db'],"SELECT status_name FROM status WHERE status_id='$order_status'")or die("ERROR : order function line 36");
 				list($status_name)=mysqli_fetch_row($quert_status);
 				echo "<td><p align='center' class='font20' style='border-radius:3px;padding-top:5px;color:white;$color[$order_status]'>$status_name</p></h4>";

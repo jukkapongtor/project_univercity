@@ -40,13 +40,9 @@ $(document).ready(function(){
 							<select class='form-control' id='select_year'>
 <?php
 								$query_orders = mysqli_query($_SESSION['connect_db'],"SELECT YEAR(order_date) FROM orders GROUP BY YEAR(order_date)")or die("ERROR : report  sell product month line 35");
-								$query_product_buy = mysqli_query($_SESSION['connect_db'],"SELECT YEAR(product_buy_date) FROM buy_product GROUP BY YEAR(product_buy_date)")or die("ERROR : report  sell product month line 35");
 								$query_product_supply = mysqli_query($_SESSION['connect_db'],"SELECT YEAR(supply_date) FROM buy_supply GROUP BY YEAR(supply_date)")or die("ERROR : report  sell product month line 35");
 								$select_year = array();
 								while (list($year_oreder)=mysqli_fetch_row($query_orders)) {
-									array_push($select_year, $year_oreder);
-								}
-								while (list($year_oreder)=mysqli_fetch_row($query_product_buy)) {
 									array_push($select_year, $year_oreder);
 								}
 								while (list($year_oreder)=mysqli_fetch_row($query_product_supply)) {
@@ -104,6 +100,9 @@ $(document).ready(function(){
 			      axisY: {
 			        title: ""
 			      },
+			      toolTip: {
+					shared: true
+				  },
 			      legend: {
 			        verticalAlign: "bottom",
 			        horizontalAlign: "center"
@@ -113,6 +112,7 @@ $(document).ready(function(){
 
 			      {        
 			        type: "spline",
+			        name: 'ยอดการขาย',
 			        legendText: "ยอดการขาย",
 					showInLegend: true,   
 			        dataPoints: [   
@@ -130,26 +130,28 @@ $(document).ready(function(){
 			      },
 			      {        
 			        type: "spline",
-			        legendText: "ยอดการซื้อ",
+			        name: 'ยอดค่าใช้จ่าย',
+			        legendText: "ยอดค่าใช้จ่าย",
 					showInLegend: true,   
 			        dataPoints: [    
 			        <?php
 			        	for($i=1;$i<=$amount_day[date("m")-1];$i++){
-			        		$quer_buy_product = mysqli_query($_SESSION['connect_db'],"SELECT SUM((product_buy_price*product_amount_keep)+(product_buy_price*product_amount_shop)+(product_buy_price*product_amount_web)) FROM buy_product WHERE MONTH(product_buy_date)='".date("m")."' AND YEAR(product_buy_date)='$year' AND DAY(product_buy_date)='$i'")or die("ERROR report buy month line 96");
-			        		list($product_buy_price)=mysqli_fetch_row($quer_buy_product);
+			        		/*$quer_buy_product = mysqli_query($_SESSION['connect_db'],"SELECT SUM((product_buy_price*product_amount_keep)+(product_buy_price*product_amount_shop)+(product_buy_price*product_amount_web)) FROM buy_product WHERE MONTH(product_buy_date)='".date("m")."' AND YEAR(product_buy_date)='$year' AND DAY(product_buy_date)='$i'")or die("ERROR report buy month line 96");
+			        		list($product_buy_price)=mysqli_fetch_row($quer_buy_product);*/
 
-			        		$quer_buy_supply = mysqli_query($_SESSION['connect_db'],"SELECT SUM(supply_price) FROM buy_supply WHERE MONTH(supply_date)='".date("m")."' AND YEAR(supply_date)='$year' AND DAY(supply_date)='$i'")or die("ERROR report buy month line 98");
+			        		$quer_buy_supply = mysqli_query($_SESSION['connect_db'],"SELECT SUM(supply_price*supply_amount) FROM buy_supply WHERE MONTH(supply_date)='".date("m")."' AND YEAR(supply_date)='$year' AND DAY(supply_date)='$i'")or die("ERROR report buy month line 98");
 			        		list($supply_price)=mysqli_fetch_row($quer_buy_supply);
-			        		$sum = $supply_price + $product_buy_price;
-			        		$sum = (empty($sum))?0:$sum;
-			        		echo "{y: $sum,label: 'วันที่ $i'},";
-			        		$report_buy[$i]=$sum;
+			        		//$sum = $supply_price + $product_buy_price;
+			        		$supply_price = (empty($supply_price))?0:$supply_price;
+			        		echo "{y: $supply_price,label: 'วันที่ $i'},";
+			        		$report_buy[$i]=$supply_price;
 			        	}
 			        ?>   
 			        ]
 			      },
 			      {        
 			        type: "spline",
+			        name: 'ผลกำไรขาดทุน',
 			        legendText: "ผลกำไรขาดทุน",
 					showInLegend: true,   
 			        dataPoints: [    

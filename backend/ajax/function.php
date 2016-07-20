@@ -23,20 +23,21 @@ switch ($_GET['data']) {
 		}
 	echo "});";
 	echo "</script>";
-		$query_product=mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,quality.quality_name,type.type_name FROM product  LEFT JOIN quality ON product.product_quality = quality.product_quality LEFT JOIN type ON product.product_type = type.product_type  WHERE product.product_quality='$_POST[product_quality]'");
+		$query_product=mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,quality.quality_name,type.type_name,type.type_name_eng FROM product  LEFT JOIN quality ON product.product_quality = quality.product_quality LEFT JOIN type ON product.product_type = type.product_type  WHERE product.product_quality='$_POST[product_quality]'");
 		$row =mysqli_num_rows($query_product);
 		echo "<div class='container-fluid' style='margin-top:30px;padding:0px;'>";
 		if($row<=0){
 			echo "<div class='col-md-12'><p><b>ไม่พบรายการสินค้า</b></p></div>";
 		}else{
 			echo "<p><b>รายการสินค้าแบ่งตามประเภทและหมวดหมู่</b></p>";
-			while (list($product_id,$product_name,$quality_name,$type_name)=mysqli_fetch_row($query_product)) {
+			while (list($product_id,$product_name,$quality_name,$type_name,$type_name_eng)=mysqli_fetch_row($query_product)) {
 				echo "<div class='col-md-4' style='margin-bottom:40px;pading:5px;'>";
 					echo "<input type='hidden' id='product_$product_id' value='$product_id'>";
 					$query_image=mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
 					list($product_image)=mysqli_fetch_row($query_image);
-					echo "<a id='select_$product_id' style='cursor:pointer'><p align='center'><img src='../images/$type_name/$product_image' width='90%' height='180px' ></p>";
-					echo "<p align='center'><b>$product_name</b></p></a>";
+					echo "<a id='select_$product_id' style='cursor:pointer'><p align='center'><img src='../images/$type_name_eng/$product_image' width='90%' height='180px' ></p>";
+					$str=explode(" ",$product_name,2);
+					echo "<p align='center'><b>$str[0]</b></p></a>";
 				echo "</div>";
 			}
 			
@@ -44,15 +45,15 @@ switch ($_GET['data']) {
 		echo "</div>";
 	break;
 	case 'product_detail':
-		$query_product_detail =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product_image.product_image,type.type_name FROM product LEFT JOIN product_image ON product.product_id = product_image.product_id LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id='$_POST[product_id]'")or die("ERROR : backend functopn line 44");
-		list($product_id,$product_name,$product_image,$type_name)=mysqli_fetch_row($query_product_detail);
+		$query_product_detail =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product_image.product_image,type.type_name,type.type_name_eng FROM product LEFT JOIN product_image ON product.product_id = product_image.product_id LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id='$_POST[product_id]'")or die("ERROR : backend functopn line 44");
+		list($product_id,$product_name,$product_image,$type_name,$type_name_eng)=mysqli_fetch_row($query_product_detail);
 ?>
 		<div class="panel panel-default">
 		  <div class="panel-heading">ต้นทุนสินค้า<?php echo "$product_name";?></div>
 		  <div class="panel-body">
 		    <div class="container-fluid" style='padding:0px'>
 		    	<div class='col-md-12' style='padding:0px'>
-		    		<p align="center"><img src="<?php echo "../images/$type_name/$product_image" ?>" width='60%' height='300'></p>
+		    		<p align="center"><img src="<?php echo "../images/$type_name_eng/$product_image" ?>" width='60%' height='300'></p>
 		    		<form action="ajax/buy_insert.php" method="post">
 		    		<input type="hidden" name="product_id" value="<?php echo "$product_id";?>">
 		    		<input type="hidden" name="but_date" value="<?php echo "$product_id";?>">
@@ -726,12 +727,12 @@ switch ($_GET['data']) {
 			echo "<p><b>ผู้ขายสินค้า : </b> $order_username</p>";
 			echo "<table class='table table-hover table-striped' style='font-size:13px'>";      
 				$total_price=0;
-				$query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,size.size_name,product_size.product_price_shop,order_detail.amount,type.type_name FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN product ON product.product_id = product_size.product_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN type ON product.product_type = type.product_type WHERE order_detail.order_id = '$_POST[order_id]'")or die("ERROR : order function line 111");
-				while(list($product_id,$product_name,$size_name,$product_price_shop,$total_amount,$type_name)=mysqli_fetch_row($query_orderdetail)){
+				$query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,size.size_name,product_size.product_price_shop,order_detail.amount,type.type_name,type.type_name_eng FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN product ON product.product_id = product_size.product_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN type ON product.product_type = type.product_type WHERE order_detail.order_id = '$_POST[order_id]'")or die("ERROR : order function line 111");
+				while(list($product_id,$product_name,$size_name,$product_price_shop,$total_amount,$type_name,$type_name_eng)=mysqli_fetch_row($query_orderdetail)){
 			     		echo "<tr>";
 			     			$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id = '$product_id'")or die("ERROR : cart function line 16");
 							list($product_image)=mysqli_fetch_row($query_image);
-							$path = (empty($product_image))?"icon/no-images.jpg":"$type_name/$product_image";
+							$path = (empty($product_image))?"icon/no-images.jpg":"$type_name_eng/$product_image";
 							echo "<td><img src='../images/$path' width='100' height='130'></td>";
 			     			echo "<td>";
 			     				echo "<p>$product_name ($size_name)</p>";

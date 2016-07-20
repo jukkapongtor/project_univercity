@@ -58,7 +58,7 @@ $(document).ready(function() {
 	  			<option>--เลือกประเภทสินค้า--</option>
 <?php
 			$query_type=mysqli_query($_SESSION['connect_db'],"SELECT * FROM type")or die("ERROR backend buy product line 42 ");
-			while (list($type_id,$type_name)=mysqli_fetch_row($query_type)) {
+			while (list($type_id,$type_name,$type_name_eng)=mysqli_fetch_row($query_type)) {
 				echo "<option value='$type_id'>$type_name</option>";
 			}
 ?>

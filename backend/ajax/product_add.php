@@ -48,7 +48,7 @@ $(document).ready(function() {
 </script>
 <script>
 $(document).ready(function() {
- 	var max_fields      = 5; //maximum input boxes allowed
+ 	var max_fields      = 10; //maximum input boxes allowed
     var wrapper         = $(".input_fields_wrap2"); //Fields wrapper
     var add_button      = $(".add_field_button2"); //Add button ID
     
@@ -89,6 +89,9 @@ $(document).ready(function() {
 		    		<td width="25%"><p><b>ชื่อสินค้า</b></p></td>
 		    		<td width="5%"><p><b>&nbsp;:&nbsp;</b></p></td>
 		    		<td width="70%"><p><input class='form-control' type='text' name='product_name'></p></td>
+		    	</tr>
+		    	<tr>
+		    		<td colspan="3"><p><font color='red'> !!! </font><b>คำแนะนำ </b> ควรเลือกจำนวนของขนาดสินค้าก่อนทำการเลือกประเภท<font color='red'> !!! </font></p></td>
 		    	</tr>
 		    	<tr>
 		    		<td><p><b>ประเภทสินค้า</b></p></td>
@@ -166,15 +169,15 @@ $(document).ready(function() {
 		  <div class="panel-body">
 		  	 แสดงรายการสินค้าที่ถูกเพิ่มล่าสุด 6 รายการ<br><br>
 <?php
-			$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product  LEFT JOIN type ON product.product_type=type.product_type ORDER BY product.product_id DESC LIMIT 0,6")or die("ERROR : backend product_add line 178");
-			while(list($product_id,$product_name,$product_type)=mysqli_fetch_row($query_product)){
+			$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name,type.type_name_eng FROM product  LEFT JOIN type ON product.product_type=type.product_type ORDER BY product.product_id DESC LIMIT 0,6")or die("ERROR : backend product_add line 178");
+			while(list($product_id,$product_name,$product_type,$type_img)=mysqli_fetch_row($query_product)){
 				$query_images =mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'")or die("ERROR : backend product_add line 180");
 				list($product_image)=mysqli_fetch_row($query_images);
 				echo "<div class='col-md-6' style='margin-bottom:20px;'>";
 					if(empty($product_image)){
 						echo "<center><a  data-toggle='modal' data-target='#$product_id' style='cursor:pointer;text-decoration:none'><img src='../images/icon/no-images.jpg' width='100%' height='200px'><br><b>$product_name</b></a></center>";
 					}else{
-						echo "<center><a  data-toggle='modal' data-target='#$product_id' style='cursor:pointer;text-decoration:none'><img src='../images/$product_type/$product_image' width='100%' height='200px'><br><b>$product_name</b></a></center>";
+						echo "<center><a  data-toggle='modal' data-target='#$product_id' style='cursor:pointer;text-decoration:none'><img src='../images/$type_img/$product_image' width='100%' height='200px'><br><b>$product_name</b></a></center>";
 					}
 					echo "<div class='modal fade' id='$product_id' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
 					  echo "<div class='modal-dialog modal-lg' role='document'>";
@@ -193,12 +196,12 @@ $(document).ready(function() {
 							    while(list($product_image_detail)=mysqli_fetch_row($query_images_detail)){
 							    	if($number_image==1){
 							    	echo "<div class='col-md-12'>";
-										echo "<img src='../images/$product_type/$product_image_detail' width='100%' height='350' style='border-radius:5px;'>";
+										echo "<img src='../images/$type_img/$product_image_detail' width='100%' height='350' style='border-radius:5px;'>";
 									echo "</div>";
 									$number_image++;
 									}
 									echo "<div class='col-md-3' style='padding:5px'>";
-										echo "<img src='../images/$product_type/$product_image_detail' width='100%' height='75' style='border-radius:5px;'>";
+										echo "<img src='../images/$type_img/$product_image_detail' width='100%' height='75' style='border-radius:5px;'>";
 									echo "</div>";
 								}
 							    echo "</div>";
@@ -234,9 +237,9 @@ $(document).ready(function() {
 							      			while(list($size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
 							      				echo "<div class='col-md-12'><p><b>ขนาดสินที่ $number : </b> $size_name</p></div>";	
 							      				echo "<div class='col-md-8' style='font-size:14px;'><p><b>ราคาบนเว็บไซต์(Batn)</b></p></div>";
-							      				echo "<div class='col-md-4' style='font-size:14px;'><p>$product_price_web</p></div>";
+							      				echo "<div class='col-md-4' style='font-size:14px;'><p align='right'>".number_format($product_price_web,2)." ฿</p></div>";
 							      				echo "<div class='col-md-8' style='font-size:14px;'><p><b>ราคาในร้าน(Batn)</b></p></div>";
-							      				echo "<div class='col-md-4' style='font-size:14px;'><p>$product_price_shop</p></div>";
+							      				echo "<div class='col-md-4' style='font-size:14px;'><p align='right'>".number_format($product_price_shop,2)." ฿</p></div>";
 							      				$number++;
 							      			}
 							      			echo "</td>";

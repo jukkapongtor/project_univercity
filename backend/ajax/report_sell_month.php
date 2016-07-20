@@ -10,15 +10,7 @@
 			var year = document.getElementById("select_year").value;
 			var month = document.getElementById("select_month").value;
 			$.post('ajax/function.php?data=report_sell_day',{year:year,month:month},function(data){
-				if(data=="<center><h3 style='margin-top:50px;'><font color='red'>!!! </font>กรุณาเลือกวันที่ในการแสดงข้อมูล ก่อนกดปุ่ม \"ตกลง\"<font color='red'> !!! </font></h3></center>"){
-					$('#chartContainer').hide();
-					$('#report_month').html(data);
-					
-				}else{
-					$('#chartContainer').show();
-					$('#report_month').html(data);
-				}
-						  		
+				$('#report_month').html(data);	  		
 		    });
 		});
 		
