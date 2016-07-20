@@ -85,4 +85,43 @@
     text-align: left;
 }
 
+.box-on{
+  border-radius:10px 10px 0px 0px; 
+  padding: 10px 0px 0px 0px; 
+  color:#ffffff;
+}
+
+.box-under{
+  border-radius:0px 0px 10px 10px; 
+  padding: 10px; 
+  color:#ffffff;
+
+}
+
+.box-smail{
+  border-radius:15px 15px 15px 15px;
+  background: #34495e;
+  color: #ffffff;
+  padding: 10px 10px 5px 10px; 
+  margin:5px;
+  width: 30%;
+}
+.day-money-on{
+  border-radius:10px 10px 0px 0px;
+  background: #ffffff;
+  padding: 18px 10px 10px 15px;
+  color:#1a237e;
+  height: 80px;
+
+}
+.day-money-under{
+  border-radius:0px 0px 10px 10px;
+  padding: 5;
+  color:#ffffff;
+  height: 60px;
+}
+.day-money-under h6{
+  color: #e0e0e0;
+}
+
 

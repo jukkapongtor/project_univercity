@@ -80,30 +80,33 @@
 <div id="dashboard-header" class="row">
 	<div class="container-fluid">
 		<a href='../index.php'><div class="col-md-4" style="height:140px;margin-bottom:20px;"><img src="../images/icon/showwebsite.png" width="100%" height="100%"></div></a>
-		<div class="col-md-4" style="height:140px;margin-bottom:20px;"><div style='width:100%;height:100%;border-radius:5px;'>
-		<h4><b>สถานะการแจ้งเตือน</b></h4>
-			<ul class="nav navbar-nav pull-right panel-menu">
-				<li class="hidden-xs">
-					<a href="index.php" class="modal-link">
-						<i class="fa fa-bell"></i>
-						<span class="badge">7</span>
-					</a>
-				</li>
-				<li class="hidden-xs">
-					<a class="ajax-link" href="ajax/calendar.html">
-						<i class="fa fa-calendar"></i>
-						<span class="badge">7</span>
-					</a>
-				</li>
-				<li class="hidden-xs">
-					<a href="ajax/page_messages.html" class="ajax-link">
-						<i class="fa fa-envelope"></i>
-						<span class="badge">7</span>
-					</a>
-				</li>
-			</ul>
-
-		</div></div>
+	<!--start money show-->
+		<div class="col-md-4" style="height:140px;margin-bottom:20px;">
+			<div class="col-md-6" style="padding:0px; margin: 2px; width: 45%; " >
+				<div class="col-md-12 day-money-on" style="border: 3px solid #027878;" >
+					<center><h1><b>200.00</b></h1></center>				
+				</div>
+				<div class="col-md-12 day-money-under" style=" background: #027878; border: 3px solid #027878;" >
+					<center>
+						<h6>รายได้</h6>
+						<h4>13/05/59</h4>
+					</center>				
+				</div>
+			</div>
+			<div class="col-md-6" style="padding:0px; margin: 2px; width: 45%;" >
+				<div class="col-md-12 day-money-on" style="border: 3px solid #801638;" >
+					<center><h1><b>200.00</b></h1></center>				
+				</div>
+				<div class="col-md-12 day-money-under" style=" background: #801638; border: 3px solid #801638;" >
+					<center>
+						<h6>รายจ่าย</h6>
+						<h4>13/05/59</h4>
+					</center>				
+				</div>
+			</div>
+		</div>
+	<!--end money show-->
+	<!--start switch shop -->
 		<div class="col-md-4" style="margin-bottom:20px;padding:0px;">
 			<div class="panel panel-default">
 			  <div class="panel-heading" style="padding:5px;"><h4 align="center" style="margin:0px;"><b>จัดกาารสถานะเว็บไซต์</b></h4></div>
@@ -164,9 +167,171 @@
 				</div>
 			  </div>
 			</div>
-			
 		</div>
-	</div>
+	<!--end switch shop -->
+<!-- _____________________ของน้ำ________________________________________________ -->
+
+		<div class="col-md-12" style="padding:0;" >
+			<div class="panel panel-default col-md-7" style="padding:0;">
+ 				<div class="panel-heading">แจ้งเตือน</div>
+  				<div class="panel-body">
+<!-- _____________________ของน้ำ________________________________________________ -->
+				<div class="col-md-12"  style="margin-bottom:15px;" >
+  					<div class="col-md-4" >
+  						<div class="col-md-12 box-on" style="background:#1abc9c;">
+  							<center>
+  							<img src="../images/dashbord/hourglass.png" style=" width: 50px;" >
+  							<p>รอการชำระเงิน</p>
+  							</center>
+  						</div>
+  						<div class="col-md-12 box-under" style=" background: #16a085;">
+  						<center><h2>12</h2></center>
+  						</div>
+  					</div>
+  					<div class="col-md-4" >
+  						<div class="col-md-12 box-on" style="background:#e67e22;">
+  							<center>
+  							<img src="../images/dashbord/receipt.png" style=" width: 50px;" >
+  							<p>รอตรวจสอบการโอนเงิน</p>
+  							</center>
+  						</div>
+  						<div class="col-md-12 box-under" style=" background: #d35400;">
+  						<center><h2>12</h2></center>
+  						</div>
+  					</div>
+  					<div class="col-md-4" >
+  						<div class="col-md-12 box-on" style="background:#3498db;">
+  							<center>
+  							<img src="../images/dashbord/box.png" style=" width: 50px;" >
+  							<p>รอจัดส่งสินค้า</p>
+  							</center>
+  						</div>
+  						<div class="col-md-12 box-under" style=" background: #2980b9;">
+  						<center><h2>12</h2></center>
+  						</div>
+  					</div>
+  				</div>
+<!-- _____________________ของน้ำ________________________________________________ -->
+				<div class="col-md-12" style="margin-bottom:15px;">
+  					<div class="col-md-4" >
+  						<div class="col-md-12 box-on" style="background:#985986;">
+  							<center>
+  								<img src="../images/dashbord/truck.png" style=" width: 50px;" >
+  								<p>กำลังจัดส่ง</p>
+  							</center>
+  						</div>
+  						<div class="col-md-12 box-under" style=" background: #8e44ad;">
+  							<center>
+  								<h2>12</h2>
+  							</center>
+  						</div>
+  					</div>
+  					<div class="col-md-4" >
+  						<div class="col-md-12 box-on" style="background:#607d8b;">
+  							<center>
+  							<img src="../images/dashbord/gift.png" style=" width: 50px;" >
+  							<p>ลูกค้ายืนยันรับของ</p>
+  							</center>
+  						</div>
+  						<div class="col-md-12 box-under" style=" background: #456e7a;">
+  						<center><h2>12</h2></center>
+  						</div>
+  					</div>
+  					<div class="col-md-4" >
+  						<div class="col-md-12 box-on" style="background:#f1c40f;">
+  							<center>
+  							<img src="../images/dashbord/chat.png" style=" width: 50px;" >
+  							<p>ข้อความ</p>
+  							</center>
+  						</div>
+  						<div class="col-md-12 box-under" style=" background: #f39c12;">
+  						<center><h2>12</h2></center>
+  						</div>
+  					</div>
+  				</div>
+  				<div class="col-md-12" style="margin-bottom:15px;">
+  					<div class="col-md-4" >
+  						<div class="col-md-12 box-on" style="background:#e74c3c;">
+  							<center>
+  							<img src="../images/dashbord/stock.png" style=" width: 50px;" >
+  							<p>แจ้งเตือนสินค้าใกล้หมด</p>
+  							</center>
+  						</div>
+  						<div class="col-md-12 box-under" style=" background: #c0392b;">
+  						<center><h2>12</h2></center>
+  						</div>
+  					</div>
+
+  				</div>
+    				
+				</div> <!--end panal body-->
+			</div>
+			<div class="col-md-1"  style="padding:0;"></div>
+	<!--_______________________________start ข้อมูลหน้าร้าน______________________________-->
+			<div class="panel panel-default col-md-4" style="padding:0;">
+ 				<div class="panel-heading"><<img src=""> ข้อมูลหน้าร้าน</div>
+  					<div class="panel-body">
+  						<div class="col-md-12" style="padding:0px;">
+  							
+  							<div class="col-md-4 box-smail">
+  								<center>
+  								<img src="../images/dashbord/group.png" width="60%" >
+  								<p>ผู้เข้าชม</p>
+  								<h4>200</h4>
+  								</center>
+  							</div>
+  							
+  							<div class="col-md-4 box-smail">
+  								<center>
+  								<img src="../images/dashbord/new.png" width="60%" >
+  								<p>ข่าวสาร</p>
+  								<h4>1</h4>
+  								</center>
+  								
+  							</div>
+  							
+  							<div class="col-md-4 box-smail">
+  								<center>
+  								<img src="../images/dashbord/blog.png" width="60%" >
+  								<p>บทความ</p>
+  								<h4>5</h4>
+  								</center>
+  							</div>
+  						</div>
+  						<div class="col-md-12" style="padding:0px;">
+  							
+  							<div class="col-md-4 box-smail">
+  								<center>
+  								<img src="../images/dashbord/group.png" width="60%" >
+  								<p>ผู้เข้าชม</p>
+  								<h4>200</h4>
+  								</center>
+  							</div>
+  							
+  							<div class="col-md-4 box-smail">
+  								<center>
+  								<img src="../images/dashbord/new.png" width="60%" >
+  								<p>ข่าวสาร</p>
+  								<h4>1</h4>
+  								</center>
+  								
+  							</div>
+  							
+  							<div class="col-md-4 box-smail">
+  								<center>
+  								<img src="../images/dashbord/blog.png" width="60%" >
+  								<p>บทความ</p>
+  								<h4>5</h4>
+  								</center>
+  							</div>
+  						</div>
+    				</div>
+			</div>
+<!--_______________________________End ข้อมูลหน้าร้าน_________________________________-->
+		</div>
+			
+		
+	</div><!--end conntainer-->
 	
 <!--
 	<div class="col-xs-12 col-sm-4 col-md-5">
