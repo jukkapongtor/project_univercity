@@ -3,6 +3,23 @@
 	include("../../include/function.php");
 	connect_db();
 ?>
+<script>
+function delete_quality(quality_id){
+    swal({
+      title: "ลบหมวดหมู่สินค้า",
+      text: "รายการที่เกี่ยวข้องจะถูกลบทั้งหมด คุณต้องการลบเลยใช่ไหม",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "ลบหมวดหมู่สินค้า",
+      cancelButtonText: "ยกเลิกการลบ",
+      closeOnConfirm: false
+    },
+    function(){
+      window.location = 'ajax/quality_delete.php?delete_quality_id='+quality_id;
+    });
+}  
+</script>
 <div class="row">
 	<div id="breadcrumb" class="col-xs-12">
 		<a href="#" class="show-sidebar">
@@ -13,9 +30,6 @@
 			<li><a href="#">จัดการหมวดหมู่สินค้า</a></li>
 
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 <div class='col-md-6' style="margin-top:20px;">
@@ -128,8 +142,8 @@
                                 echo "</table>";
                           echo "</div>";
                           echo "<div class='modal-footer'>";
-                            echo "<button type='submit' class='btn btn-primary'>Save changes</button>";
-                            echo "<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>";
+                            echo "<button type='submit' class='btn btn-primary'>แก้ไขหมวดหมู่</button>";
+                            echo "<button type='button' class='btn btn-default' data-dismiss='modal'>ปิด</button>";
                           echo "</div>";
                         echo "</div>";
                       echo "</div>";
@@ -137,7 +151,7 @@
                     echo "</form>";
                     echo "</div>";
                     echo "<div class='col-md-2'>";
-                        echo "<b><a href='ajax/quality_delete.php?delete_quality_id=$product_quality' onclick='return confirm(\"ข้อมูลที่เกี่ยวข้องกับ หมวดหมู่$quality_name จะถูกลบทั้งหมด คุณต้องการที่จะลบข้อมูลใช่หรือไม่\")'><button class='btn btn-danger btn-sm' type='button' style='padding:0px 3px;'>ลบข้อมูล</button></a></b>";
+                        echo "<b><a  onclick='delete_quality($product_quality)'><button class='btn btn-danger btn-sm' type='button' style='padding:0px 3px;'>ลบข้อมูล</button></a></b>";
                     echo "</div>";
                 }
             }

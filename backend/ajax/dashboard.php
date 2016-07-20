@@ -63,16 +63,9 @@
 			<i class="fa fa-bars"></i>
 		</a>
 		<ol class="breadcrumb pull-left">
-			<li><a href="index.html">Home</a></li>
-			<li><a href="#">Dashboard</a></li>
+			<li><a href="index.html">หน้าหลัก</a></li>
+			<li><a href="#">หน้าแดชบอร์ด</a></li>
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-google-plus"></i></a>
-			<a href="#"><i class="fa fa-facebook"></i></a>
-			<a href="#"><i class="fa fa-twitter"></i></a>
-			<a href="#"><i class="fa fa-linkedin"></i></a>
-			<a href="#"><i class="fa fa-youtube"></i></a>
-		</div>
 	</div>
 </div>
 <!--End Breadcrumb-->

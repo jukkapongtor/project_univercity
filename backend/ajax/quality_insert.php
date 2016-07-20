@@ -3,9 +3,16 @@
 	echo "<meta charset='utf8'>";
 	include("../../include/function.php");
 	connect_db();
-
+?>
+<head>
+	<link rel="stylesheet" type="text/css" href="../../sweetalert/sweetalert.css">
+	<script src="plugins/jquery/jquery.min.js"></script>
+	<script src="../../sweetalert/sweetalert.min.js"></script> 
+</head>
+<body>
+<?php
 	if(empty($_POST['quality_name'])||empty($_POST['product_type'])){
-		echo "<script>alert('กรุณากรอกข้อมูลให้ครบถ้วน');window.location='../#ajax/quality_manage.php'</script>";
+		echo "<script>swal({title:'',text: 'กรุณากรอกข้อมูลให้ครบถ้วน',type:'error',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='../#ajax/quality_manage.php';})</script>";
 	}else{
 		if(!empty($_FILES['quality_image']['name'])){
 			$image=$_FILES['quality_image']['name'];
@@ -14,7 +21,8 @@
 			$image="";
 		}
 		mysqli_query($_SESSION['connect_db'],"INSERT INTO quality VALUES('','$_POST[quality_name]','$_POST[product_type]','$image')")or die("ERROR : backend quality_insert line 16");
-		echo "<script>alert('เพิ่มหมวดหมู่สินค้าเรียบร้อย');window.location='../#ajax/quality_manage.php'</script>";
+
+		echo "<script>swal({title:'',text: 'เพิ่มหมวดหมู่สินค้าเรียบร้อย',type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='../#ajax/quality_manage.php';})</script>";
 	}
 
 ?>

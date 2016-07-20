@@ -39,9 +39,6 @@ $(document).ready(function() {
 			<li><a href="#">จัดการข้อมูลผู้ใช้งาน</a></li>
 			<li><a href="#">ดูรายการขายบนเว็บไซต์</a></li>
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 <div class="row">
@@ -72,15 +69,15 @@ $(document).ready(function() {
 			echo "<center><h4 style='background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>สถานะการขายสินค้า</b></h4></center>";
 			
 			echo "<table class='table table-striped table-hover'>";
-				echo "<tr><th align='center'>ลำดับ</th><th align='center'>รหัสซื้อสินค้า</th><th align='center'>วันที่สั่งซื้อ</th><th align='center'>สถานะการซื้อสินค้า</th><!--<th align='center'>จำนวนสินค้า</th><th align='center'>ราคา</th>--><th align='center'>ผู้ชื้อ</th></tr>";
+				echo "<tr><th align='center'><center>ลำดับ</th><th align='center'><center>รหัสซื้อสินค้า</th><th align='center'><center>วันที่สั่งซื้อ</th><!--<th align='center'>สถานะการซื้อสินค้า</th><th align='center'>จำนวนสินค้า</th><th align='center'>ราคา</th>--><th align='center'><center>ผู้ชื้อ</th></tr>";
 			$number=1;
 			while(list($order_id,$order_username,$order_date,$order_date_limit,$order_status,$total_amount,$total_price,$tracking_id)=mysqli_fetch_row($query_order)){
 				echo "<tr>";
-					echo "<td>$number</td>";
+					echo "<td align='center'>$number</td>";
 					echo "<input type='hidden' id='order_id' value='$order_id'>";
 					echo "<td><a id='select_order_$order_id' style='text-decoration:none;cursor:pointer'>$order_id</a></td>";
-					echo "<td>".substr($order_date,0,10)."</td>";
-					echo "<td>$order_date_limit</td>";
+					echo "<td align='center'>".substr($order_date,0,10)."</td>";
+					//echo "<td>$order_date_limit</td>";
 					//echo "<td>$total_amount</td>";
 					//echo "<td>$total_price</td>";
 					echo "<td>$order_username</td>";

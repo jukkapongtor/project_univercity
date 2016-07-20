@@ -3,6 +3,23 @@
 
 	include("../../include/function.php");
 	connect_db();
+
+	$keywords = (empty($_GET['keywords']))?"":$_GET['keywords'];
+	$getproduct_type=(empty($_GET['product_type']))?"":$_GET['product_type'];
+	$getproduct_quality=(empty($_GET['product_quality']))?"":$_GET['product_quality'];
+	$sql_type = (empty($_GET['product_type']))?"":"OR (type.product_type='$_GET[product_type]' AND type.type_name LIKE '%$keywords%')";
+	$sql_quality = (empty($_GET['product_quality']))?"":"OR (quality.product_quality='$_GET[product_quality]' AND quality.quality_name LIKE '%$keywords%')";
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,type.type_name,quality.quality_name FROM product LEFT JOIN type ON product.product_type = type.product_type LEFT JOIN quality ON product.product_quality = quality.product_quality WHERE product.product_name LIKE '%$keywords%' $sql_type $sql_quality ")or die("ERROR : backend product list line 61");
+	$count_product = mysqli_num_rows($query_product);
+	$total_page = ceil($count_product/10);
+	if(empty($_GET['page'])){
+		$page=1;
+		$start_row=0;
+	}
+	else{
+		$page=$_GET['page'];
+		$start_row=($page-1)*10;
+	}
 ?>
 <?php
 $query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id FROM product")or die("ERROR : backend product list line 8");
@@ -24,6 +41,74 @@ echo "</script>";
 }
 
 ?>
+<script>
+function delete_product(product_id){
+    swal({
+      title: "ลบสินค้า",
+      text: "คุณต้องการลบรายการสินค้า คุณต้องการลบเลยใช่ไหม",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "ลบหมวดหมู่สินค้า",
+      cancelButtonText: "ยกเลิกการลบ",
+      closeOnConfirm: false
+    },
+    function(){
+      window.location = 'ajax/product_delete.php?product_id='+product_id;
+    });
+} 
+$(document).ready(function() {
+	var max_fields      = 5; //maximum input boxes allowed
+    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
+    var add_button      = $(".add_field_button"); //Add button ID
+    
+    var x = 1; //initlal text box count
+    <?php
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name,type.type_name_eng,product.product_type FROM product LEFT JOIN type ON product.product_type = type.product_type LEFT JOIN quality ON product.product_quality = quality.product_quality  WHERE product.product_name LIKE '%$keywords%' $sql_type $sql_quality ORDER BY product.product_id DESC  LIMIT $start_row,10")or die("ERROR : backend type_add line 42");
+	while(list($product_id,$product_name,$type_name,$type_name_eng,$type_id)=mysqli_fetch_row($query_product)){
+		echo "$('#x_$product_id').click(function(){";
+			echo "x=document.getElementById('x_$product_id').value;";
+		echo "});";
+		echo "$('.remove_field_$product_id"."_"."2').click(function(){";
+	       echo " $('.remove_$product_id"."_"."2').remove(); x--;";
+	    echo "});";
+		echo "$('.remove_field_$product_id"."_"."3').click(function(){";
+	       echo " $('.remove_$product_id"."_"."3').remove(); x--;";
+	    echo "});";
+		echo "$('.remove_field_$product_id"."_"."4').click(function(){";
+	       echo " $('.remove_$product_id"."_"."4').remove(); x--;";
+	    echo "});";
+		echo "$('.remove_field_$product_id"."_"."5').click(function(){";
+	       echo " $('.remove_$product_id"."_"."5').remove(); x--;";
+	    echo "});";
+	}
+	?>
+    $(add_button).click(function(e){ //on add input button click
+    	$.ajax({
+            type: 'POST',
+            data: {product_type: "2"},
+            url: 'ajax/select_product_size.php?data=size',
+            success: function(data) {alert(data);$('#product_type').html(data);}
+        });
+        e.preventDefault();
+        if(x < max_fields){ //max input box allowed
+            x++; //text box increment
+            $(wrapper).append(' <div class="remove col-md-12" style="margin-bottom:2px;padding:0px"><div class="col-md-4" style="padding:0">ขนาดสินค้า </div><div class="col-md-6" style="padding:0"><p><select class="form-control" id="product_type"  name="product_size[]"><option value="">--เลือกขนาดสินค้า--</option><?php ?></select></p></div><button  class="remove_field btn btn-danger" style="padding:0px 3px;width:27px;height:27px;margin-bottom:2px"><img src="../images/icon/minus.png" width="12px" height="12px" ></button><div class="col-md-12" style="padding:0"></div><div class="col-md-4" style="padding:0;margin-bottom:4px">ราคาบนเว็บ</div><div class="col-md-6" style="padding:2px;;margin-bottom:4px"><input type="text" class="form-control" name="product_price_web[]" style="margin-top:-5px;"></div><div class="col-md-4" style="padding:0;margin-bottom:4px">ราคาในร้าน</div><div class="col-md-6" style="padding:2px;margin-bottom:4px"><input type="text" class="form-control" name="product_price_shop[]" style="margin-top:-5px;"></div></div></div></div></div>'); //add input box
+        }
+    });
+    
+    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+        e.preventDefault(); $(this).parent('.remove').remove(); x--;
+    })   
+});
+function hide_remover(){
+	$('.remove').hide();
+}
+
+ 
+</script>
+
+
 <div class="row">
 	<div id="breadcrumb" class="col-xs-12">
 		<a href="#" class="show-sidebar">
@@ -34,9 +119,6 @@ echo "</script>";
 			<li><a href="#">แสดงรายการสินค้า</a></li>
 
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 <div class="container-fluid" style="border-bottom:1px solid #ddd;margin-bottom:20px;">
@@ -45,12 +127,7 @@ echo "</script>";
 		<h4>ค้นหาข้อมูลสินค้า</h4>
 		<div class="col-md-10" style="margin-top:20px;padding:0px;" >
 <?php
-			$keywords = (empty($_GET['keywords']))?"":$_GET['keywords'];
-			$getproduct_type=(empty($_GET['product_type']))?"":$_GET['product_type'];
-			$getproduct_quality=(empty($_GET['product_quality']))?"":$_GET['product_quality'];
-
-			$sql_type = (empty($_GET['product_type']))?"":"OR (type.product_type='$_GET[product_type]' AND type.type_name LIKE '%$keywords%')";
-			$sql_quality = (empty($_GET['product_quality']))?"":"OR (quality.product_quality='$_GET[product_quality]' AND quality.quality_name LIKE '%$keywords%')";
+			
 			
 
 		    echo "<input type='text' class='form-control' name='keywords' placeholder='Search...' value='$keywords'  style='height:30px;'>";
@@ -61,6 +138,7 @@ echo "</script>";
 		</div>
 	</div>
 	<div class="col-md-6">
+
 		<h4>เลือกประเภทและหมวดหมู่สินค้าในการค้นหา</h4>
 		<div class="col-md-6" style='padding:0px'>
 			<p>เลือกประเภทสินค้า</p>
@@ -75,7 +153,7 @@ echo "</script>";
 		}
 ?>
 		</div>
-		<div class="col-md-6" style='padding:0px'>
+		<div class="col-md-6" style='padding:0px' >
 			<p>เลือกหมวดหมู่สินค้า</p>
 <?php
 		$query_quality = mysqli_query($_SESSION['connect_db'],"SELECT product_quality,quality_name FROM quality")or die("ERROR : backend product list line 49");
@@ -93,29 +171,23 @@ echo "</script>";
 </div>
 <div class="container-fluid">
 <?php
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,type.type_name,quality.quality_name FROM product LEFT JOIN type ON product.product_type = type.product_type LEFT JOIN quality ON product.product_quality = quality.product_quality WHERE product.product_name LIKE '%$keywords%' $sql_type $sql_quality ")or die("ERROR : backend product list line 61");
-	$count_product = mysqli_num_rows($query_product);
-	$total_page = ceil($count_product/10);
-	if(empty($_GET['page'])){
-		$page=1;
-		$start_row=0;
-	}
-	else{
-		$page=$_GET['page'];
-		$start_row=($page-1)*10;
-	}
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,product_image.product_image,type.type_name,product.product_type FROM product LEFT JOIN type ON product.product_type = type.product_type LEFT JOIN quality ON product.product_quality = quality.product_quality LEFT JOIN product_image ON product.product_id = product_image.product_id WHERE product.product_name LIKE '%$keywords%' $sql_type $sql_quality ORDER BY product.product_id DESC  LIMIT $start_row,10")or die("ERROR : backend product list line 87");
+	
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name,type.type_name_eng,product.product_type FROM product LEFT JOIN type ON product.product_type = type.product_type LEFT JOIN quality ON product.product_quality = quality.product_quality  WHERE product.product_name LIKE '%$keywords%' $sql_type $sql_quality ORDER BY product.product_id DESC  LIMIT $start_row,10")or die("ERROR : backend product list line 87");
 	$number =0;
-	while(list($product_id,$product_name,$product_image,$type_name,$type_id)=mysqli_fetch_row($query_product)){
+	while(list($product_id,$product_name,$type_name,$type_name_eng,$type_id)=mysqli_fetch_row($query_product)){
 
 		if(($number%5)==0){
 			echo "<div class='col-md-1' style='margin-bottom:20px; height:300px;'></div>";
 		}
 		echo "<div class='col-md-2' style='margin-bottom:20px; height:300px;'>";
-			echo "<center><p><img src='../images/$type_name/$product_image' width='100%' height='200px' style='border-radius:5px;'></p>";
+			$query_productimg = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'")or die("ERROR : backend product list line 113");
+			list($product_image)=mysqli_fetch_row($query_productimg);
+			echo "<center><p><img src='../images/$type_name_eng/$product_image' width='100%' height='200px' style='border-radius:5px;'></p>";
 			echo "<p>$product_name</p>";
-			echo "<p><button class='btn btn-xs btn-warning' type='button' data-toggle='modal' data-target='#$product_id'>แก้ไขข้อมูล</button>";
-			echo "&nbsp;<a href='ajax/product_delete.php?product_id=$product_id' onclick='return confirm(\"คุณต้องการลบรายการสินค้า$product_name ใช่หรือไม่\")'><button class='btn btn-xs btn-danger' type='button' >ลบข้อมูล</button></a></p></a></center>";
+			$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size.size_id,size.size_name,product_size.product_amount_keep,product_size.product_amount_shop,product_size.product_amount_web,product_size.product_price_shop,product_size.product_sprice_shop,product_size.product_price_web,product_size.product_sprice_web FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size WHERE product_size.product_id ='$product_id'");
+			$row_size = mysqli_num_rows($query_size);
+			echo "<p><button class='btn btn-xs btn-warning' type='button' onclick='hide_remover()' id='x_$product_id' value='$row_size' data-toggle='modal' data-target='#$product_id'>แก้ไขข้อมูล</button>";
+			echo "&nbsp;<button class='btn btn-xs btn-danger' type='button' onclick='delete_product($product_id)' >ลบข้อมูล</button></a></p></center>";
 				echo "<div class='modal fade' id='$product_id' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
 				  echo "<div class='modal-dialog modal-lg' role='document'>";
 				    echo "<div class='modal-content'>";
@@ -135,12 +207,12 @@ echo "</script>";
 							    while(list($product_image_detail)=mysqli_fetch_row($query_images_detail)){
 							    	if($number_image==1){
 							    	echo "<div class='col-md-12'>";
-										echo "<img src='../images/$type_name/$product_image_detail' width='100%' height='350' style='border-radius:5px;'>";
+										echo "<img src='../images/$type_name_eng/$product_image_detail' width='100%' height='350' style='border-radius:5px;'>";
 									echo "</div>";
 									$number_image++;
 									}
 									echo "<div class='col-md-3' style='padding:5px'>";
-										echo "<img src='../images/$type_name/$product_image_detail' width='100%' height='75' style='border-radius:5px;'>";
+										echo "<img src='../images/$type_name_eng/$product_image_detail' width='100%' height='75' style='border-radius:5px;'>";
 									echo "</div>";
 								}
 				        echo "</div>";
@@ -160,14 +232,7 @@ echo "</script>";
 							    echo "<tr>";
 							      	echo "<td><p><b>ประเภทสินค้า</b></p></td>";
 							        echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
-							      	$query_type_edit=mysqli_query($_SESSION['connect_db'],"SELECT product_type,type_name FROM type")or die("ERROR : product_add line 160");
-									echo "<td><p><select class='form-control' id='product_type_$product_id'  name='product_type'>";
-										echo "<option value=''>--เลือกประเภทสินค้า--</option>";
-									    while(list($product_type_edit,$type_name_edit)=mysqli_fetch_row($query_type_edit)){
-									    	$selected=($type_name==$type_name_edit)?"selected='selected'":"";
-									    	echo "<option value='$product_type_edit' $selected>$type_name_edit</option>";
-									    }
-								    echo "</select></p></td>";
+									echo "<td><p><input type='text' class='form-control' value='$type_name'  name='product_type' disabled></p></td>";
 							    echo "</tr>";
 							    echo "<tr>";
 							      	echo "<td><p><b>หมวดหมู่สินค้า</b></p></td>";
@@ -192,16 +257,16 @@ echo "</script>";
 							      	echo "<td valign='top'><p><b>ขนาดสินค้า</b></p></td>";
 							      	echo "<td valign='top'><p><b>&nbsp;:&nbsp;</b></p></td>";
 							      	echo "<td><div class='input_fields_wrap' >";
-							      	$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size.size_id,size.size_name,product_size.product_amount_keep,product_size.product_amount_shop,product_size.product_amount_web,product_size.product_price_shop,product_size.product_sprice_shop,product_size.product_price_web,product_size.product_sprice_web FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size WHERE product_size.product_id ='$product_id'");
+							      	
 							      	$num=1;
-							      	$row_size = mysqli_num_rows($query_size);
+
 							      	if($row_size>0){
 							      		while(list($size_id,$size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
 							      			if($num!=1){
-							      				echo "<div class='remove col-md-12' style='margin-bottom:2px;padding:0px'>";
+							      				echo "<div class='remove_$product_id"."_"."$num col-md-12' style='margin-bottom:2px;padding:0px'>";
 							      			}
 							      			echo "<input type='hidden' name='product_size_old[]' value='$size_id'>";		
-											echo "<div class='col-md-4' style='padding:0'><p>ขนาดสินที่ $num</p></div>";
+											echo "<div class='col-md-4' style='padding:0'><p>ขนาดสินค้า</p></div>";
 											echo "<div class='col-md-6' style='padding:0'><p><select class='form-control' id='product_size$num"."_"."$product_id'  name='product_size[]'>";
 											echo "<option value=''>--เลือกขนาดสินค้า--</option>";
 											$query_size_edit =mysqli_query($_SESSION['connect_db'],"SELECT product_size,size_name FROM size WHERE type_id='$type_id' ")or die("ERROR : backend product list line 206");
@@ -213,7 +278,7 @@ echo "</script>";
 										   	if($num==1){
 										   		echo "<button class='add_field_button btn btn-primary' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/add.png' width='12px' height='12px' ></button>";
 										   	}else{
-										   		echo "<button  class='remove_field btn btn-danger' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/minus.png' width='12px' height='12px' ></button>";
+										   		echo "<button  class='remove_field_$product_id"."_"."$num btn btn-danger' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/minus.png' width='12px' height='12px' ></button>";
 										   	}
 											    	
 										   	echo "<div class='col-md-12' style='padding:0'>";

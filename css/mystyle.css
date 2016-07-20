@@ -56,7 +56,7 @@ div {
 	height: 60px;
 	background:#cfffd6;
 	position: fixed;
-	z-index: 2;
+	z-index: 10;
 	border-radius: 0px 0px 15px 15px;
 	box-shadow: 5px 1px 10px #444;
 }

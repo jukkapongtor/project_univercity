@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	include("../../include/function.php");
+  date_default_timezone_set('Asia/Bangkok');
 	connect_db();
 ?>
 <script>
@@ -33,23 +34,20 @@ $(document).ready(function() {
 		</a>
 		<ol class="breadcrumb pull-left">
 			<li><a href="#">จัดการค่าใช้จ่าย</a></li>
-			<li><a href="#">สินค้าสำหรับขายต่อ</a></li>
+			<li><a href="#">ต้นทุนสินค้า</a></li>
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">รายการซื้อสินค้า</h3>
+    <h3 class="panel-title">รายการต้นทุนสินค้า</h3>
   </div>
   <div class="panel-body">
 <?php
 	$date = date("Y-m-d");
 ?>
   <div class="col-md-12">
-  	<p><b>รายการซื้อเข้าประจำวันที่ : </b><?php echo "$date"; ?></p>
+  	<p><b>รายการต้นทุนประจำวันที่ : </b><?php echo "$date"; ?></p>
   </div>
   <div class="col-md-6">
   	<p><b>เลือกประเภทสินค้าและหมวดหมู่สินค้า</b></p>
@@ -60,7 +58,7 @@ $(document).ready(function() {
 	  			<option>--เลือกประเภทสินค้า--</option>
 <?php
 			$query_type=mysqli_query($_SESSION['connect_db'],"SELECT * FROM type")or die("ERROR backend buy product line 42 ");
-			while (list($type_id,$type_name)=mysqli_fetch_row($query_type)) {
+			while (list($type_id,$type_name,$type_name_eng)=mysqli_fetch_row($query_type)) {
 				echo "<option value='$type_id'>$type_name</option>";
 			}
 ?>

@@ -9,7 +9,7 @@ function show_cart(){
 		$num=1;
 		$total_price=0;
 		foreach ($_SESSION['cart_id'] as $key => $value) {
-			$query_product =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id ='$value[product_id]'")or die("ERROR : cart function line 12");
+			$query_product =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id ='$value[product_id]'")or die("ERROR : cart function line 12");
 			list($product_id,$product_name,$type_name)=mysqli_fetch_row($query_product);
 			echo "<tr>";
 				echo "<td><p class='font20' align='center'>$num</p></td>";
@@ -224,7 +224,7 @@ function show_cart(){
 							echo "</td>";
 						echo "</tr>";
 					echo "</table></center>";
-					echo "<p align='right'><button type='submit' class='btn btn-success font20' onclick='return confirm(\"ทางร้านจะส่งสินค้าไปตามที่ท่านกรอกข้อมูล ยืนยันข้อมูลถูกต้อง?\")'>ยืนยันการสั่งซื้อและอัปเดทข้อมูลผู้ใช้</button>";
+					echo "<p align='right'><button type='submit' class='btn btn-success font20'>ยืนยันการสั่งซื้อและอัปเดทข้อมูลผู้ใช้</button>";
 		        	echo "&nbsp;&nbsp;<button type='button' class='btn btn-danger font20' data-dismiss='modal'>ยกลเิก</button></p>";
 		        echo "</div>";
 		      echo "</div>";
@@ -259,7 +259,7 @@ echo "<script>";
 	                    echo "$.post('module/index.php?data=amounttotal_cart',{amounttotal_cart:amount_incart},function(data){";
 	                    echo "});";
 					echo "}else{";
-						echo "alert('จำนวนสินค้าไม่พอจำหน่าย');";
+						
 					echo "}";
                 echo "});";
                 echo "$('#lower_incart_$key').click(function() {";
@@ -301,6 +301,7 @@ echo "</script>";
 function cancel_cart(){
 	unset($_SESSION['total_amount']);
 	unset($_SESSION['cart_id']);
-	echo "<script>alert('ยกเลิกสินค้าทั้งหมดในนตะกร้าเรียบร้อยแล้ว');window.location='index.php?module=users&action=data_users&menu=2'</script>";
+	echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+	echo "<script>swal({title:'',text: \"ยกเลิกสินค้าทั้งหมดในนตะกร้าเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=users&action=data_users&menu=2';})</script>";
 }
 ?>

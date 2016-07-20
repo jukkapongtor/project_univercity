@@ -16,11 +16,7 @@
             <li><a href="#">จัดการข้อมูลพนักงาน</a></li>
             <li><a href="#">ข้อมูลพนักงาน</a></li>
             <li><a href="#">แก้ไขข้อมูลพนักงาน</a>
-
         </ol>
-        <div id="social" class="pull-right">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-        </div>
     </div>
 </div>
 

@@ -34,9 +34,6 @@
             <li><a href="#">จัดการคิวอาร์โค้ด</a></li>
             <li><a href="#">พิมพ์คิวอาร์โค้ด</a></li>
         </ol>
-        <div id="social" class="pull-right">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-        </div>
     </div>
 </div>
 <p style='background:#16326a;color:white;padding:5px;border-bottom:2px solid #325bb0;font-size:16px'><b>ไม่พบรายการขายสินค้า</b></p>

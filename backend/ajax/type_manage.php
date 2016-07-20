@@ -5,7 +5,7 @@
 ?>
 <script>
 $(document).ready(function() {
-    var max_fields      = 5; //maximum input boxes allowed
+    var max_fields      = 10; //maximum input boxes allowed
     var wrapper         = $(".input_fields_wrap"); //Fields wrapper
     var add_button      = $(".add_field_button"); //Add button ID
     
@@ -22,14 +22,27 @@ $(document).ready(function() {
         e.preventDefault(); $(this).parent('.remove').remove(); x--;
     })
 });
+	
 $(document).ready(function() {
-    var max_fields2      = 5; //maximum input boxes allowed
+
+    var max_fields2      = 10; //maximum input boxes allowed
     var wrapper2        = $(".input_fields_wrap2"); //Fields wrapper
     var add_button2      = $(".add_field_button2"); //Add button ID
+   	var x2 = 1;
     
-    var x2 = 1; //initlal text box count
+<?php
+	$query_type = mysqli_query($_SESSION['connect_db'],"SELECT product_type FROM type")or die("ERROR : backend type_add line 42");
+	while (list($product_type)=mysqli_fetch_row($query_type)) {
+		echo "$('#x_$product_type').click(function(){";
+			echo "x2=document.getElementById('x_$product_type').value;";
+		echo "});";
+	}
+?>
+    	
+   	
     $(add_button2).click(function(e){ //on add input button click
         e.preventDefault();
+       	//initlal text box count
         if(x2 < max_fields2){ //max input box allowed
             x2++; //text box increment
             $(wrapper2).append(' <div class="remove2" style="margin-bottom:2px"><div class="col-md-10" style="margin-bottom:2px;padding:0px;"><input type="text" class="form-control" name="unit_name[]"></div><button  class="remove_field2 btn btn-danger" style="padding:0px 3px;width:27px;height:27px;margin-bottom:2px"><img src="../images/icon/minus.png" width="12px" height="12px" ></button></div>'); //add input box
@@ -40,6 +53,46 @@ $(document).ready(function() {
         e.preventDefault(); $(this).parent('.remove2').remove(); x--;
     })
 });
+
+function check_data(){	
+	var eng =	/^([a-zA-Z])+$/;	
+	if (!(eng.test(document.all.name_eng.value)))
+	{
+	swal("", "ชื่อประเภทสินค้า(ภาษาอังกฤษ) กรอกได้เฉพาะภาษาอังกฤษเท่านั้น","error");
+	document.all.name_eng.select();
+	return false;
+	}
+}
+<?php
+	$query_type = mysqli_query($_SESSION['connect_db'],"SELECT product_type FROM type")or die("ERROR : backend type_add line 42");
+	while(list($product_type)=mysqli_fetch_row($query_type)){
+		echo "function check_data$product_type(){";	
+			echo "var eng =	/^([a-zA-Z])+$/;";	
+			echo "if (!(eng.test(document.all.name_eng$product_type.value)))";
+			echo "{";
+			echo "swal('', 'ชื่อประเภทสินค้า(ภาษาอังกฤษ) กรอกได้เฉพาะภาษาอังกฤษเท่านั้น','error');";
+			echo "document.all.name_eng$product_type.select();";
+			echo "return false;";
+			echo "}";
+		echo "}";
+	}
+?>
+
+function delete_type(type_id){
+	swal({
+	  title: "ลบประเภทสินค้า",
+	  text: "รายการที่เกี่ยวข้องจะถูกลบทั้งหมด คุณต้องการลบเลยใช่ไหม",
+	  type: "warning",
+	  showCancelButton: true,
+	  confirmButtonColor: "#DD6B55",
+	  confirmButtonText: "ลบประเภทสินค้า",
+	  cancelButtonText: "ยกเลิกการลบ",
+	  closeOnConfirm: false
+	},
+	function(){
+	  window.location = 'ajax/type_delete.php?delete_type_id='+type_id;
+	});
+}
 </script>
 <div class="row">
 	<div id="breadcrumb" class="col-xs-12">
@@ -51,23 +104,27 @@ $(document).ready(function() {
 			<li><a href="#">จัดการประเภทสินค้า</a></li>
 
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 <div class='col-md-6' style="margin-top:20px;">
-	<form method="post" action="ajax/type_insert.php">
+	<form method="post" action="ajax/type_insert.php" onsubmit="return check_data()">
 	<div class="panel panel-default">
 	  <div class="panel-heading"><h3>ฟอร์มเพิ่มประเภทสินค้า</h3></div>
 	  <div class="panel-body">
 	    <table width="100%">
 	    	<tr>
-	    		<td width="30%"><p align='right'><b>ชื่อประเภทสินค้า : &nbsp;&nbsp;</b></p></td>
-	    		<td><input class='form-control' type='text' name='type_name'></td>
+	    		<td width="50%"><p align='right'><b>ชื่อประเภทสินค้า : &nbsp;&nbsp;</b></p></td>
+	    		<td><input class='form-control' type='text' name='type_name' required></td>
 	    	</tr>
 	    	<tr>
-	    		<td width="30%" valign='top'><p align='right'><b>ขนาดประเภทสินค้า : &nbsp;&nbsp;</b></p></td>
+	    		<td colspan="2"><font color='red'> *** </font>กรุณากรอกเป็นภาษาอังกฤษเท่านั้น เพราะใช้สำหรับตั้งชื่อโฟลเดอร์<font color='red'> *** </font></td>
+	    	</tr>
+	    	<tr>
+	    		<td width="50%"><p align='right'><b>ชื่อประเภทสินค้า(ภาษาอังกฤษ) : &nbsp;&nbsp;</b></p></td>
+	    		<td><input class='form-control' type='text' id='name_eng' name='type_name_eng' required></td>
+	    	</tr>
+	    	<tr>
+	    		<td width="50%" valign='top'><p align='right'><b>ขนาดประเภทสินค้า : &nbsp;&nbsp;</b></p></td>
 	    		<td>
 	    			<div class="input_fields_wrap" >
 					    <div class="col-md-10" style='margin-bottom:2px;padding:0px;'><input type="text" class='form-control' name="unit_name[]"></div>
@@ -98,8 +155,10 @@ $(document).ready(function() {
 				echo "<b><span class='badge'>$count</span></b>";
 			echo "</div>";
 			echo "<div class='col-md-3' style='margin-bottom:20px;'>";
-				echo "<b><button class='btn btn-info btn-sm' type='button' data-toggle='modal' data-target='#$product_type'>แก้ไขข้อมูล</button></b>";
-				echo "<form method='post' action='ajax/type_update.php'>";
+				$query_size = mysqli_query($_SESSION['connect_db'],"SELECT product_size,size_name FROM size WHERE type_id ='$product_type'")or die("ERROR : backend type_edit line 103");
+				$rows = mysqli_num_rows($query_size);
+				echo "<b><button class='btn btn-info btn-sm' type='button' data-toggle='modal' id='x_$product_type' value='$rows' data-target='#$product_type'>แก้ไขข้อมูล</button></b>";
+				echo "<form method='post' action='ajax/type_update.php' onsubmit=\"return check_data$product_type()\">";
 				echo "<div class='modal fade' id='$product_type' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
 				  echo "<div class='modal-dialog' role='document'>";
 				    echo "<div class='modal-content'>";
@@ -110,18 +169,20 @@ $(document).ready(function() {
 				      echo "<div class='modal-body'>";
 				        echo "<table align='center' width='80%'>";
 					    	echo "<tr>";
-					    	$query_typeanme = mysqli_query($_SESSION['connect_db'],"SELECT type_name FROM type WHERE product_type ='$product_type'")or die("ERROR : backend type_edit line 95");
-					    	list($type_name)=mysqli_fetch_row($query_typeanme);
+					    	$query_typeanme = mysqli_query($_SESSION['connect_db'],"SELECT type_name,type_name_eng FROM type WHERE product_type ='$product_type'")or die("ERROR : backend type_edit line 95");
+					    	list($type_name,$type_name_eng)=mysqli_fetch_row($query_typeanme);
 					    		echo "<td width='35%'><p align='right'><b>ชื่อประเภทสินค้า : &nbsp;&nbsp;</b></p></td>";
-					    		echo "<td><input class='form-control' type='text' name='type_name' value='$type_name'></td>";
+					    		echo "<td><input class='form-control' type='text' name='type_name' value='$type_name' required></td>";
+					    	echo "</tr>";
+					    	echo "<tr>";
+					    		echo "<td width='35%'><p align='right'><b>ชื่อประเภทสินค้า(อังกฤษ) : &nbsp;&nbsp;</b></p></td>";
+					    		echo "<td><input class='form-control' type='text' name='type_name_eng' id='name_eng$product_type' value='$type_name_eng' required></td>";
 					    	echo "</tr>";
 					    	echo "<tr>";
 					    		echo "<td valign='top'><p align='right'><b>ขนาดประเภทสินค้า : &nbsp;&nbsp;</b></p></td>";
 					    		echo "<td>";
 					    			echo "<div class='input_fields_wrap2' >";
-					    			$query_size = mysqli_query($_SESSION['connect_db'],"SELECT product_size,size_name FROM size WHERE type_id ='$product_type'")or die("ERROR : backend type_edit line 103");
 					    			$num=1;
-					    			$rows = mysqli_num_rows($query_size);
 					    			if(empty($rows)){
 					    				echo "<div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' name='unit_name[]'></div>";
 						    			echo "<button class='add_field_button2 btn btn-primary' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/add.png' width='12px' height='12px' ></button>";
@@ -144,8 +205,8 @@ $(document).ready(function() {
 					    echo "</table>";
 				      echo "</div>";
 				      echo "<div class='modal-footer'>";
-				      	echo "<button type='submit' class='btn btn-primary'>Save changes</button>";
-				        echo "<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>";
+				      	echo "<button type='submit' class='btn btn-primary'>แก้ไขประเภทสินค้า</button>";
+				        echo "<button type='button' class='btn btn-default' data-dismiss='modal'>ปิด</button>";
 				      echo "</div>";
 				    echo "</div>";
 				  echo "</div>";
@@ -153,7 +214,7 @@ $(document).ready(function() {
 				echo "</form>";
 			echo "</div>";
 			echo "<div class='col-md-3' style='margin-bottom:20px;'>";
-				echo "<b><a href='ajax/type_delete.php?delete_type_id=$product_type' onclick='return confirm(\"ข้อมูลที่เกี่ยวข้องกับ ประเภท$type_name จะถูกลบทั้งหมด คุณต้องการที่จะลบข้อมูลใช่หรือไม่\")'><button class='btn btn-danger btn-sm' type='button'>ลบข้อมูล</button></a></b>";
+				echo "<b><a onclick=\"delete_type($product_type)\"><button class='btn btn-danger btn-sm' type='button'>ลบข้อมูล</button></a></b>";
 			echo "</div>";
 		}
 ?>

@@ -15,7 +15,7 @@
 		<meta name="description" content="description">
 		<meta name="author" content="DevOOPS">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-
+			<link rel="shortcut icon" href="images/icon/logomumfern.png" />
 			<link href="plugins/bootstrap/bootstrap.css" rel="stylesheet">
 			<link href="plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
 			<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -41,7 +41,7 @@
 			<link rel="stylesheet" href="css/plugins/char_counter.css">
 			<link rel="stylesheet" href="css/plugins/video.css">
 			<link rel="stylesheet" href="css/codemirror.min.css">
-
+			<link rel="stylesheet" type="text/css" href="../sweetalert/sweetalert.css">
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -217,8 +217,8 @@
 						 <span >จัดการค่าใช้จ่าย</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/buy_product.php">สินค้าสำหรับขาย</a></li>
-						<li><a class="ajax-link" href="ajax/supplyes_manage.php">วัสดุสิ้นเปลือง</a></li>
+						<li><a class="ajax-link" href="ajax/buy_product.php">ต้นทุนสินค้า</a></li>
+						<li><a class="ajax-link" href="ajax/supplyes_manage.php">ค่าใช้จ่ายในร้าน</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -245,12 +245,23 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i><img src="../images/icon/delivery.png" width="16px" ></i>
-						 <span >รายงานการซื้อสินค้า</span>
+						 <span >รายงานค่าใช้จ่าย</span>
 					</a>
 					<ul class="dropdown-menu">
 						<!--<li><a class="ajax-link" href="ajax/report_buy_day.php">รายงานการซื้อรายวัน</a></li>-->
-						<li><a class="ajax-link" href="ajax/report_buy_month.php">รายงานการซื้อรายเดือน</a></li>
-						<li><a class="ajax-link" href="ajax/report_buy_year.php">รายงานการซื้อรายปี</a></li>
+						<li><a class="ajax-link" href="ajax/report_buy_month.php">รายงานค่าใช้จ่ายรายเดือน</a></li>
+						<li><a class="ajax-link" href="ajax/report_buy_year.php">รายงานค่าใช้จ่ายรายปี</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i><img src="../images/icon/progress-report.png" width="16px" ></i>
+						 <span >รายงานผลกำไรขาดทุน</span>
+					</a>
+					<ul class="dropdown-menu">
+						<!--<li><a class="ajax-link" href="ajax/report_buy_day.php">รายงานการซื้อรายวัน</a></li>-->
+						<li><a class="ajax-link" href="ajax/report_profit_month.php">ผลกำไรขาดทุนรายเดือน</a></li>
+						<li><a class="ajax-link" href="ajax/report_profit_year.php">ผลกำไรขาดทุนรายปี</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -518,7 +529,7 @@
   <script type="text/javascript" src="js/plugins/char_counter.min.js"></script>
   <script type="text/javascript" src="js/plugins/inline_style.min.js"></script>
   <script type="text/javascript" src="js/plugins/save.min.js"></script>
-
+  <script src="../sweetalert/sweetalert.min.js"></script> 
   <script>
     $(function(){
       $('#edit').froalaEditor({

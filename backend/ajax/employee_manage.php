@@ -18,9 +18,6 @@
 			<li><a href="#">ข้อมูลพนักงาน</a></li>
 
 		</ol>
-		<div id="social" class="pull-right">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-		</div>
 	</div>
 </div>
 
@@ -56,9 +53,8 @@
 		echo "<td valign='middle'><center>$surname_thai</center></td>";
 		echo "<td valign='middle'><center>$phone_number</center></td>";
 		echo "<td valign='middle'><a href = 'ajax/employee_detail_id.php?employee_id=$employee_id'><center><img src='../images/icon/magnifying-glass .png' width='30px'height='30px'></center></a></td>";
-		echo "<td valign='middle'><center><a href = 'ajax/employee_fromupdate_id.php?employee_id=$employee_id'><button class='btn btn-success btn-edit'>แก้ไข</button></a>";
-		echo "<a href='ajax/employee_delete.php?employee_id=$employee_id' onclick='return confirm(\"คุณต้องการลบ $name_thai ใช่หรือไม่\")'>
-			<button class='btn btn-danger btn-de'>ลบ</button></a></center></td>";
+		echo "<td valign='middle'><center><a href = 'ajax/employee_fromupdate_id.php?employee_id=$employee_id'><button class='btn btn-success'>แก้ไข</button></a>";
+		echo "&nbsp;&nbsp;<a href='ajax/employee_delete.php?employee_id=$employee_id' onclick='return confirm(\"คุณต้องการลบ $name_thai ใช่หรือไม่\")'><button class='btn btn-danger'>ลบ</button></a></center></td>";
 		
 		echo "</tr></tbody>";
 

@@ -2,6 +2,14 @@
 session_start();
 include("../../include/function.php");
 connect_db();
+?>
+<head>
+	<link rel="stylesheet" type="text/css" href="../../sweetalert/sweetalert.css">
+	<script src="plugins/jquery/jquery.min.js"></script>
+	<script src="../../sweetalert/sweetalert.min.js"></script> 
+</head>
+<body>
+<?php
 echo "<meta charset='utf-8'>";
 	$date = date("Y-m-d");
 	$insert_buy_product = "INSERT INTO buy_product VALUES('','$_POST[product_id]','".$_POST['product_size_id'][0]."','".$_POST['amount_keep'][0]."','".$_POST['amount_shop'][0]."','".$_POST['amount_web'][0]."','".$_POST['buy_price'][0]."','$date')";
@@ -18,6 +26,6 @@ echo "<meta charset='utf-8'>";
 		$update_size ="UPDATE product_size SET product_amount_keep='$product_amount_keep',product_amount_shop='$product_amount_shop',product_amount_web='$product_amount_web' WHERE product_size_id='".$_POST['product_size_id'][$key]."'";
 		mysqli_query($_SESSION['connect_db'],$update_size)or die("ERROR : backend buy insert line 19");
 	}
-	echo "<script>alert('เพิ่มรายการซื้อและอัพเดทจำนวนสินค้าเรียบร้อยแล้ว');window.location='../#ajax/buy_product.php'</script>";
-	
+	echo "<script>swal({title:'',text: \"เพิ่มรายการซื้อและอัพเดทจำนวนสินค้าเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='../#ajax/buy_product.php';})</script>";
 ?>
+</body>
