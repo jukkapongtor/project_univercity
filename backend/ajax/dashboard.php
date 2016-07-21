@@ -166,7 +166,7 @@
 
 		<div class="col-md-12" style="padding:0;" >
 			<div class="panel panel-default col-md-7" style="padding:0;">
- 				<div class="panel-heading">แจ้งเตือน</div>
+ 				<div class="panel-heading"><h5><img src="../images/dashbord/exclamation-sign.png"> แจ้งเตือน</h5></div>
   				<div class="panel-body">
 <!-- _____________________ของน้ำ________________________________________________ -->
 				<div class="col-md-12"  style="margin-bottom:15px;" >
@@ -260,17 +260,19 @@
 				</div> <!--end panal body-->
 			</div>
 			<div class="col-md-1"  style="padding:0;"></div>
+
+			<div class="col-md-4" style="padding:0;"> <!--__star font-end_-->
 	<!--_______________________________start ข้อมูลหน้าร้าน______________________________-->
-			<div class="panel panel-default col-md-4" style="padding:0;">
- 				<div class="panel-heading"><<img src=""> ข้อมูลหน้าร้าน</div>
+			<div class="panel panel-default"  style="padding:0;">
+ 				<div class="panel-heading"><h5><img src="../images/dashbord/store.png"> ข้อมูลหน้าร้าน</h5></div>
   					<div class="panel-body">
   						<div class="col-md-12" style="padding:0px;">
   							
   							<div class="col-md-4 box-smail">
   								<center>
   								<img src="../images/dashbord/group.png" width="60%" >
-  								<p>ผู้เข้าชม</p>
-  								<h4>200</h4>
+  								<p>กระทู้</p>
+  								<h4>5</h4>
   								</center>
   							</div>
   							
@@ -290,37 +292,111 @@
   								<h4>5</h4>
   								</center>
   							</div>
+  						</div>
+  					
+    				</div>
+				</div> 
+<!--_______________________________End ข้อมูลหน้าร้าน_________________________________-->
+<!--_______________________________start ข้อมูลหลังร้าน______________________________-->
+			<div class="panel panel-default" style="padding:0;">
+ 				<div class="panel-heading"><h5><img src="../images/dashbord/icon.png"> ข้อมูลหลังร้าน</h5></div>
+  					<div class="panel-body">
+  						<div class="col-md-12" style="padding:0px;">
+
+<?php
+		$type = mysqli_query($_SESSION['connect_db'],"SELECT product_type FROM type")or die("ERROR : backend dashbord line 307");
+
+		$ptype = mysqli_num_rows($type);
+
+?>
+  							<div class="col-md-4 box-font">
+  								<center>
+  								<img src="../images/dashbord/label.png" width="60%" >
+  								<p>ประเภท</p>
+  								<h4><?php echo "$ptype"; ?></h4>
+  								</center>  								
+  							</div>
+<?php
+		$quality = mysqli_query($_SESSION['connect_db'],"SELECT product_quality FROM quality")or die("ERROR : backend dashbord line 320");
+
+		$qua = mysqli_num_rows($quality);
+
+?>
+  							
+  							<div class="col-md-4 box-font">
+  								<center>
+  								<img src="../images/dashbord/diagram.png" width="60%" >
+  								<p>หมวดหมู่</p>
+  								<h4><?php echo "$qua"; ?></h4>
+  								</center>
+  							</div>
+ <?php
+		$pro = mysqli_query($_SESSION['connect_db'],"SELECT product_id FROM product")or die("ERROR : backend dashbord line 327");
+
+		$product  = mysqli_num_rows($pro);
+		
+?>
+  							
+  							<div class="col-md-4 box-font">
+  								<center>
+  								<img src="../images/dashbord/package.png" width="60%" >
+  								<p>สินค้าในร้าน</p>
+  								<h4><?php echo "$product"; ?></h4>
+  								</center>
+  							</div>
+  							
   						</div>
   						<div class="col-md-12" style="padding:0px;">
-  							
-  							<div class="col-md-4 box-smail">
+
+<?php
+		$type = mysqli_query($_SESSION['connect_db'],"SELECT product_type FROM type")or die("ERROR : backend dashbord line 307");
+
+		$ptype = mysqli_num_rows($type);
+
+?>
+  							<div class="col-md-4 box-font">
   								<center>
-  								<img src="../images/dashbord/group.png" width="60%" >
-  								<p>ผู้เข้าชม</p>
-  								<h4>200</h4>
+  								<img src="../images/dashbord/label.png" width="60%" >
+  								<p></p>
+  								<h4><?php echo "$ptype"; ?></h4>
+  								</center>  								
+  							</div>
+<?php
+		$quality = mysqli_query($_SESSION['connect_db'],"SELECT product_quality FROM quality")or die("ERROR : backend dashbord line 320");
+
+		$qua = mysqli_num_rows($quality);
+
+?>
+  							
+  							<div class="col-md-4 box-font">
+  								<center>
+  								<img src="../images/dashbord/diagram.png" width="60%" >
+  								<p>สมาชิก</p>
+  								<h4><?php echo "$qua"; ?></h4>
+  								</center>
+  							</div>
+ <?php
+		$pro = mysqli_query($_SESSION['connect_db'],"SELECT product_id FROM product")or die("ERROR : backend dashbord line 327");
+
+		$product  = mysqli_num_rows($pro);
+		
+?>
+  							
+  							<div class="col-md-4 box-font">
+  								<center>
+  								<img src="../images/dashbord/package.png" width="60%" >
+  								<p>พนักงาน</p>
+  								<h4><?php echo "$product"; ?></h4>
   								</center>
   							</div>
   							
-  							<div class="col-md-4 box-smail">
-  								<center>
-  								<img src="../images/dashbord/new.png" width="60%" >
-  								<p>ข่าวสาร</p>
-  								<h4>1</h4>
-  								</center>
-  								
-  							</div>
-  							
-  							<div class="col-md-4 box-smail">
-  								<center>
-  								<img src="../images/dashbord/blog.png" width="60%" >
-  								<p>บทความ</p>
-  								<h4>5</h4>
-  								</center>
-  							</div>
   						</div>
+  					
     				</div>
 			</div>
-<!--_______________________________End ข้อมูลหน้าร้าน_________________________________-->
+<!--_______________________________End ข้อมูลหลังร้าน_________________________________-->
+
+			</div><!--end col 4 data font-end-->
 		</div>
 			
 		

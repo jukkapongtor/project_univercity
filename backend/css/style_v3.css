@@ -106,6 +106,7 @@
   margin:5px;
   width: 30%;
 }
+
 .day-money-on{
   border-radius:10px 10px 0px 0px;
   background: #ffffff;
@@ -122,6 +123,17 @@
 }
 .day-money-under h6{
   color: #e0e0e0;
+}
+
+.box-font{
+
+  border-radius:15px 15px 15px 15px;
+  background: #7F171F;
+  color: #ffffff;
+  padding: 10px 10px 5px 10px; 
+  margin:5px;
+  width: 30%;
+
 }
 
 
