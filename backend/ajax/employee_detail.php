@@ -8,14 +8,19 @@
     $(document).ready(function() {
         $('#profile').click(function(){
             var employee_id = document.getElementById('employee_id').value;
-            alert(employee_id);
             $.post('ajax/function.php?data=profile',{employee_id:employee_id},function(data){
                 $('#employee-detail').html(data);
             });
         });
         $('#salary').click(function(){
             var employee_id = document.getElementById('employee_id').value;
-            $.post('ajax/function.php?data=salary',{employee_id:employee_id},function(data){
+            $.post('ajax/function_employee.php?data=salary',{employee_id:employee_id},function(data){
+                $('#employee-detail').html(data);
+            });
+        });
+        $('#timework').click(function(){
+            var employee_id = document.getElementById('employee_id').value;
+            $.post('ajax/function_employee.php?data=timework',{employee_id:employee_id},function(data){
                 $('#employee-detail').html(data);
             });
         });
@@ -346,21 +351,23 @@ $edit_em = mysqli_query($_SESSION['connect_db'], "SELECT employee_id, employee_i
 <div class="col-md-4" >
 <?php
 
-if (empty($image)) {
-            $image="<center><img src='../images/icon/no-images.jpg' width='120px' height='120px' style='border-radius:60px;' ></center>";
+if (empty($employee_img)) {
+            $image="<center><img src='../images/icon/no-images.jpg' width='160px' height='160px' style='border-radius:80px;' ></center>";
         }else{
-            $image="<center><img src = '../images/employee/$employee_img' width='120px' height='120px' style='border-radius:60px;' ></center>";
+            $image="<center><img src = '../images/employee/$employee_img' width='160px' height='160px' style='border-radius:80px;border:10px solid #accfe0' ></center>";
         }
 ?>  
-    <div class="col-md-12" style="border: 1px solid; margin-bottom:20px;  ">
+
+    <div class="col-md-12" style="margin:20px 0px;">
         <center><?php echo "$image";?></center>
     </div>
 
         <!--______________________________________________________________________________--> 
 <div class="col-md-12">
     <div class="list-group">
-        <a class="list-group-item " id="profile" >ประวัติส่วนตัว</a>
-        <a class="list-group-item " id="salary" >ข้อมูลเงินเดือน</a>
+        <a class="list-group-item " id="profile" style="cursor:pointer">ประวัติส่วนตัว</a>
+        <a class="list-group-item " id="salary" style="cursor:pointer">ข้อมูลเงินเดือน</a>
+        <a class="list-group-item " id="timework" style="cursor:pointer">ลงเวลาทำงาน</a>
     </div>
 </div>    
 

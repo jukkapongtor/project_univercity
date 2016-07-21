@@ -13,8 +13,10 @@
  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
  <link rel="stylesheet" type="text/css" href="../css/mystyle.css">
  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
+ <link rel="stylesheet" type="text/css" href="../sweetalert/sweetalert.css">
  <script src="../js/jquery-1.11.3.min.js"></script>
  <script src="../js/bootstrap.min.js"></script>
+ <script src="../sweetalert/sweetalert.min.js"></script> 
  
 </head>
 <body>
@@ -29,21 +31,21 @@
           <div class="panel-body">
           <center><img src="../images/icon/logomumfern.png" width="250px" height="250px"></center>
           <form action="index.php?action=check_login" method="post">
-            <div class="input-group input-group-lg">
-              <span class="input-group-addon " aria-hidden="true"><img src="../images/icon/man-user.png" width="24"></span>
+            <div class="input-group ">
+              <span class="input-group-addon " aria-hidden="true"><img src="../images/icon/man-user.png" width="20"></span>
               <input type="text" name='username' class="form-control" placeholder="Username">
             </div>
             <br>
-            <div class="input-group input-group-lg">
-              <span class="input-group-addon "  aria-hidden="true"><img src="../images/icon/locked-padlock.png" width="24"></span>
+            <div class="input-group">
+              <span class="input-group-addon "  aria-hidden="true"><img src="../images/icon/locked-padlock.png" width="20"></span>
               <input type="password" name='passwd' class="form-control" placeholder="Password">
             </div>
-          <p style="margin-top:10px;font-size:20px;" ><a href='../index.php?module=users&action=register' style="text-decoration: none;">สมัครสมาชิก</a></p>
-          <p style="margin-top:10px;font-size:20px;" ><a href='#' style="text-decoration: none;">ลืมรหัสผ่าน</a></p>
+          <p style="margin-top:10px;" ><a href='../index.php?module=users&action=register' style="text-decoration: none;">สมัครสมาชิก</a></p>
+          <p style="margin-top:10px;" ><a href='#' style="text-decoration: none;">ลืมรหัสผ่าน</a></p>
           <div class="col-md-12">
               <p>
-                  <center><button type="submit" class="btn btn-success btn-lg">เข้าสู่ระบบ</font></button>
-                  <a href='../index.php'><button type="button" class="btn btn-danger btn-lg">ยกเลิก</button></a></center>
+                  <center><button type="submit" class="btn btn-success ">เข้าสู่ระบบ</button>
+                  <a href='../index.php'><button type="button" class="btn btn-danger">ยกเลิก</button></a></center>
               </p>
           </div>
           </form>

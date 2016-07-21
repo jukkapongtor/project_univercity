@@ -8,7 +8,7 @@ function get_module($module,$action){
 }
 function check_login(){
 	if(empty($_POST['username'])||empty($_POST['passwd'])){
-		echo "<center><h2>กรุณากรอก username และ password <br> เพื่อเข้าสู่ระบบ</h2></center><br>";
+		echo "<script>swal({title:'',text: \"กรุณากรอก username และ password เพื่อเข้าสู่ระบบ\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php';})</script>";
 	}else{
 		$user_form=$_POST['username'];
 		$pwd_form=$_POST['passwd'];
@@ -18,6 +18,7 @@ function check_login(){
 			$_SESSION['login_result']="true";
 			$_SESSION['login_name']=$username;
 			$_SESSION['login_type']=$type; //เก็บค่า user ประเภทไหน
+			echo "$_SESSION[login_type]";
 			if($_SESSION['login_type']==1){
 				echo "<script>window.location='../backend/'</script>";	
 			}elseif($_SESSION['login_type']==2){
@@ -27,8 +28,7 @@ function check_login(){
 			}
 
 		}else{
-		    echo "<script>alert('คุณกรอก username หรือ password ผิดผลาด กรุณาล็อคอินเข้าสู่ระบบใหม่')</script>";
-	        echo "<script>window.location='index.php'</script>";
+			echo "<script>swal({title:'',text: \"คุณกรอก username หรือ password ผิดผลาด กรุณาล็อคอินเข้าสู่ระบบใหม่\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php';})</script>";
 		}
 	}
 }

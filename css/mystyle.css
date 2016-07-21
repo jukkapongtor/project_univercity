@@ -2,7 +2,7 @@ body{
 	background: #eee;
 }
 div {
-  font-family: 'rainganregular',"Cordia New", sans-serif;
+  font-family: 'bangna_newregular',"Cordia New", sans-serif;
 }
 #total_amountincart{
 	position: absolute;
@@ -33,10 +33,19 @@ div {
 	padding: 0px;
 }
 .font20{
-	font-size: 20px;
+	font-size: 14px;
 }
 .font26{
-	font-size: 26px;
+	font-size: 16px;
+}
+.font-content{
+	font-size:16px;
+}
+.font_menu{
+	font-size: 18px;
+}
+.font_head{
+	font-size: 20px;
 }
 .underline{
 	margin-top: 30px;
@@ -72,16 +81,18 @@ div {
 }
 .header-menu{
 	width: 35%;
-	font-size: 40px;
+	font-size: 20px;
 	font-weight: bold;
+
 	color:#1c5d25;
 }
 .header-menu-home,.header-menu-product,.header-menu-webblog,.header-menu-webboard{
 	width: 30%;
 	height: 60px;
 	float: left;
-	padding-top: 5px;
+	padding-top: 20px;
 	color:#1c5d25;
+
 }
 .header-menu-home,.header-menu-webblog{
 	width: 20%;
@@ -131,7 +142,8 @@ div {
 .product-recommend-center,.product-recommend-sale,.product-recommend-new,.product-recommend-best{
 	width: 8%;
 	float: left;
-	font-size: 20px;
+	font-size: 12px;
+	padding: 10px 0px;
 	font-weight: bold;
 	color: #1c5d25;
 }
@@ -162,7 +174,8 @@ div {
 	margin-top:170px;
 	background:white;
 	color:#666;
-	font-size:50px;
+	font-size:32px;
+	padding: 10px;
 	opacity: 0;
 	border-left:1px #ddd solid;
 	border-right:1px #ddd solid;
@@ -176,6 +189,9 @@ div {
 	padding: 20px 0px;
 	border-right: 2px solid #649d6c;
 	height: 100%; 
+}
+.content1,.content2{
+	font-size:18px;
 }
 .active-datausers-menu{
 	background: #fff;
@@ -206,10 +222,11 @@ div {
 	border-bottom:4px solid #325bb0;
 }
 .menu-webblog{
-	font-size: 20px;
+	font-size: 13px;
+	padding: 5px 10px 0px 10px;
 }
 .menu-webblog:hover{
-	font-size: 20px;
+	font-size: 13px;
 	background: #9dbefe;
 	border-bottom: 2px #16326a solid;
 	color: #eee;
@@ -220,7 +237,7 @@ div {
 	border-bottom: 2px #16326a solid;
 }
 .header-webblog-content{
-	font-size: 26px;
+	font-size: 20px;
 	background:#16326a;
 	color:white;
 	padding-top:10px;
@@ -229,14 +246,14 @@ div {
 }
 .content-webblog{
 	margin-top:10px;
-	font-size: 20px;
+	font-size: 16px;
 }
 .webbolg-none-image{
 	width:100%;
 	height:250px;
 	border: 2px #ddd solid;
 	padding:40px;
-	font-size: 40px;
+	font-size: 25px;
 	font-weight: bold;
 	text-align: center;
 	padding-top: 70px;
@@ -256,12 +273,13 @@ div {
 }
 .order-status{
 	width: 100%;
-	font-size: 20px;
+	font-size: 11.9px;
 	border-bottom:1px #ddd solid;
 	margin-bottom: 10px;
 	font-weight: bold;
 	color: #1c5d25;
 	float: left; 
+	
 }
 .order-status1,.order-status2,.order-status3,.order-status4{
 	float: left;

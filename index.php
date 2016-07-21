@@ -192,8 +192,8 @@ echo "</script>";
     <div class="header">
         <a href='index.php' style='text-decoration: none;'><div class="header-logo">
 <?php
-            echo "<div class='header-logo-img'><img src='images/icon/$logo' width='100%' height='100%''></div>";
-            echo "<font color='#1c5d25' size='5'><p style='margin-top:16px;''><b>$nameshop</b></p></font>";
+            echo "<div class='header-logo-img'><img src='images/icon/$logo' width='100%' height='100%'></div>";
+            echo "<font color='#1c5d25' size='4'><p style='margin-top:20px;' class='hidden-xs'><b>$nameshop</b></p></font>";
 ?>
         </div></a>
         <div class="header-menu">
@@ -343,9 +343,9 @@ echo "</script>";
             </div>
             <br>
 <?php           
-            echo "<center><h1><b>$nameshop</b></h1></center>";
-            echo "<center><h2  class='marginun20'><b>$header_detail_shop</b></h2></center>";
-            echo "<div width='100%' style='padding:0px 30px;'><p><center><font size='5'>$detail_shop</font></center></p></div>";
+            echo "<center><h3><b>$nameshop</b></h3></center>";
+            echo "<center><h4 style='margin-top:10px'><b>$header_detail_shop</b></h4></center>";
+            echo "<div width='100%' style='padding:0px 30px;'><p><center><font size='4'>$detail_shop</font></center></p></div>";
             echo "<br>";
             echo "<div class='clear'></div>";
 
@@ -369,7 +369,8 @@ echo "</script>";
             while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
                 echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4' style='padding-top:10px;'>";
                     echo "<div class='div-recom'>";
-                        echo "<b><p align='center' class='div-recom-content'>$product_name</p></b>";
+                        $str=explode(" ",$product_name,2);
+                        echo "<b><p align='center' class='div-recom-content'>$str[0]</p></b>";
                     echo "</div>";
                 $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
                 list($product_image)=mysqli_fetch_row($query_image);
@@ -385,7 +386,8 @@ echo "</script>";
             while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
                 echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4' style='padding-top:10px;'>";
                     echo "<div class='div-recom'>";
-                        echo "<b><p align='center' class='div-recom-content'>$product_name</p></b>";
+                        $str=explode(" ",$product_name,2);
+                        echo "<b><p align='center' class='div-recom-content'>$str[0]</p></b>";
                     echo "</div>";
                 $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
                 list($product_image)=mysqli_fetch_row($query_image);
@@ -401,7 +403,8 @@ echo "</script>";
             while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
                 echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4' style='padding-top:10px;'>";
                     echo "<div class='div-recom'>";
-                        echo "<b><p align='center' class='div-recom-content'>$product_name</p></b>";
+                        $str=explode(" ",$product_name,2);
+                        echo "<b><p align='center' class='div-recom-content'>$str[0]</p></b>";
                     echo "</div>";
                 $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
                 list($product_image)=mysqli_fetch_row($query_image);
@@ -411,7 +414,7 @@ echo "</script>";
             }
 ?>
             </div>
-            <div class="col-md-12 con1" >
+            <div class="col-md-12 con1" style="margin-top:20px;">
                 <div class="col-md-6">
 <?php
                     echo "<img src='images/webpage/$image_content2' width='100%' height='550px'>";
@@ -449,7 +452,7 @@ echo "</script>";
     </div>
     <div class="footer" >
         <div class="container-fluid">
-                <p align="right" class="font26" style='color:white'><b>ที่อยู่ร้านมุมเฟิร์น</b></p>
+                <p align="right" class="font26" style='color:white;margin-top:5px;'><b>ที่อยู่ร้านมุมเฟิร์น</b></p>
                 <p align="right" class="font20" style='color:white'>ตลากคำเที่ยง ล็อค f208-f209 ตำบล ป่าตัน อำเภอเมือง จังหวัดเชียงใหม่ 50300</p>
                 <p align="right" class="font20" style='color:white'>เบอร์โทร : 081-8055024 &nbsp;&nbsp;E-mail : veerada@mumfern.com</p>
         </div>

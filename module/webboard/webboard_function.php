@@ -19,7 +19,7 @@ function webboard(){
 		    	echo "<p></p><p class='font20'>กระทู้แนะนำจะเป็นการนำกรทู้ที่มีการถูกใจมากที่สุด 4 อันดับนำมาแสดง</p>";
 		    	echo "<table class='table table-hover table-striped' style='margin-top:10px;'>";
 			  		echo "<thead>";
-			  		echo "<tr style='font-size:24px;'>
+			  		echo "<tr>
 			  			<th><center>ลำดับ</center></th>
 			  			<th><center>ชื่อกระทู้</center></th>
 			  			<th><center>ผู้โพสต์</center></th>
@@ -51,7 +51,7 @@ function webboard(){
 		    	echo "<p></p><p class='font20'>กระทู้น่าสนใจะเป็นการนำกรทู้ที่มีการเข้าดูมากที่สุด 4 อันดับนำมาแสดง</p>";
 		    	echo "<table class='table table-hover table-striped' style='margin-top:10px;'>";
 			  		echo "<thead>";
-			  		echo "<tr style='font-size:24px;'>
+			  		echo "<tr>
 			  			<th><center>ลำดับ</center></th>
 			  			<th><center>ชื่อกระทู้</center></th>
 			  			<th><center>ผู้โพสต์</center></th>
@@ -85,7 +85,7 @@ function webboard(){
 	  echo "<div class='panel-body'>";
 	  	echo "<table class='table table-hover table-striped' style='margin-top:10px;'>";
 	  		echo "<thead>";
-	  		echo "<tr style='font-size:24px;'>
+	  		echo "<tr>
 	  			<th><center>ลำดับ</center></th>
 	  			<th><center>ชื่อกระทู้</center></th>
 	  			<th><center>ผู้โพสต์</center></th>

@@ -1,7 +1,8 @@
 <?php
 function check_transfer(){
 	if(empty($_FILES['image_transfer']['name'])){
-		echo "<script>alert('กรุณาเลือกไฟล์ก่อนทำการยืนยันการชำระเงิน');window.location='index.php?module=users&action=data_users&menu=3'</script>";
+		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+		echo "<script>swal({title:'',text: \"กรุณาเลือกไฟล์ก่อนทำการยืนยันการชำระเงิน\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=users&action=data_users&menu=3&order_status=1';})</script>";
 	}else{
 		$image_name = $_FILES['image_transfer']['name'];
 		copy($_FILES['image_transfer']['tmp_name'],"images/transfer/".$_FILES['image_transfer']['name']);
@@ -11,7 +12,8 @@ function check_transfer(){
 
 		mysqli_query($_SESSION['connect_db'],$sqli_insert_transfer);
 		mysqli_query($_SESSION['connect_db'],$sqli_update_order);
-		echo "<script>alert('ยืนยันการชำระเงิน');window.location='index.php?module=users&action=data_users&menu=3&order_status=2'</script>";
+		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+		echo "<script>swal({title:'',text: \"ยืนยันการชำระเงิน\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=users&action=data_users&menu=3&order_status=2';})</script>";
 	}
 	
 }
