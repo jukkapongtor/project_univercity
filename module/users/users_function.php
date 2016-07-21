@@ -53,23 +53,29 @@ function register(){
 
 function insert_user(){
 	if(empty($_POST['user_email']) or empty($_POST['username']) or empty($_POST['passwd']) or empty($_POST['conpasswd']) or empty($_POST['condition'])){
-		echo "<script> alert('กรุณากลับไปกรอกข้อมูลให้ครบ !!'); window.location='index.php?module=users&action=register'</script>";
+		
+		echo "<script>swal({title:'',text: \"กรุณากลับไปกรอกข้อมูลให้ครบ !!\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=users&action=register';})</script>";
+		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 	}else{
 
 	$query_users= mysqli_query($_SESSION['connect_db'],"SELECT username,email FROM users")or die("ERROR :");
 	while(list($username,$email)=mysqli_fetch_row($query_users)){
 		if($_POST['username']==$username){
-			echo "<script>alert('username มีอยู่ในะบบแล้ว');window.location='index.php?module=users&action=register'</script>";
+			echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+			echo "<script>swal({title:'',text: \"username มีอยู่ในะบบแล้ว\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=users&action=register';})</script>";
 		}
 		if($_POST['user_email']==$email){
-			echo "<script>alert('e-mail มีอยู่ในะบบแล้ว');window.location='index.php?module=users&action=register'</script>";
+			echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+			echo "<script>swal({title:'',text: \"e-mail มีอยู่ในะบบแล้ว\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=users&action=register';})</script>";
 		}
 	}
 	if($_POST['passwd']!=$_POST['conpasswd']){
-		echo "<script>alert('Password กับ Confirm Password ไม่สอดคล้องกัน');window.location='index.php?module=users&action=register'</script>";
+		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+		echo "<script>swal({title:'',text: \"Password กับ Confirm Password ไม่สอดคล้องกัน\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=users&action=register';})</script>";
 	}	
 	mysqli_query($_SESSION['connect_db'],"INSERT INTO users VALUES ('$_POST[username]','$_POST[passwd]','','','','','$_POST[user_email]','3','','','','','','','','','' )") or die ("ERROR : users_function line 36 ") ;
-	echo "<script>alert('สมัครสมาชิกเสร็จสิ้น สามารถลงชื่อเข้าใช้งานระบบได้แล้ว');window.location='index.php'</script>";
+	echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+	echo "<script>swal({title:'',text: \"สมัครสมาชิกเสร็จสิ้น สามารถลงชื่อเข้าใช้งานระบบได้แล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php';})</script>";
 	}
 
 
@@ -385,10 +391,10 @@ function update_users(){
 	}else{
 		$image="";
 	}
-	$update_users = "UPDATE users SET fullname='$_POST[fullname]',lastname='$_POST[lastname]',phone='$_POST[phone]',type='',house_no='$_POST[house_no]',village_no='$_POST[village_no]',alley='$_POST[alley]',lane='$_POST[lane]',road='$_POST[road]',sub_district='$subdistrict',district='$district',province='$province',postal_code='$_POST[zipcode]' $image WHERE username='$_SESSION[login_name]'";
+	$update_users = "UPDATE users SET fullname='$_POST[fullname]',lastname='$_POST[lastname]',phone='$_POST[phone]',house_no='$_POST[house_no]',village_no='$_POST[village_no]',alley='$_POST[alley]',lane='$_POST[lane]',road='$_POST[road]',sub_district='$subdistrict',district='$district',province='$province',postal_code='$_POST[zipcode]' $image WHERE username='$_SESSION[login_name]'";
 	mysqli_query($_SESSION['connect_db'],$update_users)or die("ERROR : users function line 312");
-
-	echo "<script>alert('บันทึกข้อมูลผู้ใช้เสร็จสิ้น');window.location='index.php?module=users&action=data_users&menu=1'</script>";
+	echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+	echo "<script>swal({title:'',text: \"บันทึกข้อมูลผู้ใช้เสร็จสิ้น\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=users&action=data_users&menu=1';})</script>";
 }
 
 ?>

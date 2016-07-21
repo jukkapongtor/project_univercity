@@ -49,7 +49,7 @@ function delete_product(product_id){
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#DD6B55",
-      confirmButtonText: "ลบหมวดหมู่สินค้า",
+      confirmButtonText: "ลบสินค้า",
       cancelButtonText: "ยกเลิกการลบ",
       closeOnConfirm: false
     },
@@ -183,7 +183,8 @@ function hide_remover(){
 			$query_productimg = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'")or die("ERROR : backend product list line 113");
 			list($product_image)=mysqli_fetch_row($query_productimg);
 			echo "<center><p><img src='../images/$type_name_eng/$product_image' width='100%' height='200px' style='border-radius:5px;'></p>";
-			echo "<p>$product_name</p>";
+			$str=explode(" ",$product_name,2);
+			echo "<p>$str[0]</p>";
 			$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size.size_id,size.size_name,product_size.product_amount_keep,product_size.product_amount_shop,product_size.product_amount_web,product_size.product_price_shop,product_size.product_sprice_shop,product_size.product_price_web,product_size.product_sprice_web FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size WHERE product_size.product_id ='$product_id'");
 			$row_size = mysqli_num_rows($query_size);
 			echo "<p><button class='btn btn-xs btn-warning' type='button' onclick='hide_remover()' id='x_$product_id' value='$row_size' data-toggle='modal' data-target='#$product_id'>แก้ไขข้อมูล</button>";

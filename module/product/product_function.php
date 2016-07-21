@@ -6,7 +6,7 @@ function list_product(){
 		$query_type=mysqli_query($_SESSION['connect_db'],"SELECT type.product_type,type.type_name,quality.product_quality FROM type LEFT JOIN quality ON type.product_type = quality.quality_type GROUP BY type.type_name ORDER BY type.product_type ASC")or die("ERROR : product_function line 6");
 		while(list($product_type,$type_name,$product_quality)=mysqli_fetch_row($query_type)){
 			$active = ($product_type==$_GET['menu'])?"active":"";
-			echo "<a href='index.php?module=product&action=list_product&menu=$product_type&cate=$product_quality' class='list-group-item list-group-item-success $active'><font style='font-size:18px'><b>รายการสินค้าประเภท$type_name</b></font></a>";
+			echo "<a href='index.php?module=product&action=list_product&menu=$product_type&cate=$product_quality' class='list-group-item list-group-item-success $active'><font ><b>รายการสินค้าประเภท$type_name</b></font></a>";
 		} 
 			echo "</div>";
 		echo "</div>";
@@ -24,7 +24,7 @@ function list_product(){
 				$quality_img = (empty($quality_image))?"no-images.jpg":$quality_image;
 				echo "<center><a href='index.php?module=product&action=list_product&menu=$_GET[menu]&cate=$product_quality' ><img src='images/icon/$quality_img' class='select-cate-product_$number' style='width: 100px;height: 100px;border-radius: 100px;'></a>";
 			}
-				echo "<p style='font-size:25px;margin-top:5px'>$quality_name</p></center>";
+				echo "<p class='font_menu' style='margin-top:5px'>$quality_name</p></center>";
 			$number++;
 			echo "</div>";
 		}
@@ -40,7 +40,7 @@ function list_product(){
 	list($type_product) = mysqli_fetch_row($query_type);
 	$query_cate = mysqli_query($_SESSION['connect_db'],"SELECT quality_name FROM quality WHERE quality_type='$_GET[menu]' AND product_quality='$_GET[cate]'")or die("ERROR : product_function line 39");
 	list($cate_name)=mysqli_fetch_row($query_cate);
-	echo "<h3><b>รายการสินค้า / ร้านการสินค้าประเภท$type_product / หมวดหมู่$cate_name</b></h3>";
+	echo "<h4><b>รายการสินค้า / ร้านการสินค้าประเภท$type_product / หมวดหมู่$cate_name</b></h4>";
 	$quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 42");
     list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
 	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_type='$_GET[menu]' AND product.product_quality='$_GET[cate]'")or die("ERROR : product_function line 44");
@@ -51,7 +51,8 @@ function list_product(){
 			$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
 			list($product_image_detail)=mysqli_fetch_row($query_image);
 			$path= (empty($product_image_detail))?"icon/no-images.jpg":"$product_type/$product_image_detail";
-				echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='300'><p><font style='font-size:20px'>$product_name</font></p></a>";
+				$str=explode(" ",$product_name,2);
+				echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='300'><p style='margin-top:5px;'><font class='font-content' >$str[0]</font></p></a>";
 			echo "</div>";
 		}
 	}else{
@@ -94,7 +95,7 @@ function product_detail(){
 		}
 	    echo "</div>";
 	    echo "<div class='col-md-7'style='margin-top:20px'>";
-		   	 echo "<table width='100%' style='font-size:22px'>";
+		   	 echo "<table width='100%' class='font-content'>";
 	     		echo "<tr>";
 	      			echo "<td width='25%'><p><b>ชื่อสินค้า</b></p></td>";
 	      			echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
@@ -132,11 +133,11 @@ function product_detail(){
 					while(list($product_size_id,$size_id,$size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
 						echo "<div class='col-md-12'><p><b>ขนาดสินที่ $number : </b> $size_name</p></div>";
 						if(!empty($product_stock)){	
-							echo "<div class='col-md-3' style='font-size:18px;'><p><b>จำนวน</b></p></div>";
-							echo "<div class='col-md-3' style='font-size:18px;'><p>$product_amount_web</p></div>";
+							echo "<div class='col-md-3' ><p><b>จำนวน</b></p></div>";
+							echo "<div class='col-md-2' <p>$product_amount_web</p></div>";
 							if($sellstatus==1){
-								echo "<div class='col-md-3' style='font-size:18px;'><p><b>ราคา(Batn)</b></p></div>";
-								echo "<div class='col-md-3' style='font-size:18px;'><p>$product_price_web</p></div>";
+								echo "<div class='col-md-4' ><p><b>ราคา(Batn)</b></p></div>";
+								echo "<div class='col-md-3' ><p>$product_price_web</p></div>";
 							}
 							$number++;
 							if($sellstatus==1){
@@ -167,7 +168,7 @@ function product_detail(){
 	echo "</div>";
 
 	echo "<br class='clear'><div class='underline'></div>";
-	echo "<div class='col-md-12'><h2><b>รายการสินค้าที่เกี่ยวข้อง(ประเภทเดียวกัน)</b></h2></div>";
+	echo "<div class='col-md-12'><h4><b>รายการสินค้าที่เกี่ยวข้อง(ประเภทเดียวกัน)</b></h4></div>";
 	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE type.type_name='$product_type' ORDER BY RAND() LIMIT 4")or die("ERROR : product_function line 65");
 	while (list($product_id,$product_name,$product_type)=mysqli_fetch_row($query_product)) {
 		echo "<div class='col-md-3'>";
@@ -175,7 +176,7 @@ function product_detail(){
 			list($product_image_detail)=mysqli_fetch_row($query_image);
 			$path= (empty($product_image_detail))?"icon/no-images.jpg":"$product_type/$product_image_detail";
 			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='250px' style='border-radius:5px;'>";
-			echo "<p style='font-size:25px;'>$product_name</p></a>";
+			echo "<p class='font-content' style='margin-top:5px'>$product_name</p></a>";
 		echo "</div>";
 	}
 
@@ -202,7 +203,8 @@ function product_detail(){
         
 	        echo "$('#add2cart_$product_size_id').click(function() {";
 	            if(empty($_SESSION['login_name'])){
-	                echo "alert('การซื้อสินค้าทำได้เฉพาะสมาชิกเท่านั้น');";
+	            	
+	                echo "swal('', 'การซื้อสินค้าทำได้เฉพาะสมาชิกเท่านั้น','error');";
 	            }else{
 	                echo "stop=0;";
 	                echo "var product_id = document.getElementById('product_id').value;";

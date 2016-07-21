@@ -106,6 +106,14 @@
                     <p>รายการขายสินค้า</p></a>
                 </center>
             </div>
+            <div class="col-xs-6">
+                <center>
+                    <a href='index.php?module=orders&action=order_list' style="text-decoration: none;"><div class="menu-images">
+                        <img src='../images/icon/bag.png' width="100" height="100" style="margin:6px;"> 
+                    </div>
+                    <p>ดูเวลาทำงาน</p></a>
+                </center>
+            </div>
         </div>
 <?php
         }

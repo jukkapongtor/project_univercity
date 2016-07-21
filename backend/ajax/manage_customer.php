@@ -33,7 +33,6 @@
 		}else{
 			$image="<center><img src = '../images/user/$image' width='65px' height='65px' ></center>";
 		}
-
 	 	echo "<td>$image</td>";
 	 	echo "<td>$username</td>";
 	 	echo "<td>$email</td>";

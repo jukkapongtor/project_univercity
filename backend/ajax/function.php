@@ -1064,22 +1064,7 @@ switch ($_GET['data']) {
 
 
 	break;
-	case 'salary':
-?>
-	<div class="panel panel-default" style="width:100% " >
-        <div class="panel-heading">
-           	<input type="hidden" id="employee_id" value="<?php echo "$employee_id"; ?>" >
-            <h3 class="panel-title">เงินเดือน</h3>
-        </div>
-            <div class="panel-body">
 
-            <p>SALARY</p>
-
-            </div>
-	</div>
-
-<?php
-	
 	default: break;
 
 
