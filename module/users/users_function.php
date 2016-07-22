@@ -84,13 +84,13 @@ function insert_user(){
 }
 
 function data_users(){
-	echo "<div class='container-fluid' style='padding:0px;height:980px;'>";
+	echo "<div class='container-fluid ' style='padding:0px;height:980px;'>";
 		echo "<div class='col-md-3 datausers_menu'>";
 		$query_users = mysqli_query($_SESSION['connect_db'],"SELECT fullname,lastname,image FROM users WHERE username ='$_SESSION[login_name]'")or die("ERROR users function line 64");
 		list($fullname,$lastname,$image)=mysqli_fetch_row($query_users);
 		$image = (empty($image))?"user.png":$image;
-			echo "<p><center><img src='images/user/$image' id='blah' width='150' height='150'></center></p><br>";
-			echo "<p align='center'><img src='images/icon/black-user-shape.png' width='24' style='margin-top:-8px'>&nbsp;<font size='5'><b>ยินดีต้อนรับ</b></font></p>";
+			echo "<div class='col-md-12 col-xs-4 bg_img_userdata'><p><center><img src='images/user/$image' class='img_userdata' id='blah' ></center></p></div>";
+			echo "<div class='col-md-12 col-xs-8' style='margin-top:20px;padding:0px;'><p align='center'><img src='images/icon/black-user-shape.png' width='24' style='margin-top:-8px'>&nbsp;<font size='5'><b>ยินดีต้อนรับ</b></font></p>";
 			$name = (empty($fullname)AND empty($lastname))?"ไม่ระบุชื่อหรือนามสกุล":"$fullname $lastname";
 			echo "<p class='font20' style='padding-left:18px;'><b>ชื่อ : </b>$name</p>";
 			switch ($_GET['menu']) {
@@ -107,7 +107,7 @@ function data_users(){
 			echo "<a href='index.php?module=users&action=data_users&menu=3&order_status=1'><p class='font20 margin0 $action_menu_user3'>&nbsp;&nbsp;สถานะการซื้อสินค้า</p></a>";
 			echo "<a href='index.php?module=users&action=data_users&menu=4&order_status=4'><p class='font20 margin0 $action_menu_user4'>&nbsp;&nbsp;ประวัติการซื้อสินค้า</b></p></a>";
 			}
-		echo "</div>";
+		echo "</div></div>";
 		echo "<div class='col-md-9'>";
 				switch ($_GET['menu']) {
 					case '1': edit_user(); break;
@@ -120,10 +120,11 @@ function data_users(){
 	echo "</div>";
 }
 function edit_user(){
+	echo "<div class='container-fluid datauser_edit_user'>";
 	$query_users = mysqli_query($_SESSION['connect_db'],"SELECT * FROM users WHERE username ='$_SESSION[login_name]'")or die("ERROR users function line 64");
 	list($username,$passwd,$fullname,$lastname,$image,$phone,$email,$type,$house_no,$village_no,$alley,$lane,$road,$sub_district,$district,$province,$postal_code)=mysqli_fetch_row($query_users);
-	echo "<h1 style='background:#649d6c;color:white;padding:5px 10px;'>แก้ไขข้อมูลส่วนตัว</h1>";
-	echo "<div class='col-md-12' style='border-bottom:2px solid #ddd'>";
+	echo "<h3 style='background:#649d6c;color:white;padding:5px 10px;'>แก้ไขข้อมูลส่วนตัว</h3>";
+	echo "<div class='col-md-12 ' style='border-bottom:2px solid #ddd'>";
 		echo "<p class='font20'><b>รายละเอียดข้อมูลผู้ใช้</b></p>";
 		echo "<table style='margin-left:40px;'>";
 			echo "<tr>";
@@ -176,7 +177,7 @@ function edit_user(){
 			echo "</tr>";
 		echo "</table>";
 	echo "</div>";
-	echo "<div class='col-md-12' >";
+	echo "<div class='col-md-12' style='margin-top:20px;' >";
 		echo "<p class='font20'><b>ที่อยู่ที่ใช้ในการจัดส่ง</b></p>";
 		echo "<form action='index.php?module=users&action=update_users' method='post' enctype='multipart/form-data'><center><table width='80%'>";
 			echo "<tr>";
@@ -198,7 +199,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;:&nbsp;</b></p>";
 				echo "</td>";
 				echo "<td colspan='4'>";
-					echo "<p class='font20'><input class='form-control' tyle='text' name='fullname' placeholder='Fullname' value='$fullname'></p>";
+					echo "<p class='container-fluid font20'><input class='form-control' tyle='text' name='fullname' placeholder='Fullname' value='$fullname'></p>";
 				echo "</td>";
 			echo "</tr>";
 			echo "<tr>";
@@ -209,7 +210,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td colspan='4'>";
-					echo "<p class='font20'><input class='form-control' tyle='text' name='lastname' placeholder='Lastname' value='$lastname'></p>";
+					echo "<p class='container-fluid font20'><input class='form-control' tyle='text' name='lastname' placeholder='Lastname' value='$lastname'></p>";
 				echo "</td>";
 			echo "</tr>";
 			echo "<tr>";
@@ -220,7 +221,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td>";
-					echo "<p class='font20'><input class='form-control' tyle='text' name='house_no' placeholder='House NO.' value='$house_no'></p>";
+					echo "<p class='container-fluid font20'><input class='form-control' tyle='text' name='house_no' placeholder='House NO.' value='$house_no'></p>";
 				echo "</td>";
 				echo "<td>";
 					echo "<p class='font20'><b>&nbsp;หมู่</b></p>";
@@ -229,7 +230,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;:&nbsp;</b></p>";
 				echo "</td>";
 				echo "<td>";
-					echo "<p class='font20'><input class='form-control' tyle='text' name='village_no' placeholder='Village NO.' value='$village_no'></p>";
+					echo "<p class='container-fluid font20'><input class='form-control' tyle='text' name='village_no' placeholder='Village NO.' value='$village_no'></p>";
 				echo "</td>";
 			echo "</tr>";
 			echo "<tr>";
@@ -240,7 +241,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td>";
-					echo "<p class='font20'><input class='form-control' tyle='text' name='alley' placeholder='Alley' value='$alley'></p>";
+					echo "<p class='container-fluid font20'><input class='form-control' tyle='text' name='alley' placeholder='Alley' value='$alley'></p>";
 				echo "</td>";
 				echo "<td>";
 					echo "<p class='font20'><b>&nbsp;ซอย</b></p>";
@@ -249,7 +250,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;:&nbsp;</b></p>";
 				echo "</td>";
 				echo "<td>";
-					echo "<p class='font20'><input class='form-control' tyle='text' name='lane' placeholder='Lane' value='$lane'></p>";
+					echo "<p class='container-fluid font20'><input class='form-control' tyle='text' name='lane' placeholder='Lane' value='$lane'></p>";
 				echo "</td>";
 			echo "</tr>";
 			echo "<tr>";
@@ -260,7 +261,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td colspan='4'>";
-					echo "<p class='font20'><input class='form-control' tyle='text' name='road' placeholder='Road' value='$road'></p>";
+					echo "<p class='container-fluid font20'><input class='form-control' tyle='text' name='road' placeholder='Road' value='$road'></p>";
 				echo "</td>";
 			echo "</tr>";
 			echo "<tr>";
@@ -271,7 +272,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td width='27%'>";
-					echo "<p class='font20'>";
+					echo "<p class='container-fluid font20'>";
 					echo "<select id='select_provinces' name='province' style='width:100%'>";
 						echo "<option value='null'>เลือกจังหวัด</option>";
 						$query_provinces = mysqli_query($_SESSION['connect_db'],"SELECT PROVINCE_ID,PROVINCE_NAME FROM provinces")or die("ERROR : users function line 235");
@@ -293,7 +294,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td width='27%'>";
-					echo "<p class='font20'><select id='select_districts' name='districts' style='width:100%'>";
+					echo "<p class='container-fluid font20'><select id='select_districts' name='districts' style='width:100%'>";
 					if(empty($district)){
 						echo "<option value='null'>เลือกอำเภอ</option>";
 					}else{
@@ -318,7 +319,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td>";
-					echo "<p class='font20'><select id='select_subdistricts' name='subdistrict' style='width:100%'>";
+					echo "<p class='container-fluid font20'><select id='select_subdistricts' name='subdistrict' style='width:100%'>";
 					if(empty($sub_district)){
 						echo "<option value='null'>เลือกตำบล</option>";
 					}else{
@@ -340,7 +341,7 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td>";
-					echo "<p class='font20'><input class='form-control' tyle='text' id='zipcode' name='zipcode' placeholder='Postcode' value='$postal_code'></p>";
+					echo "<p class='container-fluid font20'><input class='form-control' tyle='text' id='zipcode' name='zipcode' placeholder='Postcode' value='$postal_code'></p>";
 				echo "</td>";
 			echo "</tr>";
 			echo "<tr>";
@@ -351,11 +352,12 @@ function edit_user(){
 					echo "<p class='font20'><b>&nbsp;: </b></p>";
 				echo "</td>";
 				echo "<td colspan='4'>";
-					echo "<p class='font20'><input class='form-control' tyle='text' name='phone' placeholder='Phone' value='$phone'></p>";
+					echo "<p class='container-fluid font20'><input class='form-control' tyle='text' name='phone' placeholder='Phone' value='$phone'></p>";
 				echo "</td>";
 			echo "</tr>";
 		echo "</table></center><br>";
-		echo "<p align='right' class='font20'><button type='submit' class='btn btn-success' ><b>บันทึกข้อมูล</b></button></form></p>";
+		echo "<p align='right' class='container-fluid font20'><button type='submit' class='btn btn-success' ><b>บันทึกข้อมูล</b></button></form></p>";
+	echo "</div>";
 	echo "</div>";
 }
 

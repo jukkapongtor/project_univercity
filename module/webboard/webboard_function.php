@@ -5,7 +5,7 @@ function webboard(){
 		echo "<a href='index.php?module=webboard&action=form_webboard'><p class='font20' align='right' style='margin:10px 10px 0px 0px;'><button>เพิ่มกระทู้</button></p></a>";
 	}
 	echo "<div class='panel panel-default weboard-showrecommend'>";
-	  echo "<div class='panel-heading' style='padding-bottom:0px;'><b><p class='font20'>รายการสนทนาที่แนะนำ</p></b></div>";
+	  echo "<div class='panel-heading' style='padding-bottom:0px;'><b><p>รายการสนทนาที่แนะนำ</p></b></div>";
 	  echo "<div class='panel-body'>";
 		echo "<div>";
 		  echo "<!-- Nav tabs -->";
@@ -22,10 +22,10 @@ function webboard(){
 			  		echo "<tr>
 			  			<th><center>ลำดับ</center></th>
 			  			<th><center>ชื่อกระทู้</center></th>
-			  			<th><center>ผู้โพสต์</center></th>
-			  			<th><center>เข้าชม</center></th>
-			  			<th><center>ตอบ</center></th>
-			  			<th><center>วัน/เวลา ที่โพสต์</center></th>
+			  			<th class='hidden-xs'><center>ผู้โพสต์</center></th>
+			  			<th class='hidden-xs'><center>เข้าชม</center></th>
+			  			<th class='hidden-xs'><center>ตอบ</center></th>
+			  			<th class='hidden-xs'><center>วัน/เวลา ที่โพสต์</center></th>
 			  		</tr>";
 			  		echo "</thead>";
 			  		echo "<tbody>";
@@ -37,10 +37,10 @@ function webboard(){
 					  		echo "<tr>
 					  			<td class='col-md-1'><p align='center' class='font20'>$number</p></td>
 					  			<td class='col-md-4'><p class='font20'><a href='index.php?module=webboard&action=webboard_detail&webboard_id=$webboard_id' style='text-decoration: none;'>$webboard_header</a></p></td>
-					  			<td class='col-md-2'><p align='center' class='font20'>$username</p></td>
-					  			<td class='col-md-1'><p align='center' class='font20'>$visitor</p></td>
-					  			<td class='col-md-1'><p align='center' class='font20'>ตอบ</p></td>
-					  			<td class='col-md-3'><p align='center' class='font20'>$webboard_date</p></td>
+					  			<td class='col-md-2 hidden-xs'><p align='center' class='font20'>$username</p></td>
+					  			<td class='col-md-1 hidden-xs'><p align='center' class='font20'>$visitor</p></td>
+					  			<td class='col-md-1 hidden-xs'><p align='center' class='font20'>ตอบ</p></td>
+					  			<td class='col-md-3 hidden-xs'><p align='center' class='font20'>$webboard_date</p></td>
 					  		</tr>";
 					  		$number++;
 					  	}
@@ -54,10 +54,10 @@ function webboard(){
 			  		echo "<tr>
 			  			<th><center>ลำดับ</center></th>
 			  			<th><center>ชื่อกระทู้</center></th>
-			  			<th><center>ผู้โพสต์</center></th>
-			  			<th><center>เข้าชม</center></th>
-			  			<th><center>ตอบ</center></th>
-			  			<th><center>วัน/เวลา ที่โพสต์</center></th>
+			  			<th class='hidden-xs'><center>ผู้โพสต์</center></th>
+			  			<th class='hidden-xs'><center>เข้าชม</center></th>
+			  			<th class='hidden-xs'><center>ตอบ</center></th>
+			  			<th class='hidden-xs'><center>วัน/เวลา ที่โพสต์</center></th>
 			  		</tr>";
 			  		echo "</thead>";
 			  		echo "<tbody>";
@@ -67,10 +67,10 @@ function webboard(){
 				  		echo "<tr>
 				  			<td class='col-md-1'><p align='center' class='font20'>$number</p></td>
 				  			<td class='col-md-4'><p class='font20'><a href='index.php?module=webboard&action=webboard_detail&webboard_id=$webboard_id' style='text-decoration: none;'>$webboard_header</a></p></td>
-				  			<td class='col-md-2'><p align='center' class='font20'>$username</p></td>
-				  			<td class='col-md-1'><p align='center' class='font20'>$visitor</p></td>
-				  			<td class='col-md-1'><p align='center' class='font20'>ตอบ</p></td>
-				  			<td class='col-md-3'><p align='center' class='font20'>$webboard_date</p></td>
+				  			<td class='col-md-2 hidden-xs'><p align='center' class='font20'>$username</p></td>
+				  			<td class='col-md-1 hidden-xs'><p align='center' class='font20'>$visitor</p></td>
+				  			<td class='col-md-1 hidden-xs'><p align='center' class='font20'>ตอบ</p></td>
+				  			<td class='col-md-3 hidden-xs'><p align='center' class='font20'>$webboard_date</p></td>
 				  		</tr>";
 				  		$number++;
 				  	}
@@ -88,10 +88,10 @@ function webboard(){
 	  		echo "<tr>
 	  			<th><center>ลำดับ</center></th>
 	  			<th><center>ชื่อกระทู้</center></th>
-	  			<th><center>ผู้โพสต์</center></th>
-	  			<th><center>เข้าชม</center></th>
-	  			<th><center>ตอบ</center></th>
-	  			<th><center>วัน/เวลา ที่โพสต์</center></th>
+	  			<th class='hidden-xs'><center>ผู้โพสต์</center></th>
+	  			<th class='hidden-xs'><center>เข้าชม</center></th>
+	  			<th class='hidden-xs'><center>ตอบ</center></th>
+	  			<th class='hidden-xs'><center>วัน/เวลา ที่โพสต์</center></th>
 	  		</tr>";
 	  		echo "</thead>";
 	  		echo "<tbody>";
@@ -101,10 +101,10 @@ function webboard(){
 		  		echo "<tr>
 		  			<td class='col-md-1'><p align='center' class='font20'>$number</p></td>
 		  			<td class='col-md-4'><p class='font20'><a href='index.php?module=webboard&action=webboard_detail&webboard_id=$webboard_id' style='text-decoration: none;'>$webboard_header</a></p></td>
-		  			<td class='col-md-2'><p align='center' class='font20'>$username</p></td>
-		  			<td class='col-md-1'><p align='center' class='font20'>$visitor</p></td>
-		  			<td class='col-md-1'><p align='center' class='font20'>ตอบ</p></td>
-		  			<td class='col-md-3'><p align='center' class='font20'>$webboard_date</p></td>
+		  			<td class='col-md-2 hidden-xs'><p align='center' class='font20'>$username</p></td>
+		  			<td class='col-md-1 hidden-xs'><p align='center' class='font20'>$visitor</p></td>
+		  			<td class='col-md-1 hidden-xs'><p align='center' class='font20'>ตอบ</p></td>
+		  			<td class='col-md-3 hidden-xs'><p align='center' class='font20'>$webboard_date</p></td>
 		  		</tr>";
 		  		$number++;
 		  	}
@@ -121,13 +121,13 @@ function form_webboard(){
 	  		echo "<div class='col-md-10'><p class='font20'><input type='text' class='form-control' name='webboard_header' ></p></div>";
 	  		echo "<div class='col-md-12' style='border-top:2px #ddd solid;margin-top:10px;padding-top:10px;'><b><p class='font20'>รายละเอียดของกระทู้ : </p></b></div>";
 	  		echo "<div class='col-md-12'>";
-	  			echo "<p class='font20'><button id='message_bold'>B</button>";
-	  			echo "&nbsp;<button id='message_bold'>I</button>";
-	  			echo "&nbsp;<button id='message_bold'>U</button></p>";
+	  			//echo "<p class='font20'><button id='message_bold'>B</button>";
+	  			//echo "&nbsp;<button id='message_bold'>I</button>";
+	  			//echo "&nbsp;<button id='message_bold'>U</button></p>";
 	  		echo "</div>";
 	  		echo "<div class='col-md-12'><p class='font20'><textarea class='form-control' id='webboard_message' name='webboard_detail' style='height:150px;'></textarea></p></div>";
-	  		echo "<div class='col-md-6'><p ><button type='submit' class='btn btn-success font20' >ตั้งกระทู้</button></p></div>";
-	  		echo "<div class='col-md-6'>";
+	  		echo "<div class='col-md-6 col-xs-6'><p ><button type='submit' class='btn btn-success font20' >ตั้งกระทู้</button></p></div>";
+	  		echo "<div class='col-md-6 col-xs-6'>";
 	  			echo "<table align='right'>";
 	  				$query_user = mysqli_query($_SESSION['connect_db'],"SELECT image FROM users WHERE username='$_SESSION[login_name]'")or die("ERROR : webboard function line 47");
 	  				list($image)=mysqli_fetch_row($query_user);
@@ -209,6 +209,7 @@ function webboard_detail(){
 		echo "<div class='col-md-12 blog_webboard'>";
 			echo "<form method='post' action='index.php?module=webboard&action=insert_subwebboard'><div>";
 				echo "<input type='hidden' name='webboard_id' value='$_GET[webboard_id]'>";
+		  		echo "<div class='container' style='padding:0px'>";
 		  		echo "<div class='col-md-12'><b><p class='font20'>ตอบกลับกระทู้ : </p></b></div>";
 		  		if(empty($_SESSION['login_name'])){
 		  			echo "<div class='col-md-12'><p class='font20'>*****หากต้องการตอบกระทู้หรือตั้งกระทู้ กรุณาล็อดอินเข้าใช้งานระบบก่อน*****</p></div>";
@@ -219,8 +220,8 @@ function webboard_detail(){
 		  			$button_type ="submit";
 		  		}
 		  		echo "<div class='col-md-12'><p class='font20'><textarea class='form-control' id='subwebboard_message' name='subwebboard_message' style='height:150px;' $disabled></textarea></p></div>";
-		  		echo "<div class='col-md-6'><p ><button type='$button_type' class='btn btn-success font20' >ตอบกลับ</button></p></div>";
-		  		echo "<div class='col-md-6'>";
+		  		echo "<div class='col-md-6 col-xs-4'><p ><button type='$button_type' class='btn btn-success font20' >ตอบกลับ</button></p></div>";
+		  		echo "<div class='col-md-6 col-xs-8'>";
 		  		if(!empty($_SESSION['login_name'])){
 		  			echo "<table align='right'>";
 		  				$query_user = mysqli_query($_SESSION['connect_db'],"SELECT image FROM users WHERE username='$_SESSION[login_name]'")or die("ERROR : webboard function line 47");
@@ -230,6 +231,7 @@ function webboard_detail(){
 		  				echo "<tr><td ><p class='font20' style='margin-top:-5px'>&nbsp;$_SESSION[login_name]</p></td></tr>";
 		  			echo "</table>";
 		  		}
+		  		echo "</div>";
 		  		echo "</div>";
 		  	echo "</div></form>";
 		echo "</div>";

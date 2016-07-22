@@ -1,6 +1,5 @@
 <?php
 function list_webblog(){
-	echo "asdasdasd";
 	echo "<div class='container-fluid' style='padding:0px;'>";
 		echo "<div class='header-webblog'>";
 			echo "<b>ข่าวสาร & บทความ</b>";
@@ -14,9 +13,9 @@ function list_webblog(){
 					case '3': $webblog_menu1='';$webblog_menu2='';$webblog_menu3='menu-webblog-active';break;
 					default: $webblog_menu1='menu-webblog-active';$webblog_menu2='';$webblog_menu3=''; break;
 				}
-                echo "<a href='index.php?module=webblog&action=list_webblog&webblog_menu=1'><div class='col-md-5 menu-webblog $webblog_menu1'><center><b>แสดงทั้งหมด</center></div></a>";
-                echo "<a href='index.php?module=webblog&action=list_webblog&webblog_menu=2'><div class='col-md-3 menu-webblog $webblog_menu2'><center>ข่าวสาร</center></div></a>";
-                echo "<a href='index.php?module=webblog&action=list_webblog&webblog_menu=3'><div class='col-md-4 menu-webblog $webblog_menu3' ><center>บทความ</b></center></div></a>";
+                echo "<a href='index.php?module=webblog&action=list_webblog&webblog_menu=1'><div class='col-md-5 col-xs-5 menu-webblog $webblog_menu1'><center><b>แสดงทั้งหมด</center></div></a>";
+                echo "<a href='index.php?module=webblog&action=list_webblog&webblog_menu=2'><div class='col-md-3 col-xs-3 menu-webblog $webblog_menu2'><center>ข่าวสาร</center></div></a>";
+                echo "<a href='index.php?module=webblog&action=list_webblog&webblog_menu=3'><div class='col-md-4 col-xs-4 menu-webblog $webblog_menu3' ><center>บทความ</b></center></div></a>";
 			echo "</div>";
 			echo "<div class='col-md-4'></div>";
 		echo "</div>";

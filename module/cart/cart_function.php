@@ -4,7 +4,8 @@ function show_cart(){
 		echo "<center><h3 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>สินค้ายังไม่ถูกเพิ่มในตะกร้า</b></h3></center>";
 	}else{
 		echo "<center><h3 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>รายการสินค้าในตะกร้า</b></h3></center>";
-		echo "<table class='table table-hover table-striped'>";
+		echo "<div class='table-responsive'> ";
+		echo "<table class='table table-hover table-striped '>";
 			echo "<tr><th><p class='font20' align='center'><b>ลำดับ</b></p></th><th><p class='font20'><b>รูปภาพ</b></p></th><th><p class='font20'><b>ชื่อสินค้า</b></p></th><th><p class='font20' align='center'><b>ขนาด</b></p></th><th><p class='font20' align='center'><b>ราคา(ต่อชิ้น)</b></p></th><th><p class='font20' align='center'><b>จำนวน</b></p></th><th><p class='font20' align='center'><b>รวมราคา</b></p></th></tr>";
 		$num=1;
 		$total_price=0;
@@ -43,6 +44,7 @@ function show_cart(){
 		}
 		echo "<tr><td colspan='6'><b><p class='font20' align='right'>รวมราคาสินค้าทั้งหมด</p></b></td><td><p class='font20' id='total_incart' align='right'>$total_price</p></td></tr>";
 		echo "</table>";
+		echo "</div>";
 		echo "<center><button class='btn btn-success' data-toggle='modal' data-target='#buyproduct'><p class='font20' style='margin-bottom:-5px;'>สั่งซื้อสินค้า</p></button>&nbsp;&nbsp;&nbsp;<a href='index.php?module=cart&action=cancel_cart'><button class='btn btn-danger'><p class='font20' style='margin-bottom:-5px;'>ยกเลิกสั่งซื้อ</p></button></a></center>";
 		echo "<div class='modal fade' id='buyproduct' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
 		  echo "<div class='modal-dialog ' role='document'>";

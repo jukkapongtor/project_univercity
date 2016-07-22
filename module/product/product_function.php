@@ -3,7 +3,7 @@ function list_product(){
 
 	echo "<div class='container-fluid well padding0' style='margin-top:5px;'>";
 		echo "<div class='col-md-3' style='padding' >";
-?>
+?>			<div class='hidden-sm hidden-md hidden-lg'>
 				<nav class="navbar navbar-default" >
 				  <div class="container-fluid" style='padding:10px;margin:0px;'>
 				    <!-- Brand and toggle get grouped for better mobile display -->
@@ -31,6 +31,18 @@ function list_product(){
 				    </div><!-- /.navbar-collapse -->
 				  </div><!-- /.container-fluid -->
 				</nav>
+			</div>
+			<div class='hidden-xs' style='width:100%'>
+				<ul class="list-group">
+<?php
+						$query_type=mysqli_query($_SESSION['connect_db'],"SELECT type.product_type,type.type_name,quality.product_quality FROM type LEFT JOIN quality ON type.product_type = quality.quality_type GROUP BY type.type_name ORDER BY type.product_type ASC")or die("ERROR : product_function line 6");
+						while(list($product_type,$type_name,$product_quality)=mysqli_fetch_row($query_type)){
+							$active = ($product_type==$_GET['menu'])?"active":"";
+							echo "<a href='index.php?module=product&action=list_product&menu=$product_type&cate=$product_quality' class='list-group-item list-group-item-success $active'><font ><b>สินค้าประเภท$type_name</b></font></a>";
+						}
+?>
+				</ul>
+			</div>
 <?php
 		echo "</div>";
 		echo "<div class='col-md-9' style='padding-top:10px;padding-right:0px;padding-left:0px'>";

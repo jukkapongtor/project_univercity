@@ -110,8 +110,8 @@ function order_list(){
             echo "<a href='index.php?module=users&action=data_users&menu=3&order_status=5'><div class='order-status4 $active_orsta5'><center>ล้มเหลว</center></div></a>";
             echo "<div class='order-status-center'></div>";
         echo "</div>";
-		echo "<table class='table table-striped table-hover font20'>";
-			echo "<tr><th><center>ลำดับ</th><th><center>รหัสซื้อสินค้า</th><th><center>เวลาที่ซื้อสินค้า</th><!--<th>เวลาในการชำระเงิน</th><th>สถานะการซื้อสินค้า</th><th>จำนวนสินค้า</th><th>ราคา</th>--><th><center>ข้อมูล</th></tr>";
+        
+		
 		$number=1;
 		$query_order = mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE order_username='$_SESSION[login_name]' AND order_status='$_GET[order_status]'")or die("ERROR : order function line 21");
 		$all_row = mysqli_num_rows($query_order);
@@ -128,6 +128,9 @@ function order_list(){
 		for($a=1;$a<$page;$a++){
 		  	$number+=5;
 		}
+
+		echo "<table class='table table-striped table-hover'>";
+			echo "<tr><th><center>ลำดับ</th><th><center>รหัสซื้อสินค้า</th><th><center>เวลาที่ซื้อสินค้า</th><!--<th>เวลาในการชำระเงิน</th><th>สถานะการซื้อสินค้า</th><th>จำนวนสินค้า</th><th>ราคา</th>--><th><center>ข้อมูล</th></tr>";
 		$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_username='$_SESSION[login_name]' AND order_status='$_GET[order_status]' LIMIT $start_row,5")or die("ERROR : order function line 21");
 		while(list($order_id,$order_username,$order_date,$order_date_limit,$order_status,$total_amount,$total_price,$tracking_id)=mysqli_fetch_row($query_order)){
 			echo "<tr>";
@@ -139,9 +142,10 @@ function order_list(){
 					    echo "<div class='modal-content'>";
 					      echo "<div class='modal-header' style='padding-bottom:0px;'>";
 					        echo "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
-					        echo "<h3 class='modal-title' id='myModalLabel'><b>รายละเอียดการซื้อสินค้ารหัส : </b>$order_id</h3>";
+					        echo "<h4 class='modal-title' id='myModalLabel'><b>รายละเอียดการซื้อสินค้ารหัส : </b>$order_id</h4>";
 					      echo "</div>";
 					      echo "<div class='modal-body'>";
+					      	echo "<div class='table-responsive'>";
 					        echo "<table class='table table-hover table-striped font20'>";
 					        echo "<thead><tr><th><center>ลำดับ</th><th><center>ชื่อสินค้า</th><th><center>ขนาดสินค้า</th><th><center>ราคา(ชิ้น)</th><th><center>จำนวน</th><th><center>รวมราคา</th></tr></thead><tbody>";
 					        $num=1;
@@ -161,7 +165,7 @@ function order_list(){
 					     		$num++;
 					        }
 					        echo "<tr><td colspan='5' align='right'><b>รวมยอดเงินทั้งหมด</b></td><td align='right'>".number_format($total_price,2)." ฿</td></tr>";
-					        echo "</tbody></table>";
+					        echo "</tbody></table></div>";
 					        if($order_status!=5){
 						        echo "<p align='center'><font color='red'> **** </font>เมื่อโอนเงินเสร็จและได้รับการตรวจสอบจากเจ้าของร้าน จะปรากฎปุ่มปริ้นใบเสร็จ<font color='red'> **** </font></p>";
 						        if($order_status==3){
@@ -235,6 +239,7 @@ function order_list(){
 			$number++;
 		}
 		echo "</table>";
+
 		if($total_page>1){
 		echo "<div class='col-md-12'>";
 			echo "<center><nav><ul class='pagination'>";
@@ -261,6 +266,7 @@ function order_success(){
 	$row = mysqli_num_rows($query_order);
 	if($row>0){
 		echo "<center><h3 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>ประวัติการซื้อสินค้าจากร้านมุมเฟิร์น</b></h3></center>";
+		echo "<div class='table-responsive'>";
 		echo "<table class='table table-striped table-hover font20'>";
 			echo "<tr><th><center>ลำดับ</th><th><center>รหัสซื้อสินค้า</th><th><center>เวลาที่ซื้อสินค้า</th><th><center>เวลาในการชำระเงิน</th><!--<th>จำนวนสินค้า</th><th>ราคา</th>--><th><center>ข้อมูล</th></tr>";
 		$num = 1;
@@ -311,6 +317,7 @@ function order_success(){
 			$num++;
 		}
 		echo "</table>";
+		echo "</div>";
 	}else{
 		echo "<center><h3 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>ลูกค้ายังไม่เคยซื้อสินค้าจากร้านมุมเฟิร์น</b></h3></center>";
 	}
