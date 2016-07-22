@@ -1,22 +1,57 @@
 <?php
 function list_product(){
+
 	echo "<div class='container-fluid well padding0' style='margin-top:5px;'>";
-		echo "<div class='col-md-3 padding0' >";
-			echo "<div class='list-group' style='margin-bottom:0px;'>";
-		$query_type=mysqli_query($_SESSION['connect_db'],"SELECT type.product_type,type.type_name,quality.product_quality FROM type LEFT JOIN quality ON type.product_type = quality.quality_type GROUP BY type.type_name ORDER BY type.product_type ASC")or die("ERROR : product_function line 6");
-		while(list($product_type,$type_name,$product_quality)=mysqli_fetch_row($query_type)){
-			$active = ($product_type==$_GET['menu'])?"active":"";
-			echo "<a href='index.php?module=product&action=list_product&menu=$product_type&cate=$product_quality' class='list-group-item list-group-item-success $active'><font ><b>รายการสินค้าประเภท$type_name</b></font></a>";
-		} 
-			echo "</div>";
+		echo "<div class='col-md-3' style='padding' >";
+?>			<div class='hidden-sm hidden-md hidden-lg'>
+				<nav class="navbar navbar-default" >
+				  <div class="container-fluid" style='padding:10px;margin:0px;'>
+				    <!-- Brand and toggle get grouped for better mobile display -->
+				    <div class="navbar-header">
+				      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				        <span class="sr-only">Toggle navigation</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				      </button>
+				      <a class="navbar-brand">เลือกประเภทสินค้า</a>
+				    </div>
+
+				    <!-- Collect the nav links, forms, and other content for toggling -->
+				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+				      <ul class="nav navbar-nav" style='padding:10px;width:100%;margin:0px;'>
+<?php
+						$query_type=mysqli_query($_SESSION['connect_db'],"SELECT type.product_type,type.type_name,quality.product_quality FROM type LEFT JOIN quality ON type.product_type = quality.quality_type GROUP BY type.type_name ORDER BY type.product_type ASC")or die("ERROR : product_function line 6");
+						while(list($product_type,$type_name,$product_quality)=mysqli_fetch_row($query_type)){
+							$active = ($product_type==$_GET['menu'])?"active":"";
+							echo "<a href='index.php?module=product&action=list_product&menu=$product_type&cate=$product_quality' class='list-group-item list-group-item-success $active'><font ><b>สินค้าประเภท$type_name</b></font></a>";
+						}
+?>
+				      </ul>
+				    </div><!-- /.navbar-collapse -->
+				  </div><!-- /.container-fluid -->
+				</nav>
+			</div>
+			<div class='hidden-xs' style='width:100%'>
+				<ul class="list-group">
+<?php
+						$query_type=mysqli_query($_SESSION['connect_db'],"SELECT type.product_type,type.type_name,quality.product_quality FROM type LEFT JOIN quality ON type.product_type = quality.quality_type GROUP BY type.type_name ORDER BY type.product_type ASC")or die("ERROR : product_function line 6");
+						while(list($product_type,$type_name,$product_quality)=mysqli_fetch_row($query_type)){
+							$active = ($product_type==$_GET['menu'])?"active":"";
+							echo "<a href='index.php?module=product&action=list_product&menu=$product_type&cate=$product_quality' class='list-group-item list-group-item-success $active'><font ><b>สินค้าประเภท$type_name</b></font></a>";
+						}
+?>
+				</ul>
+			</div>
+<?php
 		echo "</div>";
-		echo "<div class='col-md-9' style='padding-top:10px;padding-right:0px'>";
+		echo "<div class='col-md-9' style='padding-top:10px;padding-right:0px;padding-left:0px'>";
 		$query_cate = mysqli_query($_SESSION['connect_db'],"SELECT product_quality,quality_name,quality_image FROM quality WHERE quality_type='$_GET[menu]'")or die("ERROR : product_function line 14");
 		$number=1;
 		$num_cate = mysqli_num_rows($query_cate);
 		if(!empty($num_cate)){
 		while (list($product_quality,$quality_name,$quality_image)=mysqli_fetch_row($query_cate)) {
-			echo "<div class='col-md-3'>";
+			echo "<div class='col-md-3 col-xs-4'>";
 			if($product_quality==$_GET['cate']){
 				$quality_img = (empty($quality_image))?"no-images.jpg":$quality_image;
 				echo "<center><img src='images/icon/$quality_img' width='100' height='100' style='border-radius:100px;border:5px solid #248a32;' >";
@@ -40,19 +75,19 @@ function list_product(){
 	list($type_product) = mysqli_fetch_row($query_type);
 	$query_cate = mysqli_query($_SESSION['connect_db'],"SELECT quality_name FROM quality WHERE quality_type='$_GET[menu]' AND product_quality='$_GET[cate]'")or die("ERROR : product_function line 39");
 	list($cate_name)=mysqli_fetch_row($query_cate);
-	echo "<h4><b>รายการสินค้า / ร้านการสินค้าประเภท$type_product / หมวดหมู่$cate_name</b></h4>";
+	echo "<h4 class='font_show_type_qulity'><b>รายการสินค้า / ประเภท$type_product / หมวดหมู่$cate_name</b></h4>";
 	$quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 42");
     list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
 	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_type='$_GET[menu]' AND product.product_quality='$_GET[cate]'")or die("ERROR : product_function line 44");
 	$num_row =mysqli_num_rows($query_product);
 	if($num_row>0){
 		while (list($product_id,$product_name,$product_type)=mysqli_fetch_row($query_product)) {
-			echo "<div class='col-md-3' style='margin-top:20px'>";
+			echo "<div class='col-md-3 col-xs-6' style='margin-top:20px'>";
 			$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
 			list($product_image_detail)=mysqli_fetch_row($query_image);
 			$path= (empty($product_image_detail))?"icon/no-images.jpg":"$product_type/$product_image_detail";
 				$str=explode(" ",$product_name,2);
-				echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='300'><p style='margin-top:5px;'><font class='font-content' >$str[0]</font></p></a>";
+				echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' class='img_product_detail' ><p style='margin-top:5px;'><font class='font-content' >$str[0]</font></p></a>";
 			echo "</div>";
 		}
 	}else{
@@ -70,8 +105,9 @@ function product_detail(){
 	list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
 	$query_product_detail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,product.product_detail,quality.quality_name,product.product_stock,type.type_name,type.type_name_eng FROM product LEFT JOIN quality ON product.product_quality = quality.product_quality LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id='$_GET[product_id]'")or die("ERROR : product_function line 59");
 	list($product_name,$product_detail,$quality_name,$product_stock,$product_type,$type_name_eng)=mysqli_fetch_row($query_product_detail);
+	echo "<center><div class='hidden-md hidden-sm hidden-lg' style='margin-top:20px'><h4><b>รายละเอียดสินนค้า$product_name</b></h4></div></center>";
 	echo "<div class='container-fluid'>";
-	    echo "<div class='col-md-5'style='margin-top:20px'>";
+	    echo "<div class='col-md-5'>";
 	    $query_images_detail = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$_GET[product_id]'")or die("ERROR : product_function line 200");
 	    $number_image=1;
 	    $row_image = mysqli_num_rows($query_images_detail);
@@ -84,8 +120,8 @@ function product_detail(){
 				echo "</div>";
 				$number_image++;
 				}
-				echo "<div class='col-md-3' style='padding:5px'>";
-					echo "<img src='images/$path' width='100%' height='75' style='border-radius:5px;'>";
+				echo "<div class='col-md-3 col-xs-3' style='padding:5px'>";
+					echo "<img src='images/$path'  class='img_producde_mini' style='border-radius:5px;'>";
 				echo "</div>";
 			}
 		}else{
@@ -142,7 +178,7 @@ function product_detail(){
 							$number++;
 							if($sellstatus==1){
 							  echo "<div class='col-lg-2'></div>";
-							  echo "<div class='col-lg-6'>";
+							  echo "<div class='col-lg-6 col-xs-9'>";
 							    echo "<div class='input-group'>";
 							      echo "<span class='input-group-btn'>";
 							        echo "<button class='btn btn-default' id='lower_indetail_$product_size_id' type='button'>ลบ</button>";
@@ -153,9 +189,9 @@ function product_detail(){
 							      echo "</span>";
 							    echo "</div>";
 							  echo "</div>";
-							  echo "<div class='col-lg-2'>";
+							  echo "<div class='col-lg-2 col-xs-3' style='padding:0px'>";
 							    echo "<input type='hidden' id='product_id' value='$_GET[product_id]'>";
-							  	echo "<p align='center'><a id='add2cart_$product_size_id'><button type='button' class='btn btn-default btn-sm'><font style='font-size:15px'><b>หยิบสินค้า</b></font></button></a></p>";
+							  	echo "<p align='center'><a id='add2cart_$product_size_id'><button type='button' class='btn btn-default btn-sm' style='font-size:14px'><b>หยิบสินค้า</b></button></a></p>";
 							  echo "</div>";
 							 echo "</div>";
 							}	
@@ -171,12 +207,13 @@ function product_detail(){
 	echo "<div class='col-md-12'><h4><b>รายการสินค้าที่เกี่ยวข้อง(ประเภทเดียวกัน)</b></h4></div>";
 	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE type.type_name='$product_type' ORDER BY RAND() LIMIT 4")or die("ERROR : product_function line 65");
 	while (list($product_id,$product_name,$product_type)=mysqli_fetch_row($query_product)) {
-		echo "<div class='col-md-3'>";
+		echo "<div class='col-md-3 col-xs-4 rand_img_product'>";
 			$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
 			list($product_image_detail)=mysqli_fetch_row($query_image);
 			$path= (empty($product_image_detail))?"icon/no-images.jpg":"$product_type/$product_image_detail";
-			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='250px' style='border-radius:5px;'>";
-			echo "<p class='font-content' style='margin-top:5px'>$product_name</p></a>";
+			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' class='ran_img_product'  style='border-radius:5px;'>";
+			$str = explode(" ",$product_name, 2);
+			echo "<p class='font-content' style='margin-top:5px'>$str[0]</p></a>";
 		echo "</div>";
 	}
 
