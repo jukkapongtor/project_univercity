@@ -270,7 +270,7 @@
   							
   							<div class="col-md-4 box-smail">
   								<center>
-  								<img src="../images/dashbord/group.png" width="60%" >
+  								<img src="../images/dashbord/chatbord.png" width="60%" >
   								<p>กระทู้</p>
   								<h4>5</h4>
   								</center>
@@ -356,8 +356,8 @@
 ?>
   							<div class="col-md-4 box-font">
   								<center>
-  								<img src="../images/dashbord/label.png" width="60%" >
-  								<p></p>
+  								<img src="../images/dashbord/id-card.png" width="60%" >
+  								<p>พนักงาน</p>
   								<h4><?php echo "$ptype"; ?></h4>
   								</center>  								
   							</div>
@@ -370,7 +370,7 @@
   							
   							<div class="col-md-4 box-font">
   								<center>
-  								<img src="../images/dashbord/diagram.png" width="60%" >
+  								<img src="../images/dashbord/group.png" width="60%" >
   								<p>สมาชิก</p>
   								<h4><?php echo "$qua"; ?></h4>
   								</center>
@@ -385,7 +385,7 @@
   							<div class="col-md-4 box-font">
   								<center>
   								<img src="../images/dashbord/package.png" width="60%" >
-  								<p>พนักงาน</p>
+  								<p>รายการขายสินค้า</p>
   								<h4><?php echo "$product"; ?></h4>
   								</center>
   							</div>
