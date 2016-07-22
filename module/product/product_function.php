@@ -108,8 +108,8 @@ function product_detail(){
 				echo "</div>";
 				$number_image++;
 				}
-				echo "<div class='col-md-3' style='padding:5px'>";
-					echo "<img src='images/$path' width='100%' height='75' style='border-radius:5px;'>";
+				echo "<div class='col-md-3 col-xs-3' style='padding:5px'>";
+					echo "<img src='images/$path'  class='img_producde_mini' style='border-radius:5px;'>";
 				echo "</div>";
 			}
 		}else{
@@ -166,7 +166,7 @@ function product_detail(){
 							$number++;
 							if($sellstatus==1){
 							  echo "<div class='col-lg-2'></div>";
-							  echo "<div class='col-lg-6'>";
+							  echo "<div class='col-lg-6 col-xs-9'>";
 							    echo "<div class='input-group'>";
 							      echo "<span class='input-group-btn'>";
 							        echo "<button class='btn btn-default' id='lower_indetail_$product_size_id' type='button'>ลบ</button>";
@@ -177,9 +177,9 @@ function product_detail(){
 							      echo "</span>";
 							    echo "</div>";
 							  echo "</div>";
-							  echo "<div class='col-lg-2'>";
+							  echo "<div class='col-lg-2 col-xs-3' style='padding:0px'>";
 							    echo "<input type='hidden' id='product_id' value='$_GET[product_id]'>";
-							  	echo "<p align='center'><a id='add2cart_$product_size_id'><button type='button' class='btn btn-default btn-sm'><font style='font-size:15px'><b>หยิบสินค้า</b></font></button></a></p>";
+							  	echo "<p align='center'><a id='add2cart_$product_size_id'><button type='button' class='btn btn-default btn-sm' style='font-size:14px'><b>หยิบสินค้า</b></button></a></p>";
 							  echo "</div>";
 							 echo "</div>";
 							}	
@@ -195,12 +195,13 @@ function product_detail(){
 	echo "<div class='col-md-12'><h4><b>รายการสินค้าที่เกี่ยวข้อง(ประเภทเดียวกัน)</b></h4></div>";
 	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE type.type_name='$product_type' ORDER BY RAND() LIMIT 4")or die("ERROR : product_function line 65");
 	while (list($product_id,$product_name,$product_type)=mysqli_fetch_row($query_product)) {
-		echo "<div class='col-md-3'>";
+		echo "<div class='col-md-3 col-xs-4 rand_img_product'>";
 			$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
 			list($product_image_detail)=mysqli_fetch_row($query_image);
 			$path= (empty($product_image_detail))?"icon/no-images.jpg":"$product_type/$product_image_detail";
-			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' width='100%' height='250px' style='border-radius:5px;'>";
-			echo "<p class='font-content' style='margin-top:5px'>$product_name</p></a>";
+			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' class='ran_img_product'  style='border-radius:5px;'>";
+			$str = explode(" ",$product_name, 2);
+			echo "<p class='font-content' style='margin-top:5px'>$str[0]</p></a>";
 		echo "</div>";
 	}
 

@@ -326,6 +326,14 @@ div {
 	width:100%; 
 	height:300px;
 }
+.img_producde_mini{
+	width:100%;
+	height:75px; 
+}
+.ran_img_product{
+	width:100%;
+	height:250px;
+}
 #close-web{
 	position: fixed;
 	width: 100%;
@@ -514,4 +522,12 @@ div {
 		width:100%; 
 		height:200px;
 	}
+	.ran_img_product{
+		width:100%;
+		height:150px;
+	}
+	.rand_img_product{
+		padding: 3px;
+	}
 }
+
