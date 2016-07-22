@@ -1,5 +1,6 @@
 <?php
 function list_webblog(){
+	echo "asdasdasd";
 	echo "<div class='container-fluid' style='padding:0px;'>";
 		echo "<div class='header-webblog'>";
 			echo "<b>ข่าวสาร & บทความ</b>";
