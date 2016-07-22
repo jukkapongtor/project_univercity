@@ -1,6 +1,6 @@
 <?php
 function connect_db(){
-	$_SESSION['connect_db']=mysqli_connect("mysql.hostinger.in.th","u718031275_1304","num13041994","u718031275_mufn") or die("Connect Error");
+	$_SESSION['connect_db']=mysqli_connect("localhost","root","","mumfern") or die("Connect Error");
 	mysqli_query($_SESSION['connect_db'],"SET NAMES utf8");
 }
 function get_module($module,$action){

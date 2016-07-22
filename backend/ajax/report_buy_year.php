@@ -198,6 +198,7 @@ $(document).ready(function(){
 											}
 											echo "<tr><td align='right' colspan='5'>รวมเป็นจำนวนเงินทั้งหมด</td><td align='right'>".number_format($total_supply_price,2)." ฿</td></tr>";
 											echo "</table>";
+											echo "<center><a href='../print/print_expen.php?month=$i&year=$year' target='_blank'><button class='btn btn-sm btn-info'><span class='glyphicon glyphicon-print' aria-hidden='true'></span>&nbsp;&nbsp;ปริ้นค่าใช้จ่าย</button></a></center>";
 										}
 ?>
 									  </div>
