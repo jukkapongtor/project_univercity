@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	include("../../include/function.php");
+	date_default_timezone_set('Asia/Bangkok');
 	connect_db();
 ?>
 <script>
@@ -77,23 +78,35 @@
 		<div class="col-md-4" style="height:140px;margin-bottom:20px;">
 			<div class="col-md-6" style="padding:0px; margin: 2px; width: 45%; " >
 				<div class="col-md-12 day-money-on" style="border: 3px solid #027878;" >
-					<center><h1><b>200.00</b></h1></center>				
+					<center><h2><b>
+					<?php
+						$query_order = mysqli_query($_SESSION['connect_db'],"SELECT SUM(total_price) FROM orders WHERE DAY(order_date)='".date("d")."' AND MONTH(order_date)='".date("m")."' AND YEAR(order_date)='".date("Y")."' AND (order_Status='3' OR order_Status='4') ")or die("ERROR : backend dashbord line 83");
+						list($total_price)=mysqli_fetch_row($query_order);
+						echo number_format($total_price,2);
+					?>
+					</b></h2></center>				
 				</div>
 				<div class="col-md-12 day-money-under" style=" background: #027878; border: 3px solid #027878;" >
 					<center>
 						<h6>รายได้</h6>
-						<h4>13/05/59</h4>
+						<h4><?php echo date("d")."/".date("m")."/".substr((date("Y")+543),2,2)?></h4>
 					</center>				
 				</div>
 			</div>
 			<div class="col-md-6" style="padding:0px; margin: 2px; width: 45%;" >
 				<div class="col-md-12 day-money-on" style="border: 3px solid #801638;" >
-					<center><h1><b>200.00</b></h1></center>				
+					<center><h2><b>
+					<?php					
+				        $quer_buy_supply = mysqli_query($_SESSION['connect_db'],"SELECT SUM(supply_price*supply_amount) FROM buy_supply WHERE MONTH(supply_date)='".date("m")."' AND YEAR(supply_date)='".date("Y")."' AND DAY(supply_date)='".date("d")."'")or die("ERROR report buy month line 149");
+				        list($total_supply_price)=mysqli_fetch_row($quer_buy_supply);
+				        echo number_format($total_supply_price,2);
+					?>
+					</b></h2></center>				
 				</div>
 				<div class="col-md-12 day-money-under" style=" background: #801638; border: 3px solid #801638;" >
 					<center>
 						<h6>รายจ่าย</h6>
-						<h4>13/05/59</h4>
+						<h4><?php echo date("d")."/".date("m")."/".substr((date("Y")+543),2,2)?></h4>
 					</center>				
 				</div>
 			</div>
@@ -178,7 +191,13 @@
   							</center>
   						</div>
   						<div class="col-md-12 box-under" style=" background: #16a085;">
-  						<center><h2>12</h2></center>
+	  						<center><h2>
+	  						<?php
+	  							$query_order = mysqli_query($_SESSION['connect_db'],"SELECT count(order_id) FROM orders WHERE order_Status='1' AND type_order='web'")or die("ERROR : backend manage_website line 65");
+	  							list($payment)=mysqli_fetch_row($query_order);
+	  							echo "$payment";
+	  						?>
+	  						</h2></center>
   						</div>
   					</div>
   					<div class="col-md-4" >
@@ -189,7 +208,13 @@
   							</center>
   						</div>
   						<div class="col-md-12 box-under" style=" background: #d35400;">
-  						<center><h2>12</h2></center>
+  							<center><h2>
+	  						<?php
+	  							$query_order = mysqli_query($_SESSION['connect_db'],"SELECT count(order_id) FROM orders WHERE order_Status='2' AND type_order='web'")or die("ERROR : backend manage_website line 65");
+	  							list($payment)=mysqli_fetch_row($query_order);
+	  							echo "$payment";
+	  						?>
+	  						</h2></center>
   						</div>
   					</div>
   					<div class="col-md-4" >
@@ -200,7 +225,13 @@
   							</center>
   						</div>
   						<div class="col-md-12 box-under" style=" background: #2980b9;">
-  						<center><h2>12</h2></center>
+  							<center><h2>
+	  						<?php
+	  							$query_order = mysqli_query($_SESSION['connect_db'],"SELECT count(order_id) FROM orders WHERE order_Status='3' AND type_order='web' AND tracking_id='กำลังจัดเตรียมสินค้า'")or die("ERROR : backend manage_website line 65");
+	  							list($payment)=mysqli_fetch_row($query_order);
+	  							echo "$payment";
+	  						?>
+	  						</h2></center>
   						</div>
   					</div>
   				</div>
@@ -214,9 +245,13 @@
   							</center>
   						</div>
   						<div class="col-md-12 box-under" style=" background: #8e44ad;">
-  							<center>
-  								<h2>12</h2>
-  							</center>
+  							<center><h2>
+	  						<?php
+	  							$query_order = mysqli_query($_SESSION['connect_db'],"SELECT count(order_id) FROM orders WHERE order_Status='3' AND type_order='web' AND tracking_id!='กำลังจัดเตรียมสินค้า'")or die("ERROR : backend manage_website line 65");
+	  							list($payment)=mysqli_fetch_row($query_order);
+	  							echo "$payment";
+	  						?>
+	  						</h2></center>
   						</div>
   					</div>
   					<div class="col-md-4" >
@@ -238,7 +273,13 @@
   							</center>
   						</div>
   						<div class="col-md-12 box-under" style=" background: #f39c12;">
-  						<center><h2>12</h2></center>
+  							<center><h2>
+  							<?php
+	  							$query_contact = mysqli_query($_SESSION['connect_db'],"SELECT count(contact_id) FROM contactus ")or die("ERROR : backend dashbord line 273");
+	  							list($cnt_contact)=mysqli_fetch_row($query_contact);
+	  							echo "$cnt_contact";
+	  						?>
+  							</h2></center>
   						</div>
   					</div>
   				</div>
@@ -272,7 +313,13 @@
   								<center>
   								<img src="../images/dashbord/chatbord.png" width="60%" >
   								<p>กระทู้</p>
-  								<h4>5</h4>
+  									<h4>
+  									<?php
+  										$query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT count(webboard_id) FROM webboard ")or die("ERROR : backend dashbord line 311");
+  										list($cnt_webboard)=mysqli_fetch_row($query_webboard);
+  										echo "$cnt_webboard";
+  									?>
+  									</h4>
   								</center>
   							</div>
   							
@@ -280,7 +327,13 @@
   								<center>
   								<img src="../images/dashbord/new.png" width="60%" >
   								<p>ข่าวสาร</p>
-  								<h4>1</h4>
+  								<h4>
+  								<?php
+  									$query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT count(id_blog) FROM webblog WHERE type_blog='ข่าวสาร'")or die("ERROR : backend dashbord line 311");
+  									list($cnt_webblog)=mysqli_fetch_row($query_webboard);
+  									echo "$cnt_webblog";
+  								?>
+  								</h4>
   								</center>
   								
   							</div>
@@ -289,7 +342,13 @@
   								<center>
   								<img src="../images/dashbord/blog.png" width="60%" >
   								<p>บทความ</p>
-  								<h4>5</h4>
+  								<h4>
+  								<?php
+  									$query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT count(id_blog) FROM webblog WHERE type_blog='บทความ'")or die("ERROR : backend dashbord line 311");
+  									list($cnt_webblog)=mysqli_fetch_row($query_webboard);
+  									echo "$cnt_webblog";
+  								?>	
+  								</h4>
   								</center>
   							</div>
   						</div>
@@ -349,22 +408,19 @@
   						<div class="col-md-12" style="padding:0px;">
 
 <?php
-		$type = mysqli_query($_SESSION['connect_db'],"SELECT product_type FROM type")or die("ERROR : backend dashbord line 307");
-
-		$ptype = mysqli_num_rows($type);
-
+		$query_employee = mysqli_query($_SESSION['connect_db'],"SELECT employee_id FROM employee")or die("ERROR : backend dashbord line 307");
+		$cnt_emplo = mysqli_num_rows($query_employee);
 ?>
   							<div class="col-md-4 box-font">
   								<center>
   								<img src="../images/dashbord/id-card.png" width="60%" >
   								<p>พนักงาน</p>
-  								<h4><?php echo "$ptype"; ?></h4>
+  								<h4><?php echo "$cnt_emplo"; ?></h4>
   								</center>  								
   							</div>
 <?php
-		$quality = mysqli_query($_SESSION['connect_db'],"SELECT product_quality FROM quality")or die("ERROR : backend dashbord line 320");
-
-		$qua = mysqli_num_rows($quality);
+		$query_user = mysqli_query($_SESSION['connect_db'],"SELECT username FROM users")or die("ERROR : backend dashbord line 320");
+		$cnt_user = mysqli_num_rows($query_user);
 
 ?>
   							
@@ -372,7 +428,7 @@
   								<center>
   								<img src="../images/dashbord/group.png" width="60%" >
   								<p>สมาชิก</p>
-  								<h4><?php echo "$qua"; ?></h4>
+  								<h4><?php echo "$cnt_user"; ?></h4>
   								</center>
   							</div>
  <?php

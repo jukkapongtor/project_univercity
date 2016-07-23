@@ -8,6 +8,7 @@
     include("module/orders/orders_function.php");
     include("module/transfer/transfer_function.php");
     include("module/webblog/webblog_function.php");
+    include("module/contact/contact_function.php");
 	connect_db();
 	$module=empty($_GET['module'])?"":$_GET['module'];
     $action=empty($_GET['action'])?"":$_GET['action'];
@@ -140,7 +141,18 @@
                 $.post('module/index.php?data=close_web',{close_web:1},function(data){
                 });
             });
-        });
+        $(".contactuser-content1").click(function(){
+            $(".contactuser-content1").hide();
+            $(".contactuser").animate({"margin-bottom":"0px"},1000);
+            $(".contactuser-content2").show();
+        }); 
+         $(".contactuser-content2").click(function(){
+            $(".contactuser-content2").hide();
+            $(".contactuser").animate({"margin-bottom":"-285px"},1000);
+            $(".contactuser-content1").show();
+        });    
+
+    });
  </script>
 <?php
 /*
@@ -454,11 +466,36 @@ echo "</script>";
     </div>
     <div class="footer" >
         <div class="container-fluid">
-                <p align="right" style='color:white;margin-top:5px;'><b>ที่อยู่ร้านมุมเฟิร์น</b></p>
-                <p align="right" style='color:white'>ตลากคำเที่ยง ล็อค f208-f209 ตำบล ป่าตัน อำเภอเมือง จังหวัดเชียงใหม่ 50300</p>
-                <p align="right" style='color:white'>เบอร์โทร : 081-8055024 &nbsp;&nbsp;E-mail : veerada@mumfern.com</p>
+                <p style='color:white;margin-top:5px;'><b>ที่อยู่ร้านมุมเฟิร์น</b></p>
+                <p style='color:white'>ตลากคำเที่ยง ล็อค f208-f209 ตำบล ป่าตัน อำเภอเมือง จังหวัดเชียงใหม่ 50300</p>
+                <p style='color:white'>เบอร์โทร : 081-8055024 &nbsp;&nbsp;E-mail : veerada@mumfern.com</p>
         </div>
     </div>
+<?php
+    if(empty($_SESSION['login_type'])||($_SESSION['login_type']!=1&&$_SESSION['login_type']!=2)){
+        if(!empty($_SESSION['login_type'])){  
+            $query_user = mysqli_query($_SESSION['connect_db'],"SELECT email FROM users WHERE username='$_SESSION[login_name]'")or die("ERROR index line 476");
+            list($email)=mysqli_fetch_row($query_user);
+
+        }
+        $username = (empty($_SESSION['login_name']))?"":$_SESSION['login_name'];
+        $email =(empty($email))?"":$email;
+        $disabled = (empty($_SESSION['login_name']))?"":"disabled";
+?>
+    <div class="contactuser">
+        <center><h4 class="contactuser-content1"><b>CONTACT US</b></h4><h4 class="contactuser-content2"><b>CONTACT US</b></h4></center>
+        <div class='container-fluid'>
+            <form action="index.php?module=contact&action=insert_contact" method="post">
+                <p><input type='text' class='form-control input-sm' name='username' value="<?php echo "$username";?>"  placeholder="Username...." <?php echo "$disabled";?>></p>
+                <p><input type='text' class='form-control input-sm' name='email' value="<?php echo "$email";?>" placeholder="E-mail...." <?php echo "$disabled";?>></p>
+                <p><textarea class='form-control' style='height:120px' name='message' placeholder="Message...."></textarea></p>
+                <p align="right"><button class="btn btn-sm btn-warning">Send</button></p>
+            </form>
+        </div>
+    </div>
+<?php
+    }
+?>
 </div>
 <div class="display_mobile">
     

@@ -51,11 +51,11 @@
 	list($month_name)=mysqli_fetch_row($query_month);
 	$select_month = $month_name;
 	
-
-?>	
-<p align="center">ค่าใช้จ่ายประจำวันที่ <?php echo "$_GET[day] $select_month $_GET[year]" ?></p>
-
-<?php
+	if(!empty($_GET['day'])){
+ 		echo "<p align='center'>ค่าใช้จ่ายประจำวันที่ $_GET[day] $select_month $_GET[year] </p>";
+ 	}else{
+ 		echo "<p align='center'>ค่าใช้จ่ายประจำเดือน $select_month $_GET[year] </p>";
+ 	}
 	$query_buy_supply = mysqli_query($_SESSION['connect_db'],"SELECT * FROM buy_supply WHERE $year $month $day")or die("ERROR report buy month line 168");
 	$row = mysqli_num_rows($query_buy_supply);
 	if(empty($row)){

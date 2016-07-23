@@ -50,11 +50,12 @@
 	$query_month = mysqli_query($_SESSION['connect_db'],"SELECT month_name FROM month WHERE month_id='$_GET[month]'")or die("ERROR : print expen line 50");
 	list($month_name)=mysqli_fetch_row($query_month);
 	$select_month = $month_name;
-	
-
-?>	
-<p align="center">รายได้ประจำวันที่ <?php echo "$_GET[day] $select_month $_GET[year]" ?></p>
-<?php
+	if(!empty($_GET['day'])){
+ 		echo "<p align='center'>รายได้ประจำวันที่ $_GET[day] $select_month $_GET[year] </p>";
+ 	}else{
+ 		echo "<p align='center'>รายได้ประจำเดือน $select_month $_GET[year] </p>";
+ 	}
+	$empty=0;
 	$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE $year $month $day AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : report_sell_day line 59");
 	$rows = mysqli_num_rows($query_order);
 	if($rows>0){
@@ -102,6 +103,8 @@
 				echo "<td align='right'><p>".number_format($total_price,2)." ฿</p></td>";
 			echo "</tr>";
 		echo "</table>";								
+	}else{
+		$empty+=1;
 	}
 	$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE $year $month $day AND (order_status='3' OR order_status='4') AND type_order='shop'")or die("ERROR : report_sell_day line 247");
 	$rows = mysqli_num_rows($query_order);
@@ -150,6 +153,12 @@
 				echo "<td align='right'><p>".number_format($total_price,2)." ฿</p></td>";
 			echo "</tr>";
 		echo "</table>";		
+	}else{
+		$empty+=1;
+	}
+
+	if($empty==2){
+		echo "<br><br><br><br><br><br><br><br><br><h3 align='center'> ไม่พบรายการขายสินค้า </h3>";
 	}
 ?>
 </body>
