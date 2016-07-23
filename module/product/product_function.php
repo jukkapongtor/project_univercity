@@ -98,7 +98,7 @@ function list_product(){
 }
 
 function product_detail(){
-	if(!empty($_SESSION['login_type'])&&$_SESSION['login_type']==2){
+	if(!empty($_SESSION['login_type'])&&($_SESSION['login_type']==2)||($_SESSION['login_type']==1)){
 		echo "<script>window.location='shop/index.php?module=product&action=product_detail&product_id=$_GET[product_id]'</script>";
 	}
 	

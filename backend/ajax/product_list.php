@@ -218,7 +218,7 @@ function hide_remover(){
 							      	echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
 							      	$stock = (empty($product_stock))?0:1;
 							      	$checked = (empty($product_stock))?"":"checked='checked'";
-							      	echo "<td><p><input type='checkbox' name='product_stock' value='$stock' $checked> สินค้าพร้อมจำหน่าย</p></td>";
+							      	echo "<td><p><input type='checkbox' name='product_stock' value='1' $checked> สินค้าพร้อมจำหน่าย</p></td>";
 							    echo "</tr>";
 							    echo "<tr>";
 							      	echo "<td valign='top'><p><b>ขนาดสินค้า</b></p></td>";

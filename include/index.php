@@ -18,7 +18,18 @@
  <script src="../js/jquery-1.11.3.min.js"></script>
  <script src="../js/bootstrap.min.js"></script>
  <script src="../sweetalert/sweetalert.min.js"></script> 
- 
+ <script>
+    $(document).ready(function() {
+      $(".btn_forgot_passwd").click(function(){
+        var username = document.getElementById("username").value;
+        var email = document.getElementById("email").value;
+        $.post('forgot_passwd.php',{username:username,email:email},function(data){ 
+          alert(data);    
+        });
+      });
+
+    });
+ </script>
 </head>
 <body>
 <div class="display_com">
@@ -42,7 +53,56 @@
               <input type="password" name='passwd' class="form-control" placeholder="Password">
             </div>
           <p style="margin-top:10px;" ><a href='../index.php?module=users&action=register' style="text-decoration: none;">สมัครสมาชิก</a></p>
-          <p style="margin-top:10px;" ><a href='#' style="text-decoration: none;">ลืมรหัสผ่าน</a></p>
+          <p style="margin-top:10px;" ><a data-toggle="modal" data-target="#forgot_passwd" style="text-decoration: none;cursor:pointer">ลืมรหัสผ่าน</a></p>
+              <!-- Modal -->
+              <div class="modal fade" id="forgot_passwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin-top:70px;">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel"><center><b>ขั้นตอนการข้อรหัสผ่าน</b></center></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>กรุณากรอกชื่อผู้ใช้และอีเมล์ของท่าน ระบบจะส่งรหัสไปยังอีเมล์ของท่าน</p>
+                        <div class="container-fluid">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10 col-xs-12">
+                          <form action="index.?action=send_forgot_passwd" method="post">
+                          <table width="100%" >
+                            <tr>
+                              <td width="15%">
+                                <p>ชื่อผู้ใช้งาน</p>
+                              </td>
+                              <td width="5%">
+                                <p>&nbsp;:&nbsp;</p>
+                              </td>
+                              <td>
+                                <p><input type='text' class='form-control' id='username' name='username' placeholder="Username..." required></p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <p>อีเมล์</p>
+                              </td>
+                              <td>
+                                <p>&nbsp;:&nbsp;</p>
+                              </td>
+                              <td>
+                                <p><input type='text' class='form-control' id='email' name='email' placeholder="E-mail..." required></p>
+                              </td>
+                            </tr>
+                          </table>
+                          <br>
+                          <center><input type='button' class='btn btn-primary btn_forgot_passwd' value="ส่งข้อมูล"></center>
+                        </div>
+                        <div class="col-md-1"></div>
+                        </div>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
           <div class="col-md-12">
               <p>
                   <center><button type="submit" class="btn btn-success ">เข้าสู่ระบบ</button>
@@ -64,6 +124,8 @@
     logout();
   }
 ?>
+    
+
 </div>
 <div class="display_mobile">
     
