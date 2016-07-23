@@ -67,7 +67,7 @@
                         <div class="container-fluid">
                         <div class="col-md-1"></div>
                         <div class="col-md-10 col-xs-12">
-                          <form action="index.?action=send_forgot_passwd" method="post">
+                         
                           <table width="100%" >
                             <tr>
                               <td width="15%">
@@ -77,7 +77,7 @@
                                 <p>&nbsp;:&nbsp;</p>
                               </td>
                               <td>
-                                <p><input type='text' class='form-control' id='username' name='username' placeholder="Username..." required></p>
+                                <p><input type='text' class='form-control' id='username' name='username_forgot' placeholder="Username..." ></p>
                               </td>
                             </tr>
                             <tr>
@@ -88,7 +88,7 @@
                                 <p>&nbsp;:&nbsp;</p>
                               </td>
                               <td>
-                                <p><input type='text' class='form-control' id='email' name='email' placeholder="E-mail..." required></p>
+                                <p><input type='text' class='form-control' id='email' name='email_forgot' placeholder="E-mail..." ></p>
                               </td>
                             </tr>
                           </table>
@@ -97,7 +97,7 @@
                         </div>
                         <div class="col-md-1"></div>
                         </div>
-                        </form>
+                        
                     </div>
                   </div>
                 </div>
