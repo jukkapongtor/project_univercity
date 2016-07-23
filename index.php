@@ -156,33 +156,7 @@
     });
  </script>
 <?php
-/*
-echo "<script>";
-    echo "$(document).ready(function() {";
-            echo "$('#plus_like').click(function(){";
-            if(!empty($_SESSION['login_name'])){
-                echo "var amount_like = parseInt(document.getElementById('like_status').innerHTML);";
-                echo "var rows = parseInt(document.getElementById('like_webboard').value);";
-                echo "if(rows == 0){";
-                    echo "amount_like++;";
-                    echo "$.post('module/index.php?data=plus_like',{webboard_id:$_GET[webboard_id]},function(data){";
-                    echo "});";
-                    echo "document.getElementById('like_status').innerHTML =amount_like;";
-                    echo "document.getElementById('like_webboard').value=1;";
-                echo "}else{";
-                    echo "amount_like--;";
-                    echo "$.post('module/index.php?data=lower_like',{webboard_id:$_GET[webboard_id]},function(data){";
-                    echo "});";
-                    echo "document.getElementById('like_status').innerHTML =amount_like;";
-                    echo "document.getElementById('like_webboard').value=0;";
-                echo "}";
-            }else{
-                echo "alert('ขออภัย ระบบกดถูกใจสามารถทำได้เพียงสมาชิกเท่านั้น');";
-            }
-            echo "});";
-    echo "});";
-echo "</script>";
-*/
+
 ?>
 
  
