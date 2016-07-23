@@ -212,6 +212,7 @@ switch ($_GET['data']) {
 							      </div>
 							      <div class="modal-body">
 <?php
+									echo "<p align='right'><a href='../print/print_income.php?&month=$month_id&year=$_POST[year]' target='_blank'><button class='btn btn-sm btn-info' style='padding:0px 5px'><span class='glyphicon glyphicon-print' aria-hidden='true'></span>&nbsp;ปริ้นรายได้</button></a></p>";
 //--------------------------แสดงรายะเอียดข้อมูลขายรายวันสำรหับ  ขายบนเว็บไซต์
 									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$_POST[year]' AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : report_sell_day line 247");
 									$rows = mysqli_num_rows($query_order);
@@ -472,6 +473,7 @@ switch ($_GET['data']) {
 							      </div>
 							      <div class="modal-body">
 <?php
+									echo "<p align='right'><a href='../print/print_income.php?day=$i&month=$month&year=$year' target='_blank'><button class='btn btn-sm btn-info' style='padding:0px 5px'><span class='glyphicon glyphicon-print' aria-hidden='true'></span>&nbsp;ปริ้นรายได้</button></a></p>";
 //--------------------------แสดงรายะเอียดข้อมูลขายรายวันสำรหับ  ขายบนเว็บไซต์
 									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE DAY(order_date)='$i' AND MONTH(order_date)='$month' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : report_sell_day line 247");
 									$rows = mysqli_num_rows($query_order);
@@ -531,6 +533,7 @@ switch ($_GET['data']) {
 										</div>
 <?php
 										
+
 									}else{
 										echo "<div class='panel panel-success'>";
 										  echo "<div class='panel-heading'><h4>รายละเอียดยอดขายบนเว็บไซต์</h4></div>";
@@ -593,6 +596,7 @@ switch ($_GET['data']) {
 													echo "<td align='right'><p>".number_format($total_price,2)." ฿</p></td>";
 												echo "</tr>";
 											echo "</table>";
+
 ?>
 										  </div>
 										</div>

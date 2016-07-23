@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>MUMFERN SHOP</title>
  <link rel="shortcut icon" href="images/icon/logomumfern.png" />
@@ -25,11 +26,11 @@
   if(empty($_GET['action'])){
 ?>
     <div class="container-fluid">
-    <div class="col-md-4"></div>
-    <div class="col-md-4" style="margin-top:30px;">
+    <div class="col-md-4 "></div>
+    <div class="col-md-4 col-xs-12" style="margin-top:30px;">
         <div class="panel panel-default">
           <div class="panel-body">
-          <center><img src="../images/icon/logomumfern.png" width="250px" height="250px"></center>
+          <center><img src="../images/icon/logomumfern.png" class='include-imglogin'></center>
           <form action="index.php?action=check_login" method="post">
             <div class="input-group ">
               <span class="input-group-addon " aria-hidden="true"><img src="../images/icon/man-user.png" width="20"></span>

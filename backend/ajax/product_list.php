@@ -7,9 +7,8 @@
 	$keywords = (empty($_GET['keywords']))?"":$_GET['keywords'];
 	$getproduct_type=(empty($_GET['product_type']))?"":$_GET['product_type'];
 	$getproduct_quality=(empty($_GET['product_quality']))?"":$_GET['product_quality'];
-	$sql_type = (empty($_GET['product_type']))?"":"OR (type.product_type='$_GET[product_type]' AND type.type_name LIKE '%$keywords%')";
-	$sql_quality = (empty($_GET['product_quality']))?"":"OR (quality.product_quality='$_GET[product_quality]' AND quality.quality_name LIKE '%$keywords%')";
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,type.type_name,quality.quality_name FROM product LEFT JOIN type ON product.product_type = type.product_type LEFT JOIN quality ON product.product_quality = quality.product_quality WHERE product.product_name LIKE '%$keywords%' $sql_type $sql_quality ")or die("ERROR : backend product list line 61");
+	$sql_type = (empty($_GET['product_type']))?"":"AND type.product_type='$_GET[product_type]'";
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,type.type_name FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_name LIKE '%$keywords%' $sql_type")or die("ERROR : backend product list line 61");
 	$count_product = mysqli_num_rows($query_product);
 	$total_page = ceil($count_product/10);
 	if(empty($_GET['page'])){
@@ -20,25 +19,6 @@
 		$page=$_GET['page'];
 		$start_row=($page-1)*10;
 	}
-?>
-<?php
-$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id FROM product")or die("ERROR : backend product list line 8");
-while(list($product_id)=mysqli_fetch_row($query_product)){
-echo "<script>";
-echo "$(document).ready(function() {";
-    echo "$('#product_type_$product_id').change(function() {";
-    	echo "$.post('ajax/select_product_size.php?data=quality',{product_type: document.getElementById('product_type_$product_id').value},function(data){";
-        	echo "$('#product_quality_$product_id').html(data);";
-        echo "});";
-		echo "$.post('ajax/select_product_size.php?data=size',{product_type: document.getElementById('product_type_$product_id').value},function(data){";
-        	echo "$('#product_size1_$product_id').html(data);$('#product_size2_$product_id').html(data);$('#product_size3_$product_id').html(data);$('#product_size4_$product_id').html(data);$('#product_size5_$product_id').html(data);";
-        echo "});";
-    echo "});";
-echo "});";
-echo "</script>";
-
-
-}
 
 ?>
 <script>
@@ -64,7 +44,7 @@ $(document).ready(function() {
     
     var x = 1; //initlal text box count
     <?php
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name,type.type_name_eng,product.product_type FROM product LEFT JOIN type ON product.product_type = type.product_type LEFT JOIN quality ON product.product_quality = quality.product_quality  WHERE product.product_name LIKE '%$keywords%' $sql_type $sql_quality ORDER BY product.product_id DESC  LIMIT $start_row,10")or die("ERROR : backend type_add line 42");
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name,type.type_name_eng,product.product_type FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_name LIKE '%$keywords%' $sql_type ORDER BY product.product_id DESC  LIMIT $start_row,10")or die("ERROR : backend type_add line 42");
 	while(list($product_id,$product_name,$type_name,$type_name_eng,$type_id)=mysqli_fetch_row($query_product)){
 		echo "$('#x_$product_id').click(function(){";
 			echo "x=document.getElementById('x_$product_id').value;";
@@ -123,6 +103,7 @@ function hide_remover(){
 </div>
 <div class="container-fluid" style="border-bottom:1px solid #ddd;margin-bottom:20px;">
 	<form  method="get" action="ajax/product_list_search.php">
+	<div class="col-md-1"></div>
 	<div class="col-md-6">
 		<h4>ค้นหาข้อมูลสินค้า</h4>
 		<div class="col-md-10" style="margin-top:20px;padding:0px;" >
@@ -137,42 +118,27 @@ function hide_remover(){
 		    <button type="submit" class="btn btn-default btn-sm" style='height:30px;padding:2px 10px;'>Search</button>
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-4">
 
-		<h4>เลือกประเภทและหมวดหมู่สินค้าในการค้นหา</h4>
-		<div class="col-md-6" style='padding:0px'>
-			<p>เลือกประเภทสินค้า</p>
+		<h4>เลือกประเภทสินค้าในการค้นหา</h4>
 <?php
 		$query_type = mysqli_query($_SESSION['connect_db'],"SELECT product_type,type_name FROM type")or die("ERROR : backend product list line 39");
 		
 		$chk = (empty($_GET['product_type']))?"checked='checked'":"";
-			echo "<p>&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='product_type' value='' $chk>&nbsp;ไม่เลือกประเภท</p>";
+			echo "<div class='col-md-6' ><p>&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='product_type' value='' $chk>&nbsp;ไม่เลือกประเภท</p></div>";
 		while (list($product_type,$type_name)=mysqli_fetch_row($query_type)) {
 			$chk = ($getproduct_type==$product_type)?"checked='checked'":"";
-			echo "<p>&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='product_type' value='$product_type' $chk>&nbsp;$type_name</p>";
+			echo "<div class='col-md-6' ><p>&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='product_type' value='$product_type' $chk>&nbsp;$type_name</p></div>";
 		}
 ?>
-		</div>
-		<div class="col-md-6" style='padding:0px' >
-			<p>เลือกหมวดหมู่สินค้า</p>
-<?php
-		$query_quality = mysqli_query($_SESSION['connect_db'],"SELECT product_quality,quality_name FROM quality")or die("ERROR : backend product list line 49");
-		
-		$chk = (empty($_GET['product_quality']))?"checked='checked'":"";
-			echo "<p>&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='product_quality' value='' $chk>&nbsp;ไม่เลือกประเภท</p>";
-		while (list($product_quality,$quality_name)=mysqli_fetch_row($query_quality)) {
-			$chk = ($getproduct_quality==$product_quality)?"checked='checked'":"";
-			echo "<p>&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='product_quality' value='$product_quality' $chk>&nbsp;$quality_name</p>";
-		}
-?>
-		</div>
+		<div class="col-md-1"></div>
 	</div>
 	</form>
 </div>
 <div class="container-fluid">
 <?php
 	
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name,type.type_name_eng,product.product_type FROM product LEFT JOIN type ON product.product_type = type.product_type LEFT JOIN quality ON product.product_quality = quality.product_quality  WHERE product.product_name LIKE '%$keywords%' $sql_type $sql_quality ORDER BY product.product_id DESC  LIMIT $start_row,10")or die("ERROR : backend product list line 87");
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name,type.type_name_eng,product.product_type FROM product LEFT JOIN type ON product.product_type = type.product_type LEFT JOIN quality ON product.product_quality = quality.product_quality  WHERE product.product_name LIKE '%$keywords%' $sql_type ORDER BY product.product_id DESC  LIMIT $start_row,10")or die("ERROR : backend product list line 87");
 	$number =0;
 	while(list($product_id,$product_name,$type_name,$type_name_eng,$type_id)=mysqli_fetch_row($query_product)){
 
@@ -188,7 +154,7 @@ function hide_remover(){
 			$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size.size_id,size.size_name,product_size.product_amount_keep,product_size.product_amount_shop,product_size.product_amount_web,product_size.product_price_shop,product_size.product_sprice_shop,product_size.product_price_web,product_size.product_sprice_web FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size WHERE product_size.product_id ='$product_id'");
 			$row_size = mysqli_num_rows($query_size);
 			echo "<p><button class='btn btn-xs btn-warning' type='button' onclick='hide_remover()' id='x_$product_id' value='$row_size' data-toggle='modal' data-target='#$product_id'>แก้ไขข้อมูล</button>";
-			echo "&nbsp;<button class='btn btn-xs btn-danger' type='button' onclick='delete_product($product_id)' >ลบข้อมูล</button></a></p></center>";
+			echo "&nbsp;<button class='btn btn-xs btn-danger' type='button' onclick=\"delete_product('$product_id')\" >ลบข้อมูล</button></a></p></center>";
 				echo "<div class='modal fade' id='$product_id' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
 				  echo "<div class='modal-dialog modal-lg' role='document'>";
 				    echo "<div class='modal-content'>";
@@ -333,18 +299,18 @@ function hide_remover(){
 	if($total_page>1){
 	echo "<div class='col-md-12'>";
 		echo "<center><nav><ul class='pagination'>";
-		  echo "<li><a href='ajax/product_list_page.php?page=1&keywords=$keywords&product_type=$getproduct_type&product_quality=$getproduct_quality'>หน้าแรก</a></li>";
+		  echo "<li><a href='ajax/product_list_page.php?page=1&keywords=$keywords&product_type=$getproduct_type'>หน้าแรก</a></li>";
 		  $preview = ($page-1);
 		  $preview = ($preview<1)?1:$preview;
-		  echo "<li><a href='ajax/product_list_page.php?page=$preview&keywords=$keywords&product_type=$getproduct_type&product_quality=$getproduct_quality'><<</a></li>";
+		  echo "<li><a href='ajax/product_list_page.php?page=$preview&keywords=$keywords&product_type=$getproduct_type'><<</a></li>";
 	for($i=1;$i<=$total_page;$i++){
 			$active = ($page==$i)?"active":"";
-		  echo "<li class='$active'><a href='ajax/product_list_page.php?page=$i&keywords=$keywords&product_type=$getproduct_type&product_quality=$getproduct_quality'>$i</a></li>";
+		  echo "<li class='$active'><a href='ajax/product_list_page.php?page=$i&keywords=$keywords&product_type=$getproduct_type'>$i</a></li>";
 	}	
 		  $next = ($page+1);
 		  $next = ($next>$total_page)?$total_page:$next;
-		  echo "<li><a href='ajax/product_list_page.php?page=$next&keywords=$keywords&product_type=$getproduct_type&product_quality=$getproduct_quality'>>></a></li>";
-		  echo "<li><a href='ajax/product_list_page.php?page=$total_page&keywords=$keywords&product_type=$getproduct_type&product_quality=$getproduct_quality'>หน้าสุดท้าย</a></li>";
+		  echo "<li><a href='ajax/product_list_page.php?page=$next&keywords=$keywords&product_type=$getproduct_type'>>></a></li>";
+		  echo "<li><a href='ajax/product_list_page.php?page=$total_page&keywords=$keywords&product_type=$getproduct_type'>หน้าสุดท้าย</a></li>";
 		echo "</ul></nav></center>";
 	echo "</div>";
 	}

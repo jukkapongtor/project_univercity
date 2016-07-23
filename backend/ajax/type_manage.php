@@ -36,6 +36,33 @@ $(document).ready(function() {
 		echo "$('#x_$product_type').click(function(){";
 			echo "x2=document.getElementById('x_$product_type').value;";
 		echo "});";
+		echo "$('.remove_field2_$product_type"."_"."2').click(function(){";
+	       echo " $('.remove2_$product_type"."_"."2').remove(); x--;";
+	    echo "});";
+		echo "$('.remove_field2_$product_type"."_"."3').click(function(){";
+	       echo " $('.remove2_$product_type"."_"."3').remove(); x--;";
+	    echo "});";
+		echo "$('.remove_field2_$product_type"."_"."4').click(function(){";
+	       echo " $('.remove2_$product_type"."_"."4').remove(); x--;";
+	    echo "});";
+		echo "$('.remove_field2_$product_type"."_"."5').click(function(){";
+	       echo " $('.remove2_$product_type"."_"."5').remove(); x--;";
+	    echo "});";
+		echo "$('.remove_field2_$product_type"."_"."6').click(function(){";
+	       echo " $('.remove2_$product_type"."_"."6').remove(); x--;";
+	    echo "});";
+		echo "$('.remove_field2_$product_type"."_"."7').click(function(){";
+	       echo " $('.remove2_$product_type"."_"."7').remove(); x--;";
+	    echo "});";
+		echo "$('.remove_field2_$product_type"."_"."8').click(function(){";
+	       echo " $('.remove2_$product_type"."_"."8').remove(); x--;";
+	    echo "});";
+		echo "$('.remove_field2_$product_type"."_"."9').click(function(){";
+	       echo " $('.remove2_$product_type"."_"."9').remove(); x--;";
+	    echo "});";
+		echo "$('.remove_field2_$product_type"."_"."10').click(function(){";
+	       echo " $('.remove2_$product_type"."_"."10').remove(); x--;";
+	    echo "});";
 	}
 ?>
     	
@@ -93,6 +120,9 @@ function delete_type(type_id){
 	  window.location = 'ajax/type_delete.php?delete_type_id='+type_id;
 	});
 }
+function hide_remover(){
+	$('.remove2').hide();
+}
 </script>
 <div class="row">
 	<div id="breadcrumb" class="col-xs-12">
@@ -144,6 +174,7 @@ function delete_type(type_id){
 	  <div class="panel-body">
 	  	 แสดงประเภทสินค้า <br><br>
 <?php
+
 		$query_type = mysqli_query($_SESSION['connect_db'],"SELECT product_type,type_name FROM type ORDER BY product_type ASC")or die("ERROR : backend type_add line 42");
 		while(list($product_type,$type_name)=mysqli_fetch_row($query_type)){
 			echo "<div class='col-md-3' style='margin-bottom:20px;'>";
@@ -157,7 +188,7 @@ function delete_type(type_id){
 			echo "<div class='col-md-3' style='margin-bottom:20px;'>";
 				$query_size = mysqli_query($_SESSION['connect_db'],"SELECT product_size,size_name FROM size WHERE type_id ='$product_type'")or die("ERROR : backend type_edit line 103");
 				$rows = mysqli_num_rows($query_size);
-				echo "<b><button class='btn btn-info btn-sm' type='button' data-toggle='modal' id='x_$product_type' value='$rows' data-target='#$product_type'>แก้ไขข้อมูล</button></b>";
+				echo "<b><button class='btn btn-info btn-sm' type='button' data-toggle='modal' id='x_$product_type' onclick='hide_remover()' value='$rows' data-target='#$product_type'>แก้ไขข้อมูล</button></b>";
 				echo "<form method='post' action='ajax/type_update.php' onsubmit=\"return check_data$product_type()\">";
 				echo "<div class='modal fade' id='$product_type' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
 				  echo "<div class='modal-dialog' role='document'>";
@@ -189,12 +220,13 @@ function delete_type(type_id){
 					    			}else{
 						    			while(list($product_size,$size_name)=mysqli_fetch_row($query_size)){
 						    				if($num==1){
-						    					$num++;
+						    					
 						    					echo "<div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' name='unit_name[]' value='$size_name'></div>";
 						    					echo "<button class='add_field_button2 btn btn-primary' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/add.png' width='12px' height='12px' ></button>";
 						    				}else{
-						    					echo "<div class='remove2' style='margin-bottom:2px'><div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' name='unit_name[]' value='$size_name'></div><button  class='remove_field2 btn btn-danger' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/minus.png' width='12px' height='12px' ></button></div>";
+						    					echo "<div class='remove2_$product_type"."_"."$num' style='margin-bottom:2px'><div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' name='unit_name[]' value='$size_name'></div><button  class='remove_field2_$product_type"."_"."$num btn btn-danger' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/minus.png' width='12px' height='12px' ></button></div>";
 						    				}
+						    				$num++;
 						    				echo "<input type='hidden' name='size_id[]' value='$product_size'>";
 						    			}
 					    			}
