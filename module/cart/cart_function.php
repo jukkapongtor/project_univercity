@@ -28,11 +28,11 @@ function show_cart(){
 				echo "<td style='width:100px;'>";
 				    echo "<div class='input-group'>";
 				      echo "<span class='input-group-btn'>";
-				        echo "<button class='btn btn-default' id='lower_incart_$product_size_id' type='button'>ลบ</button>";
+				        echo "<button class='btn btn-default' id='lower_incart_$product_size_id' type='button' style='padding:6px;background:#aa8383'><img src='images/icon/minus.png' width='20' height='20'></button>";
 				      echo "</span>";
-				      echo "<p class='font20' align='center'><input type='text' class='form-control' id='product_amountincart_$product_size_id' value='$value[amount]' style='padding:0px 5px;width:50px;text-align:center'></p>";
+				      echo "<p class='font20' align='center'><input type='text' class='form-control' id='product_amountincart_$product_size_id' value='$value[amount]' disabled style='background:#fff;padding:0px 5px;width:50px;text-align:center;cursor: default;'></p>";
 				      echo "<span class='input-group-btn'>";
-				        echo "<button class='btn btn-default' id='push_incart_$product_size_id' type='button'>บวก</button>";
+				        echo "<button class='btn btn-default' id='push_incart_$product_size_id' type='button' style='padding:6px;background:#496a84'><img src='images/icon/add.png' width='20' height='20'></button>";
 				      echo "</span>";
 				    echo "</div>";
 				echo "</td>";

@@ -20,7 +20,7 @@ function list_product(){
 	</div>
 <?php
 	
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,product_image.product_image,type.type_name FROM product LEFT JOIN product_image ON product.product_id = product_image.product_id LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_name LIKE '%$keywd%'")or die("ERROR : shop product funtion line 18");
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,product_image.product_image,type.type_name_eng FROM product LEFT JOIN product_image ON product.product_id = product_image.product_id LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_name LIKE '%$keywd%'")or die("ERROR : shop product funtion line 18");
 	$count_product =mysqli_num_rows($query_product);
 	$total_page = ceil($count_product/10);
 	if(empty($_GET['page'])){
@@ -32,7 +32,7 @@ function list_product(){
 		$start_row=($page-1)*10;
 	}
 	if($count_product>0){
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_name LIKE '%$keywd%' LIMIT $start_row,10")or die("ERROR : shop product funtion line 18");
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_name LIKE '%$keywd%' LIMIT $start_row,10")or die("ERROR : shop product funtion line 18");
 	while (list($product_id,$product_name,$product_type)=mysqli_fetch_row($query_product)) {
 		$query_image=mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'  ORDER BY product_image_id ASC");
 		list($product_image)=mysqli_fetch_row($query_image);
@@ -74,8 +74,8 @@ function product_detail(){
 	</div>
 	<a href='index.php?module=cart&action=show_cart'><p align="right" style="margin:5px "><button class="btn btn-info">ตะกร้าสินค้า (<?php $_SESSION['total_amount'] = (empty($_SESSION['total_amount'] ))?0:$_SESSION['total_amount'] ;echo "$_SESSION[total_amount]";?>)</button></p></a><hr style="margin-top:0px;"><hr style="margin-top:-18px;">
 <?php
-	$query_product_detail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,product.product_detail,quality.quality_name,product.product_stock,type.type_name FROM product LEFT JOIN quality ON product.product_quality = quality.product_quality LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id='$_GET[product_id]'")or die("ERROR : product_function line 196");
-	list($product_name,$product_detail,$quality_name,$product_stock,$product_type)=mysqli_fetch_row($query_product_detail);
+	$query_product_detail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,product.product_detail,quality.quality_name,product.product_stock,type.type_name,type.type_name_eng FROM product LEFT JOIN quality ON product.product_quality = quality.product_quality LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id='$_GET[product_id]'")or die("ERROR : product_function line 196");
+	list($product_name,$product_detail,$quality_name,$product_stock,$product_type,$type_name_eng)=mysqli_fetch_row($query_product_detail);
 
 	$query_images_detail = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$_GET[product_id]'")or die("ERROR : product_function line 200");
 	$count_image = mysqli_num_rows($query_images_detail);
@@ -97,7 +97,7 @@ function product_detail(){
 	while(list($product_image_detail)=mysqli_fetch_row($query_images_detail)){
 	  	$active = ($number_image==1)?"active":"";
 	    echo "<div class='item $active'>";
-	      echo "<img src='../images/$product_type/$product_image_detail' alt='...' style='width:100%;height:200'>";
+	      echo "<img src='../images/$type_name_eng/$product_image_detail' alt='...' style='width:100%;height:200'>";
 	      echo "<div class='carousel-caption'>";
 	      echo "</div>";
 	    echo "</div>";
@@ -165,11 +165,11 @@ function product_detail(){
 				echo "<div class='col-xs-7' >";
 					echo "<div class='input-group' >";
 						echo "<span class='input-group-btn' >";
-							echo "<button class='btn btn-default' id='lower_indetail_$product_size_id' type='button' style='font-size:12'>ลบ</button>";
+							echo "<button class='btn btn-default' id='lower_indetail_$product_size_id' type='button' style='padding:6px;background:#aa8383'><img src='../images/icon/minus.png' width='20' height='20'></button>";
 						echo "</span>";
-							echo "<input type='text' class='form-control input-sm' id='product_amountindetail_$product_size_id' value='0' style='height:31px'>";
+							echo "<input type='text' class='form-control input-sm' id='product_amountindetail_$product_size_id' value='0'  disabled style='background:#fff;height:31px;text-align:center;cursor: default;' >";
 						echo "<span class='input-group-btn'>";
-							echo "<button class='btn btn-default' id='push_indetail_$product_size_id' type='button' style='font-size:12'>บวก</button>";
+							echo "<button class='btn btn-default' id='push_indetail_$product_size_id' type='button' style='padding:6px;background:#496a84'><img src='../images/icon/add.png' width='20' height='20'></button>";
 						echo "</span>";
 					echo "</div>";
 				echo "</div>";

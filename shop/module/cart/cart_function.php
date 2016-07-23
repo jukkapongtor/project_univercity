@@ -29,11 +29,11 @@ function show_cart(){
 					echo "<p><b>ราคาต่อชิ้น</b> <font id='price_$product_size_id'>$product_price_shop</font> บาท</p>";
 					echo "<center><div class='input-group' style='width:70%;margin-bottom:10px;'>";
 				      echo "<span class='input-group-btn'>";
-				        echo "<button class='btn btn-default btn-sm' id='lower_incart_$product_size_id' type='button'>ลบ</button>";
+				        echo "<button class='btn btn-default btn-sm' id='lower_incart_$product_size_id' type='button' style='padding:6px;background:#aa8383'><img src='../images/icon/minus.png' width='20' height='20'></button>";
 				      echo "</span>";
-				      echo "<input type='text' class='form-control input-sm' id='product_amountincart_$product_size_id' value='$value[amount]' style='padding:0px 5px;text-align:center'>";
+				      echo "<input type='text' class='form-control input-sm' id='product_amountincart_$product_size_id' value='$value[amount]' style='padding:0px 5px;text-align:center;cursor: default;'>";
 				      echo "<span class='input-group-btn'>";
-				        echo "<button class='btn btn-default btn-sm' id='push_incart_$product_size_id' type='button'>บวก</button>";
+				        echo "<button class='btn btn-default btn-sm' id='push_incart_$product_size_id' type='button' style='padding:6px;background:#496a84'><img src='../images/icon/add.png' width='20' height='20'></button>";
 				      echo "</span>";
 				    echo "</div></center>";
 				    $sum_product = $product_price_shop * $value['amount'];

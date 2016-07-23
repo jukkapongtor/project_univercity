@@ -83,7 +83,6 @@ div {
 	width: 35%;
 	font-size: 20px;
 	font-weight: bold;
-
 	color:#1c5d25;
 }
 .header-menu-home,.header-menu-product,.header-menu-webblog,.header-menu-webboard{
@@ -102,7 +101,7 @@ div {
 	color: white;
 	cursor: pointer;
 }
-.header-menu-active,.product-recommend-sale{
+.header-menu-active,/*.product-recommend-sale*/ .product-recommend-new{
 	background: #248a32;
 	border-bottom:3px solid #1c5d25;
 	color:white; 
@@ -152,7 +151,7 @@ div {
 	float: left;
 }
 .product-recommend-center,.product-recommend-sale,.product-recommend-new,.product-recommend-best{
-	width: 8%;
+	width: 12%;
 	float: left;
 	font-size: 12px;
 	padding: 10px 0px;
@@ -171,8 +170,11 @@ div {
 	border-bottom:1px solid #1c5d25;
 	color:white; 
 }
-.product-recom-new-content,.product-recom-best-content{
+/*.product-recom-new-content,.product-recom-best-content*/.product-recom-best-content{
 	display: none;
+}
+.product-recommend-new{
+	color:white;
 }
 .div-recom{
 	width:90%;
@@ -466,7 +468,7 @@ div {
 		color: white;
 		cursor: pointer;
 	}
-	.header-menu-active,.product-recommend-sale{
+	.header-menu-active,/*.product-recommend-sale*/.product-recommend-new{
 		background: #248a32;
 		border-bottom:3px solid #1c5d25;
 		color:white; 
@@ -525,7 +527,7 @@ div {
 	.product-recommend-center{
 		height: 10px;
 	}
-	.product-recommend-sale{
+	/*.product-recommend-sale*/.product-recommend-new{
 		background: #248a32;
 		border-bottom:1px solid #1c5d25;
 		color:white; 

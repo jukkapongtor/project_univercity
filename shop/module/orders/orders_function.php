@@ -136,7 +136,7 @@ function order_detail(){
 <?php
 	echo "<table class='table table-hover table-striped' style='font-size:13px'>";      
 		$total_price=0;
-		$query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,size.size_name,product_size.product_price_shop,order_detail.amount,type.type_name FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN product ON product.product_id = product_size.product_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN type ON product.product_type = type.product_type WHERE order_detail.order_id = '$_GET[order_id]'")or die("ERROR : order function line 111");
+		$query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,size.size_name,product_size.product_price_shop,order_detail.amount,type.type_name_eng FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN product ON product.product_id = product_size.product_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN type ON product.product_type = type.product_type WHERE order_detail.order_id = '$_GET[order_id]'")or die("ERROR : order function line 111");
 		while(list($product_id,$product_name,$size_name,$product_price_shop,$total_amount,$type_name)=mysqli_fetch_row($query_orderdetail)){
 	     		echo "<tr>";
 	     			$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id = '$product_id'")or die("ERROR : cart function line 16");
