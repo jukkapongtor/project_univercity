@@ -130,7 +130,7 @@
 								</a>
 								<ul class="dropdown-menu" style="background:#444">
 									<li>
-										<a href="#">
+										<a class="ajax-link" href="ajax/admin_form.php?ddd=eee">
 											<i class="fa fa-user"></i>
 											<span>ข้อมูลส่วนตัว</span>
 										</a>
@@ -209,6 +209,16 @@
 						<li><a class="ajax-link" href="ajax/quality_manage.php">จัดการหมวดหมู่สินค้า</a></li>
 						<li><a class="ajax-link" href="ajax/product_add.php">เพิ่มรายการสินค้า</a></li>
 						<li><a class="ajax-link" href="ajax/product_list.php">แก้ไขรายการสินค้า</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i><img src="../images/icon/box-closed.png" width="16px" ></i>
+						 <span >จัดการโปโมชั่น</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="ajax/pomotion_sale_add.php">เพิ่มสินค้าลดราคา</a></li>
+						<!--<li><a class="ajax-link" href="ajax/pomotion_sale.php">สินค้าลดราคา</a></li>-->
 					</ul>
 				</li>
 				<li class="dropdown">

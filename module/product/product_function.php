@@ -98,7 +98,7 @@ function list_product(){
 }
 
 function product_detail(){
-	if(!empty($_SESSION['login_type'])&&($_SESSION['login_type']==2)||($_SESSION['login_type']==1)){
+	if(!empty($_SESSION['login_type'])&&(($_SESSION['login_type']==2)||($_SESSION['login_type']==1))){
 		echo "<script>window.location='shop/index.php?module=product&action=product_detail&product_id=$_GET[product_id]'</script>";
 	}
 	
@@ -174,7 +174,13 @@ function product_detail(){
 							echo "<div class='col-md-2' <p>$product_amount_web</p></div>";
 							if($sellstatus==1){
 								echo "<div class='col-md-4' ><p><b>ราคา(Batn)</b></p></div>";
-								echo "<div class='col-md-3' ><p>$product_price_web</p></div>";
+								if($product_sprice_web!=0){
+									echo "<div class='col-md-3' ><p style='text-decoration:line-through;color:red'>$product_price_web</p></div>";
+									echo "<div class='col-md-6' ><p align='right'><font color='red'> !!! </font>ราคาพิเศษ<font color='red'> !!! </font></div></p>";
+									echo "<div class='col-md-6' ><p>$product_sprice_web</p></div>";
+								}else{
+									echo "<div class='col-md-3' ><p>$product_price_web</p></div>";
+								}
 							}
 							$number++;
 							if($sellstatus==1){
@@ -192,7 +198,7 @@ function product_detail(){
 							  echo "</div>";
 							  echo "<div class='col-lg-2 col-xs-3' style='padding:0px'>";
 							    echo "<input type='hidden' id='product_id' value='$_GET[product_id]'>";
-							  	echo "<p align='center'><a id='add2cart_$product_size_id'><button type='button' class='btn btn-default btn-sm' style='font-size:14px;'><b>หยิบสินค้า</b></button></a></p>";
+							  	echo "<p align='center'><a id='add2cart_$product_size_id'><button type='button' class='btn btn-default btn-sm' style='font-size:14px;'><span class='glyphicon glyphicon-shopping-cart'></span><b> หยิบสินค้า</b></button></a></p>";
 							  echo "</div>";
 							 echo "</div>";
 							}	
@@ -241,16 +247,16 @@ function product_detail(){
 		<div class='col-md-8'>
 			<div class="col-md-12">
 			<form action='index.php?module=product&action=comment_product' method="post">
-				<p><textarea class="form-control" name='comment_product' style='height:100px;' placeholder="Comment..."></textarea></p>
+				<p><textarea class="form-control" name='comment_product' style='height:100px;' placeholder="Comment..." required></textarea></p>
 				
 				
 				<?php
 					$user =(!empty($_SESSION['login_name']))?$_SESSION['login_name']:"";
 					$disabled = (!empty($_SESSION['login_name']))?"disabled":"";
 				?>
-				<input type="hidden" name='username' value="<?php echo $user;?>">
-				<input type="hidden" name='product_id' value="<?php $_GET[product_id]?>">
-				<p><input type='text' class="form-control" value="<?php echo $user;?>" placeholder="Username..."  <?php echo $disabled;?>></p>
+				<input type="hidden" name='username' value="<?php echo "$user";?>">
+				<input type="hidden" name='product_id' value="<?php echo "$_GET[product_id]" ;?>">
+				<p><input type='text' class="form-control" value="<?php echo "$user";?>" placeholder="Username..."  <?php echo $disabled;?> required></p>
 				<p align="right"><button class="btn btn-sm btn-primary">แสดงความเห็น</button></p>
 			</form>
 			</div>
@@ -336,12 +342,12 @@ function product_detail(){
 }
 function comment_product(){
 	echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
-	if(empty($_SESSION['login-name'])){
+	if(empty($_SESSION['login_name'])){
 		echo "<script>swal({title:'',text: \"สามารถแสดงความคิดเห็นสินค้าได้เฉพาะสมาชิกเท่านั้น\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=product&action=product_detail&product_id=$_POST[product_id]';})</script>";
 	}else{
 		$date = date("Y-m-d H:i:s");
 		$insert_comment = "INSERT INTO comment_product VALUES('','$_SESSION[login_name]','$_POST[product_id]','$_POST[comment_product]','$date')";
-		mysqli_query($_SESSION['connect_db'],$insert_comment);
+		mysqli_query($_SESSION['connect_db'],$insert_comment)or die("ERROR product funtion line 346");
 		echo "<script>swal({title:'',text: \"แสดงความคิดเห็นเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=product&action=product_detail&product_id=$_POST[product_id]';})</script>";
 	}
 	
