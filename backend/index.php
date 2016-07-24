@@ -539,6 +539,30 @@
         height: 400
       })
     });
+    $(function(){
+      $('#editweb').froalaEditor({
+         toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'paragraphFormat', 'paragraphStyle', 'align', 'formatOL', 'formatUL', 'undo', 'redo', 'html'],
+
+        enter: $.FroalaEditor.ENTER_P,
+        height: 200
+      })
+    });
+     $(function(){
+      $('#editweb1').froalaEditor({
+         toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'paragraphFormat', 'paragraphStyle', 'align', 'formatOL', 'formatUL', 'undo', 'redo', 'html'],
+
+        enter: $.FroalaEditor.ENTER_P,
+        height: 200
+      })
+    });
+      $(function(){
+      $('#editweb2').froalaEditor({
+         toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'paragraphFormat', 'paragraphStyle', 'align', 'formatOL', 'formatUL', 'undo', 'redo', 'html'],
+
+        enter: $.FroalaEditor.ENTER_P,
+        height: 200
+      })
+    });
   </script>
 </body>
 

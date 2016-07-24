@@ -73,7 +73,14 @@
 <!--Start Dashboard 1-->
 <div id="dashboard-header" class="row">
 	<div class="container-fluid">
-		<a href='../index.php'><div class="col-md-4" style="height:140px;margin-bottom:20px;"><img src="../images/icon/showwebsite.png" width="100%" height="100%"></div></a>
+		<a href='../index.php'>
+			<div class="col-md-4" style=" padding: 0px;" >
+				<div class="col-md-12 " style=" padding: 0px; "  >
+					<div class="col-md-5 box-web-left"><img src="../images/dashbord/online-shop.png" width="100%" height="100%"></div>
+					<div class="col-md-7 box-web-right"><h3>เข้าชมเว็บไซต์</h3></div>
+				</div>
+			</div>
+		</a>
 	<!--start money show-->
 		<div class="col-md-4" style="height:140px;margin-bottom:20px;">
 			<div class="col-md-6" style="padding:0px; margin: 2px; width: 45%; " >
@@ -238,13 +245,13 @@
 <!-- _____________________ของน้ำ________________________________________________ -->
 				<div class="col-md-12" style="margin-bottom:15px;">
   					<div class="col-md-4" >
-  						<div class="col-md-12 box-on" style="background:#985986;">
+  						<div class="col-md-12 box-on" style="background:#656d78;">
   							<center>
   								<img src="../images/dashbord/truck.png" style=" width: 50px;" >
   								<p>กำลังจัดส่ง</p>
   							</center>
   						</div>
-  						<div class="col-md-12 box-under" style=" background: #8e44ad;">
+  						<div class="col-md-12 box-under" style=" background: #434a54;">
   							<center><h2>
 	  						<?php
 	  							$query_order = mysqli_query($_SESSION['connect_db'],"SELECT count(order_id) FROM orders WHERE order_Status='3' AND type_order='web' AND tracking_id!='กำลังจัดเตรียมสินค้า'")or die("ERROR : backend manage_website line 65");
@@ -255,31 +262,25 @@
   						</div>
   					</div>
   					<div class="col-md-4" >
-  						<div class="col-md-12 box-on" style="background:#607d8b;">
+  						<div class="col-md-12 box-on" style="background:#880e4f;">
   							<center>
-  							<img src="../images/dashbord/gift.png" style=" width: 50px;" >
-  							<p>ลูกค้ายืนยันรับของ</p>
+  							<img src="../images/dashbord/error.png" style=" width: 50px;" >
+  							<p>ล้มเหลว</p>
   							</center>
   						</div>
-  						<div class="col-md-12 box-under" style=" background: #456e7a;">
+  						<div class="col-md-12 box-under" style=" background:#d81b60;">
   						<center><h2>12</h2></center>
   						</div>
   					</div>
   					<div class="col-md-4" >
-  						<div class="col-md-12 box-on" style="background:#f1c40f;">
+  						<div class="col-md-12 box-on" style="background:#7b1fa2;">
   							<center>
-  							<img src="../images/dashbord/chat.png" style=" width: 50px;" >
-  							<p>ข้อความ</p>
+  							<img src="../images/dashbord/folder.png" style=" width: 50px;" >
+  							<p>รายการเกินกำหนด</p>
   							</center>
   						</div>
-  						<div class="col-md-12 box-under" style=" background: #f39c12;">
-  							<center><h2>
-  							<?php
-	  							$query_contact = mysqli_query($_SESSION['connect_db'],"SELECT count(contact_id) FROM contactus ")or die("ERROR : backend dashbord line 273");
-	  							list($cnt_contact)=mysqli_fetch_row($query_contact);
-	  							echo "$cnt_contact";
-	  						?>
-  							</h2></center>
+  							<div class="col-md-12 box-under" style=" background:#4a148c;">
+  							<center><h2>12</h2></center>
   						</div>
   					</div>
   				</div>
@@ -293,6 +294,23 @@
   						</div>
   						<div class="col-md-12 box-under" style=" background: #c0392b;">
   						<center><h2>12</h2></center>
+  						</div>
+  					</div>
+  					<div class="col-md-4" >
+  						<div class="col-md-12 box-on" style="background:#f1c40f;">
+  							<center>
+  							<img src="../images/dashbord/chat.png" style=" width: 50px;" >
+  							<p>ข้อความ</p>
+  							</center>
+  						</div>
+  							<div class="col-md-12 box-under" style=" background: #f39c12;">
+  							<center><h2>
+  							<?php
+	  							$query_contact = mysqli_query($_SESSION['connect_db'],"SELECT count(contact_id) FROM contactus ")or die("ERROR : backend dashbord line 273");
+	  							list($cnt_contact)=mysqli_fetch_row($query_contact);
+	  							echo "$cnt_contact";
+	  						?>
+  							</h2></center>
   						</div>
   					</div>
 
@@ -431,18 +449,12 @@
   								<h4><?php echo "$cnt_user"; ?></h4>
   								</center>
   							</div>
- <?php
-		$pro = mysqli_query($_SESSION['connect_db'],"SELECT product_id FROM product")or die("ERROR : backend dashbord line 327");
-
-		$product  = mysqli_num_rows($pro);
-		
-?>
-  							
+ 					
   							<div class="col-md-4 box-font">
   								<center>
-  								<img src="../images/dashbord/package.png" width="60%" >
-  								<p>รายการขายสินค้า</p>
-  								<h4><?php echo "$product"; ?></h4>
+  								<img src="../images/dashbord/storefont.png" width="60%" >
+  								<p>ขายหน้าร้าน</p>
+  								<h4>12</h4>
   								</center>
   							</div>
   							

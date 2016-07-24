@@ -135,5 +135,24 @@
   width: 30%;
 
 }
+.box-web-left{
+
+  border-radius:15px 0px 0px 15px;
+  padding: 10px 10px 5px 10px; 
+  height: 140px; 
+  margin-bottom:20px; 
+  background:#D1968A;
+ 
+
+}
+.box-web-right{
+  border-radius:0px 15px 15px 0px;
+  background:#5E3535;
+  color: #ffffff;
+  height: 140px;
+  
+  padding: 50px 0px 30px 30px; "
+  
+}
 
 

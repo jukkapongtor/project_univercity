@@ -33,7 +33,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td  width="30%" ><p><b>เลือกภาพโลโก้ร้าน</b></p></td>
+				<td style="padding:5px;"  width="30%" ><p><b>เลือกภาพโลโก้ร้าน</b></p></td>
 				<td ><p><b>:&nbsp;</b></p></td>
 				<td ><p><input type="file" name="logo_image" multiple onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"></p></td>
 			</tr>
@@ -50,60 +50,47 @@
 			<tr>
 				<td valign="top" style="padding:5px;"><p><b>เนื้อหาส่วนที่1</b></p></td>
 				<td valign="top" ><p><b>:&nbsp;</b></p></td>
-				<td ><textarea class="form-control" name='content1'><?php echo "$detail_shop";?></textarea></td>
+				<td ><textarea class="form-control text-editor"  id="editweb"  name='content1' "><?php echo "$detail_shop";?></textarea></td>
 			</tr>
 			<tr>
-				<td colspan="3">
+				<td colspan="3" style="padding: 10px 10px 0px 5px" >
 <?php
 					$image2 = (!empty($image_content2))?"src='../images/webpage/$image_content2'":"";
 ?>
-					<p align="center"><img id='blah2' <?php echo $image2 ;?> width="100" height="100" ></p>
+					<p align="center"><img id='blah2' <?php echo $image2 ;?> width="200" height="300" ></p>
 				</td>
 			</tr>
 			<tr>
-				<td ><p><b>เลือกภาพเนื้อหาส่วนที่2</b></p></td>
+				<td style="padding:5px;" ><p><b>ภาพเนื้อหาส่วนที่2</b></p></td>
 				<td ><p><b>:&nbsp;</b></p></td>
 				<td ><p><input type="file" name="image_content2" multiple onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])"></p></td>
 			</tr>
-			<tr>
-				<td style="padding:5px;"><p><b>หัวข้อเนื้อหาส่วที่2</b></p></td>
-				<td ><p><b>:&nbsp;</b></p></td>
-				<td ><input type="text" class="form-control" name="head_content2" value="<?php echo "$header_content2";?>"></td>
-			</tr>
+			
 			<tr>
 				<td valign="top" style="padding:5px;"><p><b>เนื้อหาส่วนที่2</b></p></td>
 				<td valign="top" ><p><b>:&nbsp;</b></p></td>
-				<td ><textarea class="form-control" name="content2"><?php echo "$content2";?></textarea></td>
+				<td ><textarea class="form-control text-editor"  id="editweb1" name="content2"><?php echo "$content2";?></textarea></td>
 			</tr>
 			<tr>
-				<td colspan="3">
+				<td colspan="3"  style="padding: 10px 10px 0px 5px">
 <?php
 					$image3 = (!empty($image_content3))?"src='../images/webpage/$image_content3'":"";
 ?>
-					<p align="center"><img id='blah3' <?php echo $image3 ;?> width="100" height="100" ></p>
+					<p align="center"><img id='blah3' <?php echo $image3 ;?> width="200" height="300" ></p>
 				</td>
 				</td>
 			</tr>
 			<tr>
-				<td ><p><b>เลือกภาพเนื้อหาส่วนที่3</b></p></td>
+				<td ><p><b>ภาพเนื้อหาส่วนที่3</b></p></td>
 				<td ><p><b>:&nbsp;</b></p></td>
 				<td ><p><input type="file" name="image_content3" multiple onchange="document.getElementById('blah3').src = window.URL.createObjectURL(this.files[0])"></p></td>
 			</tr>
 			<tr>
-				<td style="padding:5px;"><p><b>หัวข้อเนื้อหาส่วที่3</b></p></td>
-				<td ><p><b>:&nbsp;</b></p></td>
-				<td ><input type="text" class="form-control" name="head_content3" value="<?php echo "$header_content3";?>"></td>
-			</tr>
-			<tr>
 				<td valign="top" style="padding:5px;"><p><b>เนื้อหาส่วนที่3</b></p></td>
 				<td valign="top" ><p><b>:&nbsp;</b></p></td>
-				<td ><textarea class="form-control" name="content3"><?php echo "$content3";?></textarea></td>
+				<td ><textarea class="form-control text-editor"  id="editweb2" name="content3"><?php echo "$content3";?></textarea></td>
 			</tr>
-			<tr >
-				<td valign="top" style="padding:5px;"><p><b>เนื้อหาส่วนท้าย</b></p></td>
-				<td valign="top" ><p><b>:&nbsp;</b></p></td>
-				<td style="padding-top:5px;"><textarea class="form-control" name="content_footer"></textarea></td>
-			</tr>
+			
 			</table>
 			<p align="center" style="margin-top:10px"><button class='btn btn-sm btn-success' type='submit'>ยืนยันการแก้ไข</button></p>
 		</form>
