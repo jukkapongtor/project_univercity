@@ -217,7 +217,7 @@
 						 <span >จัดการคลังสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/buy_product.php">เพิ่มสินค้า</a></li>
+						<li><a class="ajax-link" href="ajax/buy_product.php">เพิ่มจำนวนสินค้า</a></li>
 						<li><a class="ajax-link" href="ajax/stock_list.php">รายการคลังสินค้า</a></li>
 					</ul>
 				</li>

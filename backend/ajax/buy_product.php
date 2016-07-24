@@ -34,7 +34,7 @@ $(document).ready(function() {
 		</a>
 		<ol class="breadcrumb pull-left">
 			<li><a href="#">จัดการค่าใช้จ่าย</a></li>
-			<li><a href="#">ต้นทุนสินค้า</a></li>
+			<li><a href="#">เพิ่มจำนวนสินค้า</a></li>
 		</ol>
 	</div>
 </div>

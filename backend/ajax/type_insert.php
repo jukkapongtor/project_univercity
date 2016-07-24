@@ -11,11 +11,17 @@
 </head>
 <body>
 <?php
-	$number="";
+	$number=0;
+	$new_cntunit = array();
 	foreach ($_POST['unit_name'] as  $value) {
-		$number=$value;
+		if(!empty($value)){
+			array_push($new_cntunit,$value);
+			$number++;
+		}
 	}
-	if(empty($_POST['type_name'])||empty($number)){
+	unset($_POST['unit_name']);
+	$_POST['unit_name']=$new_cntunit;
+	if(empty($number)){
 		echo "<script>swal({title:'',text: 'กรุณากรอกข้อมูลให้ครบถ้วน',type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='../#ajax/type_manage.php';})</script>";
 	}else{
 		$query_type = mysqli_query($_SESSION['connect_db'],"SELECT type_name FROM type")or die("ERROR : backend type_insert line 14");

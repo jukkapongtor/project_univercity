@@ -21,16 +21,28 @@ $(document).ready(function() {
     $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
         e.preventDefault(); $(this).parent('.remove').remove(); x--;
     })
+
+    
 });
-	
-$(document).ready(function() {
+<?php	
+
+echo "$(document).ready(function() {";
+	$query_type = mysqli_query($_SESSION['connect_db'],"SELECT product_type FROM type")or die("ERROR : backend type_add line 42");
+	while(list($product_type)=mysqli_fetch_row($query_type)){
+		echo "$('.add_size_$product_type').click(function(){";
+			echo "var new_size= document.getElementById('new_size_$product_type').value;";
+	    	echo "window.location='ajax/function_size.php?data=insert_size&product_type=$product_type&new_size='+new_size;";
+	    echo "});";
+	}
+echo "});";
+/*
 
     var max_fields2      = 10; //maximum input boxes allowed
     var wrapper2        = $(".input_fields_wrap2"); //Fields wrapper
     var add_button2      = $(".add_field_button2"); //Add button ID
    	var x2 = 1;
     
-<?php
+
 	$query_type = mysqli_query($_SESSION['connect_db'],"SELECT product_type FROM type")or die("ERROR : backend type_add line 42");
 	while (list($product_type)=mysqli_fetch_row($query_type)) {
 		echo "$('#x_$product_type').click(function(){";
@@ -64,7 +76,8 @@ $(document).ready(function() {
 	       echo " $('.remove2_$product_type"."_"."10').remove(); x--;";
 	    echo "});";
 	}
-?>
+
+
     	
    	
     $(add_button2).click(function(e){ //on add input button click
@@ -80,7 +93,11 @@ $(document).ready(function() {
         e.preventDefault(); $(this).parent('.remove2').remove(); x--;
     })
 });
-
+function hide_remover(){
+	$('.remove2').hide();
+}
+*/
+?>
 function check_data(){	
 	var eng =	/^([a-zA-Z])+$/;	
 	if (!(eng.test(document.all.name_eng.value)))
@@ -120,8 +137,21 @@ function delete_type(type_id){
 	  window.location = 'ajax/type_delete.php?delete_type_id='+type_id;
 	});
 }
-function hide_remover(){
-	$('.remove2').hide();
+function delete_size(ele){
+	var size_id= ele.getAttribute("product_size");
+	swal({
+	  title: "ลบขนาดสินค้า",
+	  text: "รายการที่เกี่ยวข้องจะถูกลบทั้งหมด คุณต้องการลบเลยใช่ไหม",
+	  type: "warning",
+	  showCancelButton: true,
+	  confirmButtonColor: "#DD6B55",
+	  confirmButtonText: "ลบขนาดสินค้าสินค้า",
+	  cancelButtonText: "ยกเลิกการลบ",
+	  closeOnConfirm: false
+	},
+	function(){
+	  window.location = 'ajax/function_size.php?data=delete_size&size_id='+size_id;
+	});
 }
 </script>
 <div class="row">
@@ -198,7 +228,7 @@ function hide_remover(){
 				        echo "<h4 class='modal-title' id='myModalLabel'>แก้ไขประเภท$type_name</h4>";
 				      echo "</div>";
 				      echo "<div class='modal-body'>";
-				        echo "<table align='center' width='80%'>";
+				        echo "<table align='center' width='100%'>";
 					    	echo "<tr>";
 					    	$query_typeanme = mysqli_query($_SESSION['connect_db'],"SELECT type_name,type_name_eng FROM type WHERE product_type ='$product_type'")or die("ERROR : backend type_edit line 95");
 					    	list($type_name,$type_name_eng)=mysqli_fetch_row($query_typeanme);
@@ -213,12 +243,13 @@ function hide_remover(){
 					    		echo "<td valign='top'><p align='right'><b>ขนาดประเภทสินค้า : &nbsp;&nbsp;</b></p></td>";
 					    		echo "<td>";
 					    			echo "<div class='input_fields_wrap2' >";
-					    			$num=1;
+					    			//$num=1;
 					    			if(empty($rows)){
 					    				echo "<div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' name='unit_name[]'></div>";
 						    			echo "<button class='add_field_button2 btn btn-primary' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/add.png' width='12px' height='12px' ></button>";
 					    			}else{
 						    			while(list($product_size,$size_name)=mysqli_fetch_row($query_size)){
+						    				/*
 						    				if($num==1){
 						    					
 						    					echo "<div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' name='unit_name[]' value='$size_name'></div>";
@@ -228,6 +259,16 @@ function hide_remover(){
 						    				}
 						    				$num++;
 						    				echo "<input type='hidden' name='size_id[]' value='$product_size'>";
+						    				*/
+						    				echo "<input type='hidden' name='size_id[]' value='$product_size'>";
+						    				echo "<div style='margin-bottom:2px'><div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' id='size_name_new' name='unit_name_have[]' value='$size_name' disabled></div><button type='button' class='btn btn-danger' onclick=\"delete_size(this)\"  product_size='$product_size' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/minus.png' width='12px' height='12px' ></button></div>";
+						    			}
+						    			if($rows<10){
+						    				echo "<tr>";
+									    		echo "<td width='35%'><p align='right'><b>เพิ่มขนาด : &nbsp;&nbsp;</b></p></td>";
+									    		echo "<td><input type='text' class='form-control' id='new_size_$product_type' name='unit_name' value=''></td>";
+									    	echo "</tr>";
+						    				//echo "<div style='margin-bottom:2px'><div class='col-md-12' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' id='new_size_$product_type' name='unit_name' value=''></div><!--<button type='button' class='btn btn-primary add_size_$product_type' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/add.png' width='12px' height='12px' ></button>--></div>";
 						    			}
 					    			}
 					    			echo "</div>";
