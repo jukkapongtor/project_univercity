@@ -33,13 +33,14 @@
     <form action="ajax/employee_update.php" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="employee" value="<?php echo "$employee_id"; ?>" >
 
-        <input  type="file" name="employee_img">
         <br>
         <div class="panel panel-danger">
             <div class="panel-heading">
                 <h3 class="panel-title">แก้ไขข้อมูลพื้นฐาน</h3>
             </div>
             <div class="panel-body">
+            <div class="container-fluid" style="padding:0px">
+                <div class="col-md-9">
          <!--______________________________________________________________________________-->  
                 <table>  
                 <tr>
@@ -102,6 +103,10 @@
                 <td style="padding:10px;">
                     <input type="text" class="form-control" name="id_card" value="<?php echo "$id_card"; ?>" required>
                 </td>
+                <td style="padding:10px;">เลือกรูปภาพ : </td>
+                <td style="padding:10px;" >
+                    <input  type="file" name="employee_img"  multiple onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                </td>
             </tr> 
              <tr>
                 <td style="padding:10px;">เบอร์โทรศัพท์ : </td>
@@ -117,6 +122,13 @@
             </tr> 
          <!--______________________________________________________________________________-->
                 </table>
+                </div>
+                <div class="col-md-3">
+                <?php
+                    $path = (empty($employee_img))?"icon/no-images.jpg":"employee/$employee_img";
+                    echo "<img id='blah' src='../images/$path' style='border:1px solid #000;width:100%;height:300px'>";
+                ?>
+                </div>
             </div>
         </div>
         <div class="panel panel-danger">
@@ -128,6 +140,12 @@
                 <tr>
                     <td style="padding:10px;">วันเกิด : </td>
                     <td style="padding: 10px;">
+                    <?php
+                        $day = substr($birth_date,8,10);
+                        $month = substr($birth_date,5,2);
+                        $year = substr($birth_date,0,4);
+                        $birth_date = "$day/$month/$year";
+                    ?>
                         <input type="text" class="form-control " id="datepicker" name="birth_date" value="<?php echo "$birth_date"; ?>" >
                     </td>
                 
@@ -501,7 +519,6 @@
             </div>
         </div>
             <div class="col-md-12"  align="right" style="margin-top: 10px;" >
-                 <button type="button" class="btn btn-default" >ยกเลิก</button>
                  <button type="submit" class="btn btn-primary">แก้ไข</button>
             </div>
     
@@ -510,7 +527,7 @@
 $( "#datepicker" ).datepicker({
       changeMonth: true,
       changeYear: true,
-      yearRange:"c-30:c+0"
+      yearRange:"c-10:c+20"
     });
 
 $(document).ready(function() {

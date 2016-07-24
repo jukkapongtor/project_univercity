@@ -12,6 +12,7 @@
 	connect_db();
 	$module=empty($_GET['module'])?"":$_GET['module'];
     $action=empty($_GET['action'])?"":$_GET['action'];
+    date_default_timezone_set('Asia/Bangkok');
 ?>
 <!DOCTYPE html>
 <html>
@@ -143,49 +144,19 @@
             });
         $(".contactuser-content1").click(function(){
             $(".contactuser-content1").hide();
-            $(".contactuser").animate({"margin-bottom":"0px"},1000);
+            $(".contactuser").animate({"margin-bottom":"0px"},300);
             $(".contactuser-content2").show();
         }); 
          $(".contactuser-content2").click(function(){
             $(".contactuser-content2").hide();
-            $(".contactuser").animate({"margin-bottom":"-285px"},1000);
+            $(".contactuser").animate({"margin-bottom":"-285px"},300);
             $(".contactuser-content1").show();
         });    
-
+        $(".cart_user_empty").click(function(){
+            swal("", "ตะกร้าสินค้าสามารถใช้ได้เฉพาะสมาชิกเท่านั้น", "warning");
+        });
     });
  </script>
-<?php
-/*
-echo "<script>";
-    echo "$(document).ready(function() {";
-            echo "$('#plus_like').click(function(){";
-            if(!empty($_SESSION['login_name'])){
-                echo "var amount_like = parseInt(document.getElementById('like_status').innerHTML);";
-                echo "var rows = parseInt(document.getElementById('like_webboard').value);";
-                echo "if(rows == 0){";
-                    echo "amount_like++;";
-                    echo "$.post('module/index.php?data=plus_like',{webboard_id:$_GET[webboard_id]},function(data){";
-                    echo "});";
-                    echo "document.getElementById('like_status').innerHTML =amount_like;";
-                    echo "document.getElementById('like_webboard').value=1;";
-                echo "}else{";
-                    echo "amount_like--;";
-                    echo "$.post('module/index.php?data=lower_like',{webboard_id:$_GET[webboard_id]},function(data){";
-                    echo "});";
-                    echo "document.getElementById('like_status').innerHTML =amount_like;";
-                    echo "document.getElementById('like_webboard').value=0;";
-                echo "}";
-            }else{
-                echo "alert('ขออภัย ระบบกดถูกใจสามารถทำได้เพียงสมาชิกเท่านั้น');";
-            }
-            echo "});";
-    echo "});";
-echo "</script>";
-*/
-?>
-
- 
- 
 </head>
 <body>
 <?php include_once("analyticstracking.php") ?>
@@ -229,11 +200,12 @@ echo "</script>";
         $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : index line 260");
         list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
         if($sellstatus==1){
-        if(!empty($_SESSION['login_name'])&&$_SESSION['login_type']==3){
-            echo "<a href='index.php?module=users&action=data_users&menu=2'><div class='header-function-cart'>";
-        }else{
-            echo "<a href='' ><div class='header-function-cart'>";
-        }
+        if((!empty($_SESSION['login_name'])&&$_SESSION['login_type']==3)||empty($_SESSION['login_name'])){
+            if(!empty($_SESSION['login_name'])){
+                echo "<a href='index.php?module=users&action=data_users&menu=2'><div class='header-function-cart'>";
+            }else{
+                echo "<a style='cursor:pointer'><div class='header-function-cart cart_user_empty'>";
+            }
                 $_SESSION['total_amount'] = (empty($_SESSION['total_amount']))?"0":$_SESSION['total_amount'];
                 $hidden = (empty($_SESSION['total_amount']))?"display:none":"";
                 echo "<b><p id='total_amountincart' style='$hidden'>$_SESSION[total_amount]</p></b>";
@@ -241,6 +213,7 @@ echo "</script>";
                 <img src="images/icon/cart-of-ecommerce.png" class="img_cart">
             </div></a>
 <?php
+        }
         }
             
 
@@ -261,7 +234,7 @@ echo "</script>";
                     }
                     
                     echo "</a><ul class='dropdown-menu dropdown-menu-right' style='cursor:default'>";
-                        echo "<li><p style='margin-left:10px;font-size:20px;'><b>ชื่อผู้ใช้งาน :</b> $username</p></li>";
+                        echo "<li><p style='margin-left:10px;'><b>ชื่อผู้ใช้งาน :</b> $username</p></li>";
                         echo "<li><div>
                         <div style='float:left'>";
                         if(empty($user_image)){
@@ -272,21 +245,21 @@ echo "</script>";
                         echo "</div>
                         <div style='float:left'>";
                         if(!empty($user_fullname)&&!empty($user_lastname)){
-                            echo "<p style='margin-right:10px;font-size:23px;'>&nbsp;$user_fullname $user_lastname</p>";
+                            echo "<p style='margin-right:10px;'>&nbsp;$user_fullname $user_lastname</p>";
                         }
                     if($_SESSION['login_type']==1){
-                        echo "<a href='backend/' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;จัดการข้อมูลหลังร้าน</p></a>";
+                        echo "<a href='backend/' style='text-decoration: none;'><p style='margin-top:-10px;margin-right:10px;'>&nbsp;จัดการข้อมูลหลังร้าน</p></a>";
                     }
                     if($_SESSION['login_type']==2){
-                        echo "<a href='shop/' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;ขายสินค้าในร้าน</p></a>";
+                        echo "<a href='shop/' style='text-decoration: none;'><p style='margin-top:-10px;margin-right:10px;'>&nbsp;ขายสินค้าในร้าน</p></a>";
                     }
                     if($_SESSION['login_type']==3){
-                        echo "<a href='index.php?module=users&action=data_users&menu=1' style='text-decoration: none;'><p style='margin-top:-10px;font-size:21px;margin-right:10px;'>&nbsp;ข้อมูลผู้ใช้งาน</p></a>";
+                        echo "<a href='index.php?module=users&action=data_users&menu=1' style='text-decoration: none;'><p style='margin-top:-10px;margin-right:10px;'>&nbsp;ข้อมูลผู้ใช้งาน</p></a>";
                     }
                         echo "</div>
                         </div><br class='clear'></li>";
                         echo "<li role='separator' class='divider'></li>";
-                        echo "<li><p align='right' style='margin-right:10px;'><a href='include/index.php?action=logout'><button class='btn btn-sm btn-default'><font size='4'>ออกจากระบบ</font></button></a></p></li>";
+                        echo "<li><p align='right' style='margin-right:10px;'><a href='include/index.php?action=logout'><button class='btn btn-sm btn-warning'><font size='2'>ออกจากระบบ</font></button></a></p></li>";
                     echo "</ul>";
                 echo "</div>";
             }
@@ -368,13 +341,14 @@ echo "</script>";
 ?>            
             <div class="product-recommend">
                 <div class='product-recommend-center'></div>
-                <div class="product-recommend-sale"><center>สินค้าลดราคา</center></div>
+                <!--<div class="product-recommend-sale"><center>สินค้าลดราคา</center></div>-->
                 <div class="product-recommend-new"><center>สินค้ามาใหม่</center></div>
                 <div class="product-recommend-best"><center>สินค้าขายดี</center></div>
                 <div class='product-recommend-center'></div>
             </div>
 <?php
             }
+/*
 ?>
             <div class="product-recom-sale-content">
 <?php
@@ -393,9 +367,11 @@ echo "</script>";
             }
 ?>
             </div>
+*/
+?>
             <div class="product-recom-new-content">
 <?php
-            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type LIMIT 6,6 ");
+            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type ORDER BY product.product_id DESC LIMIT 0,6 ");
             while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
                 echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4 col-xs-6' style='padding-top:10px;'>";
                     echo "<div class='div-recom'>";
@@ -483,7 +459,7 @@ echo "</script>";
         $disabled = (empty($_SESSION['login_name']))?"":"disabled";
 ?>
     <div class="contactuser">
-        <center><h4 class="contactuser-content1"><b>CONTACT US</b></h4><h4 class="contactuser-content2"><b>CONTACT US</b></h4></center>
+        <center><h4 class="contactuser-content1"><b>ติดต่อเจ้าของร้าน</b></h4><h4 class="contactuser-content2"><b>ติดต่อเจ้าของร้าน</b></h4></center>
         <div class='container-fluid'>
             <form action="index.php?module=contact&action=insert_contact" method="post">
                 <p><input type='text' class='form-control input-sm' name='username' value="<?php echo "$username";?>"  placeholder="Username...." <?php echo "$disabled";?>></p>

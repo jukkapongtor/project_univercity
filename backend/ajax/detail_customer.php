@@ -30,7 +30,7 @@
 		echo "<table width='80%'>";
 			echo"<tr><td style ='padding:10px;' align=right>ชื่อผู้ใช้ : </td><td>$username</td><td style ='padding:10px;' align=right>ชื่อ-นามสกุล : </td><td> $fullname $lastname</td></tr>";
 			echo"<tr><td style ='padding:10px;' align=right>อีเมลล์ : </td><td> $email</td><td style ='padding:10px;' align=right>โทรศัพท์ : </td><td> $phone</td></tr>";
-			echo"<tr><td style ='padding:10px;' align=right>บ้านเลขี่ : </td><td> $house_no</td><td style ='padding:10px;' align=right>หมู่ : </td><td> $village_no</td></tr>";
+			echo"<tr><td style ='padding:10px;' align=right>บ้านเลขที่ : </td><td> $house_no</td><td style ='padding:10px;' align=right>หมู่ : </td><td> $village_no</td></tr>";
 			echo"<tr><td style ='padding:10px;' align=right>ตรอก : </td><td> $alley</td><td style ='padding:10px;' align=right>ซอย : </td><td> $lane</td></tr>";
 			echo"<tr><td style ='padding:10px;' align=right>ถนน : </td><td> $road</td><td style ='padding:10px;' align=right>ตำบล : </td><td> $sub_district</td></tr>";
 			echo"<tr><td style ='padding:10px;' align=right>อำเภอ : </td><td> $district</td><td style ='padding:10px;' align=right>จังหวัด : </td><td> $province</td></tr>";

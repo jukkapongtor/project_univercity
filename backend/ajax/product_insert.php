@@ -23,6 +23,7 @@
 		$row = mysqli_num_rows($query_product);
 		if(empty($row)){
 			$_POST['product_stock'] = (empty($_POST['product_stock']))?0:1;
+
 			$sql_insert_product = "INSERT INTO product VALUES('','$_POST[product_name]','$_POST[product_detail]','$_POST[product_type]','$_POST[product_quality]','$_POST[product_stock]')";
 			mysqli_query($_SESSION['connect_db'],$sql_insert_product)or die("ERROR : backend porduct insert line 17");
 

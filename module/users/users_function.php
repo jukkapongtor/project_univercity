@@ -3,26 +3,26 @@
 function register(){
 	echo "<form method='post' action='index.php?module=users&action=insert_user'>";
 	echo "<div class='container-fluid'>";
-		echo "<div class='col-md-12' style='border-bottom:1px solid #ddd;margin-top:20px;'>";
-			echo "<center><font style='font-size:50px'><b>สมัครสมาชิก</b></font></center>";
+		echo "<div class='col-md-12' style='border-bottom:1px solid #ddd;margin-top:20px;margin-bottom:35px;'>";
+			echo "<center><h3><b>สมัครสมาชิก</b></h3></center>";
 		echo "</div>";
 		echo "<div class='col-md-3' style='margin-top:20px'> </div>";
 		echo "<div class='col-md-2' style='margin-top:20px'>";
-			echo "<p style='font-size:25px'><b>กรอกอิเมล์</b></p>";
-			echo "<p style='font-size:25px'><b>ชื่อผู้ใช้งาน</b></p>";
-			echo "<p style='font-size:25px'><b>รหัสผ่าน</b></p>";
-			echo "<p style='font-size:25px;margin-top:70px'><b>ยืนยันรหัสผ่าน</b></p>";
+			echo "<p ><b>กรอกอิเมล์</b></p>";
+			echo "<p ><b>ชื่อผู้ใช้งาน</b></p>";
+			echo "<p ><b>รหัสผ่าน</b></p>";
+			echo "<p style='margin-top:70px'><b>ยืนยันรหัสผ่าน</b></p>";
 		echo "</div>";
 		echo "<div class='col-md-5' style='margin-top:20px'>";
-			echo "<p><input type='email' class='form-control' name='user_email' placeholder='Email...'></p>";
-			echo "<p><input type='text' class='form-control' name='username' placeholder='Username...'></p>";
-			echo "<p><input type='password' class='form-control' name='passwd' placeholder='Password ...'></p>";
-			echo "<p><font style='font-size:18px'>รหัสผ่านจะต้องเป็นตัวเลข ภาษาอังกฤษ อักขระพิเศษ ยกเว้น คอมม่า(,) ซิงเกิลโค๊ด(') และดับเิ้ลโค๊ด(\") จำนวน 4-16 หลัก</font></p>";
-			echo "<p><input type='password' class='form-control' name='conpasswd' placeholder='Confirm password...'></p>";
+			echo "<p><input type='email' class='form-control' name='user_email' placeholder='Email...' required></p>";
+			echo "<p><input type='text' class='form-control' name='username' placeholder='Username...' required></p>";
+			echo "<p><input type='password' class='form-control' name='passwd' placeholder='Password ...' required></p>";
+			echo "<p><font >รหัสผ่านจะต้องเป็นตัวเลข ภาษาอังกฤษ อักขระพิเศษ ยกเว้น คอมม่า(,) ซิงเกิลโค๊ด(') และดับเิ้ลโค๊ด(\") จำนวน 4-16 หลัก</font></p>";
+			echo "<p><input type='password' class='form-control' name='conpasswd' placeholder='Confirm password...' required></p>";
 		echo "</div>";
 		echo "<div class='col-md-2' style='margin-top:20px'> </div>";
-		echo "<div class='col-md-12' style='margin-top:20px'>";
-			echo "<center><input type='checkbox' name='condition' value='1'><font style='font-size:22px'>&nbsp;ยอมรับ&nbsp;<a data-toggle='modal' data-target='#condition' style='text-decoration:none;cursor:pointer'>เงื่อนไขการให้บริการ</a></font></center>";
+		/*echo "<div class='col-md-12' style='margin-top:20px'>";
+			echo "<center><input type='checkbox' name='condition' value='1'><font style=''>&nbsp;ยอมรับ&nbsp;<a data-toggle='modal' data-target='#condition' style='text-decoration:none;cursor:pointer'>เงื่อนไขการให้บริการ</a></font></center>";
 ?>
 				<div class="modal fade" id="condition" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 				  <div class="modal-dialog" role="document">
@@ -41,18 +41,19 @@ function register(){
 				  </div>
 				</div>
 <?php
-		echo "</div>";
+		echo "</div>";*/
 		echo "<div class='col-md-3' style='margin-top:20px'> </div>";
 		echo "<div class='col-md-6' style='margin-top:20px;margin-bottom:50px;'>";
-			echo "<center><button class='btn btn-sm btn-success' type='submit'><font style='font-size:20px;'>ยืนยันการลงทะเบียน</font></button>&nbsp;&nbsp;&nbsp;<a href='index.php'><button class='btn btn-sm btn-danger'type='button'><font style='font-size:20px;'>ยกเลิกการลงทะเบียน</font></button></a></center>";
+			echo "<center><button class='btn btn-sm btn-success' type='submit'><font >ยืนยันการลงทะเบียน</font></button>&nbsp;&nbsp;&nbsp;<a href='index.php'><button class='btn btn-sm btn-danger'type='button'><font >ยกเลิกการลงทะเบียน</font></button></a></center>";
 		echo "</div>";
 		echo "<div class='col-md-3' style='margin-top:20px'> </div>";
 	echo "</div>";
 	echo "</form>";
+	echo "<br>";
 }
 
 function insert_user(){
-	if(empty($_POST['user_email']) or empty($_POST['username']) or empty($_POST['passwd']) or empty($_POST['conpasswd']) or empty($_POST['condition'])){
+	if(empty($_POST['user_email']) or empty($_POST['username']) or empty($_POST['passwd']) or empty($_POST['conpasswd'])){
 		
 		echo "<script>swal({title:'',text: \"กรุณากลับไปกรอกข้อมูลให้ครบ !!\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=users&action=register';})</script>";
 		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
@@ -73,7 +74,7 @@ function insert_user(){
 		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 		echo "<script>swal({title:'',text: \"Password กับ Confirm Password ไม่สอดคล้องกัน\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=users&action=register';})</script>";
 	}	
-	mysqli_query($_SESSION['connect_db'],"INSERT INTO users VALUES ('$_POST[username]','$_POST[passwd]','','','','','$_POST[user_email]','3','','','','','','','','','' )") or die ("ERROR : users_function line 36 ") ;
+	mysqli_query($_SESSION['connect_db'],"INSERT INTO users VALUES ('$_POST[username]','$_POST[passwd]','','','','','$_POST[user_email]','3','','','','','','','','','','' )") or die ("ERROR : users_function line 36 ") ;
 	echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 	echo "<script>swal({title:'',text: \"สมัครสมาชิกเสร็จสิ้น สามารถลงชื่อเข้าใช้งานระบบได้แล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php';})</script>";
 	}
@@ -122,7 +123,7 @@ function data_users(){
 function edit_user(){
 	echo "<div class='container-fluid datauser_edit_user'>";
 	$query_users = mysqli_query($_SESSION['connect_db'],"SELECT * FROM users WHERE username ='$_SESSION[login_name]'")or die("ERROR users function line 64");
-	list($username,$passwd,$fullname,$lastname,$image,$phone,$email,$type,$house_no,$village_no,$alley,$lane,$road,$sub_district,$district,$province,$postal_code)=mysqli_fetch_row($query_users);
+	list($username,$passwd,$fullname,$lastname,$image,$phone,$email,$type,$employee_id,$house_no,$village_no,$alley,$lane,$road,$sub_district,$district,$province,$postal_code)=mysqli_fetch_row($query_users);
 	echo "<h3 style='background:#649d6c;color:white;padding:5px 10px;'>แก้ไขข้อมูลส่วนตัว</h3>";
 	echo "<div class='col-md-12 ' style='border-bottom:2px solid #ddd'>";
 		echo "<p class='font20'><b>รายละเอียดข้อมูลผู้ใช้</b></p>";
@@ -364,20 +365,20 @@ function edit_user(){
 function update_passwd(){
 
 	if(empty($_POST['oldpasswd'])||empty($_POST['newpasswd'])||empty($_POST['connewpasswd'])){
-		echo "<script>alert('คุณกรอกข้อมูลไม่ครบ กรุณากรอกข้อมูลให้ครบก่อนทำการยืนยัน');window.location='index.php?module=users&action=data_users&menu=1';</script>";
+		echo "<script>swal({title:'',text: 'คุณกรอกข้อมูลไม่ครบ กรุณากรอกข้อมูลให้ครบก่อนทำการยืนยัน',type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=users&action=data_users&menu=1';})</script>";
 	}else{
 		$query_users = mysqli_query($_SESSION['connect_db'],"SELECT passwd FROM users WHERE username= '$_SESSION[login_name]'")or die("ERROR : users function line 238");
 		list($passwd)=mysqli_fetch_row($query_users);
 
 		if($passwd!=$_POST['oldpasswd']){
-			echo "<script>alert('รหัสเดิมไม่ถูกต้อง กรุณาตรวจสอบรหัสเดิมของคุณให้ถูกต้อง');window.location='index.php?module=users&action=data_users&menu=1';</script>";
-			echo "string";
+			echo "<script>swal({title:'',text: 'รหัสเดิมไม่ถูกต้อง กรุณาตรวจสอบรหัสเดิมของคุณให้ถูกต้อง',type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=users&action=data_users&menu=1';})</script>";
 		}elseif($_POST['newpasswd']!=$_POST['connewpasswd']){
-			echo "<script>alert('การยืนยันรหัสผ่านไม่สอดคล้องกัน กรุณาตรวจสอบความถูกต้อง');window.location='index.php?module=users&action=data_users&menu=1';</script>";
-		}
+			echo "<script>swal({title:'',text: 'การยืนยันรหัสผ่านไม่สอดคล้องกัน กรุณาตรวจสอบความถูกต้อง',type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=users&action=data_users&menu=1';})</script>";
+		}else{
 
-		mysqli_query($_SESSION['connect_db'],"UPDATE users SET passwd='$_POST[newpasswd]' WHERE username ='$_SESSION[login_name]'")or die("ERROR : update password users function line 246 ");
-		echo "<script>alert('รหัสผ่านของท่านถูกแก้ไขเรียบร้อยแล้ว');window.location='index.php?module=users&action=data_users&menu=1';</script>";
+			mysqli_query($_SESSION['connect_db'],"UPDATE users SET passwd='$_POST[newpasswd]' WHERE username ='$_SESSION[login_name]'")or die("ERROR : update password users function line 246 ");
+			echo "<script>swal({title:'',text: \"รหัสผ่านของท่านถูกแก้ไขเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=users&action=data_users&menu=1';})</script>";
+		}
 
 
 	}

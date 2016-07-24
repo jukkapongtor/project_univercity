@@ -18,7 +18,9 @@ if($_POST['btn_work']=="workin"){
 	$row = mysqli_num_rows($query_working);
 	if(empty($row)){
 		$date = date("Y-m-d H:i:s");
-		$insert = "INSERT INTO working VALUES('','$date','','$_POST[employee_id]','')";
+		$query_start_salary = mysqli_query($_SESSION['connect_db'],"SELECT salary_price FROM start_salary ORDER BY salary_id DESC ")or die("backend salary function line 23");
+         list($salary_price)=mysqli_fetch_row($query_start_salary);
+		$insert = "INSERT INTO working VALUES('','$date','','$_POST[employee_id]','','$salary_price')";
 		mysqli_query($_SESSION['connect_db'],$insert)or die("ERROR working line 21");
 		echo "<script>swal({title:'',text: \"ลงเวลาทำงานเรียบร้อย\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='../#ajax/employee_detail.php?employee_id=$_POST[employee_id]';})</script>";
 	}else{
@@ -48,7 +50,9 @@ if($_POST['btn_work']=="workin"){
 	$row = mysqli_num_rows($query_working);
 	if(empty($row)){
 		$date = date("Y-m-d H:i:s");
-		$insert = "INSERT INTO working VALUES('','$date','$date','$_POST[employee_id]','$_POST[stop_work]')";
+		$query_start_salary = mysqli_query($_SESSION['connect_db'],"SELECT salary_price FROM start_salary ORDER BY salary_id DESC ")or die("backend salary function line 23");
+         list($salary_price)=mysqli_fetch_row($query_start_salary);
+		$insert = "INSERT INTO working VALUES('','$date','$date','$_POST[employee_id]','$_POST[stop_work]','$salary_price')";
 		mysqli_query($_SESSION['connect_db'],$insert)or die("ERROR working line 21");
 		echo "<script>swal({title:'',text: \"ลงข้อมูลการลาเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='../#ajax/employee_detail.php?employee_id=$_POST[employee_id]';})</script>";
 	}else{

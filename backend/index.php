@@ -130,7 +130,7 @@
 								</a>
 								<ul class="dropdown-menu" style="background:#444">
 									<li>
-										<a href="#">
+										<a class="ajax-link" href="ajax/admin_form.php?ddd=eee">
 											<i class="fa fa-user"></i>
 											<span>ข้อมูลส่วนตัว</span>
 										</a>
@@ -213,12 +213,32 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
+						<i><img src="../images/icon/box-closed.png" width="16px" ></i>
+						 <span >จัดการโปโมชั่น</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="ajax/pomotion_sale_add.php">เพิ่มสินค้าลดราคา</a></li>
+						<!--<li><a class="ajax-link" href="ajax/pomotion_sale.php">สินค้าลดราคา</a></li>-->
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i><img src="../images/icon/shopping.png" width="16px" ></i>
+						 <span >จัดการคลังสินค้า</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="ajax/buy_product.php">เพิ่มจำนวนสินค้า</a></li>
+						<li><a class="ajax-link" href="ajax/stock_list.php">รายการคลังสินค้า</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
 						<i><img src="../images/icon/shopping.png" width="16px" ></i>
 						 <span >จัดการค่าใช้จ่าย</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/buy_product.php">ต้นทุนสินค้า</a></li>
-						<li><a class="ajax-link" href="ajax/supplyes_manage.php">ค่าใช้จ่ายในร้าน</a></li>
+						<li><a class="ajax-link" href="ajax/supplyes_manage.php">เพิ่มค่าใช้จ่าย</a></li>
+						<li><a class="ajax-link" href="ajax/supplyes_list.php">รายการค่าใช้จ่าย</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">

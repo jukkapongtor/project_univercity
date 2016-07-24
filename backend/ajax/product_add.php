@@ -20,7 +20,7 @@ $(document).ready(function() {
         });
     	return false;
     });
-
+    /*
     var max_fields      = 5; //maximum input boxes allowed
     var wrapper         = $(".input_fields_wrap"); //Fields wrapper
     var add_button      = $(".add_field_button"); //Add button ID
@@ -43,12 +43,14 @@ $(document).ready(function() {
     $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
         e.preventDefault(); $(this).parent('.remove').remove(); x--;
     })
+	*/
 });
 
 </script>
 <script>
+
 $(document).ready(function() {
- 	var max_fields      = 10; //maximum input boxes allowed
+ 	var max_fields      = 4; //maximum input boxes allowed
     var wrapper         = $(".input_fields_wrap2"); //Fields wrapper
     var add_button      = $(".add_field_button2"); //Add button ID
     
@@ -65,6 +67,7 @@ $(document).ready(function() {
         e.preventDefault(); $(this).parent('.remove2').remove(); x--;
     })
 });
+
 </script>
 <div class="row">
 	<div id="breadcrumb" class="col-xs-12">
@@ -90,9 +93,9 @@ $(document).ready(function() {
 		    		<td width="5%"><p><b>&nbsp;:&nbsp;</b></p></td>
 		    		<td width="70%"><p><input class='form-control' type='text' name='product_name'></p></td>
 		    	</tr>
-		    	<tr>
+		    	<!--<tr>
 		    		<td colspan="3"><p><font color='red'> !!! </font><b>คำแนะนำ </b> ควรเลือกจำนวนของขนาดสินค้าก่อนทำการเลือกประเภท<font color='red'> !!! </font></p></td>
-		    	</tr>
+		    	</tr>-->
 		    	<tr>
 		    		<td><p><b>ประเภทสินค้า</b></p></td>
 		    		<td><p><b>&nbsp;:&nbsp;</b></p></td>
@@ -119,19 +122,19 @@ $(document).ready(function() {
 		    		</td>
 		    	</tr>
 		    	<tr>
-		    		<td valign="top"><p><b>ขนาดสินค้า</b></p>&nbsp;&nbsp;เมื่อกดเครื่องหมายบวก ต้องทำการเลือกประเภทและหมวดหมู่ใหม่</td>
+		    		<td valign="top"><p><b>ขนาดสินค้า</b></p>&nbsp;&nbsp;<font color='red' size='2'>* </font><font size='2'>สามารถเพิ่มขนาดสินค้าได้จากขั้นตอนการแก้ไขสินค้า</font></td>
 		    		<td valign="top"><p><b>&nbsp;:&nbsp;</b></p></td>
 		    		<td>
 		    		<div class="input_fields_wrap" >		
-						<div class='col-md-10' style='padding:0'><p><select class='form-control' id='product_size1'  name='product_size[]'>
+						<div class='col-md-12' style='padding:0'><p><select class='form-control' id='product_size1'  name='product_size[]'>
 				    		<option value=''>--เลือกขนาดสินค้า--</option>
 				    	</select></p></div>
-				    	<button class="add_field_button btn btn-primary" style="padding:0px 3px;width:27px;height:27px;margin-bottom:2px"><img src='../images/icon/add.png' width="12px" height="12px" ></button>
+				    	<!--<button class="add_field_button btn btn-primary" style="padding:0px 3px;width:27px;height:27px;margin-bottom:2px">-->
 				    	<div class='col-md-12' style='padding:0'>
 							<div class='col-md-4' style='padding:0;margin-bottom:4px'>ราคาบนเว็บ</div>
-							<div class='col-md-6' style='padding:2px;;margin-bottom:4px'><input type='text' class='form-control' name='product_price_web[]' style="margin-top:-5px;"></div>
+							<div class='col-md-8' style='padding:2px;;margin-bottom:4px'><input type='text' class='form-control' name='product_price_web[]' style="margin-top:-5px;"></div>
 							<div class='col-md-4' style='padding:0;margin-bottom:4px'>ราคาในร้าน</div>
-							<div class='col-md-6' style='padding:2px;margin-bottom:4px'><input type='text' class='form-control' name='product_price_shop[]' style="margin-top:-5px;"></div>
+							<div class='col-md-8' style='padding:2px;margin-bottom:4px'><input type='text' class='form-control' name='product_price_shop[]' style="margin-top:-5px;"></div>
 						</div>
 		    		</div>
 		    		</td>

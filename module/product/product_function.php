@@ -91,13 +91,14 @@ function list_product(){
 			echo "</div>";
 		}
 	}else{
-		echo "<div class='col-md-12' style='margin:40px 0px;'><center><h1 ><b>ไม่พบรายการสินค้า</b></h1></center></div>";
+		echo "<div class='col-md-12' style='margin:40px 0px 50px 0px;'><center><h1 ><b>ไม่พบรายการสินค้า</b></h1></center></div>";
+		echo "<div><br><br><br><br><br><br><br><br><br><br><br><br></div>";
 	}
 	echo "</div>";
 }
 
 function product_detail(){
-	if(!empty($_SESSION['login_type'])&&$_SESSION['login_type']==2){
+	if(!empty($_SESSION['login_type'])&&(($_SESSION['login_type']==2)||($_SESSION['login_type']==1))){
 		echo "<script>window.location='shop/index.php?module=product&action=product_detail&product_id=$_GET[product_id]'</script>";
 	}
 	
@@ -173,7 +174,13 @@ function product_detail(){
 							echo "<div class='col-md-2' <p>$product_amount_web</p></div>";
 							if($sellstatus==1){
 								echo "<div class='col-md-4' ><p><b>ราคา(Batn)</b></p></div>";
-								echo "<div class='col-md-3' ><p>$product_price_web</p></div>";
+								if($product_sprice_web!=0){
+									echo "<div class='col-md-3' ><p style='text-decoration:line-through;color:red'>$product_price_web</p></div>";
+									echo "<div class='col-md-6' ><p align='right'><font color='red'> !!! </font>ราคาพิเศษ<font color='red'> !!! </font></div></p>";
+									echo "<div class='col-md-6' ><p>$product_sprice_web</p></div>";
+								}else{
+									echo "<div class='col-md-3' ><p>$product_price_web</p></div>";
+								}
 							}
 							$number++;
 							if($sellstatus==1){
@@ -181,17 +188,17 @@ function product_detail(){
 							  echo "<div class='col-lg-6 col-xs-9'>";
 							    echo "<div class='input-group'>";
 							      echo "<span class='input-group-btn'>";
-							        echo "<button class='btn btn-default' id='lower_indetail_$product_size_id' type='button'>ลบ</button>";
+							        echo "<button class='btn' id='lower_indetail_$product_size_id' type='button' style='padding:6px;background:#aa8383'><img src='images/icon/minus.png' width='20' height='20'></button>";
 							      echo "</span>";
-							      echo "<input type='text' class='form-control' id='product_amountindetail_$product_size_id' value='0'>";
+							      echo "<input type='text' class='form-control' id='product_amountindetail_$product_size_id' value='0' disabled style='background:#fff;cursor: default;text-align:center'>";
 							      echo "<span class='input-group-btn'>";
-							        echo "<button class='btn btn-default' id='push_indetail_$product_size_id' type='button'>บวก</button>";
+							        echo "<button class='btn' id='push_indetail_$product_size_id' type='button'style='padding:6px;background:#496a84'><img src='images/icon/add.png' width='20' height='20'></button>";
 							      echo "</span>";
 							    echo "</div>";
 							  echo "</div>";
 							  echo "<div class='col-lg-2 col-xs-3' style='padding:0px'>";
 							    echo "<input type='hidden' id='product_id' value='$_GET[product_id]'>";
-							  	echo "<p align='center'><a id='add2cart_$product_size_id'><button type='button' class='btn btn-default btn-sm' style='font-size:14px'><b>หยิบสินค้า</b></button></a></p>";
+							  	echo "<p align='center'><a id='add2cart_$product_size_id'><button type='button' class='btn btn-default btn-sm' style='font-size:14px;'><span class='glyphicon glyphicon-shopping-cart'></span><b> หยิบสินค้า</b></button></a></p>";
 							  echo "</div>";
 							 echo "</div>";
 							}	
@@ -202,6 +209,62 @@ function product_detail(){
 			echo "</table>";
 		echo "</div>";
 	echo "</div>";
+
+	$query_comment_product = mysqli_query($_SESSION['connect_db'],"SELECT * FROM comment_product WHERE product_id='$_GET[product_id]' ORDER BY comment_date DESC ")or die("ERROR : product line 226");
+	$comment_row = mysqli_num_rows($query_comment_product);
+	if(!empty($comment_row)){
+		echo "<div class='container-fluid' style='border-bottom:2px #ddd solid;margin:30px 0px; width:80%;margin-left:10%;'>";
+		$num=1;
+		while(list($comment_proid,$username,$product_id,$comment_detail,$comment_date)=mysqli_fetch_row($query_comment_product)){
+			echo "<h4><b>ความคิดเห็นที่ $num</	b></h4>";
+			echo "<p style='margin-left:30px;'>$comment_detail</p>";
+			$query_user = mysqli_query($_SESSION['connect_db'],"SELECT image FROM users WHERE username='$username'")or die("ERROR : 
+				product line 215");
+			list($image)=mysqli_fetch_row($query_user);
+			echo "<table>";
+				echo "<tr>";
+					echo "<td rowspan='2' valign='middle'><img src='images/user/$image' width='45' height='45' style='border-radius:45px;border:2px #ddd solid;margin-top:-10px;'></td>";
+					echo "<td><p>&nbsp;&nbsp;<b>ผู้แสดงความคิดเห็น<b></p></td>";
+				echo "</tr>";
+				echo "<tr>";
+					echo "<td><p>&nbsp;&nbsp;$username</p></td>";
+				echo "</tr>";
+			echo "</table>";
+			if($num!=$comment_row){
+				echo "<div class='container-fluid' style='border-bottom:2px #ddd solid;margin:10px 0px 0px 0x;  width:80%;margin-left:10%;'></div>";	
+			}
+			$num++;
+		}
+		echo "</div>";
+	}
+?>
+	<div class="container-fluid" style='border-bottom:2px #ddd solid;margin:30px; width:90%;margin-left:5%;'> 
+		<h4><b>ความคิดเห็น</b></h4>
+	</div>
+	<div class="container-fluid"> 
+		<div class='row'>
+		<div class='col-md-2'></div>
+		<div class='col-md-8'>
+			<div class="col-md-12">
+			<form action='index.php?module=product&action=comment_product' method="post">
+				<p><textarea class="form-control" name='comment_product' style='height:100px;' placeholder="Comment..." required></textarea></p>
+				
+				
+				<?php
+					$user =(!empty($_SESSION['login_name']))?$_SESSION['login_name']:"";
+					$disabled = (!empty($_SESSION['login_name']))?"disabled":"";
+				?>
+				<input type="hidden" name='username' value="<?php echo "$user";?>">
+				<input type="hidden" name='product_id' value="<?php echo "$_GET[product_id]" ;?>">
+				<p><input type='text' class="form-control" value="<?php echo "$user";?>" placeholder="Username..."  <?php echo $disabled;?> required></p>
+				<p align="right"><button class="btn btn-sm btn-primary">แสดงความเห็น</button></p>
+			</form>
+			</div>
+		</div>
+		<div class='col-md-2'></div>
+		</div>
+	</div>
+<?php
 
 	echo "<br class='clear'><div class='underline'></div>";
 	echo "<div class='col-md-12'><h4><b>รายการสินค้าที่เกี่ยวข้อง(ประเภทเดียวกัน)</b></h4></div>";
@@ -277,5 +340,16 @@ function product_detail(){
 	echo "</script>";
 
 }
-
+function comment_product(){
+	echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+	if(empty($_SESSION['login_name'])){
+		echo "<script>swal({title:'',text: \"สามารถแสดงความคิดเห็นสินค้าได้เฉพาะสมาชิกเท่านั้น\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=product&action=product_detail&product_id=$_POST[product_id]';})</script>";
+	}else{
+		$date = date("Y-m-d H:i:s");
+		$insert_comment = "INSERT INTO comment_product VALUES('','$_SESSION[login_name]','$_POST[product_id]','$_POST[comment_product]','$date')";
+		mysqli_query($_SESSION['connect_db'],$insert_comment)or die("ERROR product funtion line 346");
+		echo "<script>swal({title:'',text: \"แสดงความคิดเห็นเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=product&action=product_detail&product_id=$_POST[product_id]';})</script>";
+	}
+	
+}
 ?>
