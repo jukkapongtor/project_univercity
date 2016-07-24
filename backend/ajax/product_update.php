@@ -2,6 +2,7 @@
 	session_start();
 	echo "<meta charset='utf8'>";
 	include("../../include/function.php");
+	date_default_timezone_set('Asia/Bangkok');
 	connect_db();
 ?>
 <head>

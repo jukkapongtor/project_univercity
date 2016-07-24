@@ -1,12 +1,14 @@
 <?php
     session_start();
     echo "<meta charset='utf-8'>";
+    date_default_timezone_set('Asia/Bangkok');
 	include("../include/function.php");
     include("include/function.php");
 	connect_db();
     include("module/product/product_function.php");
     include("module/cart/cart_function.php");
     include("module/orders/orders_function.php");
+    include("module/employee/employee_function.php");
     $module=empty($_GET['module'])?"":$_GET['module'];
     $action=empty($_GET['action'])?"":$_GET['action'];
     
@@ -30,6 +32,9 @@
  <script src="../sweetalert/sweetalert.min.js"></script> 
 </head>
 <body>
+<div class='container-fluid' style='paddig:0px;background:#eee;'>
+<div class="col-md-2 hidden-xs"></div>
+<div class="col-md-8 col-xs-12" style="background:#fff;padding:0px;">
 <?php
     if(!empty($_SESSION['login_name'])&&($_SESSION['login_type']==2||$_SESSION['login_type']==1)){
 
@@ -43,10 +48,15 @@
 ?>
     </div>
     <div class="main">
+
 <?php
         if(!empty($module)){
             get_module_shop($module,$action);
         }else{
+?>
+    <div class="container-fluid" style="padding:0px;">
+    <div class='col-md-6' style="padding:0px;">
+<?php
             echo "<div class='user'>";
                 echo "<div class='user-image'>";
                     $query_user = mysqli_query($_SESSION['connect_db'],"SELECT username,fullname,lastname,image FROM users WHERE username='$_SESSION[login_name]'")or die("ERROR : index line 116");
@@ -54,7 +64,7 @@
                     if(empty($user_image)){
                         echo "<img src='../images/user/user.png' width='50' height='50' style='border-radius:50px;margin:5px;'>";
                     }else{
-                        echo "<img src='../images/user/$user_image' width='50' height='50' style='border-radius:50px;margin:5px'>";
+                        echo "<img src='../images/employee/$user_image' width='50' height='50' style='border-radius:50px;margin:5px'>";
                     }
                 echo "</div>";
                 echo "<div class='user-data'>";
@@ -64,10 +74,12 @@
                     $type_user = array(1=>"เจ้าของร้าน",2=>"พนักงาน",3=>"ผู้ใช้งานทั่วไป");
                     echo $type_user[$_SESSION['login_type']]."<br>";
                 echo "</div>";
-            echo "<div>";
+            echo "</div>";
         
 ?>
-        <p align='right' style="margin-right:10px;">
+    </div>
+    <div class='col-md-6'>
+        <p align='right' style="margin-right:10px;margin-top:10px;">
 <?php
             if($_SESSION['login_type']==1){
                 echo "<a href='../backend/index.php?action=logout'><button class='btn btn-sm btn-primary' type='button'>ส่วนการจัดการ</button></a>&nbsp;";
@@ -75,50 +87,77 @@
 ?>  
             <a href='../include/index.php?action=logout'><button class="btn btn-sm btn-danger" type='button'>ออกระบบ</button></a>
         </p>
+    </div>
+    </div>
         <hr>
         <div class="container-fluid" style='padding:0px'>
-            <div class="col-xs-6">
+            <div class="col-xs-6 col-md-3 col-sm-3">
                 <center>
-                    <a href='index.php?module=product&action=list_product' style="text-decoration: none;"><div class="menu-images">
+                    <a href='index.php?module=product&action=list_product' style="text-decoration: none;"><div class="menu-images" style="background:#000">
                         <img src='../images/icon/iconfern.png' width="100" height="100" style="margin:6px;"> 
                     </div>
                     <p>รายการสินค้า</p></a>
                 </center>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-6 col-md-3 col-sm-3">
                 <center>
 <?php
                 if(!empty($_SESSION['total_amount'])){
                     echo "<p style='position:absolute;padding:5px;right:20;background:#133572;border-radius:20px;color:white;font-size:16px'><b>&nbsp;&nbsp;$_SESSION[total_amount]&nbsp;&nbsp;</b></p>";
                 }
 ?>
-                    <div class="menu-images">
+                    <div class="menu-images" >
                         <a href='index.php?module=cart&action=show_cart' style="text-decoration: none;"><img src='../images/icon/cart-of-ecommerce.png' width="100" height="100" style="margin:6px;">
                     </div>
                     <p>ตะกร้าสิน้า</p></a> 
                 </center>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-6 col-md-3 col-sm-3">
                 <center>
-                    <a href='index.php?module=orders&action=order_list' style="text-decoration: none;"><div class="menu-images">
+                    <a href='index.php?module=orders&action=order_list' style="text-decoration: none;"><div class="menu-images" style="background:#000">
                         <img src='../images/icon/bag.png' width="100" height="100" style="margin:6px;"> 
                     </div>
                     <p>รายการขายสินค้า</p></a>
                 </center>
             </div>
-            <div class="col-xs-6">
+<?php
+        if($_SESSION['login_type']==2){
+?>
+            <div class="col-xs-6 col-md-3 col-sm-3">
                 <center>
-                    <a href='index.php?module=orders&action=order_list' style="text-decoration: none;"><div class="menu-images">
-                        <img src='../images/icon/bag.png' width="100" height="100" style="margin:6px;"> 
+                    <a href='index.php?module=employee&action=show_worktime' style="text-decoration: none;"><div class="menu-images" style="background:#000">
+                        <img src='../images/icon/time.png' width="100" height="100" style="margin:6px;"> 
                     </div>
                     <p>ดูเวลาทำงาน</p></a>
                 </center>
             </div>
+<?php  
+        }
+?>
+<?php
+        if($_SESSION['login_type']==2){
+?>
+            <div class="col-xs-6 col-md-3 col-sm-3">
+                <center>
+                    <a href='index.php?module=employee&action=show_salary' style="text-decoration: none;"><div class="menu-images" style="background:#000">
+                        <img src='../images/icon/calculator-and-dollar-sign.png' width="100" height="100" style="margin:6px;"> 
+                    </div>
+                    <p>ดูเงินเดือน</p></a>
+                </center>
+            </div>
+<?php  
+        }
+?>
         </div>
 <?php
         }
 ?>
+    <div class="col-md-12 hidden-xs" style="margin-bottom:10px;"><br><br><br><br><br><br><br><br><br></div>
     </div>
+</div>
+<div class="col-md-2"></div>
+
+</div>
 </body>
 </html>
 <?php

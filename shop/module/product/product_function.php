@@ -10,36 +10,38 @@ function list_product(){
 		<form method='get'>
 		<input type='hidden' name='module' value="product">
 		<input type='hidden' name='action' value="list_product">
-		<div class="col-xs-9">
+		<div class="col-md-2 col-sm-1"></div>
+		<div class="col-xs-9 col-md-7 col-sm-8">
 			<input type="text" class="form-control input-sm" name='keywd' value="<?php echo "$keywd"; ?>" placeholder="Search...">
 		</div>
-		<div class="col-xs-3">
+		<div class="col-xs-3 col-md-2 col-sm-2">
 			<button type="submit" class="btn btn-sm btn-primary" >ค้นหา</button>
 		</div>
+		<div class="col-md-2 col-sm-1"></div>
 		</form>
 	</div>
 <?php
 	
 	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,product_image.product_image,type.type_name_eng FROM product LEFT JOIN product_image ON product.product_id = product_image.product_id LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_name LIKE '%$keywd%'")or die("ERROR : shop product funtion line 18");
 	$count_product =mysqli_num_rows($query_product);
-	$total_page = ceil($count_product/10);
+	$total_page = ceil($count_product/12);
 	if(empty($_GET['page'])){
 		$page=1;
 		$start_row=0;
 	}
 	else{
 		$page=$_GET['page'];
-		$start_row=($page-1)*10;
+		$start_row=($page-1)*12;
 	}
 	if($count_product>0){
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_name LIKE '%$keywd%' LIMIT $start_row,10")or die("ERROR : shop product funtion line 18");
+	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_name LIKE '%$keywd%' LIMIT $start_row,12")or die("ERROR : shop product funtion line 18");
 	while (list($product_id,$product_name,$product_type)=mysqli_fetch_row($query_product)) {
 		$query_image=mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'  ORDER BY product_image_id ASC");
 		list($product_image)=mysqli_fetch_row($query_image);
 ?> 
-		<div class="col-xs-6" style='margin-top:10px;'>
+		<div class="col-xs-6 col-sm-4 col-md-3" style='margin-top:10px;'>
 
-			<a href='<?php echo "index.php?module=product&action=product_detail&product_id=$product_id";?>'><p align="center"><?php echo "<img src='../images/$product_type/$product_image' width='120' height='120' style='border-radius:60px;border:4px solid #ccc'>" ;?></p>
+			<a href='<?php echo "index.php?module=product&action=product_detail&product_id=$product_id";?>' style='text-decoration:none'><p align="center"><?php echo "<img src='../images/$product_type/$product_image' width='120' height='120' style='border-radius:60px;border:4px solid #ccc'>" ;?></p>
 			<p align="center"><?php echo "$product_name";?></p></a>
 		</div>
 <?php
@@ -93,11 +95,11 @@ function product_detail(){
 	  <!-- Wrapper for slides -->
 <?php
 	$number_image=1;
-	echo "<div class='carousel-inner' role='listbox'>";
+	echo "<div class='carousel-inner img_slide_detail' role='listbox'>";
 	while(list($product_image_detail)=mysqli_fetch_row($query_images_detail)){
 	  	$active = ($number_image==1)?"active":"";
-	    echo "<div class='item $active'>";
-	      echo "<img src='../images/$type_name_eng/$product_image_detail' alt='...' style='width:100%;height:200'>";
+	    echo "<div class='item  $active img_slide_detail'>";
+	      echo "<img src='../images/$type_name_eng/$product_image_detail' style='width:100%height:100%' alt='...'>";
 	      echo "<div class='carousel-caption'>";
 	      echo "</div>";
 	    echo "</div>";
@@ -117,9 +119,9 @@ function product_detail(){
 	</div>
 
 <?php
-	echo "<table width='95%' style='margin:10px;font-size:14px;'>";
+	echo "<table align='center' width='85%' style='margin:10px;font-size:14px;'>";
 		echo "<tr>";
-			echo "<td width='35%'><p><b>ชื่อสินค้า</b></p></td>";
+			echo "<td width='30%'><p><b>ชื่อสินค้า</b></p></td>";
 			echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
 			echo "<td><p>$product_name</p></td>";
 		echo "</tr>";

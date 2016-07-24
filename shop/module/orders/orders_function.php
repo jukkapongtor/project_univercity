@@ -134,6 +134,7 @@ function order_detail(){
 <p style="margin:5px"><b>รายละเอียดการขายสินค้ารหัส : </b><?php echo $_GET['order_id'] ?></p>
 <hr style="margin:0px"><hr style="margin:2px">
 <?php
+	echo "<p align='right'><a href='../print/print_bill_shop.php?order_id=$_GET[order_id]' target='_blank'><button class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-print'></span>&nbsp;ปริ้นรายงานขาย</button></a></p>";
 	echo "<table class='table table-hover table-striped' style='font-size:13px'>";      
 		$total_price=0;
 		$query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,size.size_name,product_size.product_price_shop,order_detail.amount,type.type_name_eng FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN product ON product.product_id = product_size.product_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN type ON product.product_type = type.product_type WHERE order_detail.order_id = '$_GET[order_id]'")or die("ERROR : order function line 111");

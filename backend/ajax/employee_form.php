@@ -396,8 +396,7 @@
             </div>
         </div>
             <div class="col-md-12"  align="right" style="margin-top: 10px;" >
-                 <button type="button" class="btn btn-default" >Close</button>
-                 <button type="submit" class="btn btn-primary">Save</button>
+                 <button type="submit" class="btn btn-primary">ส่งข้อมูล</button>
             </div>
     
     </form>

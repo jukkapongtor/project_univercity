@@ -17,6 +17,8 @@
 .user{
 	float: left;
 	width: 100%;
+	margin-left: 20px;
+	margin-top: 10px;
 }
 .user-image,.user-data{
 	float: left;
@@ -43,4 +45,20 @@
 .menu-header a {
 	color: white;
 	text-decoration: none;
+}
+.img_slide_detail{
+	width:100%;
+	height:400px;
+}
+@media screen and (max-width:1115px){
+	.img_slide_detail{
+		width:100%;
+		height:300px;
+	}
+}
+@media screen and (max-width:750px){
+	.img_slide_detail{
+		width:100%;
+		height:200px;
+	}
 }

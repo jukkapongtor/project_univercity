@@ -74,7 +74,7 @@ function insert_user(){
 		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 		echo "<script>swal({title:'',text: \"Password กับ Confirm Password ไม่สอดคล้องกัน\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=users&action=register';})</script>";
 	}	
-	mysqli_query($_SESSION['connect_db'],"INSERT INTO users VALUES ('$_POST[username]','$_POST[passwd]','','','','','$_POST[user_email]','3','','','','','','','','','' )") or die ("ERROR : users_function line 36 ") ;
+	mysqli_query($_SESSION['connect_db'],"INSERT INTO users VALUES ('$_POST[username]','$_POST[passwd]','','','','','$_POST[user_email]','3','','','','','','','','','','' )") or die ("ERROR : users_function line 36 ") ;
 	echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 	echo "<script>swal({title:'',text: \"สมัครสมาชิกเสร็จสิ้น สามารถลงชื่อเข้าใช้งานระบบได้แล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php';})</script>";
 	}

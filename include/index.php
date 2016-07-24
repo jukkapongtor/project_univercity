@@ -21,10 +21,14 @@
  <script>
     $(document).ready(function() {
       $(".btn_forgot_passwd").click(function(){
-        var username = document.getElementById("username").value;
-        var email = document.getElementById("email").value;
-        $.post('forgot_passwd.php',{username:username,email:email},function(data){ 
-          alert(data);    
+        var username = document.getElementById("username_forgot").value;
+        var email = document.getElementById("email_forgot").value;
+        $.post('forgot_passwd.php',{username_forgot:username,email_forgot:email},function(data){ 
+          if(data=="username or email not match"){
+            swal("", "ชื่อผู้ใช้งานกับอีเมล์ ไม่สอดคล้องกัน", "error");
+          }else{
+            swal("", "ระบบส่งรหัสผ่านไปยังอีเมล์ของท่านเรียบร้อยแล้ว", "success");
+          }  
         });
       });
 
@@ -77,7 +81,7 @@
                                 <p>&nbsp;:&nbsp;</p>
                               </td>
                               <td>
-                                <p><input type='text' class='form-control' id='username' name='username_forgot' placeholder="Username..." ></p>
+                                <p><input type='text' class='form-control' id='username_forgot' placeholder="Username..." ></p>
                               </td>
                             </tr>
                             <tr>
@@ -88,7 +92,7 @@
                                 <p>&nbsp;:&nbsp;</p>
                               </td>
                               <td>
-                                <p><input type='text' class='form-control' id='email' name='email_forgot' placeholder="E-mail..." ></p>
+                                <p><input type='text' class='form-control' id='email_forgot'  placeholder="E-mail..." ></p>
                               </td>
                             </tr>
                           </table>
