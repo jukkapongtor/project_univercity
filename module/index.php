@@ -13,6 +13,7 @@
 		case "lower_like":lower_like();break;
 		case "close_web":close_web();break;
 		case "select_address":select_address();break;
+		case "edit_webboard":edit_webboard();break;
 		default: echo "<script>alert('เกิดข้อผิดพลาดในการใช้งาน ระบบจะนำคุณไปยังหน้าหลัก');window.location='../index.php'</script>";break;
 	}
 

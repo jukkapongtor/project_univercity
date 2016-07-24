@@ -75,6 +75,15 @@ function close_web(){
 		$_SESSION['web_close']=1;
 		echo "<script>window.location='../index.php'</script>";
 }
+function edit_webboard(){
+	echo "<form action='index.php?module=webboard&action=update_webboard' method='post'>";
+		$query_webboard=mysqli_query($_SESSION['connect_db'],"SELECT webboard_detail FROM webboard WHERE webboard_id ='$_POST[webboard_id]'")or die("ERROR users function line 64");
+		list($webboard_detail)=mysqli_fetch_row($query_webboard);
+		echo "<input type='hidden' name='webboard_id' value='$_POST[webboard_id]'>";
+		echo "<textarea class='form-control' name='webboard_detail' style='height:120px;'>$webboard_detail</textarea>";
+		echo "<p align='right'><button type='submit' class='btn btn-sm btn-success' style='margin-top:10px;'>แก้ไข</button></p>";
+	echo "</form>";
+}
 function select_address(){
 	if($_POST['address']=="user"){
 		$query_users = mysqli_query($_SESSION['connect_db'],"SELECT * FROM users WHERE username ='$_SESSION[login_name]'")or die("ERROR users function line 64");

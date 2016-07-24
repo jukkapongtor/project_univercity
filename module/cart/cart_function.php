@@ -23,7 +23,8 @@ function show_cart(){
 				$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size.product_size_id,size.size_name,product_size.product_amount_shop,product_size.product_amount_web,product_size.product_price_shop,product_size.product_sprice_shop,product_size.product_price_web,product_size.product_sprice_web  FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size   WHERE product_size.product_size_id='$key' AND product_size.product_id='$value[product_id]'")or die("ERROR : cart function line 19");
 				list($product_size_id,$size_name,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size);
 				echo "<td><p class='font20' align='center'>$size_name</p></td>";
-				echo "<td><p class='font20' align='center' id='price_$product_size_id'>$product_price_web</p></td>";
+				$price = ($product_sprice_web!=0)?$product_sprice_web:$product_price_web;
+				echo "<td><p class='font20' align='center' id='price_$product_size_id'>$price</p></td>";
 				echo "<input type='hidden' id='product_id_$product_size_id' value='$product_id'>";
 				echo "<td style='width:100px;'>";
 				    echo "<div class='input-group'>";
@@ -36,7 +37,7 @@ function show_cart(){
 				      echo "</span>";
 				    echo "</div>";
 				echo "</td>";
-				$sum_product = $product_price_web * $value['amount'];
+				$sum_product = $price * $value['amount'];
 				$total_price+=$sum_product;
 				echo "<td><p class='font20' align='right' id='sum_incart_$product_size_id'>".number_format($sum_product)."</p></td>";
 			echo "</tr>";
@@ -59,7 +60,7 @@ function show_cart(){
 		        echo "<p><b>เลือกข้อมูลผู้ซื้อสินค้า : </b><input type='radio' id='address1' name='address' value='user' checked='checked'> เลือกข้อมูลจากผู้ใช้ &nbsp;&nbsp;<input type='radio' name='address' id='address2' value='not_user' > ใช้ข้อมูลใหม่</p>";
 		        echo "<div id='address_customer'>";
 		        	$query_users = mysqli_query($_SESSION['connect_db'],"SELECT * FROM users WHERE username ='$_SESSION[login_name]'")or die("ERROR users function line 64");
-					list($username,$passwd,$fullname,$lastname,$image,$phone,$email,$type,$house_no,$village_no,$alley,$lane,$road,$sub_district,$district,$province,$postal_code)=mysqli_fetch_row($query_users);
+					list($username,$passwd,$fullname,$lastname,$image,$phone,$email,$type,$employee_id,$house_no,$village_no,$alley,$lane,$road,$sub_district,$district,$province,$postal_code)=mysqli_fetch_row($query_users);
 					echo "<center><table width='80%'>";
 						echo "<tr>";
 							echo "<td>";

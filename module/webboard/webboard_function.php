@@ -131,7 +131,7 @@ function form_webboard(){
 	  			//echo "&nbsp;<button id='message_bold'>I</button>";
 	  			//echo "&nbsp;<button id='message_bold'>U</button></p>";
 	  		echo "</div>";
-	  		echo "<div class='col-md-12'><p class='font20'><textarea class='form-control' id='webboard_message' name='webboard_detail' style='height:150px;'></textarea></p></div>";
+	  		echo "<div class='col-md-12'><p class='font20'><textarea class='form-control' id='webboard_message' name='webboard_detail' style='height:240px;'></textarea></p></div>";
 	  		echo "<div class='col-md-6 col-xs-6'><p ><button type='submit' class='btn btn-success font20' >ตั้งกระทู้</button></p></div>";
 	  		echo "<div class='col-md-6 col-xs-6'>";
 	  			echo "<table align='right'>";
@@ -148,11 +148,13 @@ function form_webboard(){
 }
 function add_webboard(){
 	if(empty($_POST['webboard_header'])||empty($_POST['webboard_detail'])){
-		echo "<script>alert('กรุณากรอกข้อมูลให้ครบก่อนทำการเพิ่มกระทู้');window.location='index.php?module=webboard&action=form_webboard'</script>";
+		echo "<script>swal({title:'',text: \"กรุณากรอกข้อมูลให้ครบก่อนทำการเพิ่มกระทู้\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=webboard&action=form_webboard';})</script>";
+		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 	}else{
 		$datetime= date("Y-m-d H:i:s");
-		mysqli_query($_SESSION['connect_db'],"INSERT INTO webboard VALUES('','$_POST[webboard_header]','$_POST[webboard_detail]','$_SESSION[login_name]','$datetime','0','0')")or die("ERROR : webboard function line 58");
-		echo "<script>alert('เพิ่มกระทู้เรียบร้อยแล้ว');window.location='index.php?module=webboard&action=webboard'</script>";
+		mysqli_query($_SESSION['connect_db'],"INSERT INTO webboard VALUES('','$_POST[webboard_header]','$_POST[webboard_detail]','$_SESSION[login_name]','$datetime','0')")or die("ERROR : webboard function line 154");
+		echo "<script>swal({title:'',text: \"เพิ่มกระทู้เรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=webboard&action=webboard';})</script>";
+		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 	}
 	
 }
@@ -221,6 +223,33 @@ function webboard_detail(){
 			//alert(ele.getAttribute('like_substatus'));
 */
 	echo "</script>";
+?>
+	<script>
+		$(document).ready(function() {
+			$("#edit_webboard").click(function(){
+				var webboard_id = document.getElementById("webboard_id").value;
+				$.post('module/index.php?data=edit_webboard',{webboard_id:webboard_id},function(data){
+	            	$("#webboard_detail").html(data);
+	            });
+			});
+		});
+		function delete_webboard(webboard_id){
+		    swal({
+		      title: "ลบกรทู้",
+		      text: "คุณต้องการลบกระทู้เลยใช่ไหม",
+		      type: "warning",
+		      showCancelButton: true,
+		      confirmButtonColor: "#DD6B55",
+		      confirmButtonText: "ลบกรทู้",
+		      cancelButtonText: "ยกเลิกการลบ",
+		      closeOnConfirm: false
+		    },
+		    function(){
+		      window.location = 'index.php?module=webboard&action=delete_webboard&webboard_id='+webboard_id;
+		    });
+		}
+	</script>
+<?php
 
 
 
@@ -232,9 +261,14 @@ function webboard_detail(){
 		echo "<div class='col-md-12 blog_webboard'>";
 			$query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT webboard.*,COUNT(like_status.like_id) FROM webboard LEFT JOIN like_status ON webboard.webboard_id = like_status.like_name_id WHERE webboard.webboard_id='$_GET[webboard_id]' AND like_status.like_name='webboard'  ")or die("ERROR : webboard function line 151");
 			list($webboard_id,$webboard_header,$webboard_detail,$username,$webboard_date,$visitor,$like)=mysqli_fetch_row($query_webboard);
+			echo "<input type='hidden' id='webboard_id' value='$webboard_id'>";
+			if(!empty($_SESSION['login_name'])&&($username==$_SESSION['login_name'])){
+				echo "<p class='font20' align='right'><button id='edit_webboard' class='btn btn-sm btn-primary'>แก้ไขข้อความ</button>&nbsp;&nbsp;<button onclick='delete_webboard($webboard_id)' class='btn btn-sm btn-danger'>ลบกระทู้</button></p>";
+			}
 			echo "<p class='font26'><b>ชื่อกระทู้ : </b> $webboard_header</p>";
-			echo "<p class='font26'><b>รายระเอียดข้อมูล : </b></p>";
-			echo "<p class='font20'>$webboard_detail</p>";
+			echo "<p class='font26'><b>รายละเอียดข้อมูล : </b></p>";
+			echo "<p class='font20' id='webboard_detail'>$webboard_detail</p>";
+
 			echo "<hr>";
 			$like_message = "Like";
 			if(!empty($_SESSION['login_name'])){
@@ -326,14 +360,26 @@ function webboard_detail(){
 		
 	echo "</div>";
 }
+function update_webboard(){
+	mysqli_query($_SESSION['connect_db'],"UPDATE webboard SET webboard_detail='$_POST[webboard_detail]' WHERE webboard_id='$_POST[webboard_id]'")or die("ERROR : webboard line 349");
+		echo "<script>swal({title:'',text: \"แก้ไขกระทู้เรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=webboard&action=webboard_detail&webboard_id=$_POST[webboard_id]';})</script>";
+		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+}
 function insert_subwebboard(){
 	if(empty($_POST['subwebboard_message'])){
-		echo "<script>alert('กรุณาพิมพ์ข้อความก่อนทำการตอบกระทู้');window.location='index.php?module=webboard&action=webboard_detail&webboard_id=$_POST[webboard_id]'</script>";
+		echo "<script>swal({title:'',text: \"กรุณาพิมพ์ข้อความก่อนทำการตอบกระทู้\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=webboard&action=webboard_detail&webboard_id=$_POST[webboard_id]';})</script>";
+		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 	}else{
 		$subwebboard_datetime = date("Y-m-d H:i:s");
-		mysqli_query($_SESSION['connect_db'],"INSERT INTO subwebboard VALUES('','$_POST[webboard_id]','$_POST[subwebboard_message]','$_SESSION[login_name]','$subwebboard_datetime','0')")or die("ERROR : insert_subwebboard line 209");
-		echo "<script>window.location='index.php?module=webboard&action=webboard_detail&webboard_id=$_POST[webboard_id]'</script>";
+		mysqli_query($_SESSION['connect_db'],"INSERT INTO subwebboard VALUES('','$_POST[webboard_id]','$_POST[subwebboard_message]','$_SESSION[login_name]','$subwebboard_datetime','0')")or die("ERROR : webboard line 359");
+		echo "<script>swal({title:'',text: \"แสดงความคิดเห็นเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=webboard&action=webboard_detail&webboard_id=$_POST[webboard_id]';})</script>";
+		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 	}
-
 }
+function delete_webboard(){
+	mysqli_query($_SESSION['connect_db'],"DELETE FROM webboard WHERE webboard_id='$_GET[webboard_id]'")or die("ERROR : webboard line 349");
+		echo "<script>swal({title:'',text: \"ลบกระทู้รหัส $_GET[webboard_id] เรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=webboard&action=webboard';})</script>";
+		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+}
+
 ?>
