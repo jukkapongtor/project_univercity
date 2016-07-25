@@ -53,10 +53,12 @@ function order_insert(){
 					$sql_insert_orderdetail.=",";
 				}
 				if($value['amount']!=0){
+					$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,size_id FROM product_size WHERE product_size_id='$key'")or die("ERROR : order function line 5");
+					list($product_id,$size_id)=mysqli_fetch_row($query_product);
 					$query_price = mysqli_query($_SESSION['connect_db'],"SELECT product_sprice_web,product_price_web FROM product_size WHERE product_size_id='$key'")or die("ERROR : order function line 5");
 					list($product_sprice_web,$product_price_web)=mysqli_fetch_row($query_price);
 					$price = ($product_sprice_web!=0)?$product_sprice_web:$product_price_web;
-					$sql_insert_orderdetail.= "('','$order_id','$key','$value[amount]','$price')";
+					$sql_insert_orderdetail.= "('','$order_id','$product_id','$size_id','$value[amount]','$price')";
 					$number++;
 				}
 			}
@@ -151,7 +153,7 @@ function order_list(){
 					        echo "<thead><tr><th><center>ลำดับ</th><th><center>ชื่อสินค้า</th><th><center>ขนาดสินค้า</th><th><center>ราคา(ชิ้น)</th><th><center>จำนวน</th><th><center>รวมราคา</th></tr></thead><tbody>";
 					        $num=1;
 					        $total_price=0;
-					        $query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,size.size_name,order_detail.price,order_detail.amount FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN product ON product.product_id = product_size.product_id LEFT JOIN size ON product_size.size_id = size.product_size WHERE order_detail.order_id = '$order_id'")or die("ERROR : order function line 111");
+					        $query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,size.size_name,order_detail.price,order_detail.amount FROM order_detail LEFT JOIN product ON order_detail.product_id = product.product_id LEFT JOIN size ON order_detail.size_id = size.product_size WHERE order_detail.order_id = '$order_id'")or die("ERROR : order function line 111");
 					        while(list($product_name,$size_name,$product_price_web,$total_amount)=mysqli_fetch_row($query_orderdetail)){
 					     		echo "<tr>";
 					     			echo "<td align='center'>$num</td>";
@@ -329,7 +331,7 @@ function order_success(){
 					        echo "<thead><tr><th><center>ลำดับ</th><th><center>ชื่อสินค้า</th><th><center>ขนาดสินค้า</th><th><center>ราคา(ชิ้น)</th><th><center>จำนวน</th><th><center>รวมราคา</th></tr></thead><tbody>";
 					        $number=1;
 					        $total_price=0;
-					        $query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,size.size_name,order_detail.price,order_detail.amount FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN product ON product.product_id = product_size.product_id LEFT JOIN size ON product_size.size_id = size.product_size WHERE order_detail.order_id = '$order_id'")or die("ERROR : order function line 111");
+					        $query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,size.size_name,order_detail.price,order_detail.amount FROM order_detail LEFT JOIN product ON order_detail.product_id = product.product_id LEFT JOIN size ON order_detail.size_id = size.product_size WHERE order_detail.order_id = '$order_id'")or die("ERROR : order function line 334");
 					        while(list($product_name,$size_name,$product_price_web,$total_amount)=mysqli_fetch_row($query_orderdetail)){
 					     		echo "<tr>";
 					     			echo "<td align='center'>$num</td>";

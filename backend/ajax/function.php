@@ -114,7 +114,7 @@ switch ($_GET['data']) {
 		$month = substr($_POST['date'],3,2);
 		$year = substr($_POST['date'],6,4);
 		$date_select="$year-$month-$day";
-		$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id,total_amount,total_price FROM orders WHERE DATE(order_date)='$date_select' AND (order_status='3' OR order_status='4') ")or die("ERROR : report_sell_day line 47");
+		$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id,total_amount,total_price FROM orders WHERE DATE(order_date)='$date_select' AND (order_status='3' OR order_status='4') ")or die("ERROR : report_sell_day line 117");
 		$rows = mysqli_num_rows($query_order);
 		if($rows<=0){
 			echo "<p><b>ไม่พบรายการขาย</p>";
@@ -137,14 +137,14 @@ switch ($_GET['data']) {
 		</table>
 	<script>
 <?php
-	$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE DATE(order_date)='$date_select' AND (order_status='3' OR order_status='4') ")or die("ERROR : report_sell_day line 47");
+	$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE DATE(order_date)='$date_select' AND (order_status='3' OR order_status='4') ")or die("ERROR : report_sell_day line 140");
 	$rows = mysqli_num_rows($query_order);
 	if($rows>0){
 		$num=0;
 
 		$order_detail =array();
 		while (list($order_id)=mysqli_fetch_row($query_order)) {
-			$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN product ON product_size.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 47");
+			$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,order_detail.price FROM order_detail LEFT JOIN size ON order_detail.size_id = size.product_size LEFT JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 147");
 			while (list($amount,$product_name,$size_name)=mysqli_fetch_row($query_order_detail)) {
 				$check_dubble=0;
 				foreach ($order_detail as $key => $value) {
@@ -214,13 +214,13 @@ switch ($_GET['data']) {
 <?php
 									echo "<p align='right'><a href='../print/print_income.php?&month=$month_id&year=$_POST[year]' target='_blank'><button class='btn btn-sm btn-info' style='padding:0px 5px'><span class='glyphicon glyphicon-print' aria-hidden='true'></span>&nbsp;ปริ้นรายได้</button></a></p>";
 //--------------------------แสดงรายะเอียดข้อมูลขายรายวันสำรหับ  ขายบนเว็บไซต์
-									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$_POST[year]' AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : report_sell_day line 247");
+									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$_POST[year]' AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : report_sell_day line 217");
 									$rows = mysqli_num_rows($query_order);
 									if($rows>0){
 										$num=0;
 										$order_detail =array();
 										while (list($order_id)=mysqli_fetch_row($query_order)) {
-											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,product_size.product_price_web FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN product ON product_size.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 47");
+											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,order_detail.price FROM order_detail LEFT JOIN size ON order_detail.size_id = size.product_size LEFT JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 223");
 
 
 											while (list($amount,$product_name,$size_name,$product_price_web)=mysqli_fetch_row($query_order_detail)) {
@@ -281,13 +281,13 @@ switch ($_GET['data']) {
 										echo "</div>";
 									}
 //--------------------------แสดงรายะเอียดข้อมูลขายรายวันสำรหับ  ขายในร้าน
-									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$_POST[year]' AND (order_status='3' OR order_status='4') AND type_order='shop'")or die("ERROR : report_sell_day line 247");
+									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$_POST[year]' AND (order_status='3' OR order_status='4') AND type_order='shop'")or die("ERROR : report_sell_day line 284");
 									$rows = mysqli_num_rows($query_order);
 									if($rows>0){
 										$num=0;
 										$order_detail =array();
 										while (list($order_id)=mysqli_fetch_row($query_order)) {
-											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,product_size.product_price_shop FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN product ON product_size.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 47");
+											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,order_detail.price FROM order_detail LEFT JOIN size ON order_detail.size_id = size.product_size LEFT JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 290");
 
 
 											while (list($amount,$product_name,$size_name,$product_price_shop)=mysqli_fetch_row($query_order_detail)) {
@@ -378,11 +378,11 @@ switch ($_GET['data']) {
 <?php
 	$query_report_month =mysqli_query($_SESSION['connect_db'],"SELECT month_id,month_name FROM month")or die("ERROR : report_sell_day line 185");
 	while (list($month_id,$month_name)=mysqli_fetch_row($query_report_month)) {
-		$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_date,SUM(total_amount),SUM(total_price) FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$_POST[year]' AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : report_sell_day line 47");
+		$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_date,SUM(total_amount),SUM(total_price) FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$_POST[year]' AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : report_sell_day line 381");
 		list($date,$total_amount,$total_price)=mysqli_fetch_row($query_order_detail);
 		$repot_month[]=array("month_name"=>"$month_name","total_price"=>"$total_price");
 
-		$query_order_detail_shop =mysqli_query($_SESSION['connect_db'],"SELECT order_date,SUM(total_amount),SUM(total_price) FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$_POST[year]' AND (order_status='3' OR order_status='4')AND type_order='shop'")or die("ERROR : report_sell_day line 47");
+		$query_order_detail_shop =mysqli_query($_SESSION['connect_db'],"SELECT order_date,SUM(total_amount),SUM(total_price) FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$_POST[year]' AND (order_status='3' OR order_status='4')AND type_order='shop'")or die("ERROR : report_sell_day line 385");
 		list($date_shop,$total_amount_shop,$total_price_shop)=mysqli_fetch_row($query_order_detail_shop);
 		$repot_month_shop[]=array("month_name"=>"$month_name","total_price"=>"$total_price_shop");
 	}
@@ -475,13 +475,13 @@ switch ($_GET['data']) {
 <?php
 									echo "<p align='right'><a href='../print/print_income.php?day=$i&month=$month&year=$year' target='_blank'><button class='btn btn-sm btn-info' style='padding:0px 5px'><span class='glyphicon glyphicon-print' aria-hidden='true'></span>&nbsp;ปริ้นรายได้</button></a></p>";
 //--------------------------แสดงรายะเอียดข้อมูลขายรายวันสำรหับ  ขายบนเว็บไซต์
-									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE DAY(order_date)='$i' AND MONTH(order_date)='$month' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : report_sell_day line 247");
+									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE DAY(order_date)='$i' AND MONTH(order_date)='$month' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : report_sell_day line 478");
 									$rows = mysqli_num_rows($query_order);
 									if($rows>0){
 										$num=0;
 										$order_detail =array();
 										while (list($order_id)=mysqli_fetch_row($query_order)) {
-											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,product_size.product_price_web FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN product ON product_size.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 47");
+											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,order_detail.price FROM order_detail LEFT JOIN size ON order_detail.size_id = size.product_size LEFT JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 484");
 
 
 											while (list($amount,$product_name,$size_name,$product_price_web)=mysqli_fetch_row($query_order_detail)) {
@@ -543,13 +543,13 @@ switch ($_GET['data']) {
 										echo "</div>";
 									}
 //--------------------------แสดงรายะเอียดข้อมูลขายรายวันสำรหับ  ขายในร้าน
-									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE DAY(order_date)='$i' AND MONTH(order_date)='$month' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4') AND type_order='shop'")or die("ERROR : report_sell_day line 247");
+									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE DAY(order_date)='$i' AND MONTH(order_date)='$month' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4') AND type_order='shop'")or die("ERROR : report_sell_day line 546");
 									$rows = mysqli_num_rows($query_order);
 									if($rows>0){
 										$num=0;
 										$order_detail =array();
 										while (list($order_id)=mysqli_fetch_row($query_order)) {
-											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,product_size.product_price_shop FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN product ON product_size.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 47");
+											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,order_detail.price FROM order_detail LEFT JOIN size ON order_detail.size_id = size.product_size LEFT JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 552");
 
 
 											while (list($amount,$product_name,$size_name,$product_price_shop)=mysqli_fetch_row($query_order_detail)) {

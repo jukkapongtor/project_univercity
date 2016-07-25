@@ -21,7 +21,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>MUMFERN SHOP</title>
  <meta name="viewport" content="width=device-width, initial-scale=1">
- <meta name="keywords" content="ขายเฟิร์น,ขายต้นไม้,เฟิร์น,ต้นไม้,ขายเฟิร์น จังหวัดเชียงใหม่,ขายเฟิร์น รับส่งทั่วประเทศ,ร้านขายเฟิร์น,มุมเฟิร์น ขายส่งเฟิร์น,ขายเฟิร์น ตลาดคำเที่ยง,ขายต้นไม้ ตลาดคำเที่ยง"
+ <meta name="keywords" content="ขายเฟิร์น,ขายต้นไม้,เฟิร์น,ต้นไม้,ขายเฟิร์น จังหวัดเชียงใหม่,ขายเฟิร์น รับส่งทั่วประเทศ,ร้านขายเฟิร์น,มุมเฟิร์น ขายส่งเฟิร์น,ขายเฟิร์น ตลาดคำเที่ยง,ขายต้นไม้ ตลาดคำเที่ยง">
  <link rel="shortcut icon" href="images/icon/logomumfern.png" />
  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
  <link rel="stylesheet" type="text/css" href="css/mystyle.css">
@@ -42,7 +42,6 @@
 <link rel="stylesheet" href="backend/css/plugins/char_counter.css">
 <link rel="stylesheet" href="backend/css/plugins/video.css">
 <link rel="stylesheet" href="backend/css/codemirror.min.css">
-<link rel="stylesheet" type="text/css" href="../sweetalert/sweetalert.css">
 <link href="css/froala_style.min.css" rel="stylesheet" type="text/css" />
 
  <script src="js/jquery-1.11.3.min.js"></script>
@@ -420,9 +419,10 @@
             }
 ?>
             </div>
-            <div class="container-fluid" style="margin:10px;"></div>
-            <div class="col-md-12 con1" >
-                <div class="col-md-6 col-xs-5">
+           
+            <div class="container-fluid" style="margin:10px;">
+            <div class="col-md-12 con1" style="border-top:2px #ddd solid;padding-top:10px;margin-top:20px;">
+                <div class="col-md-6 col-xs-5" style="margin-top:10px;">
 <?php
                     echo "<img src='images/webpage/$image_content2' class='img_show_content'>";
 ?>
@@ -436,7 +436,7 @@
                 </div>
             </div>
             
-            <div class="col-md-12 con2" style="margin:10px;">
+            <div class="col-md-12 con2" style="margin-top:20px;">
                 <div class="col-md-6 col-xs-7">
 <?php
                     echo "<p class='content2'><b>$header_content3</b></p>";
@@ -449,7 +449,7 @@
 ?>
                 </div>
             </div>
-
+            </div>
 
 <?php
         }
@@ -481,7 +481,7 @@
             <form action="index.php?module=contact&action=insert_contact" method="post">
                 <p><input type='text' class='form-control input-sm' name='username' value="<?php echo "$username";?>"  placeholder="Username...." <?php echo "$disabled";?>></p>
                 <p><input type='text' class='form-control input-sm' name='email' value="<?php echo "$email";?>" placeholder="E-mail...." <?php echo "$disabled";?>></p>
-                <p><textarea class='form-control' style='height:120px' name='message' placeholder="Message...."></textarea></p>
+                <p><textarea class='form-control ' style='height:120px' name='message' placeholder="Message...."></textarea></p>
                 <p align="right"><button class="btn btn-sm btn-warning">Send</button></p>
             </form>
         </div>

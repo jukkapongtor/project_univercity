@@ -178,7 +178,7 @@ div {
 }
 .div-recom{
 	width:90%;
-	height:400px;
+	height:340px;
 	position:absolute;
 }
 .div-recom:hover{
@@ -322,11 +322,11 @@ div {
 }
 .img_product_recom{
 	width:100%;
-	height:400px;
+	height:340px;
 }
 .img_product_detail{
 	width:100%; 
-	height:300px;
+	height:250px;
 }
 .img_producde_mini{
 	width:100%;
@@ -537,7 +537,7 @@ div {
 		height:250px;
 	}
 	.div-recom{
-		width:85%;
+		width:90%;
 		height:250px;
 		position:absolute;
 	}
@@ -613,6 +613,13 @@ div {
 	.include-imglogin{
 		width: 200px;
 		height: 200px;
+	}
+	.contactuser{
+		width: 35%;
+		font-size: 8px;
+	}
+	.contactuser-content1,.contactuser-content2{
+		font-size: 15px;
 	}
 	#image-close-web{
 		margin-top: 80px;

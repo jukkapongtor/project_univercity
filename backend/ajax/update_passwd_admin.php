@@ -6,6 +6,7 @@
     connect_db();
 ?>
 <head>
+	<meta charset='utf-8'>
 	<link rel="stylesheet" type="text/css" href="../../sweetalert/sweetalert.css">
 	<script src="plugins/jquery/jquery.min.js"></script>
 	<script src="../../sweetalert/sweetalert.min.js"></script> 
