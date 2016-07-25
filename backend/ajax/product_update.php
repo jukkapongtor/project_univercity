@@ -53,7 +53,13 @@
 					mysqli_query($_SESSION['connect_db'],"INSERT INTO product_size VALUES('','$_POST[product_id]','$value','0','0','0','".$_POST['product_price_shop'][$key]."','0','".$_POST['product_price_web'][$key]."','0')")or die("ERROR : backend product update line 58");
 					echo "<script>swal({title:'',text: \"แก้ไขประเภทสินค้าเรียบร้อย\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='../#ajax/product_list.php';})</script>";
 				}else{
-					echo "<script>swal({title:'',text: 'ขนาดสินค้าที่เพิ่มนี้มีในระบบสินค้าแล้ว กรุณาเพิ่มขนาดสินค้าชนิดอื่น',type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='../#ajax/product_list.php';})</script>";
+					if(empty($_POST['edit_size_id'])){
+						echo "<script>swal({title:'',text: 'ขนาดสินค้าที่เพิ่มนี้มีในระบบสินค้าแล้ว กรุณาเพิ่มขนาดสินค้าชนิดอื่น',type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='../#ajax/product_list.php';})</script>";
+					}else{
+						mysqli_query($_SESSION['connect_db'],"UPDATE product_size SET product_price_shop='".$_POST['product_price_shop'][$key]."',product_price_web='".$_POST['product_price_web'][$key]."' WHERE product_id = '$_POST[product_id]' AND size_id='$value' ")or die("ERROR : backend product update line 48");
+						echo "<script>swal({title:'',text: \"แก้ไขประเภทสินค้าเรียบร้อย\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='../#ajax/product_list.php';})</script>";
+					}	
+					
 				}
 			}
 			$number++;

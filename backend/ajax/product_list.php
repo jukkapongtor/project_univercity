@@ -248,6 +248,7 @@ function hide_remover(){
 
 								      	if($row_size>0){
 								      		while(list($size_id,$size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
+								      			echo "<input type='hidden' name='edit_size_id[]' value='$size_id'>";	
 								      			echo "<input type='hidden' name='size_id[]' value='$size_id'>";		
 												echo "<div class='col-md-11' style='padding:0'><p><select class='form-control' name='product_size[]' disabled>";
 												echo "<option value=''>--เลือกขนาดสินค้า--</option>";
