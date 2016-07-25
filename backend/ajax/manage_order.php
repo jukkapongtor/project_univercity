@@ -36,7 +36,7 @@ $(document).ready(function() {
 			<i class="fa fa-bars"></i>
 		</a>
 		<ol class="breadcrumb pull-left">
-			<li><a href="#">จัดการข้อมูลผู้ใช้งาน</a></li>
+			<li><a href="#">จัดการรายการขาย</a></li>
 			<li><a href="#">ดูรายการขายบนเว็บไซต์</a></li>
 		</ol>
 	</div>

@@ -244,7 +244,7 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i><img src="../images/icon/income.png" width="16px" ></i>
-						 <span >จัดการรายได้</span>
+						 <span >จัดการรายการขาย</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/manage_order.php">ดูรายการขายบนเว็บไซต์</a></li>

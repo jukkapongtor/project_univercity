@@ -166,43 +166,53 @@ function product_detail(){
 					echo "<td>";
 					$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size.product_size_id,product_size.size_id,size.size_name,product_size.product_amount_keep,product_size.product_amount_shop,product_size.product_amount_web,product_size.product_price_shop,product_size.product_sprice_shop,product_size.product_price_web,product_size.product_sprice_web FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size WHERE product_size.product_id ='$_GET[product_id]'");
 					$number=1;
-					
+					$rows_size = mysqli_num_rows($query_size);
+					if($rows_size>0){
 					while(list($product_size_id,$size_id,$size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
 						echo "<div class='col-md-12'><p><b>ขนาดสินที่ $number : </b> $size_name</p></div>";
 						if(!empty($product_stock)){	
 							echo "<div class='col-md-3' ><p><b>จำนวน</b></p></div>";
-							echo "<div class='col-md-2' <p>$product_amount_web</p></div>";
-							if($sellstatus==1){
-								echo "<div class='col-md-4' ><p><b>ราคา(Batn)</b></p></div>";
-								if($product_sprice_web!=0){
-									echo "<div class='col-md-3' ><p style='text-decoration:line-through;color:red'>$product_price_web</p></div>";
-									echo "<div class='col-md-6' ><p align='right'><font color='red'> !!! </font>ราคาพิเศษ<font color='red'> !!! </font></div></p>";
-									echo "<div class='col-md-6' ><p>$product_sprice_web</p></div>";
-								}else{
-									echo "<div class='col-md-3' ><p>$product_price_web</p></div>";
+							$product_amount_web = ($product_amount_web==0)?"สินค้าหมด":$product_amount_web;
+							if($product_amount_web!="สินค้าหมด"){
+								echo "<div class='col-md-2' <p>$product_amount_web</p></div>";
+								if($sellstatus==1){
+									echo "<div class='col-md-4' ><p><b>ราคา(Batn)</b></p></div>";
+									if($product_sprice_web!=0){
+										echo "<div class='col-md-3' ><p style='text-decoration:line-through;color:red'>$product_price_web</p></div>";
+										echo "<div class='col-md-6' ><p align='right'><font color='red'> !!! </font>ราคาพิเศษ<font color='red'> !!! </font></div></p>";
+										echo "<div class='col-md-6' ><p>$product_sprice_web</p></div>";
+									}else{
+										echo "<div class='col-md-3' ><p>$product_price_web</p></div>";
+									}
 								}
-							}
-							$number++;
-							if($sellstatus==1){
-							  echo "<div class='col-lg-2'></div>";
-							  echo "<div class='col-lg-6 col-xs-9'>";
-							    echo "<div class='input-group'>";
-							      echo "<span class='input-group-btn'>";
-							        echo "<button class='btn' id='lower_indetail_$product_size_id' type='button' style='padding:6px;background:#aa8383'><img src='images/icon/minus.png' width='20' height='20'></button>";
-							      echo "</span>";
-							      echo "<input type='text' class='form-control' id='product_amountindetail_$product_size_id' value='0' disabled style='background:#fff;cursor: default;text-align:center'>";
-							      echo "<span class='input-group-btn'>";
-							        echo "<button class='btn' id='push_indetail_$product_size_id' type='button'style='padding:6px;background:#496a84'><img src='images/icon/add.png' width='20' height='20'></button>";
-							      echo "</span>";
-							    echo "</div>";
-							  echo "</div>";
-							  echo "<div class='col-lg-2 col-xs-3' style='padding:0px'>";
-							    echo "<input type='hidden' id='product_id' value='$_GET[product_id]'>";
-							  	echo "<p align='center'><a id='add2cart_$product_size_id'><button type='button' class='btn btn-default btn-sm' style='font-size:14px;'><span class='glyphicon glyphicon-shopping-cart'></span><b> หยิบสินค้า</b></button></a></p>";
-							  echo "</div>";
-							 echo "</div>";
+								$number++;
+								if($sellstatus==1){
+								  echo "<div class='col-lg-2'></div>";
+								  echo "<div class='col-lg-6 col-xs-9'>";
+								    echo "<div class='input-group'>";
+								      echo "<span class='input-group-btn'>";
+								        echo "<button class='btn' id='lower_indetail_$product_size_id' type='button' style='padding:6px;background:#aa8383'><img src='images/icon/minus.png' width='20' height='20'></button>";
+								      echo "</span>";
+								      echo "<input type='text' class='form-control' id='product_amountindetail_$product_size_id' value='0' disabled style='background:#fff;cursor: default;text-align:center'>";
+								      echo "<span class='input-group-btn'>";
+								        echo "<button class='btn' id='push_indetail_$product_size_id' type='button'style='padding:6px;background:#496a84'><img src='images/icon/add.png' width='20' height='20'></button>";
+								      echo "</span>";
+								    echo "</div>";
+								  echo "</div>";
+								  echo "<div class='col-lg-2 col-xs-3' style='padding:0px'>";
+								    echo "<input type='hidden' id='product_id' value='$_GET[product_id]'>";
+								  	echo "<p align='center'><a id='add2cart_$product_size_id'><button type='button' class='btn btn-default btn-sm' style='font-size:14px;'><span class='glyphicon glyphicon-shopping-cart'></span><b> หยิบสินค้า</b></button></a></p>";
+								  echo "</div>";
+								 echo "</div>";
+								}
+							}else{
+								echo "<div class='col-md-9' <p>$product_amount_web</p></div>";
 							}	
 						}
+						$number++;
+					}
+					}else{
+						echo "<p>ไม่พบขนาดสินค้า</p>";
 					}
 					echo "</td>";
 				echo "</tr>";

@@ -17,7 +17,7 @@ function order_detail_shop(ele) {
 			<i class="fa fa-bars"></i>
 		</a>
 		<ol class="breadcrumb pull-left">
-			<li><a href="#">จัดการข้อมูลผู้ใช้งาน</a></li>
+			<li><a href="#">จัดการรายการขาย</a></li>
 			<li><a href="#">ดูรายการขายในร้าน</a></li>
 		</ol>
 	</div>

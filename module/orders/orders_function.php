@@ -131,9 +131,15 @@ function order_list(){
 		for($a=1;$a<$page;$a++){
 		  	$number+=5;
 		}
-
+		if($_GET['order_status']==1){
+			echo "<p align='center'><font color='red'> **** </font>กรุณาชำระเงินและแจ้งการโอนเงินภายในระยะเวลา 3 วันหลังทำการสั่งซื้อสินค้า<font color='red'> **** </font></p>";
+		}
 		echo "<table class='table table-striped table-hover'>";
-			echo "<tr><th><center>ลำดับ</th><th><center>รหัสซื้อสินค้า</th><th><center>เวลาที่ซื้อสินค้า</th><!--<th>เวลาในการชำระเงิน</th><th>สถานะการซื้อสินค้า</th><th>จำนวนสินค้า</th><th>ราคา</th>--><th><center>ข้อมูล</th></tr>";
+			echo "<tr><th><center>ลำดับ</th><th><center>รหัสซื้อสินค้า</th><th><center>เวลาที่ซื้อสินค้า</th>";
+			if($_GET['order_status']==1){
+				echo "<th><center>เวลาในการชำระเงิน</th>";
+			}
+			echo "<!--<th>เวลาในการชำระเงิน</th><th>สถานะการซื้อสินค้า</th><th>จำนวนสินค้า</th><th>ราคา</th>--><th><center>หมายเหตุ</th></tr>";
 		$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_username='$_SESSION[login_name]' AND order_status='$_GET[order_status]' LIMIT $start_row,5")or die("ERROR : order function line 21");
 		while(list($order_id,$order_username,$order_date,$order_date_limit,$order_status,$total_amount,$total_price,$tracking_id)=mysqli_fetch_row($query_order)){
 			echo "<tr>";
@@ -149,6 +155,7 @@ function order_list(){
 					      echo "</div>";
 					      echo "<div class='modal-body'>";
 					      	echo "<div class='table-responsive'>";
+
 					        echo "<table class='table table-hover table-striped font20'>";
 					        echo "<thead><tr><th><center>ลำดับ</th><th><center>ชื่อสินค้า</th><th><center>ขนาดสินค้า</th><th><center>ราคา(ชิ้น)</th><th><center>จำนวน</th><th><center>รวมราคา</th></tr></thead><tbody>";
 					        $num=1;
@@ -201,7 +208,9 @@ function order_list(){
 					echo "</div>";
 				echo "</td>";
 				echo "<td>".substr($order_date,0,10)."</td>";
-				//echo "<td>$order_date_limit</td>";
+				if($_GET['order_status']==1){;
+					echo "<td>".date("Y-m-d", strtotime("+3 day", strtotime(substr($order_date,0,10))))."</td>";
+				}
 				$quert_status = mysqli_query($_SESSION['connect_db'],"SELECT status_name FROM status WHERE status_id='$order_status'")or die("ERROR : order function line 36");
 				list($status_name)=mysqli_fetch_row($quert_status);
 				//echo "<td><p align='center' class='font20' style='border-radius:3px;padding-top:5px;color:white;$color[$order_status]'>$status_name</p></h4></td>";
@@ -313,7 +322,7 @@ function order_success(){
 		echo "<center><h3 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>ประวัติการซื้อสินค้าจากร้านมุมเฟิร์น</b></h3></center>";
 		echo "<div class='table-responsive'>";
 		echo "<table class='table table-striped table-hover font20'>";
-			echo "<tr><th><center>ลำดับ</th><th><center>รหัสซื้อสินค้า</th><th><center>เวลาที่ซื้อสินค้า</th><th><center>เวลาในการชำระเงิน</th><!--<th>จำนวนสินค้า</th><th>ราคา</th>--><th><center>สถานะ</th><th><center>ข้อมูล</th></tr>";
+			echo "<tr><th><center>ลำดับ</th><th><center>รหัสซื้อสินค้า</th><th><center>เวลาที่ซื้อสินค้า</th><!--<th><center>เวลาในการชำระเงิน</th><th>จำนวนสินค้า</th><th>ราคา</th>--><th><center>สถานะ</th><th><center>หมายเหตุ</th></tr>";
 		$num = 1;
 		while(list($order_id,$order_username,$order_date,$order_date_limit,$order_status,$total_amount,$total_price,$tracking_id,$address,$type_order,$transfer_date)=mysqli_fetch_row($query_order)){
 			echo "<tr>";
@@ -356,7 +365,7 @@ function order_success(){
 				$order_date = substr($order_date, 0,10);
 				echo "<td >$order_date</td>";
 				$transfer_date = substr($transfer_date, 0,10);
-				echo "<td >$transfer_date</td>";
+				//echo "<td >$transfer_date</td>";
 				switch ($order_status) {
 					case '1': $order_status_name ="รอการชำระเงิน"; break;
 					case '2': $order_status_name ="รอการตรวจสอบโอนเงิน"; break;

@@ -85,7 +85,7 @@ function insert_user(){
 }
 
 function data_users(){
-	echo "<div class='container-fluid ' style='padding:0px;height:980px;'>";
+	echo "<div class='container-fluid ' style='padding:0px;height:1200px;'>";
 		echo "<div class='col-md-3 datausers_menu'>";
 		$query_users = mysqli_query($_SESSION['connect_db'],"SELECT fullname,lastname,image FROM users WHERE username ='$_SESSION[login_name]'")or die("ERROR users function line 64");
 		list($fullname,$lastname,$image)=mysqli_fetch_row($query_users);
