@@ -74,34 +74,46 @@
 <div id="dashboard-header" class="row">
 	<div class="container-fluid">
 		<a href='../index.php'>
-			<div class="col-md-4" style=" padding: 0px;" >
-				<div class="col-md-12 " style=" padding: 0px; "  >
-					<div class="col-md-5 box-web-left"><img src="../images/dashbord/online-shop.png" width="100%" height="100%"></div>
-					<div class="col-md-7 box-web-right"><h3>เข้าชมเว็บไซต์</h3></div>
+			<div class="col-md-2" style=" height:150px; padding: 0px;" >
+				<div class="col-md-12 box-web-left " style=" padding: 0px; background:#D1968A;"  >
+					<center><img src="../images/dashbord/online-shop.png" width="70%" height="90%"></center>
+				</div>
+				<div class="col-md-12 box-web-right " style=" padding: 0px; background:#5E3535; "  >
+					<center><h4>ไปหน้าเว็บไซต์<h4></center>					
+				</div>
+			</div>
+		</a>
+		<a href="">
+			<div class="col-md-2" style=" height:150px; padding: 0px;" >
+				<div class="col-md-12 box-web-left " style=" padding: 0px; background: #BBD9EE; ; "  >
+					<center><img src="../images/dashbord/store.png" width="70%" height="100%"></center>
+				</div>
+				<div class="col-md-12 box-web-right " style=" padding: 0px; background: #206BA4; ; "  >
+					<center><h4>ขายหน้าร้าน</h4></center>					
 				</div>
 			</div>
 		</a>
 	<!--start money show-->
-		<div class="col-md-4" style="height:140px;margin-bottom:20px;">
-			<div class="col-md-6" style="padding:0px; margin: 2px; width: 45%; " >
-				<div class="col-md-12 day-money-on" style="border: 3px solid #027878;" >
-					<center><h2><b>
+		<div class="col-md-2" style="height:150px;margin-bottom:20px; padding: 0px ">
+			<div class="col-md-12 day-money-on" style="border: 3px solid #027878; background: #ffffff;" >
+				<center><h2><b>
 					<?php
 						$query_order = mysqli_query($_SESSION['connect_db'],"SELECT SUM(total_price) FROM orders WHERE DAY(order_date)='".date("d")."' AND MONTH(order_date)='".date("m")."' AND YEAR(order_date)='".date("Y")."' AND (order_Status='3' OR order_Status='4') ")or die("ERROR : backend dashbord line 83");
 						list($total_price)=mysqli_fetch_row($query_order);
 						echo number_format($total_price,2);
 					?>
-					</b></h2></center>				
-				</div>
-				<div class="col-md-12 day-money-under" style=" background: #027878; border: 3px solid #027878;" >
-					<center>
-						<h6>รายได้</h6>
-						<h4><?php echo date("d")."/".date("m")."/".substr((date("Y")+543),2,2)?></h4>
-					</center>				
-				</div>
+				</b></h2></center>				
 			</div>
-			<div class="col-md-6" style="padding:0px; margin: 2px; width: 45%;" >
-				<div class="col-md-12 day-money-on" style="border: 3px solid #801638;" >
+			<div class="col-md-12 day-money-under" style=" background:#027878; border: 3px solid #027878;" >
+				<center>
+					<h6>รายได้</h6>
+					<h4><?php echo date("d")."/".date("m")."/".substr((date("Y")+543),2,2)?></h4>
+				</center>				
+			</div>
+		</div>
+			
+			<div class="col-md-2" style="height:150px;margin-bottom:20px; padding:0px;" >
+				<div class="col-md-12 day-money-on" style="border: 3px solid #801638; background: #ffffff;" >
 					<center><h2><b>
 					<?php					
 				        $quer_buy_supply = mysqli_query($_SESSION['connect_db'],"SELECT SUM(supply_price*supply_amount) FROM buy_supply WHERE MONTH(supply_date)='".date("m")."' AND YEAR(supply_date)='".date("Y")."' AND DAY(supply_date)='".date("d")."'")or die("ERROR report buy month line 149");
@@ -117,7 +129,7 @@
 					</center>				
 				</div>
 			</div>
-		</div>
+		
 	<!--end money show-->
 	<!--start switch shop -->
 		<div class="col-md-4" style="margin-bottom:20px;padding:0px;">
@@ -185,7 +197,7 @@
 <!-- _____________________ของน้ำ________________________________________________ -->
 
 		<div class="col-md-12" style="padding:0;" >
-			<div class="panel panel-default col-md-7" style="padding:0;">
+			<div class="panel panel-danger col-md-7" style="padding:0;">
  				<div class="panel-heading"><h5><img src="../images/dashbord/exclamation-sign.png"> แจ้งเตือน</h5></div>
   				<div class="panel-body">
 <!-- _____________________ของน้ำ________________________________________________ -->
@@ -322,8 +334,8 @@
 
 			<div class="col-md-4" style="padding:0;"> <!--__star font-end_-->
 	<!--_______________________________start ข้อมูลหน้าร้าน______________________________-->
-			<div class="panel panel-default"  style="padding:0;">
- 				<div class="panel-heading"><h5><img src="../images/dashbord/store.png"> ข้อมูลหน้าร้าน</h5></div>
+			<div class="panel panel-info"  style="padding:0;">
+ 				<div class="panel-heading"><h5><img src="../images/dashbord/storesmail.png"> ข้อมูลหน้าร้าน</h5></div>
   					<div class="panel-body">
   						<div class="col-md-12" style="padding:0px;">
   							
@@ -375,7 +387,7 @@
 				</div> 
 <!--_______________________________End ข้อมูลหน้าร้าน_________________________________-->
 <!--_______________________________start ข้อมูลหลังร้าน______________________________-->
-			<div class="panel panel-default" style="padding:0;">
+			<div class="panel panel-info" style="padding:0;">
  				<div class="panel-heading"><h5><img src="../images/dashbord/icon.png"> ข้อมูลหลังร้าน</h5></div>
   					<div class="panel-body">
   						<div class="col-md-12" style="padding:0px;">

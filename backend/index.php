@@ -213,7 +213,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i><img src="../images/icon/box-closed.png" width="16px" ></i>
+						<i><img src="../images/icon/promotion.png" width="16px" ></i>
 						 <span >จัดการโปโมชั่น</span>
 					</a>
 					<ul class="dropdown-menu">
@@ -223,7 +223,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i><img src="../images/icon/shopping.png" width="16px" ></i>
+						<i><img src="../images/icon/stock (1).png" width="16px" ></i>
 						 <span >จัดการคลังสินค้า</span>
 					</a>
 					<ul class="dropdown-menu">

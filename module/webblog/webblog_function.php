@@ -58,7 +58,7 @@ function webblog_detail(){
 	if(!empty($featured_image)){
 	echo "<center><img class='margintop20' src='images/webblog/$featured_image' width='600px' height='200px' ></center>";
 	}
-	echo "<div class='container-fluid'>";
+	echo "<div class='container-fluid fr-view'>";
 		echo "<p class='font20 margintop20'>$detail</p>";
 	echo "</div>";
 }

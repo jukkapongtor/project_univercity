@@ -109,17 +109,18 @@
 
 .day-money-on{
   border-radius:10px 10px 0px 0px;
-  background: #ffffff;
   padding: 18px 10px 10px 15px;
   color:#1a237e;
-  height: 80px;
+  height: 85px;
+  width: 90%
 
 }
 .day-money-under{
   border-radius:0px 0px 10px 10px;
   padding: 5;
   color:#ffffff;
-  height: 60px;
+  height: 65px;
+  width: 90%
 }
 .day-money-under h6{
   color: #e0e0e0;
@@ -134,25 +135,23 @@
   margin:5px;
   width: 30%;
 
+
 }
 .box-web-left{
 
-  border-radius:15px 0px 0px 15px;
-  padding: 10px 10px 5px 10px; 
-  height: 140px; 
-  margin-bottom:20px; 
-  background:#D1968A;
- 
+  border-radius:15px 15px 0px 0px;
+  padding: 30px 10px 10px 10px; 
+  height: 110px;
+  width: 90%
 
 }
 .box-web-right{
-  border-radius:0px 15px 15px 0px;
-  background:#5E3535;
+  border-radius:0px 0px 15px 15px;
+  padding: 30px 10px 10px 10px; 
   color: #ffffff;
-  height: 140px;
-  
-  padding: 50px 0px 30px 30px; "
-  
+  height: 40px;
+  width: 90%
+ 
 }
 
 

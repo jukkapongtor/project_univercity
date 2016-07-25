@@ -28,6 +28,23 @@
  <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
  <link rel="stylesheet" type="text/css" href="js/jquery-ui.css">
  <link rel="stylesheet" type="text/css" href="sweetalert/sweetalert.css">
+ <link href="plugins/chartist/chartist.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="backend/css/froala_editor.css">
+<link rel="stylesheet" href="backend/css/froala_style.css">
+ <link rel="stylesheet" href="backend/css/plugins/code_view.css">
+<link rel="stylesheet" href="backend/css/plugins/colors.css">
+<link rel="stylesheet" href="backend/css/plugins/emoticons.css">
+<link rel="stylesheet" href="backend/css/plugins/image_manager.css">
+<link rel="stylesheet" href="backend/css/plugins/image.css">
+<link rel="stylesheet" href="backend/css/plugins/line_breaker.css">
+<link rel="stylesheet" href="backend/css/plugins/table.css">
+<link rel="stylesheet" href="backend/css/plugins/char_counter.css">
+<link rel="stylesheet" href="backend/css/plugins/video.css">
+<link rel="stylesheet" href="backend/css/codemirror.min.css">
+<link rel="stylesheet" type="text/css" href="../sweetalert/sweetalert.css">
+<link href="css/froala_style.min.css" rel="stylesheet" type="text/css" />
+
  <script src="js/jquery-1.11.3.min.js"></script>
  <script src="js/jquery-ui.js"></script>
  <script src="js/bootstrap.min.js"></script>
