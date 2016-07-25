@@ -245,8 +245,7 @@ function delete_size(ele){
 					    			echo "<div class='input_fields_wrap2' >";
 					    			//$num=1;
 					    			if(empty($rows)){
-					    				echo "<div class='col-md-10' style='margin-bottom:2px;padding:0px;'><input type='text' class='form-control' name='unit_name[]'></div>";
-						    			echo "<button class='add_field_button2 btn btn-primary' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/add.png' width='12px' height='12px' ></button>";
+					    				echo "<input type='text' class='form-control' id='new_size_$product_type' name='unit_name' value=''>";
 					    			}else{
 						    			while(list($product_size,$size_name)=mysqli_fetch_row($query_size)){
 						    				/*
