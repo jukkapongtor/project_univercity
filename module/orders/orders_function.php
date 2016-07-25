@@ -76,23 +76,20 @@ function order_insert(){
 function order_list(){
 	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_username='$_SESSION[login_name]'")or die("ERROR : order function line 21");
 	$row = mysqli_num_rows($query_order);
-	echo "<div class='panel panel-warning' style='margin-top:20px;'>";
+	echo "<div class='panel panel-warning' style='margin-top:5px;'>";
 	  echo "<div class='panel-heading'>";
 	    echo "<h3 class='panel-title'>วิธีการสั่งซื้อสินค้า</h3>";
 	  echo "</div>";
-	  echo "<div class='panel-body'>";
-	    echo "<p class='font20'><b>การยืนยันหลักฐานการโอนเงิน</b></p>";
-	    echo "<p class='font20'><b>การตรวจสอบกระบวนการโอนเงินจากเจ้าของร้าน</b></p>";
-	    echo "<p class='font20'><b>การส่งสินค้า</b></p>";
-	    echo "<p class='font20'><b>การเกิดกระบวนการผิดพลาด</b></p>";
+	  echo "<div class='panel-body' style='padding:0px'>";
+	    echo "<p class='font20'><img src='images/icon/ขั้นตอนสั่งซื้อสินค้า.png' width='100%'></p>";
 	  echo "</div>";
 	echo "</div>";
 	echo "<div class='panel panel-info' style='margin-top:20px;'>";
 	  echo "<div class='panel-heading'>";
 	    echo "<h3 class='panel-title '>ช่องทางการชำระเงิน</h3>";
 	  echo "</div>";
-	  echo "<div class='panel-body'>";
-	    echo "<p ><b>บัญชีธนาคาร : </b> 5555-2222-3333-1111</p>";
+	  echo "<div class='panel-body' style='padding:3px 0px'>";
+	    echo "<div class='col-md-6' style='padding:2px'><img src='images/icon/scb.png' width='100%'></div>";
 	  echo "</div>";
 	echo "</div>";
 	if(empty($row)){
@@ -229,7 +226,35 @@ function order_list(){
 					     		echo "<input type='hidden' name='order_id' value='$order_id'>";
 					     		echo "<div class='col-md-4' style='padding:5px; 0px'><b>เลือกไฟล์หลักฐานโอนเงิน : </b></div><div class='col-md-8'><input type='file' name='image_transfer'  multiple onchange=\"document.getElementById('blah_$order_id').src = window.URL.createObjectURL(this.files[0])\"></div>";
 					     	echo "<div class='col-md-12'><p align='center'><img src='' id='blah_$order_id' height='350px' width='60%'></p></div>";
-					     	echo "<div class='col-md-12'><p align='right'><button type='submit' class='btn btn-primary font20' style='padding:5px;'>ส่งข้อมูลการชำระเงิน</button>";
+					     	echo "<div class='col-md-12'>";
+					     		echo "<div class='col-md-5'><p>จำนวนเงินทั้งหมดที่ต้องจ่าย : </p></div>";
+					     		echo "<div class='col-md-7'><p>".number_format($total_price,2)." ฿</p></div>";
+					     		echo "<div class='col-md-5'><p>จำนวนเงินที่โอน : </p></div>";
+					     		echo "<div class='col-md-7'><p><input type='text' class='form-control' id='transfer_price_$order_id' name='transfer_price'></p></div>";
+					     		echo "<input type='hidden' id='total_price_$order_id' name='total_price'  value='$total_price'>";
+					     		echo "<div class='col-md-5' ><p>วันที่โอน : </p></div>";
+					     		echo "<div class='col-md-7' ><p><input type='date' class='form-control' name='day' width='100%' ></p></div>";;
+					     		echo "<div class='col-md-3'>เวลา </div>";
+					     		echo "<div class='col-md-3'>";
+					     			echo "<select class='form-control' name='minute'>";
+					     				for($i=0;$i<24;$i++){
+					     					$value = ( strlen($i)==1)?"0".$i:$i;
+					     					echo "<option value='$i'>$value</option>";
+					     				}
+					     			echo "</select>";
+					     		echo "</div>";
+					     		echo "<div class='col-md-1'> : </div>";
+					     		echo "<div class='col-md-3'>";
+					     			echo "<select class='form-control' name='second'>";
+					     				for($i=0;$i<60;$i++){
+					     					$value = ( strlen($i)==1)?"0".$i:$i;
+					     					echo "<option value='$i'>$value</option>";
+					     				}
+					     			echo "</select>";
+					     		echo "</div>";
+					     		echo "<div class='col-md-1'> น. </div>";
+					     	echo "</div>";
+					     	echo "<div class='col-md-12'><p align='right'><button type='submit' class='btn btn-primary font20 check_order' style='padding:5px;'>ส่งข้อมูลการชำระเงิน</button>";
 					        echo "&nbsp;<button type='button' class='btn btn-danger' data-dismiss='modal' >ปิด</button></p></div>";
 					        echo "</form>";
 					        echo "</div>";
@@ -263,16 +288,30 @@ function order_list(){
 		echo "</div>";
 		}
 	}
-	
+	/*
+	echo "<script>";
+		echo "$(document).ready(function() {";
+			$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_username='$_SESSION[login_name]' ")or die("ERROR : order function line 21");
+			while(list($order_id,$order_username,$order_date,$order_date_limit,$order_status,$total_amount,$total_price,$tracking_id)=mysqli_fetch_row($query_order)){
+				echo "$('.check_order').click(function(){";
+					echo "alert('asdasdasd');";
+					echo "alert(document.getElementById('transfer_price_$order_id').value);";
+					echo "alert(document.getElementById('total_price_$order_id')value);";
+				echo "});";
+			}
+		echo "});";
+	echo "</script>";
+	*/
 }
 function order_success(){
-	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT orders.*,transfer.transfer_date FROM orders LEFT JOIN transfer ON orders.order_id = transfer.order_id WHERE order_username='$_SESSION[login_name]' AND order_status='4'")or die("ERROR : order function line 218");
+;
+	$query_order = mysqli_query($_SESSION['connect_db'],"SELECT orders.*,transfer.transfer_date FROM orders LEFT JOIN transfer ON orders.order_id = transfer.order_id WHERE order_username='$_SESSION[login_name]' ORDER BY order_status ASC")or die("ERROR : order function line 218");
 	$row = mysqli_num_rows($query_order);
 	if($row>0){
 		echo "<center><h3 style='margin-top:40px;background:#16326a;color:white;padding-top:8px;border-bottom:4px solid #325bb0'><b>ประวัติการซื้อสินค้าจากร้านมุมเฟิร์น</b></h3></center>";
 		echo "<div class='table-responsive'>";
 		echo "<table class='table table-striped table-hover font20'>";
-			echo "<tr><th><center>ลำดับ</th><th><center>รหัสซื้อสินค้า</th><th><center>เวลาที่ซื้อสินค้า</th><th><center>เวลาในการชำระเงิน</th><!--<th>จำนวนสินค้า</th><th>ราคา</th>--><th><center>ข้อมูล</th></tr>";
+			echo "<tr><th><center>ลำดับ</th><th><center>รหัสซื้อสินค้า</th><th><center>เวลาที่ซื้อสินค้า</th><th><center>เวลาในการชำระเงิน</th><!--<th>จำนวนสินค้า</th><th>ราคา</th>--><th><center>สถานะ</th><th><center>ข้อมูล</th></tr>";
 		$num = 1;
 		while(list($order_id,$order_username,$order_date,$order_date_limit,$order_status,$total_amount,$total_price,$tracking_id,$address,$type_order,$transfer_date)=mysqli_fetch_row($query_order)){
 			echo "<tr>";
@@ -288,7 +327,7 @@ function order_success(){
 					      echo "<div class='modal-body'>";
 					        echo "<table class='table table-hover table-striped font20'>";
 					        echo "<thead><tr><th><center>ลำดับ</th><th><center>ชื่อสินค้า</th><th><center>ขนาดสินค้า</th><th><center>ราคา(ชิ้น)</th><th><center>จำนวน</th><th><center>รวมราคา</th></tr></thead><tbody>";
-					        $num=1;
+					        $number=1;
 					        $total_price=0;
 					        $query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_name,size.size_name,order_detail.price,order_detail.amount FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN product ON product.product_id = product_size.product_id LEFT JOIN size ON product_size.size_id = size.product_size WHERE order_detail.order_id = '$order_id'")or die("ERROR : order function line 111");
 					        while(list($product_name,$size_name,$product_price_web,$total_amount)=mysqli_fetch_row($query_orderdetail)){
@@ -302,7 +341,7 @@ function order_success(){
 					     			$total_price+=$sum;
 					     			echo "<td align='right'>".number_format($sum,2)." ฿</td>";
 					     		echo "</tr>";
-					     		$num++;
+					     		$number++;
 					        }
 					        echo "<tr><td colspan='5' align='right'><b>รวมยอดเงินทั้งหมด</b></td><td align='right'>".number_format($total_price,2)." ฿</td></tr>";
 					        echo "</tbody></table>";
@@ -316,7 +355,23 @@ function order_success(){
 				echo "<td >$order_date</td>";
 				$transfer_date = substr($transfer_date, 0,10);
 				echo "<td >$transfer_date</td>";
-				echo "<td ><center><a href='print/print_bill.php?order_id=$order_id' target='_blank'><button class='btn btn-info btn-sm'><span class='glyphicon glyphicon-print' aria-hidden='true'></span> ปริ้นใบเสร็จ</button></a></center></td>";
+				switch ($order_status) {
+					case '1': $order_status_name ="รอการชำระเงิน"; break;
+					case '2': $order_status_name ="รอการตรวจสอบโอนเงิน"; break;
+					case '3': $order_status_name ="กำลังส่งสินค้า";break;
+					case '4': $order_status_name ="การซื้อเสร็จสิ้น"; break;
+					case '5': $order_status_name ="รายการล้มเหลว"; break;
+				}
+				
+				echo "<td>$order_status_name</td>";
+				if($order_status==3||$order_status==4){
+					echo "<td ><center><a href='print/print_bill.php?order_id=$order_id' target='_blank'><button class='btn btn-info btn-sm'><span class='glyphicon glyphicon-print' aria-hidden='true'></span> ปริ้นใบเสร็จ</button></a></center></td>";	
+				}else{
+					echo "<td>$tracking_id</td?";
+					
+				}
+
+				
 			echo "</tr>";
 			$num++;
 		}
