@@ -39,7 +39,6 @@ function delete_product(product_id){
 }
 function delete_size_product(ele){
 	var size_id= ele.getAttribute("size_id");
-	alert(size_id);
 	var product_id= ele.getAttribute("product_id");
 	swal({
 	  title: "ลบขนาดสินค้า",
@@ -249,9 +248,8 @@ function hide_remover(){
 
 								      	if($row_size>0){
 								      		while(list($size_id,$size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
-								      			echo "<input type='hidden' name='product_size_old[]' value='$size_id'>";		
-												echo "<div class='col-md-4' style='padding:0'><p>ขนาดสินค้า</p></div>";
-												echo "<div class='col-md-7' style='padding:0'><p><select class='form-control' name='product_size[]' disabled>";
+								      			echo "<input type='hidden' name='size_id[]' value='$size_id'>";		
+												echo "<div class='col-md-11' style='padding:0'><p><select class='form-control' name='product_size[]' disabled>";
 												echo "<option value=''>--เลือกขนาดสินค้า--</option>";
 												$query_size_edit =mysqli_query($_SESSION['connect_db'],"SELECT product_size,size_name FROM size WHERE type_id='$type_id' ")or die("ERROR : backend product list line 206");
 												while(list($size_id_edit,$size_name_edit)=mysqli_fetch_row($query_size_edit)){
@@ -259,7 +257,6 @@ function hide_remover(){
 													echo "<option value='$size_id_edit' $selected_edit>$size_name_edit</option>";
 												}
 											   	echo "</select></p></div>";
-											   	echo "<input type='hidden' name='size_id[]' value='$size_id'>";
 											   	echo "<button  class=' btn btn-danger' type='button' onclick='delete_size_product(this)' size_id='$size_id' product_id='$product_id' style='padding:0px 3px;width:27px;height:27px;margin-bottom:2px'><img src='../images/icon/minus.png' width='12px' height='12px' ></button>";		
 											   	echo "<div class='col-md-12' style='padding:0'>";
 												echo "<div class='col-md-4' style='padding:0;margin-bottom:4px'>ราคาบนเว็บ</div>";
@@ -276,9 +273,8 @@ function hide_remover(){
 								    echo "<tr>";
 								      	echo "<td valign='top'><p><b>เพิ่มขนาดสินค้า</b></p></td>";
 								      	echo "<td valign='top'><p><b>&nbsp;:&nbsp;</b></p></td>";
-								      	echo "<td><div class='input_fields_wrap' >";	
-												echo "<div class='col-md-4' style='padding:0'><p>เพิ่มขนาดสินค้า</p></div>";
-												echo "<div class='col-md-7' style='padding:0'><p><select class='form-control' name='size_id[]'>";
+								      	echo "<td colspan='3'><div class='input_fields_wrap' >";	
+												echo "<div class='col-md-11' style='padding:0'><p><select class='form-control' name='size_id[]'>";
 												echo "<option value=''>--เลือกขนาดสินค้า--</option>";
 												$query_size_edit =mysqli_query($_SESSION['connect_db'],"SELECT product_size,size_name FROM size WHERE type_id='$type_id' ")or die("ERROR : backend product list line 206");
 												while(list($size_id_edit,$size_name_edit)=mysqli_fetch_row($query_size_edit)){
