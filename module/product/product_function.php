@@ -164,11 +164,11 @@ function product_detail(){
 					echo "<td valign='top'><p><b>ขนาดสินค้า</b></p></td>";
 					echo "<td valign='top'><p><b>&nbsp;:&nbsp;</b></p></td>";
 					echo "<td>";
-					$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size.product_size_id,product_size.size_id,size.size_name,product_size.product_amount_keep,product_size.product_amount_shop,product_size.product_amount_web,product_size.product_price_shop,product_size.product_sprice_shop,product_size.product_price_web,product_size.product_sprice_web FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size WHERE product_size.product_id ='$_GET[product_id]'");
+					$query_size =mysqli_query($_SESSION['connect_db'],"SELECT product_size.product_size_id,product_size.size_id,size.size_name,product_size.product_amount_web,product_size.product_price_web,product_size.product_sprice_web FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size WHERE product_size.product_id ='$_GET[product_id]'");
 					$number=1;
 					$rows_size = mysqli_num_rows($query_size);
 					if($rows_size>0){
-					while(list($product_size_id,$size_id,$size_name,$product_amount_keep,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
+					while(list($product_size_id,$size_id,$size_name,$product_amount_web,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size)){
 						echo "<div class='col-md-12'><p><b>ขนาดสินที่ $number : </b> $size_name</p></div>";
 						if(!empty($product_stock)){	
 							echo "<div class='col-md-3' ><p><b>จำนวน</b></p></div>";

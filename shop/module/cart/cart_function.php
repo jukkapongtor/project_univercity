@@ -14,7 +14,7 @@ function show_cart(){
 		$total_price=0;
 		echo "<input type='hidden' id='total_amountincart' value='$_SESSION[total_amount]'>";
 		foreach ($_SESSION['cart_id'] as $key => $value) {
-			$query_product =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id ='$value[product_id]'")or die("ERROR : cart function line 12");
+			$query_product =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_id ='$value[product_id]'")or die("ERROR : cart function line 12");
 			list($product_id,$product_name,$type_name)=mysqli_fetch_row($query_product);
 			echo "<tr>";
 				$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id = '$value[product_id]'")or die("ERROR : cart function line 16");
@@ -26,7 +26,24 @@ function show_cart(){
 					list($product_size_id,$size_name,$product_amount_shop,$product_amount_web,$product_price_shop,$product_sprice_shop,$product_price_web,$product_sprice_web)=mysqli_fetch_row($query_size);
 					echo "<input type='hidden' id='product_id_$product_size_id' value='$product_id'>";
 					echo "<p><b>$product_name ($size_name)</b></p>";
-					echo "<p><b>ราคาต่อชิ้น</b> <font id='price_$product_size_id'>$product_price_shop</font> บาท</p>";
+					$show_price = $product_price_shop;
+					$chk1="checked='checked'";
+					$chk2="";
+					foreach ($_SESSION['sale'] as $key2 => $value2) {
+						if($key2==$key){
+							$chk1="";
+							$chk2="checked='checked'";
+							if($product_sprice_shop!=0){
+								$product_price_shop = $product_sprice_shop;
+							}
+						}
+					}
+					echo "<p><input type='radio' onclick='not_sale(this)' name='sale_product_$product_size_id' product_size_id='$product_size_id' $chk1> สินค้าไม่ลดราคา &nbsp;&nbsp; <input type='radio' name='sale_product_$product_size_id' onclick='sale(this)' product_size_id='$product_size_id' $chk2> สินค้าลดราคา</p>";
+					
+					echo "<p><b>ราคาปกติ</b> $show_price บาท</p>";
+					$show_sprice = ($product_sprice_shop!=0)?$product_sprice_shop:$product_price_shop;
+					echo "<p><b>ราคาลด</b> $show_sprice บาท</p>";
+					echo "<p><b>ราคาคิดต่อชิ้น</b> <font id='price_$product_size_id'>$product_price_shop</font> บาท</p>";
 					echo "<center><div class='input-group' style='width:70%;margin-bottom:10px;'>";
 				      echo "<span class='input-group-btn'>";
 				        echo "<button class='btn btn-default btn-sm' id='lower_incart_$product_size_id' type='button' style='padding:6px;background:#aa8383'><img src='../images/icon/minus.png' width='20' height='20'></button>";
@@ -122,6 +139,16 @@ echo "<script>";
         }
     echo "});";
 echo "</script>";
+?>
+<script>
+	function sale(ele){
+		window.location='module/index.php?data=sale_product&product_size_id='+ele.getAttribute('product_size_id');
+	}
+	function not_sale(ele){
+		window.location='module/index.php?data=not_sale_product&product_size_id='+ele.getAttribute('product_size_id');
+	}
+</script>
+<?php
 }
 function cancel_cart(){
 	unset($_SESSION['total_amount']);
