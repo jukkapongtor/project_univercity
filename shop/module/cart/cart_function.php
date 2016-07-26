@@ -29,12 +29,14 @@ function show_cart(){
 					$show_price = $product_price_shop;
 					$chk1="checked='checked'";
 					$chk2="";
-					foreach ($_SESSION['sale'] as $key2 => $value2) {
-						if($key2==$key){
-							$chk1="";
-							$chk2="checked='checked'";
-							if($product_sprice_shop!=0){
-								$product_price_shop = $product_sprice_shop;
+					if(!empty($_SESSION['sale'])){
+						foreach ($_SESSION['sale'] as $key2 => $value2) {
+							if($key2==$key){
+								$chk1="";
+								$chk2="checked='checked'";
+								if($product_sprice_shop!=0){
+									$product_price_shop = $product_sprice_shop;
+								}
 							}
 						}
 					}

@@ -4,14 +4,20 @@ function order_insert(){
 		$total_price = 0;
 		$total_amount  = 0;
 		foreach ($_SESSION['cart_id'] as $key => $value) {
-			$query_price = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_price_shop,product_amount_shop FROM product_size WHERE product_size_id='$key'")or die("ERROR : order function line 5");
-			list($product_id,$product_price_shop,$product_amount_shop)=mysqli_fetch_row($query_price);
+			$query_price = mysqli_query($_SESSION['connect_db'],"SELECT product_id,product_sprice_shop,product_price_shop,product_amount_shop FROM product_size WHERE product_size_id='$key'")or die("ERROR : order function line 5");
+			list($product_id,$product_sprice_shop,$product_price_shop,$product_amount_shop)=mysqli_fetch_row($query_price);
 			$remain = $product_amount_shop - $value['amount'];
 			if($remain<0){
 				echo "<script>swal({title:'',text: 'ขออภัยสินค้าถูกซื้อไปก่อนหน้านี่แล้ว กรุณาลดจำนวนสินค้า หรือเลือกสินค้าชิ้นใหม่',type:'warning',showCancelButton: false,confirmButtonColor: '#f39729',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=cart&action=show_cart&';})</script>";
 			}else{
 				mysqli_query($_SESSION['connect_db'],"UPDATE product_size SET product_amount_shop='$remain' WHERE product_size_id='$key'")or die("ERROR : order function line 36");
 			}
+
+				foreach ($_SESSION['sale'] as $key2 => $value2) {
+					if($key==$key2){
+						$product_price_shop = ($product_sprice_shop!=0)?$product_sprice_shop:$product_price_shop;
+					}
+				}
 			$total_price+=($product_price_shop*$value['amount']);
 			$total_amount +=$value['amount'];
 		}
@@ -27,14 +33,25 @@ function order_insert(){
 				if((!empty($value['amount']))&&$number!=1){
 					$sql_insert_orderdetail.=",";
 				}
+				$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product_id,size_id FROM product_size WHERE product_size_id='$key'")or die("ERROR : order function line 5");
+				list($product_id,$size_id)=mysqli_fetch_row($query_product);
+				$query_price = mysqli_query($_SESSION['connect_db'],"SELECT product_sprice_shop,product_price_shop FROM product_size WHERE product_size_id='$key'")or die("ERROR : order function line 5");
+				list($product_sprice_shop,$product_price_shop)=mysqli_fetch_row($query_price);
+				$price = $product_price_shop;
+				foreach ($_SESSION['sale'] as $key2 => $value2) {
+					if($key==$key2){
+						$price = ($product_sprice_shop!=0)?$product_sprice_shop:$product_price_shop;
+					}
+				}
 				if($value['amount']!=0){
-					$sql_insert_orderdetail.= "('','$order_id','$key','$value[amount]')";
+					$sql_insert_orderdetail.= "('','$order_id','$product_id','$size_id','$value[amount]','$price')";
 					$number++;
 				}
 			}
 			mysqli_query($_SESSION['connect_db'],$sql_insert_orderdetail)or die("ERROR : order function line 28");
 			unset($_SESSION['cart_id']);
 			unset($_SESSION['total_amount']);
+			unset($_SESSION['sale']);
 			echo "<script>swal({title:'',text: 'จบขั้นตอนการขายสินค้า',type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php';})</script>";
 		}else{
 			echo "<script>swal({title:'',text: 'กรุณาเพิ่มจำนวนสินค้าก่อนทำการยืนยันการซื้อ',type:'warning',showCancelButton: false,confirmButtonColor: '#f39729',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){ window.location='index.php?module=cart&action=show_cart&';})</script>";
@@ -137,7 +154,7 @@ function order_detail(){
 	echo "<p align='right'><a href='../print/print_bill_shop.php?order_id=$_GET[order_id]' target='_blank'><button class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-print'></span>&nbsp;ปริ้นรายงานขาย</button></a></p>";
 	echo "<table class='table table-hover table-striped' style='font-size:13px'>";      
 		$total_price=0;
-		$query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,size.size_name,product_size.product_price_shop,order_detail.amount,type.type_name_eng FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN product ON product.product_id = product_size.product_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN type ON product.product_type = type.product_type WHERE order_detail.order_id = '$_GET[order_id]'")or die("ERROR : order function line 111");
+		$query_orderdetail = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,size.size_name,order_detail.price,order_detail.amount,type.type_name_eng FROM order_detail LEFT JOIN product ON order_detail.product_id = product.product_id LEFT JOIN size ON order_detail.size_id = size.product_size LEFT JOIN type ON product.product_type = type.product_type WHERE order_detail.order_id = '$_GET[order_id]'")or die("ERROR : order function line 157");
 		while(list($product_id,$product_name,$size_name,$product_price_shop,$total_amount,$type_name)=mysqli_fetch_row($query_orderdetail)){
 	     		echo "<tr>";
 	     			$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id = '$product_id'")or die("ERROR : cart function line 16");
