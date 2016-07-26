@@ -4,7 +4,6 @@
 	connect_db();
 	include ('function.php');
 ?>
- <link rel="shortcut icon" href="../images/icon/logomumfern.png" />
 <?php
 	switch ($_GET['data']) {
 		case "provinces":provinces();break;

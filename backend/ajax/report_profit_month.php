@@ -111,7 +111,7 @@ $(document).ready(function(){
 			      data: [
 
 			      {        
-			        type: "spline",
+			        type: "line",
 			        name: 'ยอดการขาย',
 			        legendText: "ยอดการขาย",
 					showInLegend: true,   
@@ -129,7 +129,7 @@ $(document).ready(function(){
 			        ]
 			      },
 			      {        
-			        type: "spline",
+			        type: "line",
 			        name: 'ยอดค่าใช้จ่าย',
 			        legendText: "ยอดค่าใช้จ่าย",
 					showInLegend: true,   
@@ -150,7 +150,7 @@ $(document).ready(function(){
 			        ]
 			      },
 			      {        
-			        type: "spline",
+			        type: "line",
 			        name: 'ผลกำไรขาดทุน',
 			        legendText: "ผลกำไรขาดทุน",
 					showInLegend: true,   

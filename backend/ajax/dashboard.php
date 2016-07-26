@@ -83,7 +83,7 @@
 				</div>
 			</div>
 		</a>
-		<a href="">
+		<a href="../shop/">
 			<div class="col-md-2" style=" height:150px; padding: 0px;" >
 				<div class="col-md-12 box-web-left " style=" padding: 0px; background: #BBD9EE; ; "  >
 					<center><img src="../images/dashbord/store.png" width="70%" height="100%"></center>
@@ -281,7 +281,13 @@
   							</center>
   						</div>
   						<div class="col-md-12 box-under" style=" background:#d81b60;">
-  						<center><h2>12</h2></center>
+  						<center><h2>
+  							<?php
+	  							$query_order = mysqli_query($_SESSION['connect_db'],"SELECT count(order_id) FROM orders WHERE order_Status='5' AND type_order='web' AND tracking_id!='กำลังจัดเตรียมสินค้า'")or die("ERROR : backend manage_website line 65");
+	  							list($cnt_error)=mysqli_fetch_row($query_order);
+	  							echo "$cnt_error";
+	  						?>
+  						</h2></center>
   						</div>
   					</div>
   					<div class="col-md-4" >
@@ -292,12 +298,20 @@
   							</center>
   						</div>
   							<div class="col-md-12 box-under" style=" background:#4a148c;">
-  							<center><h2>12</h2></center>
+  							<center><h2>
+  								<?php
+  								$date_limit =  date("Y-m-d");
+	  							$query_limit_order = mysqli_query($_SESSION['connect_db'],"SELECT count(order_id) FROM orders WHERE DATE(order_date_limit)='$date_limit' AND order_status='1' AND type_order='web'")or die("ERROR : backend manage_website line 65");
+	  							list($cnt_date_max)=mysqli_fetch_row($query_limit_order);
+	  							echo "$cnt_date_max";
+	  						?>
+  							</h2></center>
+
   						</div>
   					</div>
   				</div>
   				<div class="col-md-12" style="margin-bottom:15px;">
-  					<div class="col-md-4" >
+  					<a href='ajax/function_page.php?data=min_amount'><div class="col-md-4" >
   						<div class="col-md-12 box-on" style="background:#e74c3c;">
   							<center>
   							<img src="../images/dashbord/stock.png" style=" width: 50px;" >
@@ -305,17 +319,24 @@
   							</center>
   						</div>
   						<div class="col-md-12 box-under" style=" background: #c0392b;">
-  						<center><h2>12</h2></center>
+  						<center><h2>
+  							<?php
+	  							$query_product_amount = mysqli_query($_SESSION['connect_db'],"SELECT count(product_size_id) FROM product_size WHERE product_amount_web<3 OR product_amount_web<5")or die("ERROR : backend manage_website line 65");
+	  							list($cnt_porduct_amount)=mysqli_fetch_row($query_product_amount);
+
+	  							echo "$cnt_porduct_amount";
+	  						?>
+  						</h2></center>
   						</div>
-  					</div>
-  					<div class="col-md-4" >
+  					</div></a>
+  					<a href='ajax/function_page.php?data=contact_us'><div class="col-md-4" >
   						<div class="col-md-12 box-on" style="background:#f1c40f;">
   							<center>
   							<img src="../images/dashbord/chat.png" style=" width: 50px;" >
   							<p>ข้อความ</p>
   							</center>
   						</div>
-  							<div class="col-md-12 box-under" style=" background: #f39c12;">
+  						<div class="col-md-12 box-under" style=" background: #f39c12;">
   							<center><h2>
   							<?php
 	  							$query_contact = mysqli_query($_SESSION['connect_db'],"SELECT count(contact_id) FROM contactus ")or die("ERROR : backend dashbord line 273");
@@ -324,7 +345,7 @@
 	  						?>
   							</h2></center>
   						</div>
-  					</div>
+  					</div></a>
 
   				</div>
     				
@@ -466,7 +487,13 @@
   								<center>
   								<img src="../images/dashbord/storefont.png" width="60%" >
   								<p>ขายหน้าร้าน</p>
-  								<h4>12</h4>
+  								<h4>
+  									<?php
+  										$query_order_shop = mysqli_query($_SESSION['connect_db'],"SELECT count(order_id) FROM orders WHERE type_order='shop' ")or die("ERROR : backend dashbord line 311");
+  										list($cnt_shop)=mysqli_fetch_row($query_order_shop);
+  										echo "$cnt_shop";
+  									?>
+  								</h4>
   								</center>
   							</div>
   							

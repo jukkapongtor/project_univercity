@@ -77,11 +77,11 @@
 		$day =array("01"=>31,"02"=>$feb,"03"=>31,"04"=>30,"05"=>31,"06"=>30,"07"=>31,"08"=>31,"09"=>30,"10"=>31,"11"=>30,"12"=>31);
 	$query_report_month =mysqli_query($_SESSION['connect_db'],"SELECT month_id,month_name FROM month")or die("ERROR : report_sell_day line 185");
 	while (list($month_id,$month_name)=mysqli_fetch_row($query_report_month)) {
-		$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_date,SUM(total_amount),SUM(total_price) FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : report_sell_day line 47");
+		$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_date,SUM(total_amount),SUM(total_price) FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : report_sell_day line 80");
 		list($date,$total_amount,$total_price)=mysqli_fetch_row($query_order_detail);
 		$repot_month[]=array("month_name"=>"$month_name","total_price"=>"$total_price");
 
-		$query_order_detail_shop =mysqli_query($_SESSION['connect_db'],"SELECT order_date,SUM(total_amount),SUM(total_price) FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4')AND type_order='shop'")or die("ERROR : report_sell_day line 47");
+		$query_order_detail_shop =mysqli_query($_SESSION['connect_db'],"SELECT order_date,SUM(total_amount),SUM(total_price) FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4')AND type_order='shop'")or die("ERROR : report_sell_day line 84");
 		list($date_shop,$total_amount_shop,$total_price_shop)=mysqli_fetch_row($query_order_detail_shop);
 		$repot_month_shop[]=array("month_name"=>"$month_name","total_price"=>"$total_price_shop");
 	}
@@ -159,17 +159,19 @@
 //--------------------------แสดงรายะเอียดข้อมูลขายรายวันสำรหับ  ขายบนเว็บไซต์
 									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : report_sell_day line 247");
 									$rows = mysqli_num_rows($query_order);
+									$total_amount_web=0;
+									$total_price_web=0;
 									if($rows>0){
 										$num=0;
 										$order_detail =array();
 										while (list($order_id)=mysqli_fetch_row($query_order)) {
-											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,product_size.product_price_web FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN product ON product_size.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 47");
+											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,order_detail.price FROM order_detail LEFT JOIN size ON order_detail.size_id = size.product_size LEFT JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 166");
 
 
 											while (list($amount,$product_name,$size_name,$product_price_web)=mysqli_fetch_row($query_order_detail)) {
 												$check_dubble=0;
 												foreach ($order_detail as $key => $value) {
-													if($value['name']=="$product_name" AND $value['size']=="$size_name"){
+													if($value['name']=="$product_name" AND $value['size']=="$size_name" AND $value['price']=="$product_price_web"){
 														$order_detail[$key]['amount']=$value['amount']+$amount;
 														$order_detail[$key]['price']=$value['price']+$product_price_web;
 														$check_dubble=1;
@@ -179,6 +181,7 @@
 													$order_detail[$num]=array("name"=>"$product_name","size"=>"$size_name","amount"=>"$amount","price"=>"$product_price_web");
 												}
 												$num++;
+												$total_amount_web+=$amount;
 											}
 										}
 ?>		
@@ -194,7 +197,7 @@
 													echo "<th><p align='center'>ราคา</p></th>";
 													echo "<th><p align='center'>รวมราคา</p></th>";
 												echo "</tr>";
-											$total_price=0;
+											$total_price_web=0;
 											foreach ($order_detail as $key => $value) {
 												echo "<tr>";
 													echo "<td><p>$value[name]</p></td>";
@@ -202,12 +205,12 @@
 													echo "<td><p>$value[amount]</p></td>";
 													echo "<td align='right'><p>".number_format($value['price'],2)." ฿</p></td>";
 													echo "<td align='right'><p>".number_format(($value['amount']*$value['price']),2)." ฿</p></td>";
-													$total_price +=($value['amount']*$value['price']);
+													$total_price_web +=($value['amount']*$value['price']);
 												echo "</tr>";
 											}
 												echo "<tr>";
 													echo "<td colspan='4'><p align='right'>รวมราคาทั้งหมด</p></td>";
-													echo "<td align='right'><p>".number_format($total_price,2)." ฿</p></td>";
+													echo "<td align='right'><p>".number_format($total_price_web,2)." ฿</p></td>";
 												echo "</tr>";
 											echo "</table>";
 ?>
@@ -226,17 +229,19 @@
 //--------------------------แสดงรายะเอียดข้อมูลขายรายวันสำรหับ  ขายในร้าน
 									$query_order =mysqli_query($_SESSION['connect_db'],"SELECT order_id FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4') AND type_order='shop'")or die("ERROR : report_sell_day line 247");
 									$rows = mysqli_num_rows($query_order);
+									$total_amount_shop=0;
+									$total_price_shop=0;
 									if($rows>0){
 										$num=0;
 										$order_detail =array();
 										while (list($order_id)=mysqli_fetch_row($query_order)) {
-											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,product_size.product_price_shop FROM order_detail LEFT JOIN product_size ON order_detail.product_size_id = product_size.product_size_id LEFT JOIN size ON product_size.size_id = size.product_size LEFT JOIN product ON product_size.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 47");
+											$query_order_detail =mysqli_query($_SESSION['connect_db'],"SELECT order_detail.amount,product.product_name,size.size_name,order_detail.price FROM order_detail LEFT JOIN size ON order_detail.size_id = size.product_size LEFT JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = '$order_id' ORDER BY order_detail.order_id DESC")or die("ERROR : report_sell_day line 233");
 
 
 											while (list($amount,$product_name,$size_name,$product_price_shop)=mysqli_fetch_row($query_order_detail)) {
 												$check_dubble=0;
 												foreach ($order_detail as $key => $value) {
-													if($value['name']=="$product_name" AND $value['size']=="$size_name"){
+													if($value['name']=="$product_name" AND $value['size']=="$size_name" AND $value['price']=="$product_price_shop"){
 														$order_detail[$key]['amount']=$value['amount']+$amount;
 														$order_detail[$key]['price']=$product_price_shop;
 														$check_dubble=1;
@@ -246,6 +251,7 @@
 													$order_detail[$num]=array("name"=>"$product_name","size"=>"$size_name","amount"=>"$amount","price"=>"$product_price_shop");
 												}
 												$num++;
+												$total_amount_shop+=$amount;
 											}
 										}
 ?>		
@@ -261,7 +267,7 @@
 													echo "<th><p align='center'>ราคา</p></th>";
 													echo "<th><p align='center'>รวมราคา</p></th>";
 												echo "</tr>";
-											$total_price=0;
+											$total_price_shop=0;
 											foreach ($order_detail as $key => $value) {
 												echo "<tr>";
 													echo "<td><p>$value[name]</p></td>";
@@ -269,12 +275,12 @@
 													echo "<td><p>$value[amount]</p></td>";
 													echo "<td align='right'><p>".number_format($value['price'],2)." ฿</p></td>";
 													echo "<td align='right'><p>".number_format(($value['amount']*$value['price']),2)." ฿</p></td>";
-													$total_price +=($value['amount']*$value['price']);
+													$total_price_shop +=($value['amount']*$value['price']);
 												echo "</tr>";
 											}
 												echo "<tr>";
 													echo "<td colspan='4'><p align='right'>รวมราคาทั้งหมด</p></td>";
-													echo "<td><p align='right'>".number_format($total_price,2)." ฿</p></td>";
+													echo "<td><p align='right'>".number_format($total_price_shop,2)." ฿</p></td>";
 												echo "</tr>";
 											echo "</table>";
 ?>
@@ -298,18 +304,14 @@
 							</div> <!-- ปิดการใช้งาน modal แสดงรายละเอียดรายวัน -->
 <?php
 								echo "</td>";
-							$query_report_month =mysqli_query($_SESSION['connect_db'],"SELECT SUM(total_amount),SUM(total_price) FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4') AND type_order='shop'")or die("ERROR : function line 222");
-							list($total_amount,$total_price)=mysqli_fetch_row($query_report_month);
-							$total_amount = (empty($total_amount))?0:$total_amount;
-							$total_price = (empty($total_price))?0:$total_price;
-							echo "<td align='right'>".number_format($total_amount)."</td>";
-							echo "<td align='right'>".number_format($total_price,2)." ฿</td>";
-							$query_report_month =mysqli_query($_SESSION['connect_db'],"SELECT SUM(total_amount),SUM(total_price) FROM orders WHERE MONTH(order_date)='$month_id' AND YEAR(order_date)='$year' AND (order_status='3' OR order_status='4') AND type_order='web'")or die("ERROR : function line 222");
-							list($total_amount,$total_price)=mysqli_fetch_row($query_report_month);
-							$total_amount = (empty($total_amount))?0:$total_amount;
-							$total_price = (empty($total_price))?0:$total_price;
-							echo "<td align='right'>".number_format($total_amount)." </td>";
-							echo "<td align='right'>".number_format($total_price,2)." ฿</td>";
+							$total_amount_shop =(empty($total_amount_shop))?0:$total_amount_shop;
+							echo "<td align='right'>".number_format($total_amount_shop,2)."</td>";
+							$total_price_shop =(empty($total_price_shop))?0:$total_price_shop;
+							echo "<td align='right'>".number_format($total_price_shop,2)." ฿</td>";
+							$total_amount_web =(empty($total_amount_web))?0:$total_amount_web;
+							echo "<td align='right'>".number_format($total_amount_web)."</td>";
+							$total_price_web =(empty($total_price_web))?0:$total_price_web;
+							echo "<td align='right'>".number_format($total_price_web,2)." ฿</td>";
 						echo "</tr>";
 					}
 ?>

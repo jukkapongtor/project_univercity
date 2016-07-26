@@ -12,10 +12,11 @@ function order_insert(){
 			}else{
 				mysqli_query($_SESSION['connect_db'],"UPDATE product_size SET product_amount_shop='$remain' WHERE product_size_id='$key'")or die("ERROR : order function line 36");
 			}
-
-				foreach ($_SESSION['sale'] as $key2 => $value2) {
-					if($key==$key2){
-						$product_price_shop = ($product_sprice_shop!=0)?$product_sprice_shop:$product_price_shop;
+				if(!empty($_SESSION['sale'])){
+					foreach ($_SESSION['sale'] as $key2 => $value2) {
+						if($key==$key2){
+							$product_price_shop = ($product_sprice_shop!=0)?$product_sprice_shop:$product_price_shop;
+						}
 					}
 				}
 			$total_price+=($product_price_shop*$value['amount']);
@@ -38,9 +39,11 @@ function order_insert(){
 				$query_price = mysqli_query($_SESSION['connect_db'],"SELECT product_sprice_shop,product_price_shop FROM product_size WHERE product_size_id='$key'")or die("ERROR : order function line 5");
 				list($product_sprice_shop,$product_price_shop)=mysqli_fetch_row($query_price);
 				$price = $product_price_shop;
-				foreach ($_SESSION['sale'] as $key2 => $value2) {
-					if($key==$key2){
-						$price = ($product_sprice_shop!=0)?$product_sprice_shop:$product_price_shop;
+				if(!empty($_SESSION['sale'])){
+					foreach ($_SESSION['sale'] as $key2 => $value2) {
+						if($key==$key2){
+							$price = ($product_sprice_shop!=0)?$product_sprice_shop:$product_price_shop;
+						}
 					}
 				}
 				if($value['amount']!=0){
@@ -96,18 +99,23 @@ function order_list(){
 		  	$number+=10;
 		}
 		$query_order = mysqli_query($_SESSION['connect_db'],"SELECT * FROM orders WHERE order_username='$_SESSION[login_name]' AND order_Status='4' AND type_order='shop' ORDER BY order_id DESC LIMIT $start_row,10")or die("ERROR : order function line 21");
+		$amount = 0;
+		$price=0;
 		while(list($order_id,$order_username,$order_date,$order_date_limit,$order_status,$total_amount,$total_price,$tracking_id)=mysqli_fetch_row($query_order)){
 			echo "<tr>";
 				echo "<td align='center'>$number</td>";
 				echo "<td><a href='index.php?module=orders&action=order_detail&order_id=$order_id' style='text-decoration: none;'>$order_id</td>";
 				echo "<td>".substr($order_date,0,10)."</td>";
 				echo "<td>$total_amount</td>";
-				echo "<td>$total_price</td>";
-				
+				echo "<td align='right'>".number_format($total_price,2)." ฿</td>";
 			echo "</tr>";
 			$number++;
+			$amount+= $total_amount;
+			$price+= $total_price;
 		}
+		echo "<td colspan='3' align='right'><b>รวม</b></td><td>$amount</td><td align='right'>".number_format($price,2)." ฿</td>";
 		echo "</table>";
+		
 		if($total_page>1){
 		echo "<div class='col-md-12'>";
 			echo "<center><nav><ul class='pagination'>";

@@ -36,13 +36,13 @@ switch ($_GET['data']) {
         </div>
             <div class="panel-body">
             <?php
-                $query_working = mysqli_query($_SESSION['connect_db'],"SELECT SUM(salary) FROM working WHERE employee_id ='$employee_id' AND MONTH(working_in)='".(date("m")-1)."'");
+                $query_working = mysqli_query($_SESSION['connect_db'],"SELECT SUM(salary) FROM working WHERE employee_id ='$employee_id' AND MONTH(working_in)='".(date("m")-1)."'")or die("ERROR function employee line 39");
                 list($last_salary)=mysqli_fetch_row($query_working);
                 $last_salary = empty($last_salary)?0:$last_salary;
             ?>
             <p>เงินเดือนเมื่อเดือนที่แล้ว : <?php echo $last_salary?> บาท</p>
             <?php
-                $query_working = mysqli_query($_SESSION['connect_db'],"SELECT working_id,working_in,working_out,salary,TIMEDIFF(working_out,working_in) FROM working WHERE employee_id ='$employee_id' AND MONTH(working_in)='".date("m")."'");
+                $query_working = mysqli_query($_SESSION['connect_db'],"SELECT working_id,working_in,working_out,salary,TIMEDIFF(working_out,working_in) FROM working WHERE employee_id ='$employee_id' AND MONTH(working_in)='".date("m")."'")or die("ERROR function employee line 45");
                 $rows = mysqli_num_rows($query_working);
                 if($rows > 0){
                 echo "<form action='ajax/salary_update.php' method='post'>";

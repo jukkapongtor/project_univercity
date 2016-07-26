@@ -110,7 +110,7 @@
                     <div class="menu-images" >
                         <a href='index.php?module=cart&action=show_cart' style="text-decoration: none;"><img src='../images/icon/cart-of-ecommerce.png' width="100" height="100" style="margin:6px;">
                     </div>
-                    <p>ตะกร้าสิน้า</p></a> 
+                    <p>ตะกร้าสินค้า</p></a> 
                 </center>
             </div>
             <div class="col-xs-6 col-md-3 col-sm-3">

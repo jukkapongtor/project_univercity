@@ -1,6 +1,7 @@
 <?php
 function list_product(){
 	$keywd = (empty($_GET['keywd']))?"":$_GET['keywd'];
+	$_SESSION['total_amount'] = (empty($_SESSION['total_amount']))?0:$_SESSION['total_amount'];
 ?>
 	<div class="menu-header">
 		<p style="margin:0px;"><a href='index.php'>หน้าหลัก</a> / <a href='#'>รายการสินค้า</a>  </p>

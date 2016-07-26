@@ -9,7 +9,8 @@ function insert_contact(){
 	$username = (empty($_SESSION['login_name']))?"$_POST[username]":$_SESSION['login_name'];
     $email =(empty($email))?"$_POST[email]":$email;
 	$type_user=(empty($_SESSION['login_name']))?"ผู้ใช้งานทั้วไป":"สมาชิก";
-	$sql_insert_contact = "INSERT INTO contactus VALUES('','$username','$email','$_POST[message]','$type_user')";
+	$date_send = date("Y-m-d H:i:s");
+	$sql_insert_contact = "INSERT INTO contactus VALUES('','$username','$email','$_POST[message]','$type_user','$date_send','1')";
 	mysqli_query($_SESSION['connect_db'],$sql_insert_contact)or die("ERROR ERROR :  contact line 13");
 
 	echo "<script>swal({title:'',text: \"ส่งข้อความไปยังเจ้าของร้านแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.history.back();});</script>";

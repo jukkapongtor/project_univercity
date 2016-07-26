@@ -91,7 +91,7 @@ $(document).ready(function(){
 			      data: [
 
 			      {        
-			        type: "spline",
+			        type: "line",
 			        legendText: "ยอดการขาย",
 					showInLegend: true,   
 			        dataPoints: [   
@@ -109,7 +109,7 @@ $(document).ready(function(){
 			        ]
 			      },
 			      {        
-			        type: "spline",
+			        type: "line",
 			        legendText: "ยอดการซื้อ",
 					showInLegend: true,   
 			        dataPoints: [    
@@ -129,7 +129,7 @@ $(document).ready(function(){
 			        ]
 			      },
 			      {        
-			        type: "spline",
+			        type: "line",
 			        legendText: "ผลกำไรขาดทุน",
 					showInLegend: true,   
 			        dataPoints: [    
