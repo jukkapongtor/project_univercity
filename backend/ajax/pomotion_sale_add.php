@@ -95,25 +95,31 @@
 					      $query_size = mysqli_query($_SESSION['connect_db'],"SELECT product_size.product_size_id,size.size_name,product_size.product_price_web,product_size.product_price_shop,product_size.product_sprice_web,product_size.product_sprice_shop FROM product_size LEFT JOIN size ON product_size.size_id = size.product_size WHERE product_size.product_id='$product_id'")or die("ERROR : backend pomotion sale line 95");
 					      echo "<form action='ajax/function_pomotion_sale.php?data=update_pomotion' method='post'>";
 					      echo "<table width='80%' align='center'>";
-					      while(list($product_size_id,$size_name,$product_price_web,$product_price_shop,$product_sprice_web,$product_sprice_shop)=mysqli_fetch_row($query_size)){
-					      	echo "<input type='hidden' name='product_size_id[]' value='$product_size_id'>";
-					      	echo "<tr><td colspan='4'><p><b>ขนาดสินค้า : </b>$size_name</p></td></tr>";
-					      	echo "<tr>";
-					      		echo "<td><p><b>ราคาบนเว็บไซต์ : </b></p></td>";
-					      		echo "<td><p>".number_format($product_price_web,2)." ฿</p></td>";
-					      		echo "<td><p><b>ลดราคา : </b></p></td>";
-					      		echo "<td width='20%'><p><input type='text' class='form-control' name='sprice_web[]' value='$product_sprice_web'></p></td>";
-					      	echo "</tr>";
-					      	echo "<tr>";
-					      		echo "<td><p><b>ราคาในร้าน : </b></p></td>";
-					      		echo "<td><p>".number_format($product_price_shop,2)." ฿</p></td>";
-					      		echo "<td><p><b>ลดราคา : </b></p></td>";
-					      		echo "<td><p><input type='text' class='form-control' name='sprice_shop[]' value='$product_sprice_shop'></p></td>";
-					      	echo "</tr>";
-					      }
-					      echo "<tr><td colspan='4'><p align='right'><button class='btn btn-sm btn-primary'>เพิ่มโปรโมชั่น</button></p></td></tr>";
-					      echo "</table>";
-					      echo "</form>";
+					      $rows = mysqli_num_rows($query_size); 
+					      if($rows > 0){
+						      while(list($product_size_id,$size_name,$product_price_web,$product_price_shop,$product_sprice_web,$product_sprice_shop)=mysqli_fetch_row($query_size)){
+						      	echo "<input type='hidden' name='product_size_id[]' value='$product_size_id'>";
+						      	echo "<tr><td colspan='4'><p><b>ขนาดสินค้า : </b>$size_name</p></td></tr>";
+						      	echo "<tr>";
+						      		echo "<td><p><b>ราคาบนเว็บไซต์ : </b></p></td>";
+						      		echo "<td><p>".number_format($product_price_web,2)." ฿</p></td>";
+						      		echo "<td><p><b>ลดราคา : </b></p></td>";
+						      		echo "<td width='20%'><p><input type='text' class='form-control' name='sprice_web[]' value='$product_sprice_web'></p></td>";
+						      	echo "</tr>";
+						      	echo "<tr>";
+						      		echo "<td><p><b>ราคาในร้าน : </b></p></td>";
+						      		echo "<td><p>".number_format($product_price_shop,2)." ฿</p></td>";
+						      		echo "<td><p><b>ลดราคา : </b></p></td>";
+						      		echo "<td><p><input type='text' class='form-control' name='sprice_shop[]' value='$product_sprice_shop'></p></td>";
+						      	echo "</tr>";
+						      }
+						      echo "<tr><td colspan='4'><p align='right'><button class='btn btn-sm btn-primary'>เพิ่มโปรโมชั่น</button></p></td></tr>";
+						      echo "</table>";
+						      echo "</form>";
+					  	  }else{
+					  	  	echo "<p align='center'>ไม่พบขนาดสินค้า</p>";
+					  	  	echo "<p align='center'>กรุณาเพิ่มขนาดสินค้าก่อนทำการลดราคาสินค้า</p>";
+					  	  }
 					      echo "</div>";//ปิด modal
 					    echo "</div>";
 					  echo "</div>";

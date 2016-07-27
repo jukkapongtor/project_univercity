@@ -134,6 +134,9 @@ function order_list(){
 		if($_GET['order_status']==1){
 			echo "<p align='center'><font color='red'> **** </font>กรุณาชำระเงินและแจ้งการโอนเงินภายในระยะเวลา 3 วันหลังทำการสั่งซื้อสินค้า<font color='red'> **** </font></p>";
 		}
+		if($_GET['order_status']==3){
+			echo "<p align='center'><font color='red'> **** </font>การปริ้นใบเสร็จจะทำงานได้ดีบนเบราว์เซอร์ Firefox<font color='red'> **** </font></p>";
+		}
 		echo "<table class='table table-striped table-hover'>";
 			echo "<tr><th><center>ลำดับ</th><th><center>รหัสซื้อสินค้า</th><th><center>เวลาที่ซื้อสินค้า</th>";
 			if($_GET['order_status']==1){
@@ -324,6 +327,7 @@ function order_success(){
 		echo "<table class='table table-striped table-hover font20'>";
 			echo "<tr><th><center>ลำดับ</th><th><center>รหัสซื้อสินค้า</th><th><center>เวลาที่ซื้อสินค้า</th><!--<th><center>เวลาในการชำระเงิน</th><th>จำนวนสินค้า</th><th>ราคา</th>--><th><center>สถานะ</th><th><center>หมายเหตุ</th></tr>";
 		$num = 1;
+		echo "<tr><td colspan='5'><p align='center'><font color='red'> **** </font>การปริ้นใบเสร็จจะทำงานได้ดีบนเบราว์เซอร์ Firefox<font color='red'> **** </font></p></td></tr>";
 		while(list($order_id,$order_username,$order_date,$order_date_limit,$order_status,$total_amount,$total_price,$tracking_id,$address,$type_order,$transfer_date)=mysqli_fetch_row($query_order)){
 			echo "<tr>";
 				echo "<td align='center'>$num</td>";
