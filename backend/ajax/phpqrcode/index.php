@@ -57,19 +57,19 @@
     </div>
     <div class="col-md-2">
         <p align="center"><input type='radio' name='select_qrcode' onclick="select_qrcode(this)" value="2" <?php echo "$checked2";?>>&nbsp;จำนวน 2 สินค้า</p>
-        <p><img src='../images/qrcode/select_qrcode1.jpg'></p>
+        <p><img src='../images/qrcode/select_qrcode2.jpg'></p>
     </div>
     <div class="col-md-2">
         <p align="center"><input type='radio' name='select_qrcode' onclick="select_qrcode(this)" value="3" <?php echo "$checked3";?>>&nbsp;จำนวน 3 สินค้า</p>
-        <p><img src='../images/qrcode/select_qrcode1.jpg'></p>
+        <p><img src='../images/qrcode/select_qrcode3.jpg'></p>
     </div>
     <div class="col-md-2">
         <p align="center"><input type='radio' name='select_qrcode' onclick="select_qrcode(this)" value="4" <?php echo "$checked4";?>>&nbsp;จำนวน 4 สินค้า</p>
-        <p><img src='../images/qrcode/select_qrcode1.jpg'></p>
+        <p><img src='../images/qrcode/select_qrcode4.jpg'></p>
     </div>
     <div class="col-md-2">
         <p align="center"><input type='radio' name='select_qrcode' onclick="select_qrcode(this)" value="5" <?php echo "$checked5";?>>&nbsp;จำนวน 5 สินค้า</p>
-        <p><img src='../images/qrcode/select_qrcode1.jpg'></p>
+        <p><img src='../images/qrcode/select_qrcode5.jpg'></p>
     </div>
     <div class="col-md-1" ></div>
 
