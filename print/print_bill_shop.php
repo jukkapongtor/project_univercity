@@ -41,7 +41,11 @@
 	
 </head>
 <body>
-<p align="center">ใบเสร็จร้านมุมเฟิร์น</p>
+<p align="center"><img src="../images/icon/logomumfern.png" width="100" height="100"></p>
+<p align="center" style="padding:-2px;" font='4'><b>ใบเสร็จร้านมุมเฟิร์น</b></p>
+<p align="center" style="padding:-2px;">ตลากคำเที่ยง ล็อค f208-f209 ตำบล ป่าตัน อำเภอเมือง จังหวัดเชียงใหม่ 50300</p>
+<p align="center" style="padding:-2px;">เบอร์โทร : 081-8055024   E-mail : veerada@mumfern.com</p>
+<br>
 <?php
 	$query_orders = mysqli_query($_SESSION['connect_db'],"SELECT address FROM orders WHERE order_id='$_GET[order_id]'")or die("ERROR  print bill line 46");
 	list($address)=mysqli_fetch_row($query_orders);

@@ -371,7 +371,7 @@ function insert_subwebboard(){
 		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 	}else{
 		$subwebboard_datetime = date("Y-m-d H:i:s");
-		mysqli_query($_SESSION['connect_db'],"INSERT INTO subwebboard VALUES('','$_POST[webboard_id]','$_POST[subwebboard_message]','$_SESSION[login_name]','$subwebboard_datetime','0')")or die("ERROR : webboard line 359");
+		mysqli_query($_SESSION['connect_db'],"INSERT INTO subwebboard VALUES('','$_POST[webboard_id]','$_POST[subwebboard_message]','$_SESSION[login_name]','$subwebboard_datetime')")or die("ERROR : webboard line 359");
 		echo "<script>swal({title:'',text: \"แสดงความคิดเห็นเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=webboard&action=webboard_detail&webboard_id=$_POST[webboard_id]';})</script>";
 		echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 	}

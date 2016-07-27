@@ -35,8 +35,6 @@
 		<th>ชื่อบทความ</th>
 		<th>ประเภท</th>
 		<th>วันเดือนปี</th>
-		<th>คนเข้าชม</th>
-		<th>คะแนน</th>
 		<th align="center">จัดการ</th>
 	</tr>
 	</thead>
@@ -49,9 +47,7 @@
 		echo "<tbody><tr><th><img src = '../images/$path' width='35px' height=35px'></th>";
 		echo "<td>$title_blog</td>";
 		echo "<td>$type_blog</td>";
-		echo "<td>$blog_date</td>";
-		echo "<td>$visitor</td>";
-		echo "<td>$rating_blog</td>";
+		echo "<td>$blog_date</td>";;
 		echo "<td><a href = 'ajax/webblog_from_update_id.php?id_blog=$blog_id'><button class='btn btn-success btn-edit'>แก้ไข</button></a>";
 		echo "<a href='ajax/webblog_delete.php?id_blog=$blog_id' onclick='return confirm(\"คุณต้องการลบบทความ--$title_blog-- ใช่หรือไม่\")'>
 			<button class='btn btn-danger btn-de'>ลบ</button></a></td>";

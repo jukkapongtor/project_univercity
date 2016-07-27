@@ -41,8 +41,11 @@
 	
 </head>
 <body>
-<p align="center"><img src='../images/icon/logomumfern.png' width="100" height="100"></p>
-<h3 align="center"><b>ร้านมุมเฟิร์น</b></h3>
+<p align="center"><img src="../images/icon/logomumfern.png" width="100" height="100"></p>
+<p align="center" style="padding:-2px;" font='4'><b>ร้านมุมเฟิร์น</b></p>
+<p align="center" style="padding:-2px;">ตลากคำเที่ยง ล็อค f208-f209 ตำบล ป่าตัน อำเภอเมือง จังหวัดเชียงใหม่ 50300</p>
+<p align="center" style="padding:-2px;">เบอร์โทร : 081-8055024   E-mail : veerada@mumfern.com</p>
+<br>
 <?php
 	$day =(empty($_GET['day']))?"":" AND DAY(supply_date)='$_GET[day]'";
 	$month =(empty($_GET['month']))?"":" AND MONTH(supply_date)='$_GET[month]' ";

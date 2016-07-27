@@ -12,7 +12,6 @@
 		<meta charset="utf-8">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>MUMFERN SHOP</title>
- 		<meta name="keywords" content="ขายเฟิร์น,ขายต้นไม้,เฟิร์น,ต้นไม้,ขายเฟิร์น จังหวัดเชียงใหม่,ขายเฟิร์น รับส่งทั่วประเทศ,ร้านขายเฟิร์น,มุมเฟิร์น ขายส่งเฟิร์น,ขายเฟิร์น ตลาดคำเที่ยง,ขายต้นไม้ ตลาดคำเที่ยง">
  		<link rel="shortcut icon" href="../images/icon/logomumfern.png" />
 		<meta name="description" content="description">
 		<meta name="author" content="DevOOPS">
@@ -166,7 +165,7 @@
 									<li>
 										<a href="../include/index.php?action=logout">
 											<i class="fa fa-power-off"></i>
-											<span>Logout</span>
+											<span>ออกระบบ</span>
 										</a>
 									</li>
 								</ul>
