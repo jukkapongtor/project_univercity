@@ -7,7 +7,7 @@ function check_transfer(){
 		if(empty($_POST['transfer_price'])){
 			echo "<script>swal({title:'',text: \"กรุณากรอกราคาในการโอนเงิน\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=users&action=data_users&menu=3&order_status=1';})</script>";
 			echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
-		}elseif($_POST['transfer_price']!=$_POST['total_price']){
+		}elseif($_POST['transfer_price']<$_POST['total_price']){
 			echo "<script>swal({title:'',text: \"ยอดเงินในการโอน ไม่สอดคล้องกับราคาที่ต้องจ่าย\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=users&action=data_users&menu=3&order_status=1';})</script>";
 			echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 		}else{

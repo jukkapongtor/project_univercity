@@ -176,9 +176,7 @@
 </head>
 <body>
 <?php include_once("analyticstracking.php");
-    if(!empty($_SESSION['login_type'])&&$_SESSION['login_type']==2){
-        echo "<script>window.location='shop/'</script>";
-    }else{
+
  ?>
 <!-- Button trigger modal -->
 
@@ -497,8 +495,6 @@
 <div class="display_mobile">
     
 </div>
-<?php
-    }
-?>
+
 </body>
 </html>
