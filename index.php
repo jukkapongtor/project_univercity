@@ -483,8 +483,8 @@
         <center><h4 class="contactuser-content1"><b>ติดต่อเจ้าของร้าน</b></h4><h4 class="contactuser-content2"><b>ติดต่อเจ้าของร้าน</b></h4></center>
         <div class='container-fluid'>
             <form action="index.php?module=contact&action=insert_contact" method="post">
-                <p><input type='text' class='form-control input-sm' name='username' value="<?php echo "$username";?>"  placeholder="Username...." <?php echo "$disabled";?>></p>
-                <p><input type='text' class='form-control input-sm' name='email' value="<?php echo "$email";?>" placeholder="E-mail...." <?php echo "$disabled";?>></p>
+                <p><input type='text' class='form-control input-sm' name='username' value="<?php echo "$username";?>"  placeholder="Username...." <?php echo "$disabled";?>  required></p>
+                <p><input type='text' class='form-control input-sm' name='email' value="<?php echo "$email";?>" placeholder="E-mail...." <?php echo "$disabled";?>  required></p>
                 <p><textarea class='form-control ' style='height:120px' name='message' placeholder="Message...."></textarea></p>
                 <p align="right"><button class="btn btn-sm btn-warning">Send</button></p>
             </form>

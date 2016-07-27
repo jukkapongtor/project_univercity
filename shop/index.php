@@ -94,8 +94,8 @@
         <div class="container-fluid" style='padding:0px'>
             <div class="col-xs-6 col-md-3 col-sm-3">
                 <center>
-                    <a href='index.php?module=product&action=list_product' style="text-decoration: none;"><div class="menu-images" style="background:#000">
-                        <img src='../images/icon/iconfern.png' width="100" height="100" style="margin:6px;"> 
+                    <a href='index.php?module=product&action=list_product' style="text-decoration: none;"><div class="menu-images" >
+                        <img src='../images/icon/clipboard.png' width="100" height="100" style="margin:6px;"> 
                     </div>
                     <p>รายการสินค้า</p></a>
                 </center>
@@ -108,15 +108,15 @@
                 }
 ?>
                     <div class="menu-images" >
-                        <a href='index.php?module=cart&action=show_cart' style="text-decoration: none;"><img src='../images/icon/cart-of-ecommerce.png' width="100" height="100" style="margin:6px;">
+                        <a href='index.php?module=cart&action=show_cart' style="text-decoration: none;"><img src='../images/icon/cart.png' width="100" height="100" style="margin:6px;">
                     </div>
                     <p>ตะกร้าสินค้า</p></a> 
                 </center>
             </div>
             <div class="col-xs-6 col-md-3 col-sm-3">
                 <center>
-                    <a href='index.php?module=orders&action=order_list' style="text-decoration: none;"><div class="menu-images" style="background:#000">
-                        <img src='../images/icon/bag.png' width="100" height="100" style="margin:6px;"> 
+                    <a href='index.php?module=orders&action=order_list' style="text-decoration: none;"><div class="menu-images">
+                        <img src='../images/icon/cashbox.png' width="100" height="100" style="margin:6px;"> 
                     </div>
                     <p>รายการขายสินค้า</p></a>
                 </center>
@@ -126,8 +126,8 @@
 ?>
             <div class="col-xs-6 col-md-3 col-sm-3">
                 <center>
-                    <a href='index.php?module=employee&action=show_worktime' style="text-decoration: none;"><div class="menu-images" style="background:#000">
-                        <img src='../images/icon/time.png' width="100" height="100" style="margin:6px;"> 
+                    <a href='index.php?module=employee&action=show_worktime' style="text-decoration: none;"><div class="menu-images">
+                        <img src='../images/icon/clock.png' width="100" height="100" style="margin:6px;"> 
                     </div>
                     <p>ดูเวลาทำงาน</p></a>
                 </center>
@@ -140,8 +140,8 @@
 ?>
             <div class="col-xs-6 col-md-3 col-sm-3">
                 <center>
-                    <a href='index.php?module=employee&action=show_salary' style="text-decoration: none;"><div class="menu-images" style="background:#000">
-                        <img src='../images/icon/calculator-and-dollar-sign.png' width="100" height="100" style="margin:6px;"> 
+                    <a href='index.php?module=employee&action=show_salary' style="text-decoration: none;"><div class="menu-images" >
+                        <img src='../images/icon/notes.png' width="100" height="100" style="margin:6px;"> 
                     </div>
                     <p>ดูเงินเดือน</p></a>
                 </center>
