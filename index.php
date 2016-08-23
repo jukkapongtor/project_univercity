@@ -59,7 +59,7 @@
             $("#header-user-hover").hide();
         });
         $(".product-recommend-sale").click(function(){
-            $(".product-recommend-sale").css({"background":"#248a32","border-bottom":"1px solid #1c5d25","color":"white" });
+            $(".product-recommend-sale").css({"background":"#248a32","border-bottom":"2px solid #1c5d25","color":"white" });
             $(".product-recommend-new").css({"background":"white","border-bottom":"0px","color":"#1c5d25" });
             $(".product-recommend-best").css({"background":"white","border-bottom":"0px","color":"#1c5d25" });
             $(".product-recom-sale-content").show();
@@ -67,7 +67,7 @@
             $(".product-recom-best-content").hide();
         });
         $(".product-recommend-new").click(function(){
-            $(".product-recommend-new").css({"background":"#248a32","border-bottom":"1px solid #1c5d25","color":"white" });
+            $(".product-recommend-new").css({"background":"#248a32","border-bottom":"2px solid #1c5d25","color":"white" });
             $(".product-recommend-sale").css({"background":"white","border-bottom":"0px","color":"#1c5d25" });
             $(".product-recommend-best").css({"background":"white","border-bottom":"0px","color":"#1c5d25" });
             $(".product-recom-new-content").show();
@@ -75,7 +75,7 @@
             $(".product-recom-best-content").hide();
         });
         $(".product-recommend-best").click(function(){
-            $(".product-recommend-best").css({"background":"#248a32","border-bottom":"1px solid #1c5d25","color":"white" });
+            $(".product-recommend-best").css({"background":"#248a32","border-bottom":"2px solid #1c5d25","color":"white" });
             $(".product-recommend-new").css({"background":"white","border-bottom":"0px","color":"#1c5d25" });
             $(".product-recommend-sale").css({"background":"white","border-bottom":"0px","color":"#1c5d25" });
             $(".product-recom-best-content").show();
@@ -357,43 +357,29 @@
 
             $quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 64");
             list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
-            if($sellstatus==1){
+            
 ?>            
             <div class="product-recommend">
+<?php
+            if($sellstatus==1){
+?>
                 <div class='product-recommend-center'></div>
-                <!--<div class="product-recommend-sale"><center>สินค้าลดราคา</center></div>-->
                 <div class="product-recommend-new"><center>สินค้ามาใหม่</center></div>
+                <div class="product-recommend-sale"><center>สินค้าลดราคา</center></div>
                 <div class="product-recommend-best"><center>สินค้าขายดี</center></div>
                 <div class='product-recommend-center'></div>
-            </div>
 <?php
-            }
-/*
-?>
-            <div class="product-recom-sale-content">
-<?php
-            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type LIMIT 0,6 ");
-            while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
-                echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4 col-xs-6' style='padding-top:10px;'>";
-                    echo "<div class='div-recom'>";
-                        $str=explode(" ",$product_name,2);
-                        echo "<b><p align='center' class='div-recom-content'>$str[0]</p></b>";
-                    echo "</div>";
-                $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
-                list($product_image)=mysqli_fetch_row($query_image);
-                $path= (empty($product_image))?"icon/no-images.jpg":"$type_name_eng/$product_image";
-                    echo "<img src='images/$path' class='img_product_recom'><br>";
-                echo "</div></a>";
+            }else{
+                echo "<font size='5'><b>&nbsp;รายการสินค้ามาใหม่</b></font>";
             }
 ?>
             </div>
-*/
-?>
+
             <div class="product-recom-new-content">
 <?php
             $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type ORDER BY product.product_id DESC LIMIT 0,6 ");
             while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
-                echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4 col-xs-6' style='padding-top:10px;'>";
+                echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4 col-xs-4' style='padding-top:10px;'>";
                     echo "<div class='div-recom'>";
                         $str=explode(" ",$product_name,2);
                         echo "<b><p align='center' class='div-recom-content'>$str[0]</p></b>";
@@ -406,11 +392,36 @@
             }
 ?>
             </div>
+<?php
+            if($sellstatus==1){
+
+?>
+            <div class="product-recom-sale-content">
+<?php
+            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type LEFT JOIN product_size ON product.product_id = product_size.product_id WHERE product_size.product_sprice_web !=0 GROUP BY product_name ORDER BY RAND() LIMIT 6");
+            while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
+                echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4 col-xs-4' style='padding-top:10px;'>";
+                    echo "<div class='div-recom'>";
+                        $str=explode(" ",$product_name,2);
+                        echo "<b><p align='center' class='div-recom-content'>$str[0]</p></b>";
+                    echo "</div>";
+                $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
+                list($product_image)=mysqli_fetch_row($query_image);
+                $path= (empty($product_image))?"icon/no-images.jpg":"$type_name_eng/$product_image";
+                    echo "<img src='images/icon/sale.png' class='img_product_recom' style='position: absolute;z-index:2'><img src='images/$path' class='img_product_recom' style='position: relative;'><br>";
+                echo "</div></a>";
+            }
+?>
+            </div>
+
+<?php
+            }
+?>
             <div class="product-recom-best-content">
 <?php
             $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng,order_detail.product_id FROM product LEFT JOIN type ON product.product_type =type.product_type LEFT JOIN order_detail ON order_detail.product_id = product.product_id GROUP BY  order_detail.product_id ORDER BY COUNT(order_detail.product_id) DESC  LIMIT 0,6 ");
             while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
-                echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4 col-xs-6' style='padding-top:10px;'>";
+                echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4 col-xs-4' style='padding-top:10px;'>";
                     echo "<div class='div-recom'>";
                         $str=explode(" ",$product_name,2);
                         echo "<b><p align='center' class='div-recom-content'>$str[0]</p></b>";
@@ -425,7 +436,7 @@
             </div>
            
             <div class="container-fluid" style="margin:10px;">
-            <div class="col-md-12 con1" style="border-top:2px #ddd solid;padding-top:10px;margin-top:20px;">
+            <div class="col-md-12 con1" style="padding-top:10px;margin-top:20px;">
                 <div class="col-md-6 col-xs-5" style="margin-top:10px;">
 <?php
                     echo "<img src='images/webpage/$image_content2' class='img_show_content'>";
