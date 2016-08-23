@@ -272,7 +272,9 @@
                         echo "<a href='shop/' style='text-decoration: none;'><p style='margin-top:-10px;margin-right:10px;'>&nbsp;ขายสินค้าในร้าน</p></a>";
                     }
                     if($_SESSION['login_type']==3){
-                        echo "<a href='index.php?module=users&action=data_users&menu=1' style='text-decoration: none;'><p style='margin-top:-10px;margin-right:10px;'>&nbsp;ข้อมูลผู้ใช้งาน</p></a>";
+                        echo "<a href='index.php?module=users&action=data_users&menu=1' style='text-decoration: none;'><p style='margin-top:-5px;margin-right:10px;'>&nbsp;ข้อมูลส่วนตัว</p></a>";
+                        echo "<a href='index.php?module=users&action=data_users&menu=3&order_status=1' style='text-decoration: none;'><p style='margin-top:-5px;margin-right:10px;'>&nbsp;สถานะการซื้อสินค้า</p></a>";
+                        echo "<a href='index.php?module=users&action=data_users&menu=4' style='text-decoration: none;'><p style='margin-top:-5px;margin-right:10px;'>&nbsp;ประวัติการซื้อสินค้า</p></a>";
                     }
                         echo "</div>
                         </div><br class='clear'></li>";
@@ -399,7 +401,7 @@
                 $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
                 list($product_image)=mysqli_fetch_row($query_image);
                 $path= (empty($product_image))?"icon/no-images.jpg":"$type_name_eng/$product_image";
-                    echo "<img src='images/$path' class='img_product_recom'><br>";
+                    echo "<img src='images/icon/new.png' class='img_product_recom' style='position: absolute;z-index:2'><img src='images/$path' class='img_product_recom' style='position: relative;'><br>";
                 echo "</div></a>";
             }
 ?>
@@ -416,7 +418,7 @@
                 $query_image= mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
                 list($product_image)=mysqli_fetch_row($query_image);
                 $path= (empty($product_image))?"icon/no-images.jpg":"$type_name_eng/$product_image";
-                    echo "<img src='images/$path' class='img_product_recom'><br>";
+                    echo "<img src='images/icon/best seller.png' class='img_product_recom' style='position: absolute;z-index:2'><img src='images/$path' class='img_product_recom' style='position: relative;'><br>";
                 echo "</div></a>";
             }
 ?>

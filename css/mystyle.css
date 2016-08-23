@@ -180,12 +180,13 @@ div {
 	width:90%;
 	height:340px;
 	position:absolute;
+	z-index: 10;
 }
 .div-recom:hover{
 	background-image: url("../images/background/black.png");
 }
 .div-recom-content{
-	margin-top:170px;
+	margin-top:145px;
 	background:white;
 	color:#666;
 	font-size:32px;
