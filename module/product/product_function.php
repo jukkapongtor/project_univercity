@@ -1,7 +1,41 @@
 <?php
 function list_product(){
+?>
+	<form method="get" style="margin-top:10px;">
+		<input type="hidden" name='module' value="product">
+		<input type="hidden" name='action' value="list_product">
+		<input type="hidden" name='menu' value="<?php echo $_GET['menu']; ?>">
+		<input type="hidden" name='cate' value="<?php echo $_GET['cate']; ?>">
+		<div class="container-fluid">
+			<div class="col-md-7"></div>
+			<div class="col-md-5">
+				<div class="col-md-4" style="padding-top:5px;"><b>ค้นหาสินค้า</b></div>
+				<div class="col-md-6 padding0"><input type="text" name='keywd' class='form-control input-sm' pattern='[a-zA-Z0-9ก-๙]{0,}' title="กรอกข้อความได้เฉพาะ a-z A-Z ก-๙"></div>
+				<div class="col-md-2"><button class="btn btn-sm"><b><span class='glyphicon glyphicon-search'></span> ค้นหา</b></button></div>			
+			</div>
+		</div>
+	</form>
 
-	echo "<div class='container-fluid well padding0' style='margin-top:5px;'>";
+<script type="text/javascript">
+/*
+  var str = '\'';
+  if ( checkStr( str ) )
+ { 
+    alert( 'มีอักขระพิเศษในข้อความ' ); 
+ }
+*/
+ function checkStr (val) {
+  var str = '<>&'; //ตัวอักษรที่ไม่ต้องการให้มี
+  if (val.indexOf("'")!= -1) return true //เครื่องหมาย '
+  if (val.indexOf('"')!= -1) return true //เครื่องหมาย "
+  for (i = 0; i < str.length; i++) {
+    if (val.indexOf(str.charAt(i))!= -1) return true
+  }
+  return false
+  }
+</script>
+<?php
+	echo "<div class='container-fluid well padding0' style='margin-top:5px;padding-top:10px;'>";
 		echo "<div class='col-md-3' style='padding' >";
 ?>			<div class='hidden-sm hidden-md hidden-lg'>
 				<nav class="navbar navbar-default" >
@@ -45,7 +79,13 @@ function list_product(){
 			</div>
 <?php
 		echo "</div>";
-		echo "<div class='col-md-9' style='padding-top:10px;padding-right:0px;padding-left:0px'>";
+		echo "<div class='col-md-9' style='padding:0px'>";
+
+			echo "<div class='container-fluid'>";
+				echo "<center><h4 style='background:#3c763d;padding:10px;margin-top:5px;color:white'><b>หมวดหมู่สินค้า</b></h4></center>";
+			echo "</div>";
+		
+
 		$query_cate = mysqli_query($_SESSION['connect_db'],"SELECT product_quality,quality_name,quality_image FROM quality WHERE quality_type='$_GET[menu]'")or die("ERROR : product_function line 14");
 		$number=1;
 		$num_cate = mysqli_num_rows($query_cate);
@@ -75,19 +115,72 @@ function list_product(){
 	list($type_product) = mysqli_fetch_row($query_type);
 	$query_cate = mysqli_query($_SESSION['connect_db'],"SELECT quality_name FROM quality WHERE quality_type='$_GET[menu]' AND product_quality='$_GET[cate]'")or die("ERROR : product_function line 39");
 	list($cate_name)=mysqli_fetch_row($query_cate);
-	echo "<h4 class='font_show_type_qulity'><b>รายการสินค้า / ประเภท$type_product / หมวดหมู่$cate_name</b></h4>";
 	$quality_sellstatus = mysqli_query($_SESSION['connect_db'],"SELECT sellproduct_status FROM web_page")or die("ERROR : product function line 42");
     list($sellstatus)=mysqli_fetch_row($quality_sellstatus);
-	$query_product = mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_type='$_GET[menu]' AND product.product_quality='$_GET[cate]'")or die("ERROR : product_function line 44");
+	if(!empty($_GET['keywd'])){
+		$sql_product = "SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_name LIKE '%$_GET[keywd]%'";
+	}else{
+		$sql_product = "SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type = type.product_type WHERE product.product_type='$_GET[menu]' AND product.product_quality='$_GET[cate]' ";
+	}
+	$query_product = mysqli_query($_SESSION['connect_db'],$sql_product)or die("ERROR : product_function line 44");
 	$num_row =mysqli_num_rows($query_product);
+	if(!empty($cate_name)){
+		if(empty($_GET['keywd'])){
+			echo "<h4 class='font_show_type_qulity'><b>รายการสินค้า / ประเภท$type_product / หมวดหมู่$cate_name</b></h4>";
+		}else{
+			echo "<div class='container-fluid'>";
+				echo "<center><h4><b>เจอสินค้าที่ค้นหาทั้งหมด <font color='red'>$num_row</font> รายการ</b></h4></center>";
+			echo "</div>";
+		}
+	}else{
+		echo "<br><br><br>";
+	}
 	if($num_row>0){
+		$product_new = array();
+		$product_sale = array();
+		$product_best = array();
+		$query_recom_new =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type ORDER BY product.product_id DESC LIMIT 0,6 ");
+        while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_new)){
+        	array_push($product_new,$product_id);
+        }
+        $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type LEFT JOIN product_size ON product.product_id = product_size.product_id WHERE product_size.product_sprice_web !=0 GROUP BY product_name");
+        while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
+        	array_push($product_sale,$product_id);
+        }
+        $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng,order_detail.product_id FROM product LEFT JOIN type ON product.product_type =type.product_type LEFT JOIN order_detail ON order_detail.product_id = product.product_id GROUP BY  order_detail.product_id ORDER BY COUNT(order_detail.product_id) DESC  LIMIT 0,6 ");
+        while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
+        	array_push($product_best,$product_id);
+        }
 		while (list($product_id,$product_name,$product_type)=mysqli_fetch_row($query_product)) {
+			$status_product=0;
 			echo "<div class='col-md-3 col-xs-6' style='margin-top:20px'>";
 			$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
 			list($product_image_detail)=mysqli_fetch_row($query_image);
 			$path= (empty($product_image_detail))?"icon/no-images.jpg":"$product_type/$product_image_detail";
 				$str=explode(" ",$product_name,2);
-				echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' class='img_product_detail' ><p style='margin-top:5px;'><font class='font-content' >$str[0]</font></p></a>";
+				echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'>";
+
+				foreach ($product_new as $value) {
+					$status_product = ($value==$product_id)?1:$status_product;
+				}
+				foreach ($product_best as $value) {
+					$status_product = ($value==$product_id)?2:$status_product;
+				}
+				foreach ($product_sale as $value) {
+					$status_product = ($value==$product_id)?3:$status_product;
+				}
+
+				if($status_product!=0){
+					switch ($status_product) {
+						case '1': echo "<img src='images/icon/new.png' class='img_product_detail' style='position: absolute;z-index:2'>"; break;
+						case '2': echo "<img src='images/icon/best seller.png' class='img_product_detail' style='position: absolute;z-index:2'>"; break;
+						default: echo "<img src='images/icon/sale.png' class='img_product_detail' style='position: absolute;z-index:2'>"; break;
+					}
+				}
+				
+				
+				echo "<img src='images/$path' class='img_product_detail' style='position: relative;'>
+				<p style='margin-top:5px;'><font class='font-content' >$str[0]</font></p></a>";
 			echo "</div>";
 		}
 	}else{
@@ -176,13 +269,13 @@ function product_detail(){
 							if($product_amount_web!="สินค้าหมด"){
 								echo "<div class='col-md-2' <p>$product_amount_web</p></div>";
 								if($sellstatus==1){
-									echo "<div class='col-md-4' ><p><b>ราคา(Batn)</b></p></div>";
+									echo "<div class='col-md-2' ><p><b>ราคา</b></p></div>";
 									if($product_sprice_web!=0){
-										echo "<div class='col-md-3' ><p style='text-decoration:line-through;color:red'>$product_price_web</p></div>";
+										echo "<div class='col-md-5' ><p style='text-decoration:line-through;color:red'>$product_price_web ฿</p></div>";
 										echo "<div class='col-md-6' ><p align='right'><font color='red'> !!! </font>ราคาพิเศษ<font color='red'> !!! </font></div></p>";
-										echo "<div class='col-md-6' ><p>$product_sprice_web</p></div>";
+										echo "<div class='col-md-6' ><p>$product_sprice_web ฿</p></div>";
 									}else{
-										echo "<div class='col-md-3' ><p>$product_price_web</p></div>";
+										echo "<div class='col-md-5' ><p>$product_price_web ฿</p></div>";
 									}
 								}
 								$number++;

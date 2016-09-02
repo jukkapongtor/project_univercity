@@ -377,8 +377,8 @@
 
             <div class="product-recom-new-content">
 <?php
-            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type ORDER BY product.product_id DESC LIMIT 0,6 ");
-            while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
+            $query_recom_new =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type ORDER BY product.product_id DESC LIMIT 0,6 ");
+            while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_new)){
                 echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4 col-xs-4' style='padding-top:10px;'>";
                     echo "<div class='div-recom'>";
                         $str=explode(" ",$product_name,2);
@@ -419,8 +419,8 @@
 ?>
             <div class="product-recom-best-content">
 <?php
-            $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng,order_detail.product_id FROM product LEFT JOIN type ON product.product_type =type.product_type LEFT JOIN order_detail ON order_detail.product_id = product.product_id GROUP BY  order_detail.product_id ORDER BY COUNT(order_detail.product_id) DESC  LIMIT 0,6 ");
-            while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
+            $query_recom_best =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng,order_detail.product_id FROM product LEFT JOIN type ON product.product_type =type.product_type LEFT JOIN order_detail ON order_detail.product_id = product.product_id GROUP BY  order_detail.product_id ORDER BY COUNT(order_detail.product_id) DESC  LIMIT 0,6 ");
+            while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_best)){
                 echo "<a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><div class='col-md-4 col-xs-4' style='padding-top:10px;'>";
                     echo "<div class='div-recom'>";
                         $str=explode(" ",$product_name,2);
