@@ -388,7 +388,7 @@ function product_detail(){
 					echo "</p>";
 				echo "</div>";
 			echo "</div>";
-			echo "<div id='edit_content_comment_$comment_proid'><p style='margin-left:30px;'>$comment_detail</p></div>";
+			echo "<div id='edit_content_comment_$comment_proid'>".nl2br($comment_detail)."</div>";
 			$query_user = mysqli_query($_SESSION['connect_db'],"SELECT image FROM users WHERE username='$username'")or die("ERROR : 
 				product line 215");
 			list($image)=mysqli_fetch_row($query_user);
@@ -543,6 +543,8 @@ function product_detail(){
 function comment_product(){
 	echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 		$date = date("Y-m-d H:i:s");
+		$_POST['comment_product'] = str_replace(" ","&nbsp;", $_POST['comment_product']);
+		$_POST['comment_detail'] = str_replace("'","&#39;", $_POST['comment_detail']);
 		$insert_comment = "INSERT INTO comment_product VALUES('','$_SESSION[login_name]','$_POST[product_id]','$_POST[comment_product]','$date')";
 		mysqli_query($_SESSION['connect_db'],$insert_comment)or die("ERROR product funtion line 346");
 		echo "<script>swal({title:'',text: \"แสดงความคิดเห็นเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=product&action=product_detail&product_id=$_POST[product_id]';})</script>";
@@ -553,6 +555,8 @@ function delete_comment(){
 	mysqli_query($_SESSION['connect_db'],"DELETE FROM comment_product WHERE comment_proid='$_POST[comment_proid]'")or die("ERROR product funtion line 509");
 }
 function update_comment(){
+	$_POST['comment_detail'] = str_replace(" ","&nbsp;", $_POST['comment_detail']);
+	$_POST['comment_detail'] = str_replace("'","&#39;", $_POST['comment_detail']);
 	mysqli_query($_SESSION['connect_db'],"UPDATE comment_product SET comment_detail='$_POST[comment_detail]' WHERE comment_proid='$_POST[comment_proid]'")or die("ERROR product funtion line 512");
 	echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 	echo "<script>swal({title:'',text: \"แก้ไขความคิดเห็นเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.history.back();})</script>";
