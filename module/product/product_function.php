@@ -136,40 +136,15 @@ function list_product(){
 		echo "<br><br><br>";
 	}
 	if($num_row>0){
-		$product_new = array();
-		$product_sale = array();
-		$product_best = array();
-		$query_recom_new =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type ORDER BY product.product_id DESC LIMIT 0,6 ");
-        while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_new)){
-        	array_push($product_new,$product_id);
-        }
-        $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type LEFT JOIN product_size ON product.product_id = product_size.product_id WHERE product_size.product_sprice_web !=0 GROUP BY product_name");
-        while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
-        	array_push($product_sale,$product_id);
-        }
-        $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng,order_detail.product_id FROM product LEFT JOIN type ON product.product_type =type.product_type LEFT JOIN order_detail ON order_detail.product_id = product.product_id GROUP BY  order_detail.product_id ORDER BY COUNT(order_detail.product_id) DESC  LIMIT 0,6 ");
-        while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
-        	array_push($product_best,$product_id);
-        }
 		while (list($product_id,$product_name,$product_type)=mysqli_fetch_row($query_product)) {
-			$status_product=0;
+			
 			echo "<div class='col-md-3 col-xs-6' style='margin-top:20px'>";
 			$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
 			list($product_image_detail)=mysqli_fetch_row($query_image);
 			$path= (empty($product_image_detail))?"icon/no-images.jpg":"$product_type/$product_image_detail";
 				$str=explode(" ",$product_name,2);
 				echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'>";
-
-				foreach ($product_new as $value) {
-					$status_product = ($value==$product_id)?1:$status_product;
-				}
-				foreach ($product_best as $value) {
-					$status_product = ($value==$product_id)?2:$status_product;
-				}
-				foreach ($product_sale as $value) {
-					$status_product = ($value==$product_id)?3:$status_product;
-				}
-
+				$status_product = check_product($product_id);
 				if($status_product!=0){
 					switch ($status_product) {
 						case '1': echo "<img src='images/icon/new.png' class='img_product_detail' style='position: absolute;z-index:2'>"; break;
@@ -201,19 +176,66 @@ function product_detail(){
 	list($product_name,$product_detail,$quality_name,$product_stock,$product_type,$type_name_eng)=mysqli_fetch_row($query_product_detail);
 	echo "<center><div class='hidden-md hidden-sm hidden-lg' style='margin-top:20px'><h4><b>รายละเอียดสินนค้า$product_name</b></h4></div></center>";
 	echo "<div class='container-fluid'>";
+		echo "<div class='col-md-12 padding0' >";
+			echo "<h4 style='background:#3c763d;color:white;padding:10px;padding-top:15px;'><b>รายการสินค้า / ประเภท$product_type / หมวดหมู่$quality_name / $product_name</b></h4>";
+		echo "</div>";
 	    echo "<div class='col-md-5'>";
-	    $query_images_detail = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$_GET[product_id]'")or die("ERROR : product_function line 200");
+	    $sql_images_detail = "SELECT product_image FROM product_image WHERE product_id='$_GET[product_id]'";
+	    $query_images_detail = mysqli_query($_SESSION['connect_db'],$sql_images_detail)or die("ERROR : product_function line 200");
 	    $number_image=1;
 	    $row_image = mysqli_num_rows($query_images_detail);
 	    if(!empty($row_image)){
+?>
+			<div class='col-md-12'>
+			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="border:1px solid #eee;border-radius:15px;">
+				<!-- Indicators -->
+				<ol class="carousel-indicators">
+<?php
+				for($i=0;$i<$row_image;$i++){
+                    $active = ($i==0)?"class='active'":"";
+                    echo "<li data-target='#carousel-example-generic' data-slide-to='$i' $active></li>";
+                }
+?>
+				</ol>
+				<!-- Wrapper for slides -->
+				<div class="carousel-inner" role="listbox" style="height:350px;border-radius:15px;">
+<?php
+			$number=0;
 		    while(list($product_image_detail)=mysqli_fetch_row($query_images_detail)){
 		    	$path= (empty($product_image_detail))?"icon/no-images.jpg":"$type_name_eng/$product_image_detail";
-		    	if($number_image==1){
-		    	echo "<div class='col-md-12'>";
-					echo "<img src='images/$path' width='100%' height='350' style='border-radius:5px;'>";
-				echo "</div>";
-				$number_image++;
-				}
+		    	//if($number_image==1){
+		    	//echo "<div class='col-md-12'>";
+					//echo "<img src='images/$path' width='100%' height='350' style='border-radius:5px;'>";
+				//echo "</div>";
+				//$number_image++;
+				//}
+				$active= ($number==0)?"active":"";
+                echo "<div class='item $active' style='height:350px;border-radius:15px;'>";
+                	echo "<img src='images/$path' style='width:100%;height:100%;border-radius:15px;' alt='...'>";
+                echo "</div>";
+                $number++;
+				//echo "<div class='col-md-3 col-xs-3' style='padding:5px'>";
+					//echo "<img src='images/$path'  class='img_producde_mini' style='border-radius:5px;'>";
+				//echo "</div>";
+			}
+
+?>
+				</div>
+				 <!-- Controls -->
+					<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style="border-radius:15px 0px 0px 15px">
+				    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				    <span class="sr-only">Previous</span>
+				  </a>
+				  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style="border-radius:0px 15px 15px 0px">
+				    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				    <span class="sr-only">Next</span>
+				  </a>
+			</div>
+			</div>
+<?php
+			$query_images_detail = mysqli_query($_SESSION['connect_db'],$sql_images_detail)or die("ERROR : product_function line 200");
+			while(list($product_image_detail)=mysqli_fetch_row($query_images_detail)){
+				$path= (empty($product_image_detail))?"icon/no-images.jpg":"$type_name_eng/$product_image_detail";
 				echo "<div class='col-md-3 col-xs-3' style='padding:5px'>";
 					echo "<img src='images/$path'  class='img_producde_mini' style='border-radius:5px;'>";
 				echo "</div>";
@@ -247,9 +269,18 @@ function product_detail(){
 					echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
 					echo "<td><p>$quality_name</p></td>";
 				echo "</tr>";
+				if($sellstatus==1){
 				echo "<tr>";
 					echo "<td><p><b>สถานะสินค้า</b></p></td>";
 					echo "<td><p><b>&nbsp;:&nbsp;</b></p></td>";
+					if(!empty($product_stock)){
+						$check_amount_product =mysqli_query($_SESSION['connect_db'],"SELECT SUM(product_amount_web) FROM product_size  WHERE product_id ='$_GET[product_id]'");
+						list($num_check_amount_product) = mysqli_fetch_row($check_amount_product);
+						if(empty($num_check_amount_product)){
+							mysqli_query($_SESSION['connect_db'],"UPDATE product SET product_stock='0' WHERE product_id ='$_GET[product_id]'");
+							$product_stockw=0;
+						}
+					}
 					$stock = (empty($product_stock))?"ไม่พร้อมจำหน่าย":"พร้อมจำหน่าย";
 					echo "<td><p>$stock</p></td>";
 				echo "</tr>";
@@ -309,18 +340,55 @@ function product_detail(){
 					}
 					echo "</td>";
 				echo "</tr>";
+				}
 			echo "</table>";
 		echo "</div>";
 	echo "</div>";
 
-	$query_comment_product = mysqli_query($_SESSION['connect_db'],"SELECT * FROM comment_product WHERE product_id='$_GET[product_id]' ORDER BY comment_date DESC ")or die("ERROR : product line 226");
+	$query_comment_product = mysqli_query($_SESSION['connect_db'],"SELECT * FROM comment_product WHERE product_id='$_GET[product_id]' ORDER BY comment_date ASC ")or die("ERROR : product line 226");
 	$comment_row = mysqli_num_rows($query_comment_product);
 	if(!empty($comment_row)){
 		echo "<div class='container-fluid' style='border-bottom:2px #ddd solid;margin:30px 0px; width:80%;margin-left:10%;'>";
 		$num=1;
 		while(list($comment_proid,$username,$product_id,$comment_detail,$comment_date)=mysqli_fetch_row($query_comment_product)){
-			echo "<h4><b>ความคิดเห็นที่ $num</	b></h4>";
-			echo "<p style='margin-left:30px;'>$comment_detail</p>";
+			echo "<div class='container-fluid padding0'>";
+				echo "<div class='col-md-6 padding0'>";
+					echo "<h4><b>ความคิดเห็นที่ $num</	b></h4>";
+				echo "</div>";
+				echo "<div class='col-md-6 padding0'>";
+					echo "<p align='right'>";
+					if(!empty($_SESSION['login_name'])&&$_SESSION['login_name']==$username){
+						echo "<img src='images/icon/draw.png' width='20' height='20' onclick='edit_comment($comment_proid)' style='cursor:pointer;'>&nbsp;&nbsp;";
+						echo "<img src='images/icon/can.png' width='20' height='20' onclick='delete_comment($comment_proid)' style='cursor:pointer;'>";
+?>
+						<script>
+							function delete_comment(comment_proid){
+								swal({
+									title: "ลบความคิดเห็น",
+									text: "คุณต้องการลบความคิดเห็นใช่หรือไม่?",
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonColor: "#DD6B55",
+									confirmButtonText: "ลบข้อความ",
+									closeOnConfirm: false,
+									cancelButtonText: "ยกเลิก" },function(){
+										$.post('index.php?module=product&action=delete_comment',{comment_proid:comment_proid},function(data){
+                						});
+										location.reload();
+									});
+							}
+							function edit_comment(comment_proid){
+								$.post('module/index.php?data=edit_comment',{comment_proid:comment_proid},function(data){
+									$('#edit_content_comment_'+comment_proid).html(data);
+                				});
+							}	
+						</script>
+<?php
+					}
+					echo "</p>";
+				echo "</div>";
+			echo "</div>";
+			echo "<div id='edit_content_comment_$comment_proid'><p style='margin-left:30px;'>$comment_detail</p></div>";
 			$query_user = mysqli_query($_SESSION['connect_db'],"SELECT image FROM users WHERE username='$username'")or die("ERROR : 
 				product line 215");
 			list($image)=mysqli_fetch_row($query_user);
@@ -342,7 +410,7 @@ function product_detail(){
 	}
 ?>
 	<div class="container-fluid" style='border-bottom:2px #ddd solid;margin:30px; width:90%;margin-left:5%;'> 
-		<h4><b>ความคิดเห็น</b></h4>
+		<h4><b>แสดงความคิดเห็น</b></h4>
 	</div>
 	<div class="container-fluid"> 
 		<div class='row'>
@@ -350,17 +418,28 @@ function product_detail(){
 		<div class='col-md-8'>
 			<div class="col-md-12">
 			<form action='index.php?module=product&action=comment_product' method="post">
-				<p><textarea class="form-control" name='comment_product' style='height:100px;' placeholder="Comment..." required></textarea></p>
-				
-				
-				<?php
+<?php
+				$disabled = (empty($_SESSION['login_name']))?"disabled":"";
+
+				echo "<p><textarea class='form-control' name='comment_product' style='height:100px;' placeholder='Comment...' required $disabled>";
+					if(empty($_SESSION['login_name'])){
+						echo "สามารถแสดงความคิดเห็นสินค้าได้เฉพาะสมาชิกเท่านั้น";
+					}
+				echo "</textarea></p>";
+
 					$user =(!empty($_SESSION['login_name']))?$_SESSION['login_name']:"";
-					$disabled = (!empty($_SESSION['login_name']))?"disabled":"";
-				?>
+?>
 				<input type="hidden" name='username' value="<?php echo "$user";?>">
 				<input type="hidden" name='product_id' value="<?php echo "$_GET[product_id]" ;?>">
-				<p><input type='text' class="form-control" value="<?php echo "$user";?>" placeholder="Username..."  <?php echo $disabled;?> required></p>
-				<p align="right"><button class="btn btn-sm btn-primary">แสดงความเห็น</button></p>
+				<p><input type='text' class="form-control" value="<?php echo "$user";?>" placeholder="Username..." required disabled></p>
+<?php
+				if(!empty($_SESSION['login_name'])){
+					echo "<p align='right'><button class='btn btn-sm btn-primary'>แสดงความเห็น</button></p>";
+				}else{
+					echo "<p align='right'><button type='button' class='btn btn-sm btn-primary' onclick='check_comment()' $disabled>แสดงความเห็น</button></p>";
+				}
+				
+?>
 			</form>
 			</div>
 		</div>
@@ -377,7 +456,18 @@ function product_detail(){
 			$query_image = mysqli_query($_SESSION['connect_db'],"SELECT product_image FROM product_image WHERE product_id='$product_id'");
 			list($product_image_detail)=mysqli_fetch_row($query_image);
 			$path= (empty($product_image_detail))?"icon/no-images.jpg":"$product_type/$product_image_detail";
-			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'><img src='images/$path' class='ran_img_product'  style='border-radius:5px;'>";
+			echo "<center><a href='index.php?module=product&action=product_detail&product_id=$product_id' style='text-decoration: none;'>";
+
+			$status_product = check_product($product_id);
+			if($status_product!=0){
+				switch ($status_product) {
+					case '1': echo "<img src='images/icon/new.png' class='ran_img_product' style='position: absolute;z-index:2'>"; break;
+					case '2': echo "<img src='images/icon/best seller.png' class='ran_img_product' style='position: absolute;z-index:2'>"; break;
+					default: echo "<img src='images/icon/sale.png' class='ran_img_product' style='position: absolute;z-index:2'>"; break;
+				}
+			}
+			echo "<img src='images/$path' class='ran_img_product'  style='border-radius:5px;position:relative'>";
+			
 			$str = explode(" ",$product_name, 2);
 			echo "<p class='font-content' style='margin-top:5px'>$str[0]</p></a>";
 		echo "</div>";
@@ -441,18 +531,30 @@ function product_detail(){
 			}
 		echo "});";
 	echo "</script>";
+?>
+	<script>
+		function check_comment(){
+			swal('', 'สามารถแสดงความคิดเห็นสินค้าได้เฉพาะสมาชิกเท่านั้น','error');
+		}
+	</script>
+<?php
 
 }
 function comment_product(){
 	echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
-	if(empty($_SESSION['login_name'])){
-		echo "<script>swal({title:'',text: \"สามารถแสดงความคิดเห็นสินค้าได้เฉพาะสมาชิกเท่านั้น\",type:'error',showCancelButton: false,confirmButtonColor: '#f27474',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=product&action=product_detail&product_id=$_POST[product_id]';})</script>";
-	}else{
 		$date = date("Y-m-d H:i:s");
 		$insert_comment = "INSERT INTO comment_product VALUES('','$_SESSION[login_name]','$_POST[product_id]','$_POST[comment_product]','$date')";
 		mysqli_query($_SESSION['connect_db'],$insert_comment)or die("ERROR product funtion line 346");
 		echo "<script>swal({title:'',text: \"แสดงความคิดเห็นเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.location='index.php?module=product&action=product_detail&product_id=$_POST[product_id]';})</script>";
-	}
 	
+	
+}
+function delete_comment(){
+	mysqli_query($_SESSION['connect_db'],"DELETE FROM comment_product WHERE comment_proid='$_POST[comment_proid]'")or die("ERROR product funtion line 509");
+}
+function update_comment(){
+	mysqli_query($_SESSION['connect_db'],"UPDATE comment_product SET comment_detail='$_POST[comment_detail]' WHERE comment_proid='$_POST[comment_proid]'")or die("ERROR product funtion line 512");
+	echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+	echo "<script>swal({title:'',text: \"แก้ไขความคิดเห็นเรียบร้อยแล้ว\",type:'success',showCancelButton: false,confirmButtonColor: '#1ca332',confirmButtonText: 'ยันยัน',closeOnConfirm: false },function(){window.history.back();})</script>";
 }
 ?>

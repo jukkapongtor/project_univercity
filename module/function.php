@@ -501,6 +501,39 @@ function select_address(){
     });
 </script>
 <?php
+}
+
+function edit_comment(){
+	$comment_proid = $_POST['comment_proid'];
+	$query_comment = mysqli_query($_SESSION['connect_db'],"SELECT comment_detail FROM comment_product WHERE comment_proid='$comment_proid'")or die("ERROR module finction line 507");
+	list($comment_detail)=mysqli_fetch_row($query_comment);
+
+	echo "<div id='edit_comment_new_$comment_proid'>";
+?>
+	<form action='index.php?module=product&action=update_comment' method="post">
+	<input type="hidden" name="comment_proid" value="<?php echo $comment_proid ?>">
+	<textarea class='form-control' name='comment_detail' style='margin:5px;'><?php echo $comment_detail; ?></textarea>
+	<p align="right">
+		<input type="submit" class='btn btn-sm btn-success' value="แก้ไข">&nbsp;
+
+<?php 
+		echo "<input type='button' class='btn btn-sm btn-danger' value='ยกเลิก'' onclick='cancel_edit($comment_proid)'>";
+?>
+	</p>
+	</form>
+	</div>
+<?php 
+	echo "<div id='edit_comment_old_$comment_proid' style='display:none'>";
+		echo "<p style='margin-left:30px;'><b>$comment_detail</b></p>"; 
+?>
+	</div>
+	<script>
+		function cancel_edit(comment_proid){
+			$('#edit_comment_new_'+comment_proid).hide();
+			$('#edit_comment_old_'+comment_proid).show();
+		} 
+	</script>
+<?php
 }	
 
 ?>

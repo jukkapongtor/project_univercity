@@ -35,7 +35,33 @@ function logout(){
 	session_destroy();
 	echo "<script>window.location='../index.php'</script>";
 }
-
-
+function check_product($product_id_check){
+	$product_new = array();		
+	$product_sale = array();
+	$product_best = array();
+	$query_recom_new =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type ORDER BY product.product_id DESC LIMIT 0,6 ");
+    while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_new)){
+      	array_push($product_new,$product_id);
+    }
+    $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng FROM product LEFT JOIN type ON product.product_type =type.product_type LEFT JOIN product_size ON product.product_id = product_size.product_id WHERE product_size.product_sprice_web !=0 GROUP BY product_name");
+    while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
+        array_push($product_sale,$product_id);
+    }
+    $query_recom_sale =mysqli_query($_SESSION['connect_db'],"SELECT product.product_id,product.product_name,type.type_name_eng,order_detail.product_id FROM product LEFT JOIN type ON product.product_type =type.product_type LEFT JOIN order_detail ON order_detail.product_id = product.product_id GROUP BY  order_detail.product_id ORDER BY COUNT(order_detail.product_id) DESC  LIMIT 0,6 ");
+    while(list($product_id,$product_name,$type_name_eng)=mysqli_fetch_row($query_recom_sale)){
+        array_push($product_best,$product_id);
+    }
+    $status_product=0;
+    foreach ($product_new as $value) {
+		$status_product = ($value==$product_id_check)?1:$status_product;
+	}
+	foreach ($product_best as $value) {
+		$status_product = ($value==$product_id_check)?2:$status_product;
+	}
+	foreach ($product_sale as $value) {
+		$status_product = ($value==$product_id_check)?3:$status_product;
+	}
+	return $status_product;
+}
 
 ?>
