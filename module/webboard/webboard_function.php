@@ -2,10 +2,15 @@
 <?php
 function webboard(){
 	if(!empty($_SESSION['login_name'])){
-		echo "<a href='index.php?module=webboard&action=form_webboard'><p class='font20' align='right' style='margin:10px 10px 0px 0px;'><button>เพิ่มกระทู้</button></p></a>";
+		echo "<div class='panel panel-success weboard-showrecommend'>";
+		  echo "<div class='panel-heading'><p><b>เพิ่มกระทู้</b></p></div>";
+		  echo "<div class='panel-body'>";
+		    echo "<p style='margin-left:20px;'>สำหรับสมาชิกสามารถกด <a href='index.php?module=webboard&action=form_webboard'><button class='btn btn-sm btn-success'>เพิ่มกระทู้</button></a> ได้  เพื่อใช้ในการถามคำถามหรือแลกเปลี่ยนข้อมูล</p>";
+		  echo "</div>";
+		echo "</div>";
 	}
 	echo "<div class='panel panel-primary weboard-showrecommend'>";
-	  echo "<div class='panel-heading' style='padding-bottom:0px;'><b><p>รายการสนทนาที่แนะนำ</p></b></div>";
+	  echo "<div class='panel-heading' style='padding-bottom:0px;'><b><p>รายการกระทู้ที่แนะนำ</p></b></div>";
 	  echo "<div class='panel-body'>";
 		echo "<div>";
 		  echo "<!-- Nav tabs -->";
@@ -16,6 +21,10 @@ function webboard(){
 		  echo "<!-- Tab panes -->";
 		  echo "<div class='tab-content'>";
 		    echo "<div role='tabpanel' class='tab-pane active' id='webboard_recommend'>";
+		    	$number=1;
+				$query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT webboard.* FROM webboard LEFT JOIN like_status ON webboard_id = like_name_id WHERE like_status.like_name='webboard' GROUP BY webboard.webboard_id ORDER BY COUNT(like_status.like_id) DESC LIMIT 0,4")or die("ERROR : webboard function line 32");
+				$row = mysqli_num_rows($query_webboard);
+				if($row>0){
 		    	echo "<p></p><p class='font20'>กระทู้แนะนำจะเป็นการนำกรทู้ที่มีการถูกใจมากที่สุด 4 อันดับนำมาแสดง</p>";
 		    	echo "<table class='table table-hover table-striped' style='margin-top:10px;'>";
 			  		echo "<thead>";
@@ -29,10 +38,7 @@ function webboard(){
 			  		</tr>";
 			  		echo "</thead>";
 			  		echo "<tbody>";
-			  		$number=1;
-				  	$query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT webboard.* FROM webboard LEFT JOIN like_status ON webboard_id = like_name_id WHERE like_status.like_name='webboard' GROUP BY webboard.webboard_id ORDER BY COUNT(like_status.like_id) DESC LIMIT 0,4")or die("ERROR : webboard function line 32");
-				  	$row = mysqli_num_rows($query_webboard);
-				  	if($row>0){
+			  		
 					  	while(list($webboard_id,$webboard_header,$webboard_detail,$username,$webboard_date,$visitor)=mysqli_fetch_row($query_webboard)){
 					  		$query_subwebboard = mysqli_query($_SESSION['connect_db'],"SELECT subwebboard_id FROM subwebboard WHERE webboard_id='$webboard_id'")or die("ERROR : webboard line 37");
 					  		$cnt_subwebboard = mysqli_num_rows($query_subwebboard);
@@ -46,10 +52,17 @@ function webboard(){
 					  		</tr>";
 					  		$number++;
 					  	}
-				  	}
+				  	
 			  	echo "</tbody></table>";
+			  }else{
+			  	echo "<h4 align='center' style='margin:60px 0px 40px 0px;'><b>ขออภัย!!! ยังไม่มีการเพิ่มกระทู้</b></h4>";
+			  }
 		    echo "</div>";
 		    echo "<div role='tabpanel' class='tab-pane' id='webboard_interesting'>";
+		    	$number=1;
+				$query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT * FROM webboard ORDER BY visitor DESC LIMIT 0,4")or die("ERROR : webboard function line 34");
+				$row = mysqli_num_rows($query_webboard);
+				if($row>0){
 		    	echo "<p></p><p class='font20'>กระทู้น่าสนใจะเป็นการนำกรทู้ที่มีการเข้าดูมากที่สุด 4 อันดับนำมาแสดง</p>";
 		    	echo "<table class='table table-hover table-striped' style='margin-top:10px;'>";
 			  		echo "<thead>";
@@ -63,8 +76,7 @@ function webboard(){
 			  		</tr>";
 			  		echo "</thead>";
 			  		echo "<tbody>";
-			  		$number=1;
-				  	$query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT * FROM webboard ORDER BY visitor DESC LIMIT 0,4")or die("ERROR : webboard function line 34");
+			  		
 				  	while(list($webboard_id,$webboard_header,$webboard_detail,$username,$webboard_date,$visitor)=mysqli_fetch_row($query_webboard)){
 				  		$query_subwebboard = mysqli_query($_SESSION['connect_db'],"SELECT subwebboard_id FROM subwebboard WHERE webboard_id='$webboard_id'")or die("ERROR : webboard line 37");
 					  	$cnt_subwebboard = mysqli_num_rows($query_subwebboard);
@@ -79,6 +91,9 @@ function webboard(){
 				  		$number++;
 				  	}
 			  	echo "</tbody></table>";
+			  	}else{
+			  		echo "<h4 align='center' style='margin:60px 0px 40px 0px;'><b>ขออภัย!!! ยังไม่มีการเพิ่มกระทู้</b></h4>";
+			  	}
 		    echo "</div>";
 		  echo "</div>";
 		echo "</div>";
@@ -87,6 +102,10 @@ function webboard(){
 	echo "<div class='panel panel-primary weboard-showrecommend'>";
 	  echo "<div class='panel-heading' style='padding-bottom:0px;'><b><p class='font20'>รายการกระทู้ทั้งหมด</p></b></div>";
 	  echo "<div class='panel-body'>";
+	  	$number=1;
+		$query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT * FROM webboard ORDER BY webboard_date DESC")or die("ERROR : webboard function line 34");
+		$row = mysqli_num_rows($query_webboard);
+		if($row>0){
 	  	echo "<table class='table table-hover table-striped' style='margin-top:10px;'>";
 	  		echo "<thead>";
 	  		echo "<tr>
@@ -99,8 +118,7 @@ function webboard(){
 	  		</tr>";
 	  		echo "</thead>";
 	  		echo "<tbody>";
-	  		$number=1;
-		  	$query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT * FROM webboard ORDER BY webboard_date DESC")or die("ERROR : webboard function line 34");
+	  		
 		  	while(list($webboard_id,$webboard_header,$webboard_detail,$username,$webboard_date,$visitor)=mysqli_fetch_row($query_webboard)){
 		  		$query_subwebboard = mysqli_query($_SESSION['connect_db'],"SELECT subwebboard_id FROM subwebboard WHERE webboard_id='$webboard_id'")or die("ERROR : webboard line 37");
 				$cnt_subwebboard = mysqli_num_rows($query_subwebboard);
@@ -115,6 +133,9 @@ function webboard(){
 		  		$number++;
 		  	}
 	  	echo "</tbody></table>";
+	  	}else{
+			echo "<h4 align='center' style='margin:60px 0px 50px 0px;'><b>ขออภัย!!! ยังไม่มีการเพิ่มกระทู้</b></h4>";
+		}
 	  echo "</div>";
 	echo "</div>";
 }
