@@ -434,7 +434,129 @@
             }
 ?>
             </div>
-           
+            
+            <div class="container-fluid padding0">
+                <div class="col-md-12 padding0" style="margin-top:20px;">
+                    <font size='5'><b>&nbsp;ข่าวสาร</b></font>
+                    <div  class="container-fluid padding0" style="border-bottom:solid 2px #ddd"></div>
+                    <div class="container-fluid">
+                    <table class="table table-hover" style="margin-top:5px;">
+                        <thead>
+                            <tr>
+                                <th><center>รายการข่าวสาร</center></th>
+                                <th><center>วันที่</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+<?php
+                        $query_webblog = mysqli_query($_SESSION['connect_db'],"SELECT id_blog,title_blog,blog_date FROM webblog ORDER BY blog_date DESC LIMIT 0,4")or die("ERROR index line 444");
+                        $line_table = 0;
+                        while(list($id_blog,$title_blog,$blog_date)=mysqli_fetch_row($query_webblog)){
+                            $line_success = (($line_table%2)==0)?"class='success'":"";
+                            echo "<tr $line_success>";
+                                echo "<td class='col-md-10'><a href='index.php?module=webblog&action=webblog_detail&webblog_id=$id_blog'><p>$title_blog</p></td>";
+                                $blog_date = substr($blog_date,0,10);
+                                echo "<td class='col-md-2'><p align='center'>$blog_date</p></td>";
+                            echo "</tr>";
+                            $line_table++;
+                        }
+?>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid padding0">
+                <div class="col-md-12 padding0" style="margin-top:20px;">
+                    <font size='5'><b>&nbsp;เว็บบอร์ด</b></font>
+                    <div  class="container-fluid padding0" style="border-bottom:solid 2px #ddd"></div>
+<?php
+        echo "<div class='container-fluid' style='margin-top:5px;'>";
+          echo "<!-- Nav tabs -->";
+          echo "<ul class='nav nav-tabs' role='tablist'>";
+            echo "<li role='presentation' class='active font20'><a href='#webboard_recommend' aria-controls='webboard_recommend' role='tab' data-toggle='tab'>กระทู้แนะนำ</a></li>";
+            echo "<li role='presentation'><a href='#webboard_interesting' class='font20' aria-controls='webboard_interesting' role='tab' data-toggle='tab'>กระทู้ที่น่าสนใจ</a></li>";
+          echo "</ul>";
+          echo "<!-- Tab panes -->";
+          echo "<div class='tab-content'>";
+            echo "<div role='tabpanel' class='tab-pane active' id='webboard_recommend'>";
+                $number=1;
+                $query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT webboard.* FROM webboard LEFT JOIN like_status ON webboard_id = like_name_id WHERE like_status.like_name='webboard' GROUP BY webboard.webboard_id ORDER BY COUNT(like_status.like_id),like_status.like_id DESC LIMIT 0,3")or die("ERROR : webboard function line 32");
+                $row = mysqli_num_rows($query_webboard);
+                if($row>0){
+                echo "<table class='table table-hover table-striped' style='margin-top:10px;'>";
+                    echo "<thead>";
+                    echo "<tr>
+                        <th><center>ชื่อกระทู้</center></th>
+                        <th class='hidden-xs'><center>ผู้โพสต์</center></th>
+                        <th class='hidden-xs'><center>เข้าชม</center></th>
+                        <th class='hidden-xs'><center>ตอบ</center></th>
+                        <th><center>วันที่โพสต์</center></th>
+                    </tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
+                    
+                        while(list($webboard_id,$webboard_header,$webboard_detail,$username,$webboard_date,$visitor)=mysqli_fetch_row($query_webboard)){
+                            $query_subwebboard = mysqli_query($_SESSION['connect_db'],"SELECT subwebboard_id FROM subwebboard WHERE webboard_id='$webboard_id'")or die("ERROR : webboard line 37");
+                            $cnt_subwebboard = mysqli_num_rows($query_subwebboard);
+                            $webboard_date = substr($webboard_date, 0,10);
+                            echo "<tr>
+                                <td class='col-md-6'><p class='font20'><a href='index.php?module=webboard&action=webboard_detail&webboard_id=$webboard_id' style='text-decoration: none;'>$webboard_header</a></p></td>
+                                <td class='col-md-2 hidden-xs'><p align='center' class='font20'>$username</p></td>
+                                <td class='col-md-1 hidden-xs'><p align='center' class='font20'>$visitor</p></td>
+                                <td class='col-md-1 hidden-xs'><p align='center' class='font20'>$cnt_subwebboard</p></td>
+                                <td class='col-md-2'><p align='center' class='font20'>$webboard_date</p></td>
+                            </tr>";
+                            $number++;
+                        }
+                    
+                echo "</tbody></table>";
+                }else{
+                    echo "<h4 align='center' style='margin-top:40px;'><b>ขออภัย!!! ยังไม่มีการเพิ่มกระทู้</b></h4>";
+                }
+            echo "</div>";
+            echo "<div role='tabpanel' class='tab-pane' id='webboard_interesting'>";
+                $number=1;
+                $query_webboard = mysqli_query($_SESSION['connect_db'],"SELECT * FROM webboard ORDER BY visitor DESC LIMIT 0,3")or die("ERROR : webboard function line 34");
+                $row = mysqli_num_rows($query_webboard);
+                if($row>0){
+                echo "<table class='table table-hover table-striped' style='margin-top:10px;'>";
+                    echo "<thead>";
+                    echo "<tr>
+                        <th><center>ชื่อกระทู้</center></th>
+                        <th class='hidden-xs'><center>ผู้โพสต์</center></th>
+                        <th class='hidden-xs'><center>เข้าชม</center></th>
+                        <th class='hidden-xs'><center>ตอบ</center></th>
+                        <th><center>วันที่โพสต์</center></th>
+                    </tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
+                   
+                    while(list($webboard_id,$webboard_header,$webboard_detail,$username,$webboard_date,$visitor)=mysqli_fetch_row($query_webboard)){
+                        $query_subwebboard = mysqli_query($_SESSION['connect_db'],"SELECT subwebboard_id FROM subwebboard WHERE webboard_id='$webboard_id'")or die("ERROR : webboard line 37");
+                        $cnt_subwebboard = mysqli_num_rows($query_subwebboard);
+                        $webboard_date = substr($webboard_date, 0,10);
+                        echo "<tr>
+                            <td class='col-md-6'><p class='font20'><a href='index.php?module=webboard&action=webboard_detail&webboard_id=$webboard_id' style='text-decoration: none;'>$webboard_header</a></p></td>
+                            <td class='col-md-2 hidden-xs'><p align='center' class='font20'>$username</p></td>
+                            <td class='col-md-1 hidden-xs'><p align='center' class='font20'>$visitor</p></td>
+                            <td class='col-md-1 hidden-xs'><p align='center' class='font20'>$cnt_subwebboard</p></td>
+                            <td class='col-md-2'><p align='center' class='font20'>$webboard_date</p></td>
+                        </tr>";
+                        $number++;
+                    }
+                echo "</tbody></table>";
+                }else{
+                    echo "<h4 align='center' style='margin-top:40px;'><b>ขออภัย!!! ยังไม่มีการเพิ่มกระทู้</b></h4>";
+                }
+            echo "</div>";
+          echo "</div>";
+        echo "</div>";
+?>
+                </div>
+            </div>
+
             <div class="container-fluid" style="margin:10px;">
             <div class="col-md-12 con1" style="padding-top:10px;margin-top:20px;">
                 <div class="col-md-6 col-xs-5" style="margin-top:10px;">
