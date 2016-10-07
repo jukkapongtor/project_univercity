@@ -466,7 +466,11 @@
                     </div>
                 </div>
             </div>
-
+<?php
+        $query_allwebboard = mysqli_query($_SESSION['connect_db'],"SELECT webboard_id FROM webboard")or die("ERROR index line 470");
+        $rows_allwebboard = mysqli_num_rows($query_allwebboard);
+        if(!empty($rows_allwebboard)){
+?>
             <div class="container-fluid padding0">
                 <div class="col-md-12 padding0" style="margin-top:20px;">
                     <font size='5'><b>&nbsp;เว็บบอร์ด</b></font>
@@ -556,7 +560,9 @@
 ?>
                 </div>
             </div>
-
+<?php
+        }
+?>
             <div class="container-fluid" style="margin:10px;">
             <div class="col-md-12 con1" style="padding-top:10px;margin-top:20px;">
                 <div class="col-md-6 col-xs-5" style="margin-top:10px;">
