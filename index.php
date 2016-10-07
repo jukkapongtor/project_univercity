@@ -273,8 +273,10 @@
                     }
                     if($_SESSION['login_type']==3){
                         echo "<a href='index.php?module=users&action=data_users&menu=1' style='text-decoration: none;'><p style='margin-top:-5px;margin-right:10px;'>&nbsp;ข้อมูลส่วนตัว</p></a>";
-                        echo "<a href='index.php?module=users&action=data_users&menu=3&order_status=1' style='text-decoration: none;'><p style='margin-top:-5px;margin-right:10px;'>&nbsp;สถานะการซื้อสินค้า</p></a>";
-                        echo "<a href='index.php?module=users&action=data_users&menu=4' style='text-decoration: none;'><p style='margin-top:-5px;margin-right:10px;'>&nbsp;ประวัติการซื้อสินค้า</p></a>";
+                         if($sellstatus==1){
+                            echo "<a href='index.php?module=users&action=data_users&menu=3&order_status=1' style='text-decoration: none;'><p style='margin-top:-5px;margin-right:10px;'>&nbsp;สถานะการซื้อสินค้า</p></a>";
+                            echo "<a href='index.php?module=users&action=data_users&menu=4' style='text-decoration: none;'><p style='margin-top:-5px;margin-right:10px;'>&nbsp;ประวัติการซื้อสินค้า</p></a>";
+                        }
                     }
                         echo "</div>
                         </div><br class='clear'></li>";
