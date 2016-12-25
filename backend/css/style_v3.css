@@ -1,0 +1,157 @@
+.text_name {
+   width: 220px;
+   height: 25px;
+   border: solid 2px #00E3E3;
+   padding: 2px;
+   border-radius: 5px;
+   font-size: 20px;
+   box-shadow: inset 0px -2px 5px 0px rgba(156, 156, 156, 0.42);
+   background-color: #FFFFFF;
+   outline: none;
+   color: #474747;
+  }
+.text_name:hover  {
+   border: 2px solid #FF00D5;
+  }
+.text_name:focus  {
+   border: solid 2px #00D43C;
+   box-shadow: inset 0px 1px 2px 0px #9C9C9C;
+  }
+.text_name:active  {
+   border: solid 2px #0043EB;
+  }
+.on-off-buywebsite{
+  width: 100px;
+  height: 30px;
+  background: #eee;
+  border-radius: 50px;
+  border:solid 1px #ccc;
+}
+.on-buywebsite1,.off-buywebsite1,.on-buywebsite2,.off-buywebsite2,.on-buywebsite3,.off-buywebsite3,.on-buywebsite4,.off-buywebsite4{
+  float: left;
+  margin: 5px;
+  width: 90px;
+  height: 20px;
+  background: #ddd;
+  border-radius: 15px;
+  padding: 0px 0px;
+}
+.off-buywebsite1,.off-buywebsite3{
+  background: orange;
+  padding-left: 55px;
+  color:white;
+}
+.on-buywebsite1,.on-buywebsite3{
+  position: absolute;
+  z-index: 2;
+  width: 55px;
+  padding-left: 13px;
+}
+.off-buywebsite2,.off-buywebsite4{
+  position: absolute;
+  z-index: 2;
+  width: 55px;
+  margin-left: 40px;
+  padding-left: 13px;
+}
+.on-buywebsite2,.on-buywebsite4{
+  background: orange;
+  padding-left: 13px;
+  color:white;
+}
+.blog-body{
+  background: #ffffff ;
+  border: 1px solid #B5B5B5;
+  padding: 20px
+}
+.btn-de{
+  background: #D41132;
+  font-size: 12px;
+  padding: 0px 5px;
+
+}
+.btn-edit{
+  background: #12A03A;
+  font-size: 12px;
+  padding: 0px 5px;
+}
+.home-slide{
+  wid.th-em: 100%;  
+  height: 400px;
+}
+.text-editor{
+    width: 81%;
+    margin: auto;
+    text-align: left;
+}
+
+.box-on{
+  border-radius:10px 10px 0px 0px; 
+  padding: 10px 0px 0px 0px; 
+  color:#ffffff;
+}
+
+.box-under{
+  border-radius:0px 0px 10px 10px; 
+  padding: 10px; 
+  color:#ffffff;
+
+}
+
+.box-smail{
+  border-radius:15px 15px 15px 15px;
+  background: #34495e;
+  color: #ffffff;
+  padding: 10px 10px 5px 10px; 
+  margin:5px;
+  width: 30%;
+}
+
+.day-money-on{
+  border-radius:10px 10px 0px 0px;
+  padding: 18px 10px 10px 15px;
+  color:#1a237e;
+  height: 85px;
+  width: 90%
+
+}
+.day-money-under{
+  border-radius:0px 0px 10px 10px;
+  padding: 5;
+  color:#ffffff;
+  height: 65px;
+  width: 90%
+}
+.day-money-under h6{
+  color: #e0e0e0;
+}
+
+.box-font{
+
+  border-radius:15px 15px 15px 15px;
+  background: #7F171F;
+  color: #ffffff;
+  padding: 10px 10px 5px 10px; 
+  margin:5px;
+  width: 30%;
+
+
+}
+.box-web-left{
+
+  border-radius:15px 15px 0px 0px;
+  padding: 30px 10px 10px 10px; 
+  height: 110px;
+  width: 90%
+
+}
+.box-web-right{
+  border-radius:0px 0px 15px 15px;
+  padding: 30px 10px 10px 10px; 
+  color: #ffffff;
+  height: 40px;
+  width: 90%
+ 
+}
+
+
